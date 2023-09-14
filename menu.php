@@ -1,7 +1,7 @@
-<?php 
+<?php
 session_start();
 $filiado = @$_SESSION['filiado'];
- ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,11 +10,14 @@ $filiado = @$_SESSION['filiado'];
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-167475784-1"></script>
   <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'UA-167475784-1');
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-167475784-1');
   </script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <meta charset="utf-8">
@@ -37,12 +40,12 @@ $filiado = @$_SESSION['filiado'];
 
   <!-- Custom styles for this template -->
   <link href="css/scrolling-nav.css" rel="stylesheet">
-  
+
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
   <link href="assets/css/material-kit.css?v=2.0.7" rel="stylesheet" />
-  
+
   <!-- Custom JavaScript for this theme -->
   <script type="text/javascript" src="js/datatables.min.js"></script>
   <script type="text/javascript" src="js/dataTables.bootstrap4.min.js"></script>
@@ -54,7 +57,7 @@ $filiado = @$_SESSION['filiado'];
 
 </head>
 
-<body class="landing-page sidebar-collapse"> 
+<body class="landing-page sidebar-collapse">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top mb-5" id="mainNav">
     <div class="container">
       <a class="navbar-brand js-scroll-trigger" href="inicio.php"><i class="bi bi-house-fill"></i> Kenshydokan</a>
@@ -110,20 +113,20 @@ $filiado = @$_SESSION['filiado'];
             <a class="nav-link js-scroll-trigger" href="contato.php"><i class="bi bi-telephone-fill"></i> Contato</a>
           </li>
           <li class="nav-item">
-            
+
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="bi bi-person-circle"></i> &nbsp
+              <i class="bi bi-person-circle"></i> &nbsp
               Minha Conta
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <?php if (@$_SESSION['filiado'] != null) { ?>
-                  <a class="nav-link js-scroll-trigger" href="filiado/perfil.php"><i class="bi bi-person-lines-fill"></i> &nbspMinha Conta</a>
-                  <a class="nav-link js-scroll-trigger" href="funcoes/sair.php"><i class="bi bi-person-x-fill"></i> &nbspSair</a>
-                <?php }else{ ?>
-                  <a class="nav-link js-scroll-trigger" href="login.php"><i class="bi bi-person-circle"> </i>&nbspLogin</a>
-                <?php } ?>
+                <a class="nav-link js-scroll-trigger" href="filiado/perfil.php"><i class="bi bi-person-lines-fill"></i> &nbspMinha Conta</a>
+                <a class="nav-link js-scroll-trigger" href="funcoes/sair.php"><i class="bi bi-person-x-fill"></i> &nbspSair</a>
+              <?php } else { ?>
+                <a class="nav-link js-scroll-trigger" href="login.php"><i class="bi bi-person-circle"> </i>&nbspLogin</a>
+              <?php } ?>
             </div>
           </li>
         </ul>
