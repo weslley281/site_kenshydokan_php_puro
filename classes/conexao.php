@@ -1,34 +1,19 @@
 <?php
+class Conexao {
+    private $servidor = "localhost";
+    private $usuario = "root";
+    private $senha = "";
+    private $bd = "u696382984_kenshydokan";
 
-class conectar
-{
-	private $servidor;
-	private $usuario;
-	private $senha;
-	private $bd;
+    public function conectar() {
+        $conexao = mysqli_connect($this->servidor, $this->usuario, $this->senha, $this->bd);
 
-	public function __construct()
-	{
-		if (file_exists('../env')) {
-			$env = file('../env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-			foreach ($env as $line) {
-				if (strpos($line, '=') !== false) {
-					list($key, $value) = explode('=', $line, 2);
-					$_ENV[trim($key)] = trim($value);
-				}
-			}
-		}
+        if (mysqli_connect_errno()) {
+            die("Falha na conexão com o banco de dados: " . mysqli_connect_error());
+        }
 
-		$this->servidor = $_ENV['DB_HOST'];
-		$this->usuario = $_ENV['DB_USER'];
-		$this->senha = $_ENV['DB_PASS'];
-		$this->bd = $_ENV['DB_NAME'];
-	}
+        mysqli_set_charset($conexao, "utf8");
 
-	public function conexao()
-	{
-		$conexao = mysqli_connect($this->servidor, $this->usuario, $this->senha, $this->bd);
-
-		return $conexao;
-	}
+        return $conexao;
+    }
 }
