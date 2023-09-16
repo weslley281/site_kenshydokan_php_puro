@@ -7,13 +7,15 @@ class postagem
 
 	public function __construct($conexao)
 	{
-		$this->conexao = $conexao;
+		$c = new Conexao();
+		$this->conexao = $c->conectar();
 	}
 
 	public function criar_postagens($id_usuario, $titulo, $conteudo, $situacao, $data)
 	{
-		$inserir = $this->conexao->$resultado = mysqli_query($conexao, $inserir);
-		//var_dump($consulta);
+		$inserir = $this->conexao->prepare("INSERT INTO postagens (id_usuario, titulo, conteudo, situacao, data) VALUES (?, ?, ?, ?, ?)");
+		$inserir->bind_param("issss", $id_usuario, $titulo, $conteudo, $situacao, $data);
+		$resultado = $inserir->execute();
 
 		return $resultado;
 	}
