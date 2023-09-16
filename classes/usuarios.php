@@ -1,24 +1,25 @@
 <?php 
- include_once("conexao.php");
+ include_once("connection.php");
 
- Class usuario{
- 	private $conexao;
+ Class Users{
+ 	private $connection;
 
-	public function __construct($conexao)
-	{
-		$c = new Conexao();
-		$this->conexao = $c->conectar();
-	}
+    public function __construct()
+    {
+        $dbConnection = new Conection();
+        $this->connection = $dbConnection->connect();
+    }
+
+    public function create_user($nome, $email, $telefone)
+    {
+    	// code...
+    }
 
  	public function editar_usuario($id_usuario, $nome, $email, $telefone){
- 		$c = new conectar();
- 		$conexao = $c->conexao();
-
- 		$consulta = "UPDATE usuarios SET nome = '$nome', email = '$email', telefone = '$telefone' WHERE id_usuario = $id_usuario";
- 		$resultado = mysqli_query($conexao, $consulta);
- 		//var_dump($consulta);
-
- 		return $resultado;
+ 		$insert = $this->connection->prepare("INSERT INTO posts (user_id, title, content, status, date) VALUES (?, ?, ?, ?, ?)");
+        $insert->bind_param("issss", $user_id, $title, $content, $status, $date);
+        $result = $insert->execute();
+        $insert->close();
  	}
 
  	public function editar_senha($id_usuario, $senha){
