@@ -1,5 +1,5 @@
 <?php 
-	include_once("../classes/conexao.php");
+	include_once("../classes/connection.php");
 	include_once("../classes/usuarios.php");
 
 	$id_usuario = $_POST["id_usuario"];
@@ -12,8 +12,8 @@
 	move_uploaded_file($nome_temp, $caminho);
 
 	//procura se a imagem existe
-	$c = new conectar();
-	$conexao = $c->conexao();
+	$c = new Connection();
+	$conexao = $c->connect();
 	$consulta = "SELECT * FROM imagens WHERE nome = '$nome'";
 	$resultado = mysqli_query($conexao, $consulta);
 	$dado = mysqli_fetch_array($resultado);                    	

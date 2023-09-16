@@ -1,7 +1,6 @@
 <?php
 
-include_once("../classes/postagens.php");
-include_once("../classes/conexao.php");
+include_once("../classes/posting.php");
 
 $registro = new postagem();
 

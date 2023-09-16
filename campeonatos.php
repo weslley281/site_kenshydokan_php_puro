@@ -1,7 +1,7 @@
-<?php 
-include_once("classes/conexao.php");
-$c = new conectar();
-$conexao = $c->conexao();
+ <?php 
+include_once("classes/connection.php");
+$c = new Connection();
+$conexao = $c->connect(); 
  ?>
 <!-- Navigation -->
   <?php include("menu.php"); ?>

@@ -2,9 +2,9 @@
   <?php include("menu.php"); ?>
 <!-- /Navigation -->
 <?php 
-include_once("../classes/conexao.php");
-$c = new conectar();
-$conexao = $c->conexao();
+include_once("../classes/connection.php");
+$c = new Connection();
+$conexao = $c->connect(); 
 
 $busca_usuario = "SELECT * FROM usuarios WHERE email = '$filiado'";
 $resultado_usuario = mysqli_query($conexao, $busca_usuario);

@@ -1,5 +1,5 @@
 <?php
-	include_once("../classes/postagens.php");
+	include_once("../classes/posting.php");
 
 	$registro = new postagem();
 
@@ -8,6 +8,8 @@
 	$conteudo = $_POST["conteudo"];
 	$situacao = "nao";
 	$data = date("Y,m,d");
+
+	var_dump($id_usuario, $titulo, $conteudo, $situacao, $data);
 
 
 	$tentativa = $registro->criar_postagens($id_usuario, $titulo, $conteudo, $situacao, $data);

@@ -1,12 +1,12 @@
 <?php
 
-include_once("../classes/conexao.php");
+include_once("../classes/connection.php");
 include_once("../classes/usuarios.php");
 
 $registro = new usuario;
 
-$c = new conectar();
-$conexao = $c->conexao();
+$c = new Connection();
+$conexao = $c->connect();
 
 $id_usuario = $_POST["id_usuario"];
 $senha_antiga = $_POST["senha_antiga"];

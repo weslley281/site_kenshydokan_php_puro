@@ -2,9 +2,9 @@
   <?php include("menu.php"); ?>
 <!-- /Navigation -->
 <?php 
-include_once("../classes/conexao.php");
-$c = new conectar();
-$conexao = $c->conexao();
+include_once("../classes/connection.php");
+$c = new Connection();
+$conexao = $c->connect(); 
 
 $busca_usuario = "SELECT * FROM usuarios WHERE email = '$filiado'";
 $resultado_usuario = mysqli_query($conexao, $busca_usuario);
@@ -96,8 +96,8 @@ if($filiado != ""){
 	        <form action="../funcoes/criar_postagem.php" method="POST">
 	            <div id="sample">
 	            	<input type="hidden" value="<?php echo $usuario["id_usuario"] ?>" name="id_usuario">
-	                <input class="form-control form-control-lg mt-2 mb-2" type="text" placeholder="Titulo" name="titulo">
-	                <textarea rows="20">
+	                <input class="form-control form-control-lg mt-2 mb-2" type="text" placeholder="Titulo" name="titulo" required autofocus>
+	                <textarea name="conteudo" rows="20" required>
 	                    Comece a criar.
 	                </textarea>
 	                <input class="btn btn-success mt-3" type="submit" name="salvar" value="salvar">

@@ -160,7 +160,19 @@
           <li>1° Dan Karatê Kenshydokan</li>
           <li>2° Dan Judo Kodokan</li>
           <li>Faixa preta Jiu Jitsu Brasileiro.</li>
-          <li>2° kyu Ju jitsu</li>
+        </ul>
+      </div>
+      <div class="col-lg-4">
+        <center>
+          <img class="rounded-circle" src="img/sensei_murilo.jpg" alt="Generic placeholder image" width="200" height="200">
+          <h2>Murilo Cardoso de Resende</h2>
+          <p><u>Contribuinte</u></p>
+        </center>
+        <ul>
+          <li>14° Khan Muay Thai</li>
+          <li>3° Dan Kickboxing</li>
+          <li>2° Dan Karatê Kenshydokan</li>
+          <li>Faixa Roxa Jiu Jitsu Brasileiro</li>
         </ul>
       </div>
     </div>

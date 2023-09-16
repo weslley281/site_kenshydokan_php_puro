@@ -2,6 +2,13 @@
  include_once("conexao.php");
 
  Class usuario{
+ 	private $conexao;
+
+	public function __construct($conexao)
+	{
+		$c = new Conexao();
+		$this->conexao = $c->conectar();
+	}
 
  	public function editar_usuario($id_usuario, $nome, $email, $telefone){
  		$c = new conectar();

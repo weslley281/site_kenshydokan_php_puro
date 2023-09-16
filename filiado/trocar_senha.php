@@ -11,16 +11,16 @@
           <div class="card-body">
             <h5 class="card-title text-center">Trocar a Senha</h5>
             <?php
-            include_once("admin/classes/conexao.php");
-        	$c = new conectar();
-        	$conexao=$c->conexao();
-        	$id_usuario = $_GET["id_usuario"];
-        	$busca_usu = "SELECT * FROM `usuarios` where id_usuario = '$id_usuario'";
-        	$resultado_usu = mysqli_query($conexao, $busca_usu);
-        	while($res = mysqli_fetch_array($resultado_usu)){
-                $id_usuario = $res["id_usuario"];
-                $nome = $res["nome"];
-            }
+              include_once("../classes/connection.php");
+              $c = new Connection();
+              $conexao = $c->connect(); 
+            	$id_usuario = $_GET["id_usuario"];
+            	$busca_usu = "SELECT * FROM `usuarios` where id_usuario = '$id_usuario'";
+            	$resultado_usu = mysqli_query($conexao, $busca_usu);
+            	while($res = mysqli_fetch_array($resultado_usu)){
+                    $id_usuario = $res["id_usuario"];
+                    $nome = $res["nome"];
+                }
             ?>
             <form class="form-signin" action="admin/funcoes/registrar_usuario.php" method="post">
               <input type="hidden" id="id_usuario" class="form-control" value="<?php echo $id_usuario; ?>" name="id_usuario">

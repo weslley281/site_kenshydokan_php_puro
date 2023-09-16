@@ -1,12 +1,12 @@
 <?php
-
-include_once("../classes/conexao.php");
 include_once("../classes/usuarios.php");
 
 $registro = new usuario;
 
-$c = new conectar();
-$conexao = $c->conexao();
+include_once("../classes/connection.php");
+
+$c = new Connection();
+$conexao = $c->connect(); 
 
 $id_usuario = $_POST["id_usuario"];
 $nome = $_POST["nome"];

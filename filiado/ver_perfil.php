@@ -2,9 +2,9 @@
   <?php include("menu.php"); ?>
 <!-- /Navigation -->
 <?php 
-include_once("../classes/conexao.php");
-$c = new conectar();
-$conexao = $c->conexao();
+include_once("../classes/connection.php");
+$c = new Connection();
+$conexao = $c->connect(); 
 $id_usuario = $_GET['id_usuario'];
 
 $busca_usuario = "SELECT * FROM usuarios WHERE id_usuario = '$id_usuario'";

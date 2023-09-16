@@ -32,7 +32,7 @@
   </h1>
 
   <div class="row mb-4">
-    <div class="col-lg-3 col-sm-6 mb-4">
+    <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
         <a href="filiado/ver_perfil.php?id_usuario=5"><img class="card-img-top" src="imagens/sensei-everson.jpg" alt=""></a>
         <div class="card-body">
@@ -41,12 +41,11 @@
           </h4>
           <ul>
               <li>Faixa Preta 3° Dan do Karate Kenshydokan.</li>
-              <li>Faixa preta 1° Dan em Judo Kodokan.</li>
-          </ul>
+        </ul>
         </div>
       </div>
     </div>
-    <div class="col-lg-3 col-sm-6 mb-4">
+    <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
         <a href="filiado/ver_perfil.php?id_usuario=5"><img class="card-img-top" src="imagens/sensei-patrick2.jpg" alt=""></a>
         <div class="card-body">
@@ -55,13 +54,11 @@
           </h4>
           <ul>
               <li>Faixa Preta 1° Dan do Karate Kenshydokan.</li>
-              <li>Faixa roxa em Jiu jitsu Brasileiro.</li>
-              <li>Faixa roxa em KickBoxing.</li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="col-lg-3 col-sm-6 mb-4">
+    <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
         <a href="filiado/ver_perfil.php?id_usuario=3"><img class="card-img-top" src="imagens/sensei_elyakin.jpg" alt=""></a>
         <div class="card-body">
@@ -74,7 +71,7 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-3 col-sm-6 mb-4">
+    <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
         <a href="filiado/ver_perfil.php?id_usuario=1"><img class="card-img-top" src="imagens/sensei_weslley.jpg" alt=""></a>
         <div class="card-body">
@@ -83,9 +80,24 @@
           </h4>
           <ul>
               <li>Faixa Preta 1° Dan do Karate Kenshydokan.</li>
-              <li>Faixa preta 1° Dan em Judo Kodokan.</li>
+              <li>Faixa preta 2° Dan em Judo Kodokan.</li>
               <li>Faixa preta de Jiu Jitsu Brasileiro.</li>
-              <li>Faixa roxa 2° Kyu em Ju jitsu.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 mb-4">
+      <div class="card h-100">
+        <a href="filiado/ver_perfil.php?id_usuario=1"><img class="card-img-top" src="imagens/sensei_murilo.jpg" alt=""></a>
+        <div class="card-body">
+          <h4 class="card-title">
+            <a href="filiado/ver_perfil.php?id_usuario=1">Murilo Cardoso de Resende</a>
+          </h4>
+          <ul>
+              <li>14° Khan Muay Thai</li>
+              <li>3° Dan Kickboxing</li>
+              <li>2° Dan Karatê Kenshydokan</li>
+              <li>Faixa Roxa Jiu Jitsu Brasileiro</li>
           </ul>
         </div>
       </div>

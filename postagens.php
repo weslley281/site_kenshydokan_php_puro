@@ -1,8 +1,8 @@
 <?php 
-include_once("classes/conexao.php");
 include_once("classes/verificacao.php");
-$c = new conectar();
-$conexao = $c->conexao();
+include_once("classes/connection.php");
+$c = new Connection();
+$conexao = $c->connect(); 
  ?>
 <!-- Navigation -->
   <?php include("menu.php"); ?>

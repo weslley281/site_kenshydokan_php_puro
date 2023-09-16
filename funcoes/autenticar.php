@@ -1,7 +1,7 @@
 <?php
-    include_once("../classes/conexao.php");
-    $c = new conectar();
-    $conexao = $c->conexao(); 
+    include_once("../classes/connection.php");
+	$c = new Connection();
+	$conexao = $c->connect(); 
     session_start();
     
     $_POST['usuario'] = strtolower($_POST['usuario']);
