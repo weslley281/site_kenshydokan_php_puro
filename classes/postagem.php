@@ -1,65 +1,64 @@
 <?php
-include_once("../classes/connection.php");
+include_once("../classes/conexao.php");
 
-
-class Posting
+class Publicacao
 {
-    private $connection;
+    private $conexao;
 
     public function __construct()
     {
-        $dbConnection = new Conection();
-        $this->connection = $dbConnection->connect();
+        $conexaoDB = new Conexao();
+        $this->conexao = $conexaoDB->conectar();
     }
 
-    public function create_posts(int $user_id, string $title, string $content, string $status, string $date): bool
+    public function criar_publicacao(int $id_usuario, string $titulo, string $conteudo, string $status, string $data): bool
     {
-        $insert = $this->connection->prepare("INSERT INTO posts (user_id, title, content, status, date) VALUES (?, ?, ?, ?, ?)");
-        $insert->bind_param("issss", $user_id, $title, $content, $status, $date);
-        $result = $insert->execute();
-        $insert->close();
+        $inserir = $this->conexao->prepare("INSERT INTO publicacoes (id_usuario, titulo, conteudo, status, data) VALUES (?, ?, ?, ?, ?)");
+        $inserir->bind_param("issss", $id_usuario, $titulo, $conteudo, $status, $data);
+        $resultado = $inserir->execute();
+        $inserir->close();
 
-        return $result;
+        return $resultado;
     }
 
-    public function edit_posts(int $post_id, string $title, string $content, string $status, string $date): bool
+    public function editar_publicacao(int $id_publicacao, string $titulo, string $conteudo, string $status, string $data): bool
     {
-        $update = $this->connection->prepare("UPDATE posts SET title = ?, content = ?, status = ?, date = ? WHERE post_id = ?");
-        $update->bind_param("ssssi", $title, $content, $status, $date, $post_id);
-        $result = $update->execute();
-        $update->close();
+        $atualizar = $this->conexao->prepare("UPDATE publicacoes SET titulo = ?, conteudo = ?, status = ?, data = ? WHERE id_publicacao = ?");
+        $atualizar->bind_param("ssssi", $titulo, $conteudo, $status, $data, $id_publicacao);
+        $resultado = $atualizar->execute();
+        $atualizar->close();
 
-        return $result;
+        return $resultado;
     }
 
-    public function edit_post_status(int $post_id, string $status): bool
+    public function editar_status_publicacao(int $id_publicacao, string $status): bool
     {
-        $update = $this->connection->prepare("UPDATE posts SET status = ? WHERE post_id = ?");
-        $update->bind_param("si", $status, $post_id);
-        $result = $update->execute();
-        $update->close();
+        $atualizar = $this->conexao->prepare("UPDATE publicacoes SET status = ? WHERE id_publicacao = ?");
+        $atualizar->bind_param("si", $status, $id_publicacao);
+        $resultado = $atualizar->execute();
+        $atualizar->close();
 
-        return $result;
+        return $resultado;
     }
 
-    public function delete_posts(int $post_id): bool
+    public function excluir_publicacao(int $id_publicacao): bool
     {
-        $delete = $this->connection->prepare("DELETE FROM posts WHERE post_id = ?");
-        $delete->bind_param("i", $post_id);
-        $result = $delete->execute();
-        $delete->close();
+        $excluir = $this->conexao->prepare("DELETE FROM publicacoes WHERE id_publicacao = ?");
+        $excluir->bind_param("i", $id_publicacao);
+        $resultado = $excluir->execute();
+        $excluir->close();
 
-        return $result;
+        return $resultado;
     }
 
-    public function register_post_images(string $name, string $path): bool
+    public function registrar_imagem_publicacao(string $nome, string $caminho): bool
     {
-        $insert = $this->connection->prepare("INSERT INTO images (name, path) VALUES (?, ?)");
-        $insert->bind_param("ss", $name, $path);
-        $result = $insert->execute();
-        $insert->close();
+        $inserir = $this->conexao->prepare("INSERT INTO imagens (nome, caminho) VALUES (?, ?)");
+        $inserir->bind_param("ss", $nome, $caminho);
+        $resultado = $inserir->execute();
+        $inserir->close();
 
-        return $result;
+        return $resultado;
     }
 }
 ?>
