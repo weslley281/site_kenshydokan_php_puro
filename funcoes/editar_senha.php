@@ -1,12 +1,12 @@
 <?php
 
-include_once("../classes/connection.php");
+include_once("../classes/conexao.php");
 include_once("../classes/usuarios.php");
 
 $registro = new usuario;
 
-$c = new Connection();
-$conexao = $c->connect();
+$c = new Conexao();
+$conexao = $c->conectar();
 
 $id_usuario = $_POST["id_usuario"];
 $senha_antiga = $_POST["senha_antiga"];
@@ -23,16 +23,16 @@ if (password_verify($senha_antiga, $senha_banco)) {
 		$tentativa = $registro->editar_senha($id_usuario, $senha);
 		if ($tentativa > 0) {
 			echo "<script language='javascript'>window.alert('Senha Editada com Sucesso'); </script>";
-    		echo "<script language='javascript'>window.location='../filiado/editar_perfil.php'; </script>";
-		}else{
+			echo "<script language='javascript'>window.location='../filiado/editar_perfil.php'; </script>";
+		} else {
 			echo "<script language='javascript'>window.alert('Erro ao Editar Senha'); </script>";
-    		echo "<script language='javascript'>window.location='../filiado/editar_perfil.php'; </script>";
+			echo "<script language='javascript'>window.location='../filiado/editar_perfil.php'; </script>";
 		}
-	}else{
+	} else {
 		echo "<script language='javascript'>window.alert('As senhas estão diferentes, tente novamente'); </script>";
-    	echo "<script language='javascript'>window.location='../filiado/editar_perfil.php'; </script>";
+		echo "<script language='javascript'>window.location='../filiado/editar_perfil.php'; </script>";
 	}
-}else{
+} else {
 	echo "<script language='javascript'>window.alert('Senha Antiga Invalida'); </script>";
-    echo "<script language='javascript'>window.location='../filiado/editar_perfil.php'; </script>";
+	echo "<script language='javascript'>window.location='../filiado/editar_perfil.php'; </script>";
 }

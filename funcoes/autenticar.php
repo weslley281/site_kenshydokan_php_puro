@@ -1,7 +1,7 @@
 <?php
-    include_once("../classes/connection.php");
-	$c = new Connection();
-	$conexao = $c->connect(); 
+    include_once("../classes/conexao.php");
+	$c = new Conexao();
+	$conexao = $c->conectar(); 
     session_start();
     
     $_POST['usuario'] = strtolower($_POST['usuario']);
@@ -38,4 +38,3 @@ if($linha > 0){
 	echo "<script language='javascript'>window.alert('login ou senha invalido'); </script>";
 	echo "<script language='javascript'>window.location='../login.php'; </script>";
 }
- ?>

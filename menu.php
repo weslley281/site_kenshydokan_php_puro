@@ -3,7 +3,7 @@ session_start();
 $filiado = @$_SESSION['filiado'];
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
 

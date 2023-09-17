@@ -1,10 +1,10 @@
 <!-- Navigation -->
-  <?php include("menu.php"); ?>
+<?php include("menu.php"); ?>
 <!-- /Navigation -->
-<?php 
-include_once("../classes/connection.php");
-$c = new Connection();
-$conexao = $c->connect(); 
+<?php
+include_once("../classes/conexao.php");
+$c = new Conexao();
+$conexao = $c->conectar();
 
 $busca_usuario = "SELECT * FROM usuarios WHERE email = '$filiado'";
 $resultado_usuario = mysqli_query($conexao, $busca_usuario);
@@ -21,9 +21,9 @@ $resultado_filiado = mysqli_query($conexao, $busca_filiado);
 $filiado = mysqli_fetch_array($resultado_filiado);
 $confirmacao = $filiado["confirmacao"];
 if ($confirmacao == "sim") {
- $ativo = "Você está filiado";
-}else{
- $ativo = "Aguardando Cofirmação de Filiação, Não Está Filiado Não";
+	$ativo = "Você está filiado";
+} else {
+	$ativo = "Aguardando Cofirmação de Filiação, Não Está Filiado Não";
 }
 
 $id_graduacao = $filiado["id_graduacao"];
@@ -31,125 +31,129 @@ $busca_graduacao = "SELECT * FROM graduacao WHERE id_graduacao = '$id_graduacao'
 $resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
 $graduacao = mysqli_fetch_array($resultado_graduacao);
 
-if($filiado != ""){
- ?>
-<body>
+if ($filiado != "") {
+?>
 
-  <!-- Navigation -->
-  <div class="container mt-5">
-	  <!-- Page Content -->
-	  <div class="container">
+	<body>
 
-	    <div class="row">
+		<!-- Navigation -->
+		<div class="container mt-5">
+			<!-- Page Content -->
+			<div class="container">
 
-	      <div class="col-lg-3">
-	        <h1 class="my-4">Meu Perfil</h1>
-	        <div class="list-group">
-	          <a href="perfil.php" class="list-group-item bg-danger text-dark">Perfil</a>
-	          <a href="editar_perfil.php" class="list-group-item bg-light text-dark">Editar Perfil</a>
-	          <?php
-	            if($usuario["tipo"] == 1 or $usuario["tipo"] == 2){
-	          ?>
-	          <a href="exame_graduacao.php" class="list-group-item bg-light text-dark">Exame de Graduação</a>
-	          <a href="criar_postagem.php" class="list-group-item bg-light text-dark">Criar Postagem</a>
-	          <a href="postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
-	          <a href="documentos.php" class="list-group-item bg-light text-dark">Arquivos para Baixar</a>
-	          <?php } ?>
-	          <a href="eventos.php" class="list-group-item bg-light text-dark">Eventos Online</a>
-	          <a href="../funcoes/sair.php" class="list-group-item bg-light text-dark">Sair</a>
-	        </div>
+				<div class="row">
 
-	      </div>
-	      <!-- /.col-lg-3 -->
-	      <!--dados do perfil -->
-	      <div class="col-lg-9">
-	        <button class="btn btn-danger mt-3" id="hide">Esconder informações</button>
-            <button class="btn btn-success mt-3" id="show">Mostrar</button>
-	      	<div id="esconder" class="text-center mt-3 mb-3">
-	      		<div class="row">
-	      			<!-- card do perfil -->
-	      			<div class="col-5 mb-4">
-	      				<div class="card" style="width: 18rem;">
-						  <img class="card-img-top" src="../imagens/<?php echo $imagem["nome"] ?>" alt="">
-						  <div class="card-body">
-						    <h5 class="card-title"><?php echo $usuario["nome"]; ?></h5>
-						  </div>
+					<div class="col-lg-3">
+						<h1 class="my-4">Meu Perfil</h1>
+						<div class="list-group">
+							<a href="perfil.php" class="list-group-item bg-danger text-dark">Perfil</a>
+							<a href="editar_perfil.php" class="list-group-item bg-light text-dark">Editar Perfil</a>
+							<?php
+							if ($usuario["tipo"] == 1 or $usuario["tipo"] == 2) {
+							?>
+								<a href="exame_graduacao.php" class="list-group-item bg-light text-dark">Exame de Graduação</a>
+								<a href="criar_postagem.php" class="list-group-item bg-light text-dark">Criar Postagem</a>
+								<a href="postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
+								<a href="documentos.php" class="list-group-item bg-light text-dark">Arquivos para Baixar</a>
+							<?php } ?>
+							<a href="eventos.php" class="list-group-item bg-light text-dark">Eventos Online</a>
+							<a href="../funcoes/sair.php" class="list-group-item bg-light text-dark">Sair</a>
 						</div>
-	      			</div>
-	      			<!-- mais informações -->
-	      			<div class="col mb-4">
-	      				<div class="card">
-						  <h5 class="card-header"><?php echo "$ativo"; ?></h5>
-						  <div class="card-body">
-						    <h5 class="card-title">Sua graduação é <?php echo $graduacao["graduacao"]; ?></h5>
-						    <p class="card-text">Dojo: <?php echo $filiado["dojo"]; ?></p>
-						    <p class="card-text">E-mail: <?php echo $usuario["email"]; ?></p>
-						    <p class="card-text">Telefone: <?php echo $usuario["telefone"]; ?></p>
-						  </div>
+
+					</div>
+					<!-- /.col-lg-3 -->
+					<!--dados do perfil -->
+					<div class="col-lg-9">
+						<button class="btn btn-danger mt-3" id="hide">Esconder informações</button>
+						<button class="btn btn-success mt-3" id="show">Mostrar</button>
+						<div id="esconder" class="text-center mt-3 mb-3">
+							<div class="row">
+								<!-- card do perfil -->
+								<div class="col-5 mb-4">
+									<div class="card" style="width: 18rem;">
+										<img class="card-img-top" src="../imagens/<?php echo $imagem["nome"] ?>" alt="">
+										<div class="card-body">
+											<h5 class="card-title"><?php echo $usuario["nome"]; ?></h5>
+										</div>
+									</div>
+								</div>
+								<!-- mais informações -->
+								<div class="col mb-4">
+									<div class="card">
+										<h5 class="card-header"><?php echo "$ativo"; ?></h5>
+										<div class="card-body">
+											<h5 class="card-title">Sua graduação é <?php echo $graduacao["graduacao"]; ?></h5>
+											<p class="card-text">Dojo: <?php echo $filiado["dojo"]; ?></p>
+											<p class="card-text">E-mail: <?php echo $usuario["email"]; ?></p>
+											<p class="card-text">Telefone: <?php echo $usuario["telefone"]; ?></p>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
-	      			</div>
-	      		</div>
-	      	</div>
-	      	<!--Fim dados do perfil -->
-	      	<hr>
-	      	<div class="text-center"><h1><strong>Cursos</strong></h1></div>
-	        <div class="row">
-            <?php 
-	      	$busca = "SELECT * FROM curso";
-			$resultado = mysqli_query($conexao, $busca);
-			while($curso = mysqli_fetch_array($resultado)){
-				$id_imagem_curso = $curso["id_imagem"];
-				
-				$busca_imagem_curso = "SELECT * FROM imagens WHERE id_imagem = '$id_imagem_curso'";
-				$resultado_imagem_curso = mysqli_query($conexao, $busca_imagem_curso);
-				$imagem_curso = mysqli_fetch_array($resultado_imagem_curso);
+						<!--Fim dados do perfil -->
+						<hr>
+						<div class="text-center">
+							<h1><strong>Cursos</strong></h1>
+						</div>
+						<div class="row">
+							<?php
+							$busca = "SELECT * FROM curso";
+							$resultado = mysqli_query($conexao, $busca);
+							while ($curso = mysqli_fetch_array($resultado)) {
+								$id_imagem_curso = $curso["id_imagem"];
 
-				$id_categoria = $curso["id_categoria"];
-				$busca_categoria = "SELECT * FROM categorias WHERE id_categoria = '$id_categoria'";
-				$resultado_categoria = mysqli_query($conexao, $busca_categoria);
-				$categoria = mysqli_fetch_array($resultado_categoria);
-	      			?>
-	          <div class="col-lg-4 col-md-6 mb-4">
-	            <div class="card h-100">
-	              <a href="assistir_aulas.php?id=<?php echo $curso["id_curso"]; ?>"><img class="card-img-top" src="../imagens_produtos/<?php echo $imagem_curso["nome"]; ?>" alt="" width="150px" height="150px"></a>
-	              <div class="card-body">
-	                <h4 class="card-title">
-	                  <a href="assistir_aulas.php?id=<?php echo $curso["id_curso"]; ?>"><?php echo $curso["nome"]; ?></a>
-	                </h4>
-	                <h5><?php echo $categoria["categoria"]; ?></h5>
-	                <p class="card-text"><?php echo $curso["descricao"]; ?></p>
-	                <p class="card-text">Professor: <?php echo $curso["professor"]; ?></p>
-	                <p class="card-text"><?php echo $curso["data"]; ?></p>
-	              </div>
-	              <div class="card-footer">
-	                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-	              </div>
-	            </div>
-	          </div>
-            <?php } ?>
+								$busca_imagem_curso = "SELECT * FROM imagens WHERE id_imagem = '$id_imagem_curso'";
+								$resultado_imagem_curso = mysqli_query($conexao, $busca_imagem_curso);
+								$imagem_curso = mysqli_fetch_array($resultado_imagem_curso);
 
-	        </div>
-	        <!-- /.row -->
+								$id_categoria = $curso["id_categoria"];
+								$busca_categoria = "SELECT * FROM categorias WHERE id_categoria = '$id_categoria'";
+								$resultado_categoria = mysqli_query($conexao, $busca_categoria);
+								$categoria = mysqli_fetch_array($resultado_categoria);
+							?>
+								<div class="col-lg-4 col-md-6 mb-4">
+									<div class="card h-100">
+										<a href="assistir_aulas.php?id=<?php echo $curso["id_curso"]; ?>"><img class="card-img-top" src="../imagens_produtos/<?php echo $imagem_curso["nome"]; ?>" alt="" width="150px" height="150px"></a>
+										<div class="card-body">
+											<h4 class="card-title">
+												<a href="assistir_aulas.php?id=<?php echo $curso["id_curso"]; ?>"><?php echo $curso["nome"]; ?></a>
+											</h4>
+											<h5><?php echo $categoria["categoria"]; ?></h5>
+											<p class="card-text"><?php echo $curso["descricao"]; ?></p>
+											<p class="card-text">Professor: <?php echo $curso["professor"]; ?></p>
+											<p class="card-text"><?php echo $curso["data"]; ?></p>
+										</div>
+										<div class="card-footer">
+											<small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+										</div>
+									</div>
+								</div>
+							<?php } ?>
 
-	      </div>
-	      <!-- /.col-lg-9 -->
+						</div>
+						<!-- /.row -->
 
-	    </div>
-	    <!-- /.row -->
+					</div>
+					<!-- /.col-lg-9 -->
 
-	  </div>
-	  <!-- /.container -->
-  </div>
+				</div>
+				<!-- /.row -->
 
-  <?php
-  include("rodape.php");
-  }else{
-  	header("location:../login.php");
-  }
-   ?>
-</body>
-</html>
+			</div>
+			<!-- /.container -->
+		</div>
 
-<script type="text/javascript">
-	
-</script>
+	<?php
+	include("rodape.php");
+} else {
+	header("location:../login.php");
+}
+	?>
+	</body>
+
+	</html>
+
+	<script type="text/javascript">
+
+	</script>

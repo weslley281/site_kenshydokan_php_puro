@@ -1,5 +1,5 @@
 <?php
-include_once("../classes/conexao.php");
+include_once("conexao.php");
 
 class Publicacao
 {
@@ -60,5 +60,27 @@ class Publicacao
 
         return $resultado;
     }
+
+    public static function buscar_nome_autor($id_usuario)
+    {
+        $c = new Conexao();
+        $conexao = $c->conectar();
+
+        $busca = "SELECT nome FROM usuarios WHERE id_usuario = ?";
+
+        $procura = $conexao->prepare($busca);
+        $procura->bind_param("i", $id_usuario);
+        $procura->execute();
+        $procura->bind_result($nome);
+
+        $autor = null;
+
+        while ($procura->fetch()) {
+            $autor = $nome;
+        }
+
+        $procura->close();
+
+        return $autor;
+    }
 }
-?>
