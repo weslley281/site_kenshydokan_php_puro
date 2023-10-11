@@ -13,7 +13,12 @@ class Usuario
 
 	public function create_user($nome, $email, $telefone)
 	{
-		// code...
+		$atualizar = $this->conexao->prepare("UPDATE postagens SET titulo = ?, conteudo = ?, status = ?, dataMudanca = ? WHERE id_publicacao = ?");
+        $atualizar->bind_param("ssssi", $titulo, $conteudo, $status, $dataMudanca, $id_publicacao);
+        $resultado = $atualizar->execute();
+        $atualizar->close();
+
+        return $resultado;
 	}
 
 	public function editar_usuario($id_usuario, $nome, $email, $telefone)
