@@ -22,10 +22,10 @@ class PublicacaoRepositorio
         return $resultado;
     }
 
-    public function editar_publicacao(int $id_publicacao, string $titulo, string $conteudo, string $status, string $dataCriacao): bool
+    public function editar_publicacao(int $id_publicacao, Publicacao $publicacao): bool
     {
         $atualizar = $this->conexao->prepare("UPDATE postagens SET titulo = ?, conteudo = ?, status = ?, dataMudanca = ? WHERE id_publicacao = ?");
-        $atualizar->bind_param("ssssi", $this->titulo, $this->conteudo, $this->status, $this->dataMudanca, $this->id_publicacao);
+        $atualizar->bind_param("ssssi", $publicacao->getTitulo(), $publicacao->getConteudo(), $publicacao->getStatus(), $publicacao->getDataMudanca(), $id_publicacao);
         $resultado = $atualizar->execute();
         $atualizar->close();
 
