@@ -1,26 +1,27 @@
 <?php
 include_once "../db/conexao.php";
-include_once "../repositorios/postagem.php";
+include_once "../repositorios/publicacaoRepositorio.php";
+include_once "menu.php";
+
 $c = new Conexao();
 $conexao = $c->conectar();
 ?>
-<!-- Navigation -->
-<?php include "menu.php";?>
 <!-- /Navigation -->
 
 <section class="container">
   <?php
-$busca_postagen = "SELECT * FROM postagens WHERE situacao = 'sim' order by id_postagem desc";
+$busca_postagen = "SELECT * FROM postagens WHERE status = 'sim' order by id_publicacao desc";
+var_dump($busca_postagen);
 $resultado_postagen = mysqli_query($conexao, $busca_postagen);
 while ($postagem = mysqli_fetch_array($resultado_postagen)) {
-    $autor = Publicacao::buscar_nome_autor($postagem["id_usuario"]);
+    $autor = PublicacaoRepositorio::buscar_nome_autor($postagem["id_usuario"]);
     ?>
     <div class="container-fluid border bg-white mt-5 mb-5">
       <div>
         <?php echo $postagem["conteudo"]; ?>
       </div>
       <div class="text-success text-right">
-        Publicado por: <a href="filiado/ver_perfil.php?id_usuario=<?php echo $postagem["id_usuario"]; ?>"><?php echo "<b><u>$autor</u></b>" ?></a> em <b><u><?php echo date('d/m/Y', strtotime($postagem['data'])); ?></u></b>;
+        Publicado por: <a href="ver_perfil.php?id_usuario=<?php echo $postagem["id_usuario"]; ?>"><?php echo "<b><u>$autor</u></b>" ?></a> em <b><u><?php echo date('d/m/Y', strtotime($postagem['dataCriacao'])); ?></u></b>;
       </div>
     </div>
   <?php }?>

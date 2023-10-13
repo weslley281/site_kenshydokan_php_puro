@@ -1,0 +1,2 @@
+INSERT INTO `usuarios` (`id_usuario`, `id_fil`, `id_imagem`, `nome`, `email`, `nivel`, `telefone`, `senha`) VALUES
+(1, 23, 290, 'Weslley Henrique Vieira Ferraz', 'weslleyhenrique800@gmail.com', 'admin', '65981233996', '$2y$10$QHnkoUa3PyqR/UvzLVP9HOlyFjPhE.DxgwgJdoflu5B69z7cIMAVa')

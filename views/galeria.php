@@ -13,7 +13,7 @@ include "menu.php";
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
 <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/galeria.css">
+<link rel="stylesheet" type="text/css" href="../css/galeria.css">
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(".fancybox").fancybox({
@@ -49,8 +49,8 @@ $busca2 = "SELECT * FROM fotos WHERE id_galeria = '$id_galeria'";
     while ($foto = mysqli_fetch_array($resultado2)) {
         ?>
 				<div class="col-lg-3 col-md-4 col-xs-6 thumb">
-					<a href="slides/<?php echo $foto["foto"] ?>" class="fancybox" rel="ligthbox">
-						<img src="slides/<?php echo $foto["foto"] ?>" class="zoom img-fluid " alt="<?php echo $foto["foto"] ?>">
+					<a href="../slides/<?php echo $foto["foto"] ?>" class="fancybox" rel="ligthbox">
+						<img src="../slides/<?php echo $foto["foto"] ?>" class="zoom img-fluid " alt="<?php echo $foto["foto"] ?>">
 
 					</a>
 				</div>

@@ -10,5 +10,7 @@ echo "<br>";
 $migration->criarTabelaGaleria();
 echo "<br>";
 $migration->criarTabelaFotos();
+echo "<br>";
+$migration->criarTabelaUsuarios();
 
 header("location:views/inicio.php");

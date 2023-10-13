@@ -1,31 +1,31 @@
  <?php
-	include_once("classes/conexao.php");
-	$c = new Conexao();
-	$conexao = $c->conectar();
-	?>
+include_once "../db/conexao.php";
+$c = new Conexao();
+$conexao = $c->conectar();
+?>
  <!-- Navigation -->
- <?php include("menu.php"); ?>
+ <?php include "menu.php";?>
  <!-- /Navigation -->
 
  <section class="container">
 
  	<div>
  		<?php
-			$busca = "SELECT * FROM campeonatos order by data asc";
-			$resultado = mysqli_query($conexao, $busca);
-			while ($res = mysqli_fetch_array($resultado)) {
-				$id_camp = $res["id_camp"];
-				$titulo_camp = $res["titulo"];
-				$subtitulo = $res["subtitulo"];
-				$endereco = $res["endereco"];
-				$data_camp = $res["data"];
-				$ativo_camp = $res["ativo"];
-				if ($ativo_camp == "sim") {
-					$ativo = "Faça sua inscrição";
-				} else {
-					$ativo = "Campeonato já realizado";
-				}
-			?>
+$busca = "SELECT * FROM campeonatos order by data asc";
+$resultado = mysqli_query($conexao, $busca);
+while ($res = mysqli_fetch_array($resultado)) {
+    $id_camp = $res["id_camp"];
+    $titulo_camp = $res["titulo"];
+    $subtitulo = $res["subtitulo"];
+    $endereco = $res["endereco"];
+    $data_camp = $res["data"];
+    $ativo_camp = $res["ativo"];
+    if ($ativo_camp == "sim") {
+        $ativo = "Faça sua inscrição";
+    } else {
+        $ativo = "Campeonato já realizado";
+    }
+    ?>
  			<div class="container border mt-3 mb-3">
  				<h4><?php echo $titulo_camp; ?></h4>
  				<blockquote class="blockquote">Será Realizado em: <?php echo $data_camp; ?><br>
@@ -38,13 +38,13 @@
  					<?php echo $ativo; ?>
  				</div>
  			</div>
- 		<?php } ?>
+ 		<?php }?>
  	</div>
 
  </section>
 
  <!-- Footer -->
  <?php
-	include("rodape.php");
-	?>
+include "rodape.php";
+?>
  <!-- /Footer -->
