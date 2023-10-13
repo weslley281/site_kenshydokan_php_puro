@@ -141,4 +141,26 @@ class Migration
             echo "Erro ao criar tabela: " . $this->conexao->error;
         }
     }
+
+    public function criarTabelaCampeonatos()
+    {
+        $sql = "
+
+        CREATE TABLE IF NOT EXISTS campeonatos (
+            `id_campeonato` int(11) NOT NULL,
+            `titulo` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+            `subtitulo` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+            `endereco` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+            `ativo` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+            `dataCriacao` DATE,
+            `dataMudanca` DATE
+        );
+        ";
+
+        if ($this->conexao->query($sql) === true) {
+            echo "Tabela 'campeonatos' criada com sucesso!";
+        } else {
+            echo "Erro ao criar tabela: " . $this->conexao->error;
+        }
+    }
 }

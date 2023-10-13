@@ -11,14 +11,14 @@ $conexao = $c->conectar();
 
  	<div>
  		<?php
-$busca = "SELECT * FROM campeonatos order by data asc";
+$busca = "SELECT * FROM campeonatos order by dataCriacao asc";
 $resultado = mysqli_query($conexao, $busca);
 while ($res = mysqli_fetch_array($resultado)) {
-    $id_camp = $res["id_camp"];
+    $id_campeonato = $res["id_campeonato"];
     $titulo_camp = $res["titulo"];
     $subtitulo = $res["subtitulo"];
     $endereco = $res["endereco"];
-    $data_camp = $res["data"];
+    $data_camp = $res["dataCriacao"];
     $ativo_camp = $res["ativo"];
     if ($ativo_camp == "sim") {
         $ativo = "Faça sua inscrição";

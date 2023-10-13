@@ -12,5 +12,7 @@ echo "<br>";
 $migration->criarTabelaFotos();
 echo "<br>";
 $migration->criarTabelaUsuarios();
+echo "<br>";
+$migration->criarTabelaCampeonatos();
 
 header("location:views/inicio.php");

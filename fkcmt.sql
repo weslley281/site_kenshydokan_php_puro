@@ -84,7 +84,7 @@ CREATE TABLE `campeonatos` (
 -- Extraindo dados da tabela `campeonatos`
 --
 
-INSERT INTO `campeonatos` (`id_camp`, `titulo`, `subtitulo`, `endereco`, `data`, `ativo`) VALUES
+INSERT INTO `campeonatos` (`id_campeonato`, `titulo`, `subtitulo`, `endereco`, `dataCriacao`, `ativo`) VALUES
 (4, 'XXVIII Campeonato Paulista de Karate Do FBKK.', 'Campeonato de Karate', 'No Ginasio Municipal Pintasilgo. IV - Avenida Soldado Policia Militar Gilberto Augustinho 948 - Jardim Hitoshi. Itacepecira da Serra - SP.', '2019-06-22', 'não'),
 (3, '1° Copa Mas Oyama de Karate de Contato', 'Kumite, Kata e Quebramentos.', 'Avenida Iara no Jardin Glória 2 no ginasio ao lado do mercado Gama.', '2018-05-20', 'não'),
 (5, '1° Open de Karate Kyokushinkai', 'Campeonato de Karate', 'Campo Grande - MS Avenida Marinha 725 08:00 h da manhã', '2018-06-17', 'não'),
