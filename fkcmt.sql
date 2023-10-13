@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.9.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 16-Jan-2021 às 19:34
--- Versão do servidor: 10.4.10-MariaDB
--- versão do PHP: 7.0.33
+-- Tempo de geração: 17-Jun-2021 às 23:27
+-- Versão do servidor: 10.4.19-MariaDB-cll-lve
+-- versão do PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `fkcmt`
+-- Banco de dados: `u696382984_kenshydokan`
 --
 
 -- --------------------------------------------------------
@@ -28,15 +28,13 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `adms`
 --
 
-DROP TABLE IF EXISTS `adms`;
-CREATE TABLE IF NOT EXISTS `adms` (
-  `id_adm` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `adms` (
+  `id_adm` int(11) NOT NULL,
   `email` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
   `nome` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
   `sobrenome` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
-  `senha` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id_adm`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `senha` varchar(300) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `adms`
@@ -51,23 +49,21 @@ INSERT INTO `adms` (`id_adm`, `email`, `nome`, `sobrenome`, `senha`) VALUES
 -- Estrutura da tabela `aulas`
 --
 
-DROP TABLE IF EXISTS `aulas`;
-CREATE TABLE IF NOT EXISTS `aulas` (
-  `id_aula` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `aulas` (
+  `id_aula` int(11) NOT NULL,
   `id_curso` int(11) NOT NULL,
-  `nome` varchar(300) NOT NULL,
-  `link` varchar(300) NOT NULL,
-  PRIMARY KEY (`id_aula`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+  `titulo` varchar(300) NOT NULL,
+  `link` varchar(300) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `aulas`
 --
 
-INSERT INTO `aulas` (`id_aula`, `id_curso`, `nome`, `link`) VALUES
-(4, 1, 'Aula 1', 'https://www.youtube.com/watch?v=mkx0CdWiPRA'),
-(5, 1, 'Aula 2', 'https://www.youtube.com/watch?v=GE6asEjTFv8'),
-(6, 3, 'Aula 1 - Inicio da aula', 'https://drive.google.com/file/d/1cnCuU5vcKzfVa2OPoxRJymiFq9PX_sG-/view?usp=sharing');
+INSERT INTO `aulas` (`id_aula`, `id_curso`, `titulo`, `link`) VALUES
+(8, 7, 'Como iniciar a Aula', 'https://drive.google.com/file/d/1cnCuU5vcKzfVa2OPoxRJymiFq9PX_sG-/view'),
+(9, 7, 'Como se portar no tatame', 'Em breve'),
+(10, 12, 'Aula 1', 'https://1drv.ms/u/s!AjCLaHewcp0zjrQQdwBMgcLf745C-w?e=jWmVOR');
 
 -- --------------------------------------------------------
 
@@ -75,16 +71,14 @@ INSERT INTO `aulas` (`id_aula`, `id_curso`, `nome`, `link`) VALUES
 -- Estrutura da tabela `campeonatos`
 --
 
-DROP TABLE IF EXISTS `campeonatos`;
-CREATE TABLE IF NOT EXISTS `campeonatos` (
-  `id_camp` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `campeonatos` (
+  `id_camp` int(11) NOT NULL,
   `titulo` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `subtitulo` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `endereco` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `data` date DEFAULT NULL,
-  `ativo` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id_camp`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `ativo` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `campeonatos`
@@ -106,20 +100,18 @@ INSERT INTO `campeonatos` (`id_camp`, `titulo`, `subtitulo`, `endereco`, `data`,
 -- Estrutura da tabela `categorias`
 --
 
-DROP TABLE IF EXISTS `categorias`;
-CREATE TABLE IF NOT EXISTS `categorias` (
-  `id_categoria` int(11) NOT NULL AUTO_INCREMENT,
-  `categoria` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id_categoria`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE `categorias` (
+  `id_categoria` int(11) NOT NULL,
+  `categoria` varchar(300) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `categorias`
 --
 
 INSERT INTO `categorias` (`id_categoria`, `categoria`) VALUES
-(2, 'KaratÃª'),
-(3, 'JudÃ´ Kodokan'),
+(2, 'Karate'),
+(3, 'Judô Kodokan'),
 (4, 'Ju Jitsu'),
 (5, 'Muay Thai'),
 (6, 'KickBoxing');
@@ -130,25 +122,25 @@ INSERT INTO `categorias` (`id_categoria`, `categoria`) VALUES
 -- Estrutura da tabela `curso`
 --
 
-DROP TABLE IF EXISTS `curso`;
-CREATE TABLE IF NOT EXISTS `curso` (
-  `id_curso` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `curso` (
+  `id_curso` int(11) NOT NULL,
   `id_categoria` int(11) NOT NULL,
   `nome` varchar(200) NOT NULL,
   `descricao` text NOT NULL,
   `professor` varchar(200) NOT NULL,
   `id_imagem` int(11) NOT NULL,
   `situacao` int(11) NOT NULL,
-  `data` date NOT NULL,
-  PRIMARY KEY (`id_curso`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+  `data` date NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `curso`
 --
 
 INSERT INTO `curso` (`id_curso`, `id_categoria`, `nome`, `descricao`, `professor`, `id_imagem`, `situacao`, `data`) VALUES
-(7, 2, 'AtualizaÃ§Ãµes do KaratÃª Kenshydokan', 'Fique atualizado sobre todas as novas tÃ©cnicas', 'Weslley Henrique Vieira Ferraz', 70, 2, '2020-12-27');
+(7, 2, 'Atualizações do Karate Kenshydokan', 'Fique atualizado sobre todas as novas tÃ©cnicas', 'Weslley Henrique Vieira Ferraz', 286, 2, '2020-12-27'),
+(11, 3, 'Nage Waza', 'TÃ©cnicas de ProjeÃ§Ã£o', 'Weslley Henrique Vieira Ferraz', 285, 2, '2021-01-18'),
+(12, 3, 'Parte Teórica do Judô', 'Aulas detalhadas sobrea história e partes mais teórica de judô', 'Weslley Henrique Vieira Ferraz', 291, 2, '2021-02-21');
 
 -- --------------------------------------------------------
 
@@ -156,12 +148,10 @@ INSERT INTO `curso` (`id_curso`, `id_categoria`, `nome`, `descricao`, `professor
 -- Estrutura da tabela `estados`
 --
 
-DROP TABLE IF EXISTS `estados`;
-CREATE TABLE IF NOT EXISTS `estados` (
-  `id_estado` int(11) NOT NULL AUTO_INCREMENT,
-  `estado` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id_estado`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE `estados` (
+  `id_estado` int(11) NOT NULL,
+  `estado` varchar(100) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `estados`
@@ -202,9 +192,8 @@ INSERT INTO `estados` (`id_estado`, `estado`) VALUES
 -- Estrutura da tabela `filiados`
 --
 
-DROP TABLE IF EXISTS `filiados`;
-CREATE TABLE IF NOT EXISTS `filiados` (
-  `id_filiado` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `filiados` (
+  `id_filiado` int(11) NOT NULL,
   `id_graduacao` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
   `dojo` varchar(100) DEFAULT NULL,
@@ -214,9 +203,8 @@ CREATE TABLE IF NOT EXISTS `filiados` (
   `endereco` varchar(100) DEFAULT NULL,
   `cidade` varchar(100) DEFAULT NULL,
   `id_estado` int(11) NOT NULL,
-  `confirmacao` varchar(3) DEFAULT NULL,
-  PRIMARY KEY (`id_filiado`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
+  `confirmacao` varchar(3) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `filiados`
@@ -226,7 +214,8 @@ INSERT INTO `filiados` (`id_filiado`, `id_graduacao`, `nome`, `dojo`, `telefone`
 (14, 20, 'Jonas Teixeira de Andrade', 'kenshydokan', '(65) 99293-2986', '12345', 'kenshydokan@gmail.com', 'vg', 'VÃ¡rzea Grande', 11, 'sim'),
 (15, 14, 'Reinaldo Jose Gomes', 'Kenshydokan', '123456', '1234567', 'naosei@gmail.com', '', '', 25, 'sim'),
 (17, 13, 'Mauro Pellegrini do Amaral Trigo', 'Kenshydokan', '12345', '12345', 'weslleyhenrique800@hotmail.com', '', '', 11, 'sim'),
-(21, 12, 'Everson Jones Batista Leite', 'Kenshydokan', '(65) 99936-6510', '20751117', 'naosei@gmail.com', NULL, NULL, 11, 'sim'),
+(20, 12, 'Everson Jones Batista Leite', 'Kenshydokan', '(65) 99936-6510', '20751117', 'naosei@gmail.com', NULL, NULL, 11, 'sim'),
+(21, 10, 'Patrick jordhan dos Santos', 'Kenshydokan', '(65) 99208-1481', '123', 'naosei@gmail.com', 'aaaaaa', 'Várzea Grande', 11, 'sim'),
 (22, 10, 'Elyakin Vinicius Mettelo', 'Kenshydokan', '(65) 9990-31993', '23693916', 'naosei@gmail.com', '', '', 11, 'sim'),
 (23, 10, 'Weslley Henrique Vieira Ferraz', 'Kenshydokan', '(65) 98123-3996', '2506499-1', 'weslleyhenrique800@gmail.com', 'Av. Castelo Branco, 754', 'VÃ¡rzea Grande', 11, 'sim'),
 (24, 8, 'Marcelo Francisco de Campos', 'Kenshydokan', '12345', '16568397', 'naosei@gmail.com', NULL, NULL, 11, 'sim'),
@@ -261,8 +250,8 @@ INSERT INTO `filiados` (`id_filiado`, `id_graduacao`, `nome`, `dojo`, `telefone`
 (53, 3, 'Alvaro Guilherme S. Ramos', 'Kenshydokan', '12345', '1234567', 'naosei@gmail.com', NULL, NULL, 11, 'sim'),
 (54, 3, 'João Vitor Curvo Gomes', 'Kenshydokan', '12345', '1234567', 'naosei@gmail.com', NULL, NULL, 11, 'sim'),
 (55, 3, 'Kauã Luigi Cinadon', 'Kenshydokan', '12345', '1234567', 'naosei@gmail.com', NULL, NULL, 11, 'sim'),
-(56, 0, 'Kamili Vitoria S. Marquezin', 'Kenshydokan', '12345', '1234567', 'naosei@gmail.com', NULL, NULL, 0, 'sim'),
-(57, 0, 'Lucas Bohr de Araujo', 'Kenshydokan', '12345', '1234567', 'naosei@gmail.com', NULL, NULL, 0, 'sim'),
+(56, 3, 'Kamili Vitoria S. Marquezin', 'Kenshydokan', '12345', '1234567', 'naosei@gmail.com', '', '', 0, 'sim'),
+(57, 3, 'Lucas Bohr de Araujo', 'Kenshydokan', '12345', '1234567', 'naosei@gmail.com', '', '', 0, 'sim'),
 (58, 3, 'Sophia Pinheiro de Souza', 'Kenshydokan', '12345', '1234567', 'naosei@gmail.com', NULL, NULL, 11, 'sim'),
 (59, 3, 'Bruno Duarte da Silva', 'Kenshydokan', '12345', '1234567', 'naosei@gmail.com', NULL, NULL, 11, 'sim'),
 (60, 3, 'Lucas Cassio Pinho dos Santos', 'Kenshydokan', '12345', '1234567', 'naosei@gmail.com', NULL, NULL, 11, 'sim'),
@@ -277,7 +266,9 @@ INSERT INTO `filiados` (`id_filiado`, `id_graduacao`, `nome`, `dojo`, `telefone`
 (69, 3, 'Kauã Tiago da Silva Magalhães', 'Kenshydokan', '12345', '1234567', 'naosei@gmail.com', NULL, NULL, 11, 'sim'),
 (70, 3, 'Rayanna Victoria de Souza Rodrigues', 'Kenshydokan', '12345', '1234567', 'naosei@gmail.com', NULL, NULL, 11, 'sim'),
 (78, 3, 'weslley gostoso', 'Quebra Dentes', '123', '64444614', 'weslleyhenrique800@hotmail.com', 'Rua Castelo Branco 123', 'VÃ¡rzea Grande', 11, 'nao'),
-(79, 10, 'Murilo Cardoso de Resende', 'Warriors', '12345', '2821781-0', 'naosei@gmail.com', 'aaaa', 'aaaa', 11, 'sim');
+(79, 10, 'Murilo Cardoso de Resende', 'Warriors', '12345', '2821781-0', 'naosei@gmail.com', 'aaaa', 'aaaa', 11, 'sim'),
+(81, 16, 'Valbson Jorge Teixeira dos Santos', 'Gladiadores Kyokushin Karatê', '91987259549', '2477686', 'valbson.jorge@gmail.com', 'Conjunto Satelite Teve', 'Belém', 14, 'sim'),
+(82, 12, 'Alex de Melo Garcia', 'Kenshydokan', '123', '1517035', 'naosei@gmail.com', 'aaaaaaaaaaa', 'aaaaaa', 11, 'sim');
 
 -- --------------------------------------------------------
 
@@ -285,15 +276,13 @@ INSERT INTO `filiados` (`id_filiado`, `id_graduacao`, `nome`, `dojo`, `telefone`
 -- Estrutura da tabela `fotos`
 --
 
-DROP TABLE IF EXISTS `fotos`;
-CREATE TABLE IF NOT EXISTS `fotos` (
-  `id_foto` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `fotos` (
+  `id_foto` int(11) NOT NULL,
   `id_galeria` int(11) NOT NULL,
   `nome` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `foto` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dataUpload` date NOT NULL,
-  PRIMARY KEY (`id_foto`)
-) ENGINE=InnoDB AUTO_INCREMENT=237 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `dataUpload` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Extraindo dados da tabela `fotos`
@@ -526,12 +515,10 @@ INSERT INTO `fotos` (`id_foto`, `id_galeria`, `nome`, `foto`, `dataUpload`) VALU
 -- Estrutura da tabela `galeria`
 --
 
-DROP TABLE IF EXISTS `galeria`;
-CREATE TABLE IF NOT EXISTS `galeria` (
-  `id_galeria` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id_galeria`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `galeria` (
+  `id_galeria` int(11) NOT NULL,
+  `nome` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Extraindo dados da tabela `galeria`
@@ -549,36 +536,34 @@ INSERT INTO `galeria` (`id_galeria`, `nome`) VALUES
 -- Estrutura da tabela `graduacao`
 --
 
-DROP TABLE IF EXISTS `graduacao`;
-CREATE TABLE IF NOT EXISTS `graduacao` (
-  `id_graduacao` int(11) NOT NULL AUTO_INCREMENT,
-  `graduacao` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id_graduacao`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE `graduacao` (
+  `id_graduacao` int(11) NOT NULL,
+  `graduacao` varchar(300) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `graduacao`
 --
 
 INSERT INTO `graduacao` (`id_graduacao`, `graduacao`) VALUES
-(2, 'Faixa Branca 8Â° Kyu'),
-(3, 'Faixa Azul 7Â° Kyu'),
-(4, 'Faixa Amarela 6Â° Kyu'),
-(5, 'Faixa Vermelha 5Â° Kyu'),
-(6, 'Faixa Laranja 4Â° Kyu'),
-(7, 'Faixa Verde 3Â° Kyu'),
-(8, 'Faixa Roxa 2Â° Kyu'),
-(9, 'Faixa Marrom 1Â° Kyu'),
-(10, 'Faixa Preta 1Â° Dan'),
-(11, 'Faixa Preta 2Â° Dan'),
-(12, 'Faixa Preta 3Â° Dan'),
-(13, 'Faixa Preta 4Â° Dan'),
-(14, 'Faixa Preta 5Â° Dan'),
-(15, 'Faixa Preta 6Â° Dan'),
-(16, 'Faixa Preta 7Â° Dan'),
-(17, 'Faixa Preta 8Â° Dan'),
-(19, 'Faixa Preta 9Â° Dan'),
-(20, 'Faixa Preta 10Â° Dan');
+(2, 'Faixa Branca 8° Kyu'),
+(3, 'Faixa Azul 7° Kyu'),
+(4, 'Faixa Amarela 6° Kyu'),
+(5, 'Faixa Vermelha 5° Kyu'),
+(6, 'Faixa Laranja 4° Kyu'),
+(7, 'Faixa Verde 3° Kyu'),
+(8, 'Faixa Roxa 2° Kyu'),
+(9, 'Faixa Marrom 1° Kyu'),
+(10, 'Faixa Preta 1° Dan'),
+(11, 'Faixa Preta 2° Dan'),
+(12, 'Faixa Preta 3° Dan'),
+(13, 'Faixa Preta 4° Dan'),
+(14, 'Faixa Preta 5° Dan'),
+(15, 'Faixa Preta 6° Dan'),
+(16, 'Faixa Preta 7° Dan'),
+(17, 'Faixa Preta 8° Dan'),
+(19, 'Faixa Preta 9° Dan'),
+(20, 'Faixa Preta 10° Dan');
 
 -- --------------------------------------------------------
 
@@ -586,20 +571,26 @@ INSERT INTO `graduacao` (`id_graduacao`, `graduacao`) VALUES
 -- Estrutura da tabela `imagens`
 --
 
-DROP TABLE IF EXISTS `imagens`;
-CREATE TABLE IF NOT EXISTS `imagens` (
-  `id_imagem` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `imagens` (
+  `id_imagem` int(11) NOT NULL,
   `nome` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `caminho` varchar(200) CHARACTER SET utf8 NOT NULL,
-  PRIMARY KEY (`id_imagem`)
-) ENGINE=MyISAM AUTO_INCREMENT=282 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `caminho` varchar(200) CHARACTER SET utf8 NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `imagens`
 --
 
 INSERT INTO `imagens` (`id_imagem`, `nome`, `caminho`) VALUES
-(281, 'weslley2.jpg', '../../imagens/weslley2.jpg');
+(281, 'weslley2.jpg', '../../imagens/weslley2.jpg'),
+(282, '', '../../imagens_produtos/'),
+(286, 'black-belt-894190_640.jpg', '../../imagens_produtos/black-belt-894190_640.jpg'),
+(285, 'bow-295101_640.png', '../../imagens_produtos/bow-295101_640.png'),
+(287, 'sensei_elyakin.jpg', '../imagens/sensei_elyakin.jpg'),
+(288, 'sensei-everson.jpg', '../imagens/sensei-everson.jpg'),
+(289, 'Logo Federação kenshydokan.jpg', '../imagens/Logo Federação kenshydokan.jpg'),
+(290, 'sensei_weslley.jpg', '../imagens/sensei_weslley.jpg'),
+(291, 'Kano_Jigoro.jpg', '../../imagens_produtos/Kano_Jigoro.jpg');
 
 -- --------------------------------------------------------
 
@@ -607,12 +598,10 @@ INSERT INTO `imagens` (`id_imagem`, `nome`, `caminho`) VALUES
 -- Estrutura da tabela `mensagens`
 --
 
-DROP TABLE IF EXISTS `mensagens`;
-CREATE TABLE IF NOT EXISTS `mensagens` (
-  `id_mensagem` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `mensagens` (
+  `id_mensagem` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
-  `id_destinatário` int(11) NOT NULL,
-  PRIMARY KEY (`id_mensagem`)
+  `id_destinatário` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -621,14 +610,12 @@ CREATE TABLE IF NOT EXISTS `mensagens` (
 -- Estrutura da tabela `paginas`
 --
 
-DROP TABLE IF EXISTS `paginas`;
-CREATE TABLE IF NOT EXISTS `paginas` (
-  `id_pag` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `paginas` (
+  `id_pag` int(11) NOT NULL,
   `titulo` varchar(200) NOT NULL,
   `conteudo` text NOT NULL,
-  `dataCaptura` date NOT NULL,
-  PRIMARY KEY (`id_pag`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+  `dataCaptura` date NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `paginas`
@@ -646,16 +633,14 @@ INSERT INTO `paginas` (`id_pag`, `titulo`, `conteudo`, `dataCaptura`) VALUES
 -- Estrutura da tabela `postagens`
 --
 
-DROP TABLE IF EXISTS `postagens`;
-CREATE TABLE IF NOT EXISTS `postagens` (
-  `id_postagem` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `postagens` (
+  `id_postagem` int(11) NOT NULL,
   `id_usuario` int(11) DEFAULT NULL,
   `titulo` varchar(200) NOT NULL,
   `conteudo` text NOT NULL,
   `situacao` varchar(4) NOT NULL,
-  `data` date NOT NULL,
-  PRIMARY KEY (`id_postagem`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+  `data` date NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `postagens`
@@ -679,26 +664,216 @@ INSERT INTO `postagens` (`id_postagem`, `id_usuario`, `titulo`, `conteudo`, `sit
 -- Estrutura da tabela `usuarios`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
-CREATE TABLE IF NOT EXISTS `usuarios` (
-  `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `usuarios` (
+  `id_usuario` int(11) NOT NULL,
   `id_fil` int(11) DEFAULT NULL,
   `id_imagem` int(11) DEFAULT NULL,
   `nome` varchar(300) NOT NULL,
   `email` varchar(300) NOT NULL,
   `tipo` int(11) DEFAULT NULL,
   `telefone` varchar(100) DEFAULT NULL,
-  `senha` varchar(300) DEFAULT NULL,
-  PRIMARY KEY (`id_usuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+  `senha` varchar(300) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `usuarios`
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `id_fil`, `id_imagem`, `nome`, `email`, `tipo`, `telefone`, `senha`) VALUES
-(1, 23, 281, 'Weslley Henrique Vieira Ferraz', 'weslleyhenrique800@gmail.com', 1, '65981233996', '$2y$10$QHnkoUa3PyqR/UvzLVP9HOlyFjPhE.DxgwgJdoflu5B69z7cIMAVa'),
-(7, 14, NULL, 'Jonas Teixeira de Andrade', 'kenshydokan@gmail.com', 1, '(65) 9293-2986', '$2y$10$P6RQdVvXuNfe1usafC4mXOmSLK12VcrOttROySCehrgel/AJzZts2');
+(1, 23, 290, 'Weslley Henrique Vieira Ferraz', 'weslleyhenrique800@gmail.com', 1, '65981233996', '$2y$10$QHnkoUa3PyqR/UvzLVP9HOlyFjPhE.DxgwgJdoflu5B69z7cIMAVa'),
+(7, 14, NULL, 'Jonas Teixeira de Andrade', 'kenshydokan@gmail.com', 1, '(65) 9293-2986', '$2y$10$P6RQdVvXuNfe1usafC4mXOmSLK12VcrOttROySCehrgel/AJzZts2'),
+(3, 22, 287, 'Elyakin Vinicius Mettelo', 'kin.vinicius@hotmail.com', 1, '(65) 9903-1993', '$2y$10$UskqCMTVTn9mBuTX3tH5xu3g4PDADnd3nQ9PTfPyZRNxwldP7Taqi'),
+(4, 28, NULL, 'Douglas Giovani de Campos', 'douglasgeovani15@gmail.com', 2, NULL, '$2y$10$3ECFDbo385vuucKKiThZpuUeqibqyY3/7NM.o6z4EvFkUPzAXSc4K'),
+(5, 21, 288, 'Everson Jones Batista Leite', 'eversonjbl@hotmail.com', 1, '(65) 9936-6510', '$2y$10$BCgcSdPmTugcJnvjp8g8NOd3WVqq3DTScmk.mWWosgqLgsU4v4maq'),
+(8, 79, NULL, 'Murilo Cardoso de Resende', 'ninja98muriloc@gmail.com', 2, '(66) 99630-9974', '$2y$10$56iGJwc9ug.FoXgPLox.oO4xXejF6pcmcWPParLXbzsgTQAVoPURm');
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices para tabela `adms`
+--
+ALTER TABLE `adms`
+  ADD PRIMARY KEY (`id_adm`);
+
+--
+-- Índices para tabela `aulas`
+--
+ALTER TABLE `aulas`
+  ADD PRIMARY KEY (`id_aula`);
+
+--
+-- Índices para tabela `campeonatos`
+--
+ALTER TABLE `campeonatos`
+  ADD PRIMARY KEY (`id_camp`);
+
+--
+-- Índices para tabela `categorias`
+--
+ALTER TABLE `categorias`
+  ADD PRIMARY KEY (`id_categoria`);
+
+--
+-- Índices para tabela `curso`
+--
+ALTER TABLE `curso`
+  ADD PRIMARY KEY (`id_curso`);
+
+--
+-- Índices para tabela `estados`
+--
+ALTER TABLE `estados`
+  ADD PRIMARY KEY (`id_estado`);
+
+--
+-- Índices para tabela `filiados`
+--
+ALTER TABLE `filiados`
+  ADD PRIMARY KEY (`id_filiado`);
+
+--
+-- Índices para tabela `fotos`
+--
+ALTER TABLE `fotos`
+  ADD PRIMARY KEY (`id_foto`);
+
+--
+-- Índices para tabela `galeria`
+--
+ALTER TABLE `galeria`
+  ADD PRIMARY KEY (`id_galeria`);
+
+--
+-- Índices para tabela `graduacao`
+--
+ALTER TABLE `graduacao`
+  ADD PRIMARY KEY (`id_graduacao`);
+
+--
+-- Índices para tabela `imagens`
+--
+ALTER TABLE `imagens`
+  ADD PRIMARY KEY (`id_imagem`);
+
+--
+-- Índices para tabela `mensagens`
+--
+ALTER TABLE `mensagens`
+  ADD PRIMARY KEY (`id_mensagem`);
+
+--
+-- Índices para tabela `paginas`
+--
+ALTER TABLE `paginas`
+  ADD PRIMARY KEY (`id_pag`);
+
+--
+-- Índices para tabela `postagens`
+--
+ALTER TABLE `postagens`
+  ADD PRIMARY KEY (`id_postagem`);
+
+--
+-- Índices para tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id_usuario`);
+
+--
+-- AUTO_INCREMENT de tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `adms`
+--
+ALTER TABLE `adms`
+  MODIFY `id_adm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de tabela `aulas`
+--
+ALTER TABLE `aulas`
+  MODIFY `id_aula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de tabela `campeonatos`
+--
+ALTER TABLE `campeonatos`
+  MODIFY `id_camp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de tabela `categorias`
+--
+ALTER TABLE `categorias`
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de tabela `curso`
+--
+ALTER TABLE `curso`
+  MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de tabela `estados`
+--
+ALTER TABLE `estados`
+  MODIFY `id_estado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT de tabela `filiados`
+--
+ALTER TABLE `filiados`
+  MODIFY `id_filiado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+
+--
+-- AUTO_INCREMENT de tabela `fotos`
+--
+ALTER TABLE `fotos`
+  MODIFY `id_foto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=237;
+
+--
+-- AUTO_INCREMENT de tabela `galeria`
+--
+ALTER TABLE `galeria`
+  MODIFY `id_galeria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de tabela `graduacao`
+--
+ALTER TABLE `graduacao`
+  MODIFY `id_graduacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de tabela `imagens`
+--
+ALTER TABLE `imagens`
+  MODIFY `id_imagem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=292;
+
+--
+-- AUTO_INCREMENT de tabela `mensagens`
+--
+ALTER TABLE `mensagens`
+  MODIFY `id_mensagem` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `paginas`
+--
+ALTER TABLE `paginas`
+  MODIFY `id_pag` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de tabela `postagens`
+--
+ALTER TABLE `postagens`
+  MODIFY `id_postagem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT de tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
