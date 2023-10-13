@@ -4,7 +4,7 @@ class Conexao
     private $servidor = "localhost";
     private $usuario = "root";
     private $senha = "";
-    private $banco = "u696382984_kenshydokan";
+    private $banco = "kenshydokan";
 
     public function conectar()
     {

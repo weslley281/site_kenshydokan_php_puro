@@ -1,15 +1,10 @@
 <?php
-include_once "conexao.php";
+include_once "../models/publicacaoModel.php";
+include_once "../db/conexao.php";
 
-class Publicacao
+class PublicacaoRepositorio
 {
     private $conexao;
-    private $id_usuario;
-    private $titulo;
-    private $conteudo;
-    private $status;
-    private $dataCriacao;
-    private $dataMudanca;
 
     public function __construct()
     {
@@ -17,10 +12,10 @@ class Publicacao
         $this->conexao = $conexaoDB->conectar();
     }
 
-    public function criar_publicacao(): bool
+    public function criarPublicacao(Publicacao $publicacao): bool
     {
         $inserir = $this->conexao->prepare("INSERT INTO postagens (id_usuario, titulo, conteudo, status, dataCriacao, dataMudanca) VALUES (?, ?, ?, ?, ?, ?)");
-        $inserir->bind_param("issss", $this->id_usuario, $this->titulo, $this->conteudo, $this->status, $this->dataCriacao, $this->dataMudanca);
+        $inserir->bind_param("issss", $publicacao->getIdUsuario(), $publicacao->getTitulo(), $publicacao->getConteudo(), $publicacao->getStatus(), $publicacao->getDataCriacao(), $publicacao->getDataMudanca());
         $resultado = $inserir->execute();
         $inserir->close();
 
