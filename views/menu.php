@@ -25,7 +25,7 @@ $filiado = @$_SESSION['filiado'];
   <meta name="author" content="Weslley Henrique Vieira Ferraz" />
   <meta name="owner" content="Federação de Karate de Contato do Estado de Mato Grosso" />
   <meta name="copyright" content="Weslley Henrique Vieira Ferraz" />
-  <meta name="keywords" content="federação, karate, carate, de contato, full, contact, luta, aula, aulas, Karatê, kata, kumite, mato grosso, cuiaba, varzea grande, weslley, ferraz,">
+  <meta name="keywords" content="kenshydokan, kyokushin, federação, karate, carate, karatê, caratê, de contato, full, contact, luta, aula, aulas, Karatê, kata, kumite, mato grosso, cuiaba, varzea grande, weslley ferraz, weslley, ferraz, judo, judô, kodokan, jiu, jiu jitsu, muay thai, muay boran, kickboxing">
   <meta name="description" content="Somos uma federação, criada com o intuito de divulgar o karate kenshydokan e outras artes marciais.">
   <meta http-equiv="refresh" content="3600">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -39,21 +39,21 @@ $filiado = @$_SESSION['filiado'];
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
 
   <!-- Custom styles for this template -->
-  <link href="css/scrolling-nav.css" rel="stylesheet">
+  <link href="../css/scrolling-nav.css" rel="stylesheet">
 
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
-  <link href="assets/css/material-kit.css?v=2.0.7" rel="stylesheet" />
+  <link href="../assets/css/material-kit.css?v=2.0.7" rel="stylesheet" />
 
   <!-- Custom JavaScript for this theme -->
-  <script type="text/javascript" src="js/datatables.min.js"></script>
-  <script type="text/javascript" src="js/dataTables.bootstrap4.min.js"></script>
+  <script type="text/javascript" src="../js/datatables.min.js"></script>
+  <script type="text/javascript" src="../js/dataTables.bootstrap4.min.js"></script>
   <!--   Core JS Files   -->
-  <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
-  <script src="assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+  <script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
+  <script src="../assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
   <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
-  <script src="assets/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
+  <script src="../assets/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
 
 </head>
 
@@ -121,12 +121,12 @@ $filiado = @$_SESSION['filiado'];
               Minha Conta
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <?php if (@$_SESSION['filiado'] != null) { ?>
+              <?php if (@$_SESSION['filiado'] != null) {?>
                 <a class="nav-link js-scroll-trigger" href="filiado/perfil.php"><i class="bi bi-person-lines-fill"></i> &nbspMinha Conta</a>
                 <a class="nav-link js-scroll-trigger" href="funcoes/sair.php"><i class="bi bi-person-x-fill"></i> &nbspSair</a>
-              <?php } else { ?>
+              <?php } else {?>
                 <a class="nav-link js-scroll-trigger" href="login.php"><i class="bi bi-person-circle"> </i>&nbspLogin</a>
-              <?php } ?>
+              <?php }?>
             </div>
           </li>
         </ul>

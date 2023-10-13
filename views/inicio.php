@@ -1,8 +1,8 @@
 <!-- Navigation -->
-<?php include("menu.php"); ?>
+<?php include "menu.php";?>
 <!-- /Navigation -->
 
-<div class="page-header header-filter" data-parallax="true" style="background-image: url('imagens/foto_principal.jpg')">
+<div class="page-header header-filter" data-parallax="true" style="background-image: url('../img/foto_principal.jpg')">
   <div class="container">
     <div class="row">
       <div class="col-md-6">
@@ -19,9 +19,9 @@
   <!-- Começo do Carrossel -->
   <div class="container">
     <video width="100%" height="450" controls autoplay="" muted="" loop="">
-      <source src="videos/slide-kenshydokan.mp4" type="video/mp4">
+      <source src="../videos/slide-kenshydokan.mp4" type="video/mp4">
     </video>
-    <script src="js/video.js"></script>
+    <script src="../js/video.js"></script>
   </div>
   <hr>
 
@@ -35,25 +35,25 @@
         <div class="row">
           <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
-              <img src="img/logo_instituto.jpg" class="img-fluid" height="200px" height="200px" alt="Logo do Instituto">
+              <img src="../img/logo_instituto.jpg" class="img-fluid" height="200px" height="200px" alt="Logo do Instituto">
               <h3 class="h4 mb-2">Instituto de Artes Marciais e Defesa Pessoal Kenshydokan</h3>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
-              <a href="https://fmjkodokan.com.br/" target="_blank"><img src="img/image13.png" class="img-fluid" alt="Logo Federação Mineira de Judô Kodokan"></a>
+              <a href="https://fmjkodokan.com.br/" target="_blank"><img src="../img/image13.png" class="img-fluid" alt="Logo Federação Mineira de Judô Kodokan"></a>
               <h3 class="h4 mb-2">Federação Mineira de Judô Kodokan</h3>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
-              <a href="http://seishinkyokushinsko.comunidades.net/representante-seishin-kyokushin-brasil" target="_blank"><img src="img/image12.png" class="img-fluid" alt="Logo Federação Brasil Karate Full Contact"></a>
+              <a href="http://seishinkyokushinsko.comunidades.net/representante-seishin-kyokushin-brasil" target="_blank"><img src="../img/image12.png" class="img-fluid" alt="Logo Federação Brasil Karate Full Contact"></a>
               <h3 class="h4 mb-2">Federação Brasil Karate Full Contact</h3>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
-              <a href="http://seishinkyokushinsko.comunidades.net/representante-seishin-kyokushin-brasil" target="_blank"><img src="img/image10.png" class="img-fluid" alt="Logo International Seishin Kyokushin Organization"></a>
+              <a href="http://seishinkyokushinsko.comunidades.net/representante-seishin-kyokushin-brasil" target="_blank"><img src="../img/image10.png" class="img-fluid" alt="Logo International Seishin Kyokushin Organization"></a>
               <h3 class="h4 mb-2">International Seishin Kyokushin Organization</h3>
             </div>
           </div>
@@ -62,26 +62,26 @@
         <div class="row">
           <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
-              <img src="img/image14.png" class="img-fluid" alt="Logo World Association of Brasilian Ju Jitsu">
+              <img src="../img/image14.png" class="img-fluid" alt="Logo World Association of Brasilian Ju Jitsu">
               <h3 class="h4 mb-2">World Association of Brasilian Ju Jitsu</h3>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
-              <img src="img/thaiboxing.jpeg" class="img-fluid" alt="Logo WKA Muay thai e Thaiboxing">
+              <img src="../img/thaiboxing.jpeg" class="img-fluid" alt="Logo WKA Muay thai e Thaiboxing">
               <h3 class="h4 mb-2">WKA Muay thai e Thaiboxing</h3>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
-              <img src="img/kickboxing.jpeg" class="img-fluid" alt="Logo South American Kickboxing Association
+              <img src="../img/kickboxing.jpeg" class="img-fluid" alt="Logo South American Kickboxing Association
               ">
               <h3 class="h4 mb-2">South American Kickboxing Association</h3>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
-              <img src="img/wka.jpeg" class="img-fluid" alt="World Kyokushinkai Association">
+              <img src="../img/wka.jpeg" class="img-fluid" alt="World Kyokushinkai Association">
               <h3 class="h4 mb-2">World Kyokushinkai Association</h3>
             </div>
           </div>
@@ -115,7 +115,7 @@
     <div class="row mt-3 mb-3">
       <div class="col-lg-4">
         <center>
-          <img class="rounded-circle" src="img/Jonas.jpg" alt="Generic placeholder image" width="200" height="200" alt="Foto de Jonas Teixeira de Andrade">
+          <img class="rounded-circle" src="../img/Jonas.jpg" alt="Generic placeholder image" width="200" height="200" alt="Foto de Jonas Teixeira de Andrade">
           <h2>Jonas Teixeira de Andrade</h2>
           <p><u>Presidente da FKCMT.</u></p>
         </center>
@@ -129,7 +129,7 @@
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
         <center>
-          <img class="rounded-circle" src="img/sensei-everson.jpg" alt="Generic placeholder image" width="200" height="200">
+          <img class="rounded-circle" src="../img/sensei-everson.jpg" alt="Generic placeholder image" width="200" height="200">
           <h2>Everson Jones Batista Leite</h2>
           <p><u>Diretor Técnico.</u></p>
         </center>
@@ -140,7 +140,7 @@
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
         <center>
-          <img class="rounded-circle" src="img/sensei_elyakin.jpg" alt="Generic placeholder image" width="200" height="200">
+          <img class="rounded-circle" src="../img/sensei_elyakin.jpg" alt="Generic placeholder image" width="200" height="200">
           <h2>Elyakin Vinicius Mettelo</h2>
           <p><u>Diretor de Arbitragem.</u></p>
         </center>
@@ -152,7 +152,7 @@
     <div class="row mt-3 mb-3">
       <div class="col-lg-4">
         <center>
-          <img class="rounded-circle" src="img/sensei_weslley.jpg" alt="Generic placeholder image" width="200" height="200">
+          <img class="rounded-circle" src="../img/sensei_weslley.jpg" alt="Generic placeholder image" width="200" height="200">
           <h2>Weslley Henrique Vieira Ferraz</h2>
           <p><u>Desenvolvedor Web</u></p>
         </center>
@@ -164,7 +164,7 @@
       </div>
       <div class="col-lg-4">
         <center>
-          <img class="rounded-circle" src="img/sensei_murilo.jpg" alt="Generic placeholder image" width="200" height="200">
+          <img class="rounded-circle" src="../img/sensei_murilo.jpg" alt="Generic placeholder image" width="200" height="200">
           <h2>Murilo Cardoso de Resende</h2>
           <p><u>Contribuinte</u></p>
         </center>
@@ -182,8 +182,8 @@
 
   <!-- Footer -->
   <?php
-  include("rodape.php");
-  ?>
+include "rodape.php";
+?>
   <!-- /Footer -->
 
   </body>
