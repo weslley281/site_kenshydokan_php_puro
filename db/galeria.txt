@@ -1,0 +1,5 @@
+INSERT INTO `galeria` (`id_galeria`, `nome`) VALUES
+(2, '1° Copa Várzea Grandense'),
+(4, '1° Open de kyokushinkai'),
+(5, 'Campeonado estadual de karate de contato kenshydokan'),
+(6, 'Mundial no Chile');
