@@ -1,5 +1,5 @@
 <?php
-include_once "../classes/conexao.php";
+include_once "../db/conexao.php";
 $c = new Conexao();
 $conexao = $c->conectar();
 session_start();
@@ -26,8 +26,8 @@ if ($linha > 0) {
         $_SESSION['filiado'] = $email;
         $_SESSION['nome'] = $dado['nome'];
         $_SESSION['id_fil'] = $dado['id_fil'];
-        $_SESSION['tipo'] = $dado['tipo'];
-        header('Location:../filiado/perfil.php');
+        $_SESSION['nivel'] = $dado['nivel'];
+        header('Location:../views/perfil.php');
     } else {
         echo "<script language='javascript'>window.alert('login ou senha invalido'); </script>";
         echo "<script language='javascript'>window.location='../login.php'; </script>";

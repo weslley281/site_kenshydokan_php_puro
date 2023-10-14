@@ -1,9 +1,9 @@
-<?php
-session_start();
-$filiado = @$_SESSION['filiado'];
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
+<?php
+session_start();
+?>
 
 <head>
 
@@ -37,6 +37,8 @@ $filiado = @$_SESSION['filiado'];
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+
+  <link rel="icon" href="../img/kenshydokan.jpg" type="image/jpg">
 
   <!-- Custom styles for this template -->
   <link href="../css/scrolling-nav.css" rel="stylesheet">
@@ -121,7 +123,7 @@ $filiado = @$_SESSION['filiado'];
               Minha Conta
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <?php if (@$_SESSION['filiado'] != null) {?>
+              <?php if (isset($_SESSION['user_id'])) {?>
                 <a class="nav-link js-scroll-trigger" href="filiado/perfil.php"><i class="bi bi-person-lines-fill"></i> &nbspMinha Conta</a>
                 <a class="nav-link js-scroll-trigger" href="funcoes/sair.php"><i class="bi bi-person-x-fill"></i> &nbspSair</a>
               <?php } else {?>
@@ -133,6 +135,5 @@ $filiado = @$_SESSION['filiado'];
       </div>
     </div>
   </nav>
-  <br>
   <br>
   <br>

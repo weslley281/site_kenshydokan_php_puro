@@ -8,7 +8,7 @@
       <div class="col-md-6">
         <h1 class="title text-danger">Karatê de Contato Kenshydokan</h1>
         <h3>Federação de Karatê de Contato do Estado de Mato Grosso<br>
-          e<br>
+          <br>
           Instituto de Artes Marciais e Defesa Pessoal Kenshydokan.</h4>
           <br>
       </div>
@@ -122,8 +122,8 @@
         <ul>
           <li>10° Dan Karatê Kenshydokan</li>
           <li>7° Dan Ju jitsu</li>
+          <li>7° Dan em KickBoxing</li>
           <li>6° Dan Judo Kodokan</li>
-          <li>6° Dan em KickBoxing</li>
           <li>5° Dan em Karate Kyokushin</li>
         </ul>
       </div><!-- /.col-lg-4 -->
@@ -154,10 +154,10 @@
         <center>
           <img class="rounded-circle" src="../img/sensei_weslley.jpg" alt="Generic placeholder image" width="200" height="200">
           <h2>Weslley Henrique Vieira Ferraz</h2>
-          <p><u>Desenvolvedor Web</u></p>
+          <p><u>Diretor Técnico</u></p>
         </center>
         <ul>
-          <li>1° Dan Karatê Kenshydokan</li>
+          <li>3° Dan Karatê Kenshydokan</li>
           <li>2° Dan Judo Kodokan</li>
           <li>Faixa preta Jiu Jitsu Brasileiro.</li>
         </ul>
@@ -166,7 +166,7 @@
         <center>
           <img class="rounded-circle" src="../img/sensei_murilo.jpg" alt="Generic placeholder image" width="200" height="200">
           <h2>Murilo Cardoso de Resende</h2>
-          <p><u>Contribuinte</u></p>
+          <p><u>Diretor de Arbitragem</u></p>
         </center>
         <ul>
           <li>14° Khan Muay Thai</li>

@@ -1,10 +1,10 @@
 <?php
-include_once("classes/conexao.php");
+include_once "../db/conexao.php";
 $c = new Conexao();
 $conexao = $c->conectar();
 ?>
 <!-- Navigation -->
-<?php include("menu.php"); ?>
+<?php include "menu.php";?>
 <!-- /Navigation -->
 
 <div class="container">
@@ -13,7 +13,7 @@ $conexao = $c->conectar();
       <div class="card card-signin my-5">
         <div class="card-body">
           <h5 class="card-title text-center">Entrar</h5>
-          <form class="form-signin" action="funcoes/autenticar.php" method="post">
+          <form class="form-signin" action="../controllers/autenticar.php" method="post">
             <div class="form-label-group">
               <input type="email" id="inputEmail" class="form-control" placeholder="Endereço de Email" name="usuario" required autofocus>
             </div>
@@ -43,6 +43,6 @@ $conexao = $c->conectar();
 
 <!-- Footer -->
 <?php
-include("rodape.php");
+include "rodape.php";
 ?>
 <!-- /Footer -->

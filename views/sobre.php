@@ -15,8 +15,8 @@
           <ul>
               <li>10° Dan Karate Kenshydokan</li>
               <li>7° Dan Ju jitsu</li>
+              <li>7° Dan em KickBoxing</li>
               <li>6° Dan Judo Kodokan</li>
-              <li>6° Dan em KickBoxing</li>
               <li>5° Dan em Karate Kyokushin</li>
           </ul>
         </div>
