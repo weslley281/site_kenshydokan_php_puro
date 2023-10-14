@@ -1,12 +1,12 @@
   <!-- Navigation -->
-  <?php include("menu.php"); ?>
+  <?php include "menu.php";?>
   <!-- /Navigation -->
   <div class="container mt-5">
         <!-- Project One -->
       <div class="row mt-5">
         <div class="col-md-7">
           <a href="filiado/ver_perfil.php?id_usuario=2">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="imagens/shihan.jpg" alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="../img/shihan.jpg" alt="">
           </a>
         </div>
         <div class="col-md-5">
@@ -23,9 +23,9 @@
       </div>
       <!-- /.row -->
       <br>
-      
+
       <!-- Alunos-->
-      
+
       <!-- Page Heading -->
   <h1 class="my-4">Seus Alunos Graduados
     <small>Faixas Pretas</small>
@@ -34,7 +34,7 @@
   <div class="row mb-4">
     <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
-        <a href="filiado/ver_perfil.php?id_usuario=5"><img class="card-img-top" src="imagens/sensei-everson.jpg" alt=""></a>
+        <a href="filiado/ver_perfil.php?id_usuario=5"><img class="card-img-top" src="../img/sensei-everson.jpg" alt=""></a>
         <div class="card-body">
           <h4 class="card-title">
             <a href="filiado/ver_perfil.php?id_usuario=5">Everson Jones Batista Leite</a>
@@ -47,7 +47,7 @@
     </div>
     <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
-        <a href="filiado/ver_perfil.php?id_usuario=5"><img class="card-img-top" src="imagens/sensei-patrick2.jpg" alt=""></a>
+        <a href="filiado/ver_perfil.php?id_usuario=5"><img class="card-img-top" src="../img/sensei-patrick2.jpg" alt=""></a>
         <div class="card-body">
           <h4 class="card-title">
             <a href="filiado/ver_perfil.php?id_usuario=5">Patrick jordhan dos Santos</a>
@@ -60,7 +60,7 @@
     </div>
     <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
-        <a href="filiado/ver_perfil.php?id_usuario=3"><img class="card-img-top" src="imagens/sensei_elyakin.jpg" alt=""></a>
+        <a href="filiado/ver_perfil.php?id_usuario=3"><img class="card-img-top" src="../img/sensei_elyakin.jpg" alt=""></a>
         <div class="card-body">
           <h4 class="card-title">
             <a href="filiado/ver_perfil.php?id_usuario=3">Elyakin Vinicius Mettelo</a>
@@ -73,13 +73,13 @@
     </div>
     <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
-        <a href="filiado/ver_perfil.php?id_usuario=1"><img class="card-img-top" src="imagens/sensei_weslley.jpg" alt=""></a>
+        <a href="filiado/ver_perfil.php?id_usuario=1"><img class="card-img-top" src="../img/sensei_weslley.jpg" alt=""></a>
         <div class="card-body">
           <h4 class="card-title">
             <a href="filiado/ver_perfil.php?id_usuario=1">Weslley Henrique Vieira Ferraz</a>
           </h4>
           <ul>
-              <li>Faixa Preta 1° Dan do Karate Kenshydokan.</li>
+              <li>Faixa Preta 3° Dan do Karate Kenshydokan.</li>
               <li>Faixa preta 2° Dan em Judo Kodokan.</li>
               <li>Faixa preta de Jiu Jitsu Brasileiro.</li>
           </ul>
@@ -88,7 +88,7 @@
     </div>
     <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
-        <a href="filiado/ver_perfil.php?id_usuario=1"><img class="card-img-top" src="imagens/sensei_murilo.jpg" alt=""></a>
+        <a href="filiado/ver_perfil.php?id_usuario=1"><img class="card-img-top" src="../img/sensei_murilo.jpg" alt=""></a>
         <div class="card-body">
           <h4 class="card-title">
             <a href="filiado/ver_perfil.php?id_usuario=1">Murilo Cardoso de Resende</a>
@@ -109,12 +109,12 @@
     <hr>
     <br>
     <br>
-        
+
       <!-- Project Two -->
       <div class="row mt-5">
         <div class="col-md-7">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="imagens/certificado 1.jpeg" alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="../img/certificado 1.jpeg" alt="">
           </a>
         </div>
         <div class="col-md-5">
@@ -131,7 +131,7 @@
       <div class="row">
         <div class="col-md-7">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="imagens/certificado 2.jpeg" alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="../img/certificado 2.jpeg" alt="">
           </a>
         </div>
         <div class="col-md-5">
@@ -150,7 +150,7 @@
 
         <div class="col-md-7">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="imagens/certificado 3.jpeg" alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="../img/certificado 3.jpeg" alt="">
           </a>
         </div>
         <div class="col-md-5">
@@ -161,15 +161,15 @@
       </div>
       -->
       <!-- /.row -->
-      
+
       <hr>
-      
+
       <!-- Project Five -->
       <div class="row">
 
         <div class="col-md-7">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="imagens/homologacao.jpeg" alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="../img/homologacao.jpeg" alt="">
           </a>
         </div>
         <div class="col-md-5">
@@ -181,13 +181,13 @@
       <!-- /.row -->
 
       <hr>
-      
+
       <!-- Project Six -->
       <div class="row">
 
         <div class="col-md-7">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="imagens/gradução kenshydokan.jpg" alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="../img/gradução kenshydokan.jpg" alt="">
           </a>
         </div>
         <div class="col-md-5">
@@ -201,12 +201,12 @@
       <hr>
   </div>
 
- 
+
 
   <!-- Footer -->
-  <?php 
-  include("rodape.php");
-   ?>
+  <?php
+include "rodape.php";
+?>
   <!-- /Footer -->
 
 </body>

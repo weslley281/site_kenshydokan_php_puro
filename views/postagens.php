@@ -11,7 +11,6 @@ $conexao = $c->conectar();
 <section class="container">
   <?php
 $busca_postagen = "SELECT * FROM postagens WHERE status = 'sim' order by id_publicacao desc";
-var_dump($busca_postagen);
 $resultado_postagen = mysqli_query($conexao, $busca_postagen);
 while ($postagem = mysqli_fetch_array($resultado_postagen)) {
     $autor = PublicacaoRepositorio::buscar_nome_autor($postagem["id_usuario"]);
