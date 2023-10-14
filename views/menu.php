@@ -43,18 +43,15 @@ $filiado = @$_SESSION['filiado'];
 
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-
   <!-- CSS Files -->
   <link href="../assets/css/material-kit.css?v=2.0.7" rel="stylesheet" />
 
   <!-- Custom JavaScript for this theme -->
   <script type="text/javascript" src="../js/datatables.min.js"></script>
   <script type="text/javascript" src="../js/dataTables.bootstrap4.min.js"></script>
-
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
   <script src="../assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-
   <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
 
