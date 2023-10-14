@@ -3,6 +3,29 @@
 
 <?php
 session_start();
+
+// Obtém o caminho da URL atual
+$url_atual = $_SERVER['REQUEST_URI'];
+
+// Define um array associativo com os URLs das páginas e seus nomes no menu
+$paginas = array(
+    '/views/inicio.php' => 'Início',
+    '/views/sobre.php' => 'Sobre Nós',
+    '/views/login.php' => 'Sistema',
+    '/views/postagens.php' => 'Postagens',
+    '/views/ver_perfil.php' => 'Perfil',
+    '/views/perfil.php' => 'Perfil',
+    '/views/galeria.php' => 'Galeria',
+    '/views/filiar.php' => 'Filiar-se',
+    '/views/filiados.php' => 'Filiados',
+    '/views/exame_graduacao.php' => 'Exame Graduação',
+    '/views/editar_postagem' => 'Editar Postagem',
+    '/views/editar_perfil.php' => 'Perfil',
+    '/views/documentos.php' => 'Documentos',
+    '/views/criar_postagem.php' => 'Postagem',
+    '/views/contato.php' => 'Contato',
+    '/views/campeonatos.php' => 'Campeonatos',
+);
 ?>
 
 <head>
@@ -31,7 +54,14 @@ session_start();
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 
-  <title>Kenshydokan</title>
+  <?php
+// Itera sobre as páginas e adiciona a classe "active" se a URL atual corresponder
+foreach ($paginas as $url => $nome_da_pagina) {
+    if ($url_atual === $url) {
+        echo "<title>Ferraz Dojos | $nome_da_pagina </title>";
+    }
+}
+?>
 
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">

@@ -28,7 +28,7 @@ class Migration
         ";
 
         if ($this->conexao->query($sql) === true) {
-            echo "Tabela 'usuarios' criada com sucesso!";
+            //echo "Tabela 'usuarios' criada com sucesso!";
         } else {
             echo "Erro ao criar tabela: " . $this->conexao->error;
         }
@@ -50,7 +50,7 @@ class Migration
         ";
 
         if ($this->conexao->query($sql) === true) {
-            echo "Tabela 'postagens' criada com sucesso!";
+            //echo "Tabela 'postagens' criada com sucesso!";
         } else {
             echo "Erro ao criar tabela: " . $this->conexao->error;
         }
@@ -78,7 +78,7 @@ class Migration
         ";
 
         if ($this->conexao->query($sql) === true) {
-            echo "Tabela 'filiados' criada com sucesso!";
+            //echo "Tabela 'filiados' criada com sucesso!";
         } else {
             echo "Erro ao criar tabela: " . $this->conexao->error;
         }
@@ -96,7 +96,7 @@ class Migration
         ";
 
         if ($this->conexao->query($sql) === true) {
-            echo "Tabela 'graduacao' criada com sucesso!";
+            //echo "Tabela 'graduacao' criada com sucesso!";
         } else {
             echo "Erro ao criar tabela: " . $this->conexao->error;
         }
@@ -114,7 +114,7 @@ class Migration
         ";
 
         if ($this->conexao->query($sql) === true) {
-            echo "Tabela 'galeria' criada com sucesso!";
+            //echo "Tabela 'galeria' criada com sucesso!";
         } else {
             echo "Erro ao criar tabela: " . $this->conexao->error;
         }
@@ -136,7 +136,7 @@ class Migration
         ";
 
         if ($this->conexao->query($sql) === true) {
-            echo "Tabela 'fotos' criada com sucesso!";
+            //echo "Tabela 'fotos' criada com sucesso!";
         } else {
             echo "Erro ao criar tabela: " . $this->conexao->error;
         }
@@ -158,7 +158,7 @@ class Migration
         ";
 
         if ($this->conexao->query($sql) === true) {
-            echo "Tabela 'campeonatos' criada com sucesso!";
+            //echo "Tabela 'campeonatos' criada com sucesso!";
         } else {
             echo "Erro ao criar tabela: " . $this->conexao->error;
         }
