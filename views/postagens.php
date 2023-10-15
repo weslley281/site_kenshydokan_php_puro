@@ -11,11 +11,11 @@ $conexao = $c->conectar();
 <section class="container">
   <?php
 $busca_postagen = "SELECT * FROM postagens WHERE status = 'sim' order by id_publicacao desc";
-echo "busca: " . var_dump($busca_postagen) . "<br>";
+//echo "busca: " . var_dump($busca_postagen) . "<br>";
 $resultado_postagen = mysqli_query($conexao, $busca_postagen);
-echo "resultado: " . var_dump($resultado_postagen) . "<br>";
+//echo "resultado: " . var_dump($resultado_postagen) . "<br>";
 while ($postagem = mysqli_fetch_array($resultado_postagen)) {
-    echo "entrou no laço" . "<br>";
+    //echo "entrou no laço" . "<br>";
     $autor = PublicacaoRepositorio::buscar_nome_autor($postagem["id_usuario"]);
     ?>
     <div class="container-fluid border bg-white mt-5 mb-5">
