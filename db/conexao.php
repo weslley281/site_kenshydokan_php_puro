@@ -1,9 +1,9 @@
 <?php
 class Conexao
 {
-    private $servidor = "localhost";
-    private $usuario = "root";
-    private $senha = "";
+    private $servidor = "kenshydokan.mysql.uhserver.com";
+    private $usuario = "kenshydokan";
+    private $senha = "K@rate12";
     private $banco = "kenshydokan";
 
     public function conectar()
