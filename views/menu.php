@@ -78,44 +78,44 @@ foreach ($paginas as $url => $nome_da_pagina) {
             <li class="nav-item <?php echo ($url_atual == "/views/inicio.php") ? 'active' : ''; ?>">
                 <a class="nav-link" href="inicio.php">Home <span class="sr-only">(página atual)</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item <?php echo ($url_atual == "/views/sobre.php") ? 'active' : ''; ?>">
                 <a class="nav-link" href="sobre.php">Sobre</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown <?php echo ($url_atual == "/views/filiar.php" || $url_atual == "/views/filiados.php") ? 'active' : ''; ?>">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filiação</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="filiar.php">Filiar-se</a>
-                    <a class="dropdown-item" href="filiados.php">Filiados</a>
+                    <a class="dropdown-item <?php echo ($url_atual == "/views/filiar.php") ? 'active' : ''; ?>" href="filiar.php">Filiar-se</a>
+                    <a class="dropdown-item <?php echo ($url_atual == "/views/filiados.php") ? 'active' : ''; ?>" href="filiados.php">Filiados</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item <?php echo ($url_atual == "/views/galeria.php") ? 'active' : ''; ?>">
                 <a class="nav-link" href="galeria.php">Galeria</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item <?php echo ($url_atual == "/views/postagens.php") ? 'active' : ''; ?>">
                 <a class="nav-link" href="postagens.php">Postagens</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>">
                 <a class="nav-link disabled" href="#">Artes Marciais</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown <?php echo ($url_atual == "/views/campeonatos.php") ? 'active' : ''; ?>">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-journal-text"></i> Campeonatos</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="campeonatos.php">Agenda de Campeonatos</a>
-                    <a class="dropdown-item" href="campeonatos.php">Se Inscreva</a>
+                    <a class="dropdown-item <?php echo ($url_atual == "/views/campeonatos.php") ? 'active' : ''; ?>" href="campeonatos.php">Agenda de Campeonatos</a>
+                    <a class="dropdown-item <?php echo ($url_atual == "/views/campeonatos.php") ? 'active' : ''; ?>" href="campeonatos.php">Se Inscreva</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item <?php echo ($url_atual == "/views/contato.php") ? 'active' : ''; ?>">
                 <a class="nav-link" href="contato.php">Contato</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown <?php echo ($url_atual == "/views/perfil.php" || $url_atual == "/views/login.php") ? 'active' : ''; ?>">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Minha Conta
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <?php if (isset($_SESSION['user_id'])) {?>
-                <a class="dropdown-item" href="perfil.php">Perfil</a>
+                <a class="dropdown-item <?php echo ($url_atual == "/views/perfil.php") ? 'active' : ''; ?>" href="perfil.php">Perfil</a>
                 <a class="dropdown-item" href="../controllers/sair.php">Sair</a>
                 <?php } else {?>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="login.php">Login</a>
+                <a class="dropdown-item <?php echo ($url_atual == "/views/login.php") ? 'active' : ''; ?>" href="login.php">Login</a>
                 <?php }?>
                 </div>
             </li>

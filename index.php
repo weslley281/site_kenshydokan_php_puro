@@ -16,3 +16,4 @@ echo "<br>";
 $migration->criarTabelaCampeonatos();
 
 header("location:views/inicio.php");
+echo "<script language='javascript'>window.location='views/inicio.php'; </script>";
