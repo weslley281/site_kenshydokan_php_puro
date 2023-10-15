@@ -1,8 +1,8 @@
 <!-- Navigation -->
-<?php include("menu.php"); ?>
+<?php include "menu.php";?>
 <!-- /Navigation -->
 <?php
-include_once("../classes/conexao.php");
+include_once "../db/conexao.php";
 $c = new Conexao();
 $conexao = $c->conectar();
 $id_usuario = $_GET['id_usuario'];
@@ -22,9 +22,9 @@ $resultado_filiado = mysqli_query($conexao, $busca_filiado);
 $filiado = mysqli_fetch_array($resultado_filiado);
 $confirmacao = $filiado["confirmacao"];
 if ($confirmacao == "sim") {
-	$ativo = "Ele está filiado";
+    $ativo = "Ele está filiado";
 } else {
-	$ativo = "Aguardando Cofirmação de Filiação, Não Está Filiado Não";
+    $ativo = "Aguardando Cofirmação de Filiação, Não Está Filiado Não";
 }
 
 $id_graduacao = $filiado["id_graduacao"];
@@ -63,25 +63,25 @@ $graduacao = mysqli_fetch_array($resultado_graduacao);
 							</div>
 							<!-- mais informações -->
 							<?php
-							$busca = "SELECT * FROM filiados where id_filiado = '$id_filiado'";
-							$resultado = mysqli_query($conexao, $busca);
-							while ($res = mysqli_fetch_array($resultado)) {
-								if ($id_filiado == 23) {
-									$graduacao = ":<br>Faixa preta 1° dan em Karatê Kenshydokan<br>
+$busca = "SELECT * FROM filiados where id_filiado = '$id_filiado'";
+$resultado = mysqli_query($conexao, $busca);
+while ($res = mysqli_fetch_array($resultado)) {
+    if ($id_filiado == 23) {
+        $graduacao = ":<br>Faixa preta 1° dan em Karatê Kenshydokan<br>
                                 Faixa preta 1° dan em Judô Kodokan<br>
                                 Faixa preta em Jiu Jitsu Brasileiro<br>
                                 Faixa roxa 2° kyu em Ju jitsu";
-								} elseif ($id_filiado == 14) {
-									$graduacao = ":<br>Faixa coral 10° dan em Karatê Kenshydokan<br>
+    } elseif ($id_filiado == 14) {
+        $graduacao = ":<br>Faixa coral 10° dan em Karatê Kenshydokan<br>
                                 Faixa coral 6° dan em Judô Kodokan<br>
                                 Faixa coral 7° dan em Ju jitsu";
-								} elseif ($id_filiado == 21) {
-									$graduacao = ":<br>Faixa preta 1° dan em Karatê Kenshydokan<br>
+    } elseif ($id_filiado == 21) {
+        $graduacao = ":<br>Faixa preta 1° dan em Karatê Kenshydokan<br>
                                 Faixa preta 1° dan em Judô Kodokan";
-								} else {
-									$graduacao = $graduacao["graduacao"];
-								}
-							?>
+    } else {
+        $graduacao = $graduacao["graduacao"];
+    }
+    ?>
 								<div class="col mb-4">
 									<div class="card">
 										<h5 class="card-header"><?php echo "$ativo"; ?></h5>
@@ -93,7 +93,7 @@ $graduacao = mysqli_fetch_array($resultado_graduacao);
 										</div>
 									</div>
 								</div>
-							<?php } ?>
+							<?php }?>
 						</div>
 					</div>
 					<!--Fim dados do perfil -->
@@ -114,9 +114,4 @@ $graduacao = mysqli_fetch_array($resultado_graduacao);
 		<!-- /.container -->
 	</div>
 
-	<?php
-	include("rodape.php");
-	?>
-</body>
-
-</html>
+<?php include "rodape.php";?>

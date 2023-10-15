@@ -59,12 +59,4 @@ $busca2 = "SELECT * FROM fotos WHERE id_galeria = '$id_galeria'";
 		</div>
 	</div>
 <?php }?>
-<!-- Footer -->
-<?php
-include "rodape.php";
-?>
-<!-- /Footer -->
-
-</body>
-
-</html>
+<?php include "rodape.php";?>

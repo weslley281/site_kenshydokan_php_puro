@@ -40,9 +40,4 @@ $conexao = $c->conectar();
   </div>
 </div>
 
-
-<!-- Footer -->
-<?php
-include "rodape.php";
-?>
-<!-- /Footer -->
+<?php include "rodape.php";?>

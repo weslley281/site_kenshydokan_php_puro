@@ -27,8 +27,4 @@ while ($postagem = mysqli_fetch_array($resultado_postagen)) {
 
 </section>
 
-<!-- Footer -->
-<?php
-include "rodape.php";
-?>
-<!-- /Footer -->
+<?php include "rodape.php";?>

@@ -1,9 +1,9 @@
-<?php include("head.php"); ?>
+<?php include "menu.php";?>
 
 <body>
 
   <!-- Navigation -->
-  <?php include("menu.php"); ?>
+  <?php include "menu.php";?>
 
   <div class="container">
     <div class="row">
@@ -12,17 +12,17 @@
           <div class="card-body">
             <h5 class="card-title text-center">Trocar a Senha</h5>
             <?php
-            include_once("../classes/conexao.php");
-            $c = new Conexao();
-            $conexao = $c->conectar();
-            $id_usuario = $_GET["id_usuario"];
-            $busca_usu = "SELECT * FROM `usuarios` where id_usuario = '$id_usuario'";
-            $resultado_usu = mysqli_query($conexao, $busca_usu);
-            while ($res = mysqli_fetch_array($resultado_usu)) {
-              $id_usuario = $res["id_usuario"];
-              $nome = $res["nome"];
-            }
-            ?>
+include_once "../db/conexao.php";
+$c = new Conexao();
+$conexao = $c->conectar();
+$id_usuario = $_GET["id_usuario"];
+$busca_usu = "SELECT * FROM `usuarios` where id_usuario = '$id_usuario'";
+$resultado_usu = mysqli_query($conexao, $busca_usu);
+while ($res = mysqli_fetch_array($resultado_usu)) {
+    $id_usuario = $res["id_usuario"];
+    $nome = $res["nome"];
+}
+?>
             <form class="form-signin" action="admin/funcoes/registrar_usuario.php" method="post">
               <input type="hidden" id="id_usuario" class="form-control" value="<?php echo $id_usuario; ?>" name="id_usuario">
               <div class="form-label-group">
@@ -49,7 +49,4 @@
     </div>
   </div>
 
-  <?php include("rodape.php"); ?>
-</body>
-
-</html>
+<?php include "rodape.php";?>

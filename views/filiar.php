@@ -1,8 +1,4 @@
-<!-- Navigation -->
-  <?php include("menu.php"); ?>
-<!-- /Navigation -->
-
-<!-- This snippet uses Font Awesome 5 Free as a dependency. You can download it at fontawesome.io! -->
+<?php include "menu.php";?>
 
 <section class="pricing py-5">
   <div class="container text-center">
@@ -30,7 +26,6 @@
           </div>
         </div>
       </div>
-      <!-- Plus Tier -->
       <div class="col-lg-4">
         <div class="card mb-5 mb-lg-0">
           <div class="card-body">
@@ -52,7 +47,6 @@
           </div>
         </div>
       </div>
-      <!-- Pro Tier -->
       <div class="col-lg-4">
         <div class="card">
           <div class="card-body">
@@ -77,11 +71,9 @@
   </div>
 </section>
 
-<!-- Footer -->
-  <?php 
-  	include("rodape.php");
-  ?>
-<!-- /Footer -->
+
+<?php include "rodape.php";?>
+
 
 <!-- Modal -->
 <div class="modal fade" id="filiar" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">

@@ -201,14 +201,6 @@
       <hr>
   </div>
 
+  </div>
 
-
-  <!-- Footer -->
-  <?php
-include "rodape.php";
-?>
-  <!-- /Footer -->
-
-</body>
-
-</html>
+<?php include "rodape.php";?>

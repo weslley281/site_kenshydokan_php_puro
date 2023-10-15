@@ -43,8 +43,4 @@ while ($res = mysqli_fetch_array($resultado)) {
 
  </section>
 
- <!-- Footer -->
- <?php
-include "rodape.php";
-?>
- <!-- /Footer -->
+<?php include "rodape.php";?>

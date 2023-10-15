@@ -1,5 +1,5 @@
 <!-- Navigation -->
-  <?php include("menu.php"); ?>
+  <?php include "menu.php";?>
 <!-- /Navigation -->
 
 <div class="container">
@@ -108,8 +108,5 @@
 
 <div class="separator" style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><a href="https://2.bp.blogspot.com/-L2kux1cDvjA/WvB3UzoBn9I/AAAAAAAADCM/J1a55dV8-gkMoO4RG1p41cGVy4FOunP1ACLcBGAs/s1600/ude_garami.gif"><img height="273" src="https://2.bp.blogspot.com/-L2kux1cDvjA/WvB3UzoBn9I/AAAAAAAADCM/J1a55dV8-gkMoO4RG1p41cGVy4FOunP1ACLcBGAs/s1600/ude_garami.gif" width="4
 
-<!-- Footer -->
-  <?php 
-  include("rodape.php");
-  ?>
-<!-- /Footer -->
+
+  <?php include "rodape.php";?>

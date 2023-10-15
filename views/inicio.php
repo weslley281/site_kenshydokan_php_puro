@@ -2,17 +2,12 @@
 <?php include "menu.php";?>
 <!-- /Navigation -->
 
-<div class="page-header header-filter" data-parallax="true" style="background-image: url('../img/foto_principal.jpg')">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <h1 class="title text-danger">Karatê de Contato Kenshydokan</h1>
-        <h3>Federação de Karatê de Contato do Estado de Mato Grosso<br>
-          <br>
-          Instituto de Artes Marciais e Defesa Pessoal Kenshydokan.</h4>
-          <br>
-      </div>
-    </div>
+<div class="row py-5" data-parallax="true" style="background-image: url('../img/foto_principal.jpg')">
+  <div class="container mx-2 py-5">
+        <h1 class="title text-danger text-uppercase font-weight-bold py-3">Kenshydokan</h1>
+        <h3 class="title text-white bold text-uppercase text-monospace py-3">Federação de Karatê de Contato do Estado de Mato Grosso.</h3>
+        <h3 class="title text-white bold text-uppercase text-monospace py-3">Instituto de Artes Marciais e Defesa Pessoal Kenshydokan.</h3>
+        <div class="py-5"></div>
   </div>
 </div>
 <div class="main main-raised">
@@ -177,15 +172,6 @@
       </div>
     </div>
   </div>
-
-
-
-  <!-- Footer -->
   <?php
 include "rodape.php";
 ?>
-  <!-- /Footer -->
-
-  </body>
-
-  </html>

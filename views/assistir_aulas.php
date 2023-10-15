@@ -1,8 +1,8 @@
 <!-- Navigation -->
-<?php include("menu.php"); ?>
+<?php include "menu.php";?>
 <!-- /Navigation -->
 <?php
-include_once("../classes/conexao.php");
+include_once "../db/conexao.php";
 $c = new Conexao();
 $conexao = $c->conectar();
 
@@ -21,9 +21,9 @@ $resultado_filiado = mysqli_query($conexao, $busca_filiado);
 $filiado = mysqli_fetch_array($resultado_filiado);
 $confirmacao = $filiado["confirmacao"];
 if ($confirmacao == "sim") {
-	$ativo = "Você está filiado";
+    $ativo = "Você está filiado";
 } else {
-	$ativo = "Aguardando Cofirmação de Filiação, Não Está Filiado Não";
+    $ativo = "Aguardando Cofirmação de Filiação, Não Está Filiado Não";
 }
 
 $id_graduacao = $filiado["id_graduacao"];
@@ -32,7 +32,7 @@ $resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
 $graduacao = mysqli_fetch_array($resultado_graduacao);
 
 if ($filiado != "") {
-?>
+    ?>
 
 	<body>
 		<div class="container mt-5">
@@ -48,13 +48,13 @@ if ($filiado != "") {
 							<a href="perfil.php" class="list-group-item bg-light text-dark">Perfil</a>
 							<a href="editar_perfil.php" class="list-group-item bg-light text-dark">Editar Perfil</a>
 							<?php
-							if ($usuario["tipo"] == 1 or $usuario["tipo"] == 2) {
-							?>
+if ($usuario["tipo"] == 1 or $usuario["tipo"] == 2) {
+        ?>
 								<a href="exame_graduacao.php" class="list-group-item bg-light text-dark">Exame de Graduação</a>
 								<a href="criar_postagem.php" class="list-group-item bg-light text-dark">Criar Postagem</a>
 								<a href="postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
 								<a href="documentos.php" class="list-group-item bg-light text-dark">Arquivos para Baixar</a>
-							<?php } ?>
+							<?php }?>
 							<a href="eventos.php" class="list-group-item bg-light text-dark">Eventos Online</a>
 							<a href="../funcoes/sair.php" class="list-group-item bg-light text-dark">Sair</a>
 						</div>
@@ -93,11 +93,11 @@ if ($filiado != "") {
 						<!--Fim dados do perfil -->
 						<hr>
 						<?php
-						$id_curso = @$_GET["id"];
-						$busca_curso = "SELECT * FROM curso where id_curso = '$id_curso'";
-						$resultado_curso = mysqli_query($conexao, $busca_curso);
-						$curso = mysqli_fetch_array($resultado_curso);
-						?>
+$id_curso = @$_GET["id"];
+    $busca_curso = "SELECT * FROM curso where id_curso = '$id_curso'";
+    $resultado_curso = mysqli_query($conexao, $busca_curso);
+    $curso = mysqli_fetch_array($resultado_curso);
+    ?>
 						<div class="text-center">
 							<h1><strong>Curso de <?php echo $curso["nome"] ?></strong></h1>
 						</div>
@@ -110,20 +110,20 @@ if ($filiado != "") {
 								</thead>
 								<tbody>
 									<?php
-									$busca = "SELECT * FROM aulas WHERE id_curso = $id_curso";
-									$resultado = mysqli_query($conexao, $busca);
-									$linha = mysqli_num_rows($resultado);
+$busca = "SELECT * FROM aulas WHERE id_curso = $id_curso";
+    $resultado = mysqli_query($conexao, $busca);
+    $linha = mysqli_num_rows($resultado);
 
-									if ($linha == 0) {
-										echo "<h3> Não há aulas cadastradas nesse curso!! </h3>";
-									} else {
-										while ($aula = mysqli_fetch_array($resultado)) {
-									?>
+    if ($linha == 0) {
+        echo "<h3> Não há aulas cadastradas nesse curso!! </h3>";
+    } else {
+        while ($aula = mysqli_fetch_array($resultado)) {
+            ?>
 											<tr>
 												<th scope="col"><a href="<?php echo $aula["link"]; ?>"><?php echo $aula["titulo"]; ?></a></th>
 											</tr>
 									<?php }
-									} ?>
+    }?>
 								</tbody>
 							</table>
 
@@ -142,12 +142,8 @@ if ($filiado != "") {
 		</div>
 		<script src="https://vjs.zencdn.net/7.8.4/video.js"></script>
 	<?php
-	include("rodape.php");
+include "rodape.php";
 } else {
-	header("location:login.php");
+    header("location:login.php");
 }
-	?>
-
-	</body>
-
-	</html>
+?>

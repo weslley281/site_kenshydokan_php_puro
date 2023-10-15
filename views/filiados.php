@@ -8,13 +8,13 @@ $conexao = $c->conectar();
 <!-- /Navigation -->
 
 <div class="container mt-5">
-	<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+	<table class="table table-bordered" width="100%" cellspacing="0">
 		<thead>
 			<tr>
-				<th>Codigo</th>
-				<th>Nome</th>
-				<th>Dojo</th>
-				<th>Graduação</th>
+				<th scope="col">Codigo</th>
+				<th scope="col">Nome</th>
+				<th scope="col">Dojo</th>
+				<th scope="col">Graduação</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -36,10 +36,10 @@ if ($linha == '') {
         $graduacao = mysqli_fetch_array($resultado_graduacao);
         ?>
 					<tr>
-						<td><?php echo $id_filiado; ?></td>
-						<td><?php echo $nome; ?></td>
-						<td><?php echo $dojo; ?></td>
-						<td><?php echo $graduacao["graduacao"]; ?></td>
+						<th class="font-weight-bold" scope="row"><?php echo $id_filiado; ?></th>
+						<td class="text-capitalize"><?php echo $nome; ?></td>
+						<td class="text-capitalize"><?php echo $dojo; ?></td>
+						<td class="text-capitalize"><?php echo $graduacao["graduacao"]; ?></td>
 					</tr>
 			<?php }
 }?>
@@ -47,8 +47,6 @@ if ($linha == '') {
 	</table>
 </div>
 
-<!-- Footer -->
 <?php
 include "rodape.php";
 ?>
-<!-- /Footer -->
