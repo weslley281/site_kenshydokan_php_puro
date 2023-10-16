@@ -112,7 +112,7 @@ foreach ($paginas as $url => $nome_da_pagina) {
                 Minha Conta
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <?php if (isset($_SESSION['user_id'])) {?>
+                <?php if (isset($_SESSION['id_usuario'])) {?>
                 <a class="dropdown-item <?php echo ($url_atual == "/views/perfil.php") ? 'active' : ''; ?>" href="perfil.php">Perfil</a>
                 <a class="dropdown-item" href="../controllers/sair.php">Sair</a>
                 <?php } else {?>

@@ -2,11 +2,12 @@
 <?php include "menu.php";?>
 <!-- /Navigation -->
 <?php
-include_once ".../db/conexao.php";
+include_once "../db/conexao.php";
 $c = new Conexao();
 $conexao = $c->conectar();
+$id_usuario = $_SESSION['id_usuario'];
 
-$busca_usuario = "SELECT * FROM usuarios WHERE email = '$filiado'";
+$busca_usuario = "SELECT * FROM usuarios WHERE email = '$id_usuario'";
 $resultado_usuario = mysqli_query($conexao, $busca_usuario);
 $usuario = mysqli_fetch_array($resultado_usuario);
 
