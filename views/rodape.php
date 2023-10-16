@@ -21,5 +21,8 @@
         toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
       });
     </script>
+
+  <!-- Video JS -->
+  <script src="https://vjs.zencdn.net/8.6.0/video.min.js"></script>
   </body>
 </html>

@@ -2,22 +2,35 @@
 <?php include "menu.php";?>
 <!-- /Navigation -->
 
-<div class="row py-5" data-parallax="true" style="background-image: url('../img/foto_principal.jpg')">
+<div class="container-fluid py-5">
+  <img class="img-fluid" src="../img/foto_principal.jpg" alt="foto dos alunos de karate">
   <div class="container mx-2">
-        <h3 class="title text-white bold text-uppercase text-monospace py-3">Federação de Karatê de Contato do Estado de Mato Grosso.</h3>
-        <h3 class="title text-white bold text-uppercase text-monospace py-3">Instituto de Artes Marciais e Defesa Pessoal Kenshydokan.</h3>
-        <h1 class="title text-danger text-uppercase font-weight-bold py-3">Kenshydokan</h1>
-        <div class="py-5"></div>
-        <div class="py-5"></div>
+        <h3 class="text-dark bold text-uppercase font-weight-bold py-3">Federação de Karatê de Contato do Estado de Mato Grosso.</h3>
+        <h3 class="text-dark bold text-uppercase font-weight-bold py-3">Instituto de Artes Marciais e Defesa Pessoal Kenshydokan.</h3>
   </div>
 </div>
+
 <div class="main main-raised">
   <!-- Começo do Carrossel -->
-  <div class="container">
-    <video width="100%" height="450" controls autoplay="" muted="" loop="">
-      <source src="../videos/slide-kenshydokan.mp4" type="video/mp4">
+  <div class="container-fluid text-center">
+    <video id="my-video"
+      class="video-js embed-responsive embed-responsive-16by9"
+      preload="auto"
+      data-setup="{}"
+      controls
+      autoplay=""
+      muted=""
+      loop=""
+      >
+      <source class="embed-responsive-item" src="../videos/slide-kenshydokan.mp4" type="video/mp4">
+      <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a
+      web browser that
+      <a href="https://videojs.com/html5-video-support/" target="_blank"
+        >supports HTML5 video</a
+      >
+    </p>
     </video>
-    <script src="../js/video.js"></script>
   </div>
   <hr>
 
@@ -88,17 +101,15 @@
   <!--Fim das Filiações-->
 
   <div class="container mt-3 mb-3">
-    <center>
-      <h2><b>Dojo kum do estilo kenshydokan.</b></h2>
-    </center>
-    <ul class="mt-3 mb-3">
-      <li>Eu juro cultivar o espírito de benevolência, e conter o espírito de violência.</li>
-      <li>Eu juro cultivar em meu coração um espírito inabalável, fortalecido e o verdadeiro significado do Karatê.</li>
-      <li>Eu juro semear na vida o respeito para com todos os seres vivos e com nossos superiores e mestres, buscando caráter, harmonia e perfeição nos treinos.</li>
-      <li>Eu juro honrar a disciplina do karatê kenshydokan e nunca usar o karatê de forma errada, assim eu juro.</li>
-      <li>Eu juro buscar força e sabedoria, humildade cortesia no karatê.</li>
-      <li>Dōmo arigatōgozaimashita</li>
-      <li>Oss</li>
+    <h2><b>Dojo kum do estilo kenshydokan.</b></h2>
+    <ul class="list-group mt-3 mb-3">
+      <li class="list-group-item">Eu juro cultivar o espírito de benevolência, e conter o espírito de violência.</li>
+      <li class="list-group-item">Eu juro cultivar em meu coração um espírito inabalável, fortalecido e o verdadeiro significado do Karatê.</li>
+      <li class="list-group-item">Eu juro semear na vida o respeito para com todos os seres vivos e com nossos superiores e mestres, buscando caráter, harmonia e perfeição nos treinos.</li>
+      <li class="list-group-item">Eu juro honrar a disciplina do karatê kenshydokan e nunca usar o karatê de forma errada, assim eu juro.</li>
+      <li class="list-group-item">Eu juro buscar força e sabedoria, humildade cortesia no karatê.</li>
+      <li class="list-group-item">Dōmo arigatōgozaimashita</li>
+      <li class="list-group-item">Oss</li>
     </ul>
   </div>
   <hr>

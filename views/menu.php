@@ -55,6 +55,8 @@ $paginas = array(
     <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/solid.js" integrity="sha384-/BxOvRagtVDn9dJ+JGCtcofNXgQO/CCCVKdMfL115s3gOgQxWaX/tSq5V8dRgsbc" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/fontawesome.js" integrity="sha384-dPBGbj4Uoy1OOpM4+aRGfAOc0W37JkROT+3uynUgTHZCHZNMHfGXsmmvYTffZjYO" crossorigin="anonymous"></script>
 
+    <!-- Video JS -->
+    <link href="https://vjs.zencdn.net/8.6.0/video-js.css" rel="stylesheet" />
     <?php
 // Itera sobre as páginas e adiciona a classe "active" se a URL atual corresponder
 foreach ($paginas as $url => $nome_da_pagina) {
@@ -66,7 +68,7 @@ foreach ($paginas as $url => $nome_da_pagina) {
 
     <script src="https://cdn.tiny.cloud/1/a0nk30p1g63rjh3gknotzn47pzsmxr7n6pfezilpk8lct92z/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   </head>
-  <body>
+  <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand bg-light rounded px-1 py-1 text-dark" href="inicio.php"><img src="../img/kenshydokan.jpg" width="30" height="30" alt="logo da kenshydokan"> Kenshydokan</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
