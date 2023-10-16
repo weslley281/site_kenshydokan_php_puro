@@ -2,6 +2,7 @@
 <html lang="pt-br">
 
 <?php
+ob_start();
 session_start();
 
 // Obtém o caminho da URL atual
@@ -128,3 +129,4 @@ foreach ($paginas as $url => $nome_da_pagina) {
             </form>
         </div>
     </nav>
+    <?php echo "O id do usário é " . $_SESSION["id_usuario"]; ?>

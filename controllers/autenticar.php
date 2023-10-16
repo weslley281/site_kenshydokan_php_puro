@@ -2,6 +2,8 @@
 include_once "../db/conexao.php";
 $c = new Conexao();
 $conexao = $c->conectar();
+
+ob_start();
 session_start();
 
 $_POST['usuario'] = strtolower($_POST['usuario']);
