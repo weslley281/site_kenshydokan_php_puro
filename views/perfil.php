@@ -7,11 +7,12 @@ $c = new Conexao();
 $conexao = $c->conectar();
 $id_usuario = $_SESSION['id_usuario'];
 
-$busca_usuario = "SELECT * FROM usuarios WHERE email = '$id_usuario'";
+$busca_usuario = "SELECT * FROM usuarios WHERE id_usuario = '$id_usuario'";
 $resultado_usuario = mysqli_query($conexao, $busca_usuario);
 $usuario = mysqli_fetch_array($resultado_usuario);
 
 $id_imagem = $usuario["id_imagem"];
+
 $busca_imagem = "SELECT * FROM imagens WHERE id_imagem = '$id_imagem'";
 $resultado_imagem = mysqli_query($conexao, $busca_imagem);
 $imagem = mysqli_fetch_array($resultado_imagem);
@@ -20,19 +21,14 @@ $id_filiado = $usuario["id_fil"];
 $busca_filiado = "SELECT * FROM filiados WHERE id_filiado = '$id_filiado'";
 $resultado_filiado = mysqli_query($conexao, $busca_filiado);
 $filiado = mysqli_fetch_array($resultado_filiado);
-$confirmacao = $filiado["confirmacao"];
-if ($confirmacao == "sim") {
-    $ativo = "Você está filiado";
-} else {
-    $ativo = "Aguardando Cofirmação de Filiação, Não Está Filiado Não";
-}
+$estaFiliado = ($filiado["confirmacao"] == "sim") ? "Você está filiado" : "Aguardando Confirmação de Filiação, Não Está Filiado Não";
 
 $id_graduacao = $filiado["id_graduacao"];
 $busca_graduacao = "SELECT * FROM graduacao WHERE id_graduacao = '$id_graduacao'";
 $resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
 $graduacao = mysqli_fetch_array($resultado_graduacao);
 
-if ($filiado != "") {
+if (isset($_SESSION['id_usuario'])) {
     ?>
 
 	<body>
@@ -50,7 +46,7 @@ if ($filiado != "") {
 							<a href="perfil.php" class="list-group-item bg-danger text-dark">Perfil</a>
 							<a href="editar_perfil.php" class="list-group-item bg-light text-dark">Editar Perfil</a>
 							<?php
-if ($usuario["tipo"] == 1 or $usuario["tipo"] == 2) {
+if ($usuario["nivel"] == "admin" || $usuario["nivel"] == "sensei") {
         ?>
 								<a href="exame_graduacao.php" class="list-group-item bg-light text-dark">Exame de Graduação</a>
 								<a href="criar_postagem.php" class="list-group-item bg-light text-dark">Criar Postagem</a>
@@ -65,8 +61,6 @@ if ($usuario["tipo"] == 1 or $usuario["tipo"] == 2) {
 					<!-- /.col-lg-3 -->
 					<!--dados do perfil -->
 					<div class="col-lg-9">
-						<button class="btn btn-danger mt-3" id="hide">Esconder informações</button>
-						<button class="btn btn-success mt-3" id="show">Mostrar</button>
 						<div id="esconder" class="text-center mt-3 mb-3">
 							<div class="row">
 								<!-- card do perfil -->
@@ -81,7 +75,7 @@ if ($usuario["tipo"] == 1 or $usuario["tipo"] == 2) {
 								<!-- mais informações -->
 								<div class="col mb-4">
 									<div class="card">
-										<h5 class="card-header"><?php echo "$ativo"; ?></h5>
+										<h5 class="card-header"><?php echo "$estaFiliado"; ?></h5>
 										<div class="card-body">
 											<h5 class="card-title">Sua graduação é <?php echo $graduacao["graduacao"]; ?></h5>
 											<p class="card-text">Dojo: <?php echo $filiado["dojo"]; ?></p>
@@ -99,7 +93,7 @@ if ($usuario["tipo"] == 1 or $usuario["tipo"] == 2) {
 						</div>
 						<div class="row">
 							<?php
-$busca = "SELECT * FROM curso";
+$busca = "SELECT * FROM cursos";
     $resultado = mysqli_query($conexao, $busca);
     while ($curso = mysqli_fetch_array($resultado)) {
         $id_imagem_curso = $curso["id_imagem"];
@@ -115,7 +109,7 @@ $busca = "SELECT * FROM curso";
         ?>
 								<div class="col-lg-4 col-md-6 mb-4">
 									<div class="card h-100">
-										<a href="assistir_aulas.php?id=<?php echo $curso["id_curso"]; ?>"><img class="card-img-top" src="../imagens_produtos/<?php echo $imagem_curso["nome"]; ?>" alt="" width="150px" height="150px"></a>
+										<a href="assistir_aulas.php?id=<?php echo $curso["id_curso"]; ?>"><img class="card-img-top" src="../img/<?php echo $imagem_curso["nome"]; ?>" alt="" width="150px" height="150px"></a>
 										<div class="card-body">
 											<h4 class="card-title">
 												<a href="assistir_aulas.php?id=<?php echo $curso["id_curso"]; ?>"><?php echo $curso["nome"]; ?></a>
@@ -123,7 +117,7 @@ $busca = "SELECT * FROM curso";
 											<h5><?php echo $categoria["categoria"]; ?></h5>
 											<p class="card-text"><?php echo $curso["descricao"]; ?></p>
 											<p class="card-text">Professor: <?php echo $curso["professor"]; ?></p>
-											<p class="card-text"><?php echo $curso["data"]; ?></p>
+											<p class="card-text"><?php echo $curso["dataCriacao"]; ?></p>
 										</div>
 										<div class="card-footer">
 											<small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
@@ -148,5 +142,5 @@ $busca = "SELECT * FROM curso";
 	<?php
 include "rodape.php";
 } else {
-    header("location:../login.php");
+    echo "<script language='javascript'>window.location='login.php'; </script>";
 }

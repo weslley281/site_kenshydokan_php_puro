@@ -14,6 +14,14 @@ echo "<br>";
 $migration->criarTabelaUsuarios();
 echo "<br>";
 $migration->criarTabelaCampeonatos();
+echo "<br>";
+$migration->criarTabelaImagens();
+echo "<br>";
+$migration->criarTabelaCursos();
+echo "<br>";
+$migration->criarTabelaAulas();
+echo "<br>";
+$migration->criarTabelaCategorias();
 
 header("location:views/inicio.php");
 echo "<script language='javascript'>window.location='views/inicio.php'; </script>";

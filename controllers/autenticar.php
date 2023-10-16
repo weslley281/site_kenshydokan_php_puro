@@ -23,16 +23,17 @@ if ($linha > 0) {
     $senha_banco = $dado["senha"];
     if (password_verify($senha, $senha_banco)) {
         $_SESSION['id_usuario'] = $dado['id_usuario'];
-        $_SESSION['filiado'] = $email;
+        $_SESSION['email'] = $email;
         $_SESSION['nome'] = $dado['nome'];
         $_SESSION['id_fil'] = $dado['id_fil'];
         $_SESSION['nivel'] = $dado['nivel'];
-        header('Location:../views/perfil.php');
+        echo "bom";
+        echo "<script language='javascript'>window.location='../views/perfil.php'; </script>";
     } else {
         echo "<script language='javascript'>window.alert('login ou senha invalido'); </script>";
-        echo "<script language='javascript'>window.location='../login.php'; </script>";
+        echo "<script language='javascript'>window.location='../views/login.php'; </script>";
     }
 } else {
     echo "<script language='javascript'>window.alert('login ou senha invalido'); </script>";
-    echo "<script language='javascript'>window.location='../login.php'; </script>";
+    echo "<script language='javascript'>window.location='../views/login.php'; </script>";
 }

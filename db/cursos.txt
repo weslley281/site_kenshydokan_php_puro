@@ -1,0 +1,4 @@
+INSERT INTO `cursos` (`id_curso`, `id_categoria`, `nome`, `descricao`, `professor`, `id_imagem`, `situacao`, `dataCriacao`) VALUES
+(7, 2, 'Atualizações do Karate Kenshydokan', 'Fique atualizado sobre todas as novas tÃ©cnicas', 'Weslley Henrique Vieira Ferraz', 286, 2, '2020-12-27'),
+(11, 3, 'Nage Waza', 'TÃ©cnicas de ProjeÃ§Ã£o', 'Weslley Henrique Vieira Ferraz', 285, 2, '2021-01-18'),
+(12, 3, 'Parte Teórica do Judô', 'Aulas detalhadas sobrea história e partes mais teórica de judô', 'Weslley Henrique Vieira Ferraz', 291, 2, '2021-02-21');
