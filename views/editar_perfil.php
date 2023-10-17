@@ -6,7 +6,9 @@ include_once "../db/conexao.php";
 $c = new Conexao();
 $conexao = $c->conectar();
 
-$busca_usuario = "SELECT * FROM usuarios WHERE email = '$filiado'";
+$id_usuario = $_SESSION['id_usuario'];
+
+$busca_usuario = "SELECT * FROM usuarios WHERE id_usuario = '$id_usuario'";
 $resultado_usuario = mysqli_query($conexao, $busca_usuario);
 $usuario = mysqli_fetch_array($resultado_usuario);
 
@@ -47,16 +49,14 @@ if ($filiado != "") {
 						<div class="list-group">
 							<a href="perfil.php" class="list-group-item bg-light text-dark">Perfil</a>
 							<a href="editar_perfil.php" class="list-group-item bg-danger text-dark">Editar Perfil</a>
-							<?php
-if ($usuario["tipo"] == 1 or $usuario["tipo"] == 2) {
-        ?>
+<?php if ($usuario["nivel"] == "admin" || $usuario["nivel"] == "sensei") {?>
 								<a href="exame_graduacao.php" class="list-group-item bg-light text-dark">Exame de Graduação</a>
 								<a href="criar_postagem.php" class="list-group-item bg-light text-dark">Criar Postagem</a>
 								<a href="postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
 								<a href="documentos.php" class="list-group-item bg-light text-dark">Arquivos para Baixar</a>
-							<?php }?>
+<?php }?>
 							<a href="eventos.php" class="list-group-item bg-light text-dark">Eventos Online</a>
-							<a href="../funcoes/sair.php" class="list-group-item bg-light text-dark">Sair</a>
+							<a href="../controllers/sair.php" class="list-group-item bg-light text-dark">Sair</a>
 						</div>
 
 					</div>
@@ -77,23 +77,21 @@ if ($usuario["tipo"] == 1 or $usuario["tipo"] == 2) {
 								<!-- mais informações -->
 								<div class="col">
 
-									<form action="../funcoes/editar_imagem.php" method="post" enctype="multipart/form-data">
+									<form action="../controllers/editar_imagem.php" method="post" enctype="multipart/form-data">
 										<input class="form-control mb-2" type="hidden" value="<?php echo $usuario["id_usuario"]; ?>" name="id_usuario" readonly>
 										<input class="form-control mb-2" type="file" value="<?php echo $usuario["nome"]; ?>" name="foto">
 										<input class="btn btn-secondary mb-2" type="submit" name="atualizar" value="atualizar foto">
 									</form>
-									<form action="../funcoes/editar_perfil.php" method="post">
+									<form action="../controllers/editar_perfil.php" method="post">
 										<input class="form-control mb-2" type="hidden" value="<?php echo $usuario["id_usuario"]; ?>" name="id_usuario" readonly>
-										<input class="form-control mb-2" type="text" value="<?php echo $usuario["nome"]; ?>" name="nome">
+										<input class="form-control mb-2" type="text" value="<?php echo $usuario["nome"]; ?>" name="nome" required>
 										<input class="form-control mb-2" type="email" value="<?php echo $usuario["email"]; ?>" name="email" readonly>
-										<input class="form-control mb-2" type="text" value="<?php echo $usuario["telefone"]; ?>" name="telefone" onkeypress="mask(this, mphone);" onblur="mask(this, mphone);">
-										<p class="text-danger">Não se esqueça de clicar em <b>editar</b> para salvar as configurações</p>
+										<input class="form-control mb-2" type="text" value="<?php echo $usuario["telefone"]; ?>" name="telefone" onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" required>
 										<input class="btn btn-success" type="submit" value="Salvar Alterações" name="editar">
 									</form>
 
 									<div id="trocar_senha">
-										<button v-on:click="senha = !senha" class="btn btn-primary text-white mt-4">Mudar a Senha</button>
-										<form v-if="senha" action="../funcoes/editar_senha.php" method="post">
+										<form v-if="senha" action="../controllers/editar_senha.php" method="post">
 											<input type="hidden" value="<?php echo $usuario["id_usuario"] ?>" name="id_usuario">
 											<input type="password" class="form-control mt-2 mb-2" placeholder="Digite a Senha Antiga" name="senha_antiga">
 											<input type="password" class="form-control mb-2" placeholder="Digite a Senha a Nova Senha" name="senha1">
@@ -122,18 +120,6 @@ include "rodape.php";
     header("location:login.php");
 }
 ?>
-	</body>
-
-	</html>
-
-	<script type="text/javascript">
-		new Vue({
-			el: '#trocar_senha',
-			data: {
-				senha: false
-			}
-		})
-	</script>
 
 	<!-- Scripts de Telefone -->
 	<script type="text/javascript">

@@ -3,7 +3,7 @@
 <!-- /Navigation -->
 
 <div class="container-fluid py-5">
-  <img class="img-fluid" src="../img/foto_principal.jpg" alt="foto dos alunos de karate">
+  <img class="img-fluid rounded" src="../img/foto_principal.jpg" alt="foto dos alunos de karate">
   <div class="container mx-2">
         <h3 class="text-dark bold text-uppercase font-weight-bold py-3">Federação de Karatê de Contato do Estado de Mato Grosso.</h3>
         <h3 class="text-dark bold text-uppercase font-weight-bold py-3">Instituto de Artes Marciais e Defesa Pessoal Kenshydokan.</h3>

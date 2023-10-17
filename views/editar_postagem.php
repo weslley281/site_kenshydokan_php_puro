@@ -7,7 +7,9 @@ $c = new Conexao();
 $conexao = $c->conectar();
 $id_postagem = $_GET["id"];
 
-$busca_usuario = "SELECT * FROM usuarios WHERE email = '$filiado'";
+$id_usuario = $_SESSION['id_usuario'];
+
+$busca_usuario = "SELECT * FROM usuarios WHERE id_usuario = '$id_usuario'";
 $resultado_usuario = mysqli_query($conexao, $busca_usuario);
 $usuario = mysqli_fetch_array($resultado_usuario);
 
@@ -48,16 +50,14 @@ if ($filiado != "") {
 						<div class="list-group">
 							<a href="perfil.php" class="list-group-item bg-light text-dark">Perfil</a>
 							<a href="editar_perfil.php" class="list-group-item bg-light text-dark">Editar Perfil</a>
-							<?php
-if ($usuario["tipo"] == 1 or $usuario["tipo"] == 2) {
-        ?>
+							<?php if ($usuario["nivel"] == "admin" || $usuario["nivel"] == "sensei") {?>
 								<a href="exame_graduacao.php" class="list-group-item bg-light text-dark">Exame de Graduação</a>
 								<a href="criar_postagem.php" class="list-group-item bg-light text-dark">Criar Postagem</a>
 								<a href="postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
 								<a href="documentos.php" class="list-group-item bg-light text-dark">Arquivos para Baixar</a>
 							<?php }?>
 							<a href="eventos.php" class="list-group-item bg-light text-dark">Eventos Online</a>
-							<a href="../funcoes/sair.php" class="list-group-item bg-light text-dark">Sair</a>
+							<a href="../controllers/sair.php" class="list-group-item bg-light text-dark">Sair</a>
 						</div>
 
 					</div>
@@ -101,7 +101,7 @@ $query = "SELECT * from postagens where id_postagem = '$id_postagem'";
     $result = mysqli_query($conexao, $query);
     while ($postagem = mysqli_fetch_array($result)) {
         ?>
-							<form class="mb-3" action="../funcoes/editar_postagem.php" method="POST">
+							<form class="mb-3" action="../controllers/editar_postagem.php" method="POST">
 								<div id="sample">
 									<input class="form-control form-control-lg mt-2" type="hidden" value="<?php echo $id_postagem ?>" name="id_postagem">
 									<input class="form-control form-control-lg mt-2 mb-2" type="text" value="<?php echo $postagem["titulo"] ?>" name="titulo">

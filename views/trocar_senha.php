@@ -23,7 +23,7 @@ while ($res = mysqli_fetch_array($resultado_usu)) {
     $nome = $res["nome"];
 }
 ?>
-            <form class="form-signin" action="admin/funcoes/registrar_usuario.php" method="post">
+            <form class="form-signin" action="../controllers/registrar_usuario.php" method="post">
               <input type="hidden" id="id_usuario" class="form-control" value="<?php echo $id_usuario; ?>" name="id_usuario">
               <div class="form-label-group">
                 <input type="password" id="senha1" class="form-control" placeholder="Senha" name="senha1" required autofocus>

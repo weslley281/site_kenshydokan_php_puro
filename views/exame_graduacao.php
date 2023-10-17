@@ -6,7 +6,9 @@ include_once "../db/conexao.php";
 $c = new Conexao();
 $conexao = $c->conectar();
 
-$busca_usuario = "SELECT * FROM usuarios WHERE email = '$filiado'";
+$id_usuario = $_SESSION['id_usuario'];
+
+$busca_usuario = "SELECT * FROM usuarios WHERE id_usuario = '$id_usuario'";
 $resultado_usuario = mysqli_query($conexao, $busca_usuario);
 $usuario = mysqli_fetch_array($resultado_usuario);
 
@@ -45,16 +47,14 @@ if ($filiado != "") {
           <div class="list-group">
             <a href="perfil.php" class="list-group-item bg-light text-dark">Perfil</a>
             <a href="editar_perfil.php" class="list-group-item bg-light text-dark">Editar Perfil</a>
-            <?php
-if ($usuario["tipo"] == 1 or $usuario["tipo"] == 2) {
-        ?>
+            <?php if ($usuario["nivel"] == "admin" || $usuario["nivel"] == "sensei") {?>
               <a href="exame_graduacao.php" class="list-group-item bg-danger text-dark">Exame de Graduação</a>
               <a href="criar_postagem.php" class="list-group-item bg-light text-dark">Criar Postagem</a>
               <a href="postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
               <a href="documentos.php" class="list-group-item bg-light text-dark">Arquivos para Baixar</a>
             <?php }?>
             <a href="eventos.php" class="list-group-item bg-light text-dark">Eventos Online</a>
-            <a href="../funcoes/sair.php" class="list-group-item bg-light text-dark">Sair</a>
+            <a href="../controllers/sair.php" class="list-group-item bg-light text-dark">Sair</a>
           </div>
 
         </div>
@@ -94,7 +94,7 @@ if ($usuario["tipo"] == 1 or $usuario["tipo"] == 2) {
             <h1><strong>Inscrição de atletas para Exame de Graduação</strong></h1>
           </div>
           <div class="text-center">
-            <form action="../funcoes/exame.php" method="post">
+            <form action="../controllers/exame.php" method="post">
               <div class="form-group">
                 <label for="nome">Nome do atleta que fará o exame:</label>
                 <input id="nome" class="form-control mb-2" type="text" placeholder="nome" name="nome">

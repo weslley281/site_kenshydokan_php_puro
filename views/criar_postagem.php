@@ -6,7 +6,9 @@ include_once "../db/conexao.php";
 $c = new Conexao();
 $conexao = $c->conectar();
 
-$busca_usuario = "SELECT * FROM usuarios WHERE email = '$filiado'";
+$id_usuario = $_SESSION['id_usuario'];
+
+$busca_usuario = "SELECT * FROM usuarios WHERE id_usuario = '$id_usuario'";
 $resultado_usuario = mysqli_query($conexao, $busca_usuario);
 $usuario = mysqli_fetch_array($resultado_usuario);
 
@@ -47,16 +49,14 @@ if ($filiado != "") {
 						<div class="list-group">
 							<a href="perfil.php" class="list-group-item bg-light text-dark">Perfil</a>
 							<a href="editar_perfil.php" class="list-group-item bg-light text-dark">Editar Perfil</a>
-							<?php
-if ($usuario["tipo"] == 1 or $usuario["tipo"] == 2) {
-        ?>
+							<?php if ($usuario["nivel"] == "admin" || $usuario["nivel"] == "sensei") {?>
 								<a href="exame_graduacao.php" class="list-group-item bg-light text-dark">Exame de Graduação</a>
 								<a href="criar_postagem.php" class="list-group-item text-dark bg-danger">Criar Postagem</a>
 								<a href="postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
 								<a href="documentos.php" class="list-group-item bg-light text-dark">Arquivos para Baixar</a>
 							<?php }?>
 							<a href="eventos.php" class="list-group-item bg-light text-dark">Eventos Online</a>
-							<a href="../funcoes/sair.php" class="list-group-item bg-light text-dark">Sair</a>
+							<a href="../controllers/sair.php" class="list-group-item bg-light text-dark">Sair</a>
 						</div>
 
 					</div>
@@ -96,7 +96,7 @@ if ($usuario["tipo"] == 1 or $usuario["tipo"] == 2) {
 							<h1><strong>Criar Postagem</strong></h1>
 						</div>
 						<p class="text-danger mx-auto">A sua postagem ira aparecer no site depois que um administrador aprovar</p>
-						<form action="../funcoes/criar_postagem.php" method="POST">
+						<form action="../controllers/criar_postagem.php" method="POST">
 							<div id="sample">
 								<input type="hidden" value="<?php echo $usuario["id_usuario"] ?>" name="id_usuario">
 								<input class="form-control form-control-lg mt-2 mb-2" type="text" placeholder="Titulo" name="titulo" required autofocus>

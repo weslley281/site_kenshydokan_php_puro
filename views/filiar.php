@@ -86,7 +86,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="funcoes/filiar.php" method="post">
+        <form action="../controllers/filiar.php" method="post">
           <!-- nome -->
           <div class="input-group mb-3">
             <div class="input-group-prepend">
