@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-
 <?php
-ob_start();
 session_start();
-
 // Obtém o caminho da URL atual
 $url_atual = $_SERVER['REQUEST_URI'];
 
@@ -28,7 +23,8 @@ $paginas = array(
     '/views/campeonatos.php' => 'Campeonatos',
 );
 ?>
-
+<!DOCTYPE html>
+<html lang="pt-br">
   <head>
     <!-- Meta tags Obrigatórias -->
     <meta charset="utf-8">
@@ -129,4 +125,3 @@ foreach ($paginas as $url => $nome_da_pagina) {
             </form>
         </div>
     </nav>
-    <?php echo "O id do usário é " . $_SESSION["id_usuario"]; ?>

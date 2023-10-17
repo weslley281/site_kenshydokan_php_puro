@@ -1,5 +1,5 @@
-<!-- Navigation -->
-<?php include "menu.php";
+<?php
+include "menu.php";
 include_once "../db/conexao.php";
 
 $c = new Conexao();

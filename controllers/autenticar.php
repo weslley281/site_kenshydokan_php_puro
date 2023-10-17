@@ -1,10 +1,11 @@
 <?php
+session_start();
+
 include_once "../db/conexao.php";
 $c = new Conexao();
 $conexao = $c->conectar();
 
 ob_start();
-session_start();
 
 $_POST['usuario'] = strtolower($_POST['usuario']);
 if (empty($_POST['usuario']) || empty($_POST['senha'])) {
@@ -31,7 +32,7 @@ if ($linha > 0) {
         $_SESSION['nivel'] = $dado['nivel'];
 
         $dados = var_dump($_SESSION);
-        echo "<script language='javascript'>window.alert('$_SESSION'); </script>";
+        echo "<script language='javascript'>window.alert('$dados'); </script>";
         echo "<script language='javascript'>window.location='../views/perfil.php'; </script>";
     } else {
         echo "<script language='javascript'>window.alert('login ou senha invalido'); </script>";
