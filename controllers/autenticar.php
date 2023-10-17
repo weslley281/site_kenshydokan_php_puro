@@ -29,7 +29,9 @@ if ($linha > 0) {
         $_SESSION['nome'] = $dado['nome'];
         $_SESSION['id_fil'] = $dado['id_fil'];
         $_SESSION['nivel'] = $dado['nivel'];
-        echo "bom";
+
+        $dados = var_dump($_SESSION);
+        echo "<script language='javascript'>window.alert('$_SESSION'); </script>";
         echo "<script language='javascript'>window.location='../views/perfil.php'; </script>";
     } else {
         echo "<script language='javascript'>window.alert('login ou senha invalido'); </script>";
