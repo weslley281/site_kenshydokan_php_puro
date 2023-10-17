@@ -12,66 +12,53 @@ class UsuarioRepositorio
         $this->conexao = $conexaoDB->conectar();
     }
 
-    public function criarPublicacao(Publicacao $publicacao): bool
+    public function criarUsuario(Usuario $usuario): bool
     {
-        $inserir = $this->conexao->prepare("INSERT INTO postagens (id_usuario, titulo, conteudo, status, dataCriacao, dataMudanca) VALUES (?, ?, ?, ?, ?, ?)");
-        $inserir->bind_param("issss", $publicacao->getIdUsuario(), $publicacao->getTitulo(), $publicacao->getConteudo(), $publicacao->getStatus(), $publicacao->getDataCriacao(), $publicacao->getDataMudanca());
+        $inserir = $this->conexao->prepare("INSERT INTO usuarios (nome, id_fil, id_imagem, email, nivel, senha, dataCriacao, dataMudanca) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $inserir->bind_param("siisssss", $usuario->getNome(), $usuario->getIdFil(), $usuario->getIdImagem(), $usuario->getEmail(), $usuario->getNivel(), $usuario->getSenha(), $usuario->getDataCriacao(), $usuario->getDataMudanca());
         $resultado = $inserir->execute();
         $inserir->close();
 
         return $resultado;
     }
 
-    public function editar_publicacao(int $id_publicacao, Publicacao $publicacao): bool
+    public function editarUsuario(int $id_usuario, Usuario $usuario): bool
     {
-        $atualizar = $this->conexao->prepare("UPDATE postagens SET titulo = ?, conteudo = ?, status = ?, dataMudanca = ? WHERE id_publicacao = ?");
-        $atualizar->bind_param("ssssi", $publicacao->getTitulo(), $publicacao->getConteudo(), $publicacao->getStatus(), $publicacao->getDataMudanca(), $id_publicacao);
+        $atualizar = $this->conexao->prepare("UPDATE usuarios SET nome = ?, id_fil = ?, id_imagem = ?, email = ?, nivel = ?, senha = ?, dataMudanca = ? WHERE id_usuario = ?");
+        $atualizar->bind_param("siissssi", $usuario->getNome(), $usuario->getIdFil(), $usuario->getIdImagem(), $usuario->getEmail(), $usuario->getNivel(), $usuario->getSenha(), $usuario->getDataMudanca(), $id_usuario);
         $resultado = $atualizar->execute();
         $atualizar->close();
 
         return $resultado;
     }
 
-    public static function editar_status_publicacao(int $id_publicacao, string $status): bool
+    public static function editarNivelUsuario(int $id_usuario, string $nivel): bool
     {
         $c = new Conexao();
         $conexao = $c->conectar();
 
-        $atualizar = $conexao->prepare("UPDATE postagens SET status = ? WHERE id_publicacao = ?");
-        $atualizar->bind_param("si", $status, $id_publicacao);
+        $atualizar = $conexao->prepare("UPDATE usuarios SET nivel = ? WHERE id_usuario = ?");
+        $atualizar->bind_param("si", $nivel, $id_usuario);
         $resultado = $atualizar->execute();
         $atualizar->close();
 
         return $resultado;
     }
 
-    public static function excluir_publicacao(int $id_publicacao): bool
+    public static function excluirUsuario(int $id_usuario): bool
     {
         $c = new Conexao();
         $conexao = $c->conectar();
 
-        $excluir = $conexao->prepare("DELETE FROM postagens WHERE id_publicacao = ?");
-        $excluir->bind_param("i", $id_publicacao);
+        $excluir = $conexao->prepare("DELETE FROM usuarios WHERE id_usuario = ?");
+        $excluir->bind_param("i", $id_usuario);
         $resultado = $excluir->execute();
         $excluir->close();
 
         return $resultado;
     }
 
-    public static function registrar_imagem_publicacao(string $nome, string $caminho): bool
-    {
-        $c = new Conexao();
-        $conexao = $c->conectar();
-
-        $inserir = $conexao->prepare("INSERT INTO imagens (nome, caminho) VALUES (?, ?)");
-        $inserir->bind_param("ss", $nome, $caminho);
-        $resultado = $inserir->execute();
-        $inserir->close();
-
-        return $resultado;
-    }
-
-    public static function buscar_nome_autor($id_usuario)
+    public static function buscarNomeUsuario($id_usuario)
     {
         $c = new Conexao();
         $conexao = $c->conectar();
@@ -83,14 +70,14 @@ class UsuarioRepositorio
         $procura->execute();
         $procura->bind_result($nome);
 
-        $autor = null;
+        $usuario = null;
 
         while ($procura->fetch()) {
-            $autor = $nome;
+            $usuario = $nome;
         }
 
         $procura->close();
 
-        return $autor;
+        return $usuario;
     }
 }

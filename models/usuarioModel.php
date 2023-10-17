@@ -3,65 +3,106 @@ include_once "conexao.php";
 
 class Usuario
 {
-    private $conexao;
+    private $nome;
+    private $id_fil;
+    private $id_imagem;
+    private $email;
+    private $nivel;
+    private $senha;
+    private $dataCriacao;
+    private $dataMudanca;
 
-    public function __construct()
+    public function __construct($nome, $id_fil, $id_imagem, $email, $senha, $dataMudanca)
     {
-        $conexaoDB = new Conexao();
-        $this->conexao = $conexaoDB->conectar();
+        $this->nome = $nome;
+        $this->id_fil = $id_fil;
+        $this->id_imagem = $id_imagem;
+        $this->email = $email;
+        $this->nivel = "aluno";
+        $this->senha = $senha;
+        $this->dataCriacao = date("Y-m-d");
+        $this->dataMudanca = $dataMudanca;
     }
 
-    public function create_user($nome, $email, $telefone)
+    // Métodos getters
+    public function getNome()
     {
-		$insert = $this->conexao->prepare("INSERT INTO posts (user_id, title, content, status, date) VALUES (?, ?, ?, ?, ?)");
-        $insert->bind_param("issss", $user_id, $title, $content, $status, $date);
-        $result = $insert->execute();
-        $insert->close();
-        
+        return $this->nome;
     }
 
-    public function editar_usuario($id_usuario, $nome, $email, $telefone)
+    public function getIdFil()
     {
-        $atualizar = $this->conexao->prepare("UPDATE postagens SET titulo = ?, conteudo = ?, status = ?, dataMudanca = ? WHERE id_publicacao = ?");
-        $atualizar->bind_param("ssssi", $titulo, $conteudo, $status, $dataMudanca, $id_publicacao);
-        $resultado = $atualizar->execute();
-        $atualizar->close();
-
-        return $resultado;
-        return $resultado;
+        return $this->id_fil;
     }
 
-    public function editar_senha($id_usuario, $senha)
+    public function getIdImagem()
     {
-        $c = new conectar();
-        $conexao = $c->conexao();
-
-        $consulta = "UPDATE usuarios SET senha = '$senha' WHERE id_usuario = $id_usuario";
-        $resultado = mysqli_query($conexao, $consulta);
-        //var_dump($consulta);
-
-        return $resultado;
+        return $this->id_imagem;
     }
 
-    public function excluir_usuario($id_usuario)
+    public function getEmail()
     {
-        $c = new conectar();
-        $conexao = $c->conexao();
-
-        $deletar = "DELETE FROM usuarios where id_usuario = '$id_usuario'";
-        $resultado = mysqli_query($conexao, $deletar);
-
-        return $resultado;
+        return $this->email;
     }
 
-    public function registrar_imagem_usuario($nome, $caminho)
+    public function getNivel()
     {
-        $c = new conectar();
-        $conexao = $c->conexao();
+        return $this->nivel;
+    }
 
-        $inserir = "INSERT INTO imagens (nome, caminho) VALUES ('$nome', '$caminho')";
-        $resultado = mysqli_query($conexao, $inserir);
+    public function getSenha()
+    {
+        return $this->senha;
+    }
 
-        return $resultado;
+    public function getDataCriacao()
+    {
+        return $this->dataCriacao;
+    }
+
+    public function getDataMudanca()
+    {
+        return $this->dataMudanca;
+    }
+
+    // Métodos setters
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+    }
+
+    public function setIdFil($id_fil)
+    {
+        $this->id_fil = $id_fil;
+    }
+
+    public function setIdImagem($id_imagem)
+    {
+        $this->id_imagem = $id_imagem;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    public function setNivel($nivel)
+    {
+        $this->nivel = $nivel;
+    }
+
+    public function setSenha($senha)
+    {
+        $this->senha = $senha;
+    }
+
+    public function setDataCriacao($dataCriacao)
+    {
+        $this->dataCriacao = $dataCriacao;
+    }
+
+    public function setDataMudanca($dataMudanca)
+    {
+        $this->dataMudanca = $dataMudanca;
     }
 }

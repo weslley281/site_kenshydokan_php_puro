@@ -8,12 +8,14 @@ class Publicacao
     private $dataCriacao;
     private $dataMudanca;
 
-    public function __construct($id_usuario, $titulo, $conteudo)
+    public function __construct($id_usuario, $titulo, $conteudo, $dataMudanca)
     {
         $this->id_usuario = $id_usuario;
         $this->titulo = $titulo;
         $this->conteudo = $conteudo;
         $this->status = "aguardando";
+        $this->dataCriacao = date("Y-m-d");
+        $this->dataMudanca = $dataMudanca;
     }
 
     // Métodos Getters
