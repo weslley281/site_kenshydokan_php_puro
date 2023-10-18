@@ -14,8 +14,11 @@ class UsuarioRepositorio
 
     public function criarUsuario(Usuario $usuario): bool
     {
-        $inserir = $this->conexao->prepare("INSERT INTO usuarios (nome, id_fil, id_imagem, email, nivel, senha, dataCriacao, dataMudanca) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $inserir->bind_param("siisssss", $usuario->getNome(), $usuario->getIdFil(), $usuario->getIdImagem(), $usuario->getEmail(), $usuario->getNivel(), $usuario->getSenha(), $usuario->getDataCriacao(), $usuario->getDataMudanca());
+        $inserir = $this->conexao->prepare("INSERT INTO usuarios (nome, id_fil, id_imagem, email, nivel, telefone, senha, dataCriacao, dataMudanca) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $inserir->bind_param("siissssss", $usuario->getNome(), $usuario->getIdFil(), $usuario->getIdImagem(), $usuario->getEmail(), $usuario->getNivel(), $usuario->getTelefone(), $usuario->getSenha(), $usuario->getDataCriacao(), $usuario->getDataMudanca());
+
+        //echo "INSERT INTO usuarios (nome, id_fil, id_imagem, email, nivel, telefone, senha, dataCriacao, dataMudanca) VALUES (" . $usuario->getNome() . ", " . $usuario->getIdFil() . ", " . $usuario->getIdImagem() . ", " . $usuario->getEmail() . ", " . $usuario->getNivel() . ", " . $usuario->getSenha() . ", " . $usuario->getDataCriacao() . ", " . $usuario->getDataMudanca() . " )";
+
         $resultado = $inserir->execute();
         $inserir->close();
 
@@ -24,8 +27,8 @@ class UsuarioRepositorio
 
     public function editarUsuario(int $id_usuario, Usuario $usuario): bool
     {
-        $atualizar = $this->conexao->prepare("UPDATE usuarios SET nome = ?, id_fil = ?, id_imagem = ?, email = ?, nivel = ?, senha = ?, dataMudanca = ? WHERE id_usuario = ?");
-        $atualizar->bind_param("siissssi", $usuario->getNome(), $usuario->getIdFil(), $usuario->getIdImagem(), $usuario->getEmail(), $usuario->getNivel(), $usuario->getSenha(), $usuario->getDataMudanca(), $id_usuario);
+        $atualizar = $this->conexao->prepare("UPDATE usuarios SET nome = ?, id_fil = ?, id_imagem = ?, email = ?, nivel = ?, telefone = ?, senha = ?, dataMudanca = ? WHERE id_usuario = ?");
+        $atualizar->bind_param("siisssssi", $usuario->getNome(), $usuario->getIdFil(), $usuario->getIdImagem(), $usuario->getEmail(), $usuario->getNivel(), $usuario->getTelefone(), $usuario->getSenha(), $usuario->getDataMudanca(), $id_usuario);
         $resultado = $atualizar->execute();
         $atualizar->close();
 

@@ -54,6 +54,11 @@ $paginas = array(
 
     <!-- Video JS -->
     <link href="https://vjs.zencdn.net/8.6.0/video-js.css" rel="stylesheet" />
+
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
     <?php
 // Itera sobre as páginas e adiciona a classe "active" se a URL atual corresponder
 foreach ($paginas as $url => $nome_da_pagina) {

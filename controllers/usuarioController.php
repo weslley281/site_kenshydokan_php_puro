@@ -1,12 +1,13 @@
 <?php
-include_once "../models/usuarioModel.php";
-include_once "../models/imagemModel.php";
-include_once "../repositorios/usuarioRepositorio.php";
-include_once "../repositorios/imagemRepositorio.php";
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if (isset($_POST["email"]) && isset($_POST["nome"]) && isset($_POST["senha"]) && isset($_POST["type"])) {
-        if ($_POST["type"] == "inserir") {
+    include_once "../models/usuarioModel.php";
+    include_once "../models/imagemModel.php";
+    include_once "../repositorios/usuarioRepositorio.php";
+    include_once "../repositorios/imagemRepositorio.php";
+
+    if (isset($_POST["email"]) && isset($_POST["nome"]) && isset($_POST["senha"]) && isset($_POST["tipo"])) {
+        if ($_POST["tipo"] == "inserir") {
+            $dataMudanca = date("Y-m-d");
             $imagemRepositorio = new ImagemRepositorio;
             $usuarioRepositorio = new UsuarioRepositorio;
 
@@ -17,16 +18,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $caminho = $diretorioUpload . $nomeImagem;
 
             $extensaoImagem = strtolower(pathinfo($caminho, PATHINFO_EXTENSION));
+            var_dump($extensaoImagem);
 
             if (in_array($extensaoImagem, ["jpg", "jpeg", "gif", "png"])) {
                 if (move_uploaded_file($_FILES["imagem"]["tmp_name"], $caminho)) {
-                    $imagemModel = new Imagem($nomeImagem, $caminho);
+                    $imagemModel = new Imagem($nomeImagem, $caminho, $dataMudanca);
 
                     if ($imagemRepositorio->registrar_imagem($imagemModel)) {
                         $id_imagem = $imagemRepositorio::procura_id_imagem($nomeImagem);
-                        $dataMudanca = date("Y-m-d");
 
-                        $usuarioModel = new Usuario($_POST["nome"], $_POST["id_fil"], $id_imagem, $_POST["email"], $senhaSegura, $dataMudanca);
+                        $usuarioModel = new Usuario($_POST["nome"], $_POST["id_fil"], $id_imagem, $_POST["email"], $_POST["telefone"], $senhaSegura, $dataMudanca);
 
                         if ($usuarioRepositorio->criarUsuario($usuarioModel)) {
                             echo "<script language='javascript'>window.alert('Usuário criado com sucesso'); </script>";
@@ -45,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 }
             } else {
                 echo "<script language='javascript'>window.alert('Formato de imagem inválido'); </script>";
-                echo "<script language='javascript'>window.location='../views/cadastrar.php'; </script>";
+                //echo "<script language='javascript'>window.location='../views/cadastrar.php'; </script>";
             }
         }
     } else {

@@ -55,7 +55,7 @@ $graduacao = mysqli_fetch_array($resultado_graduacao);
 							<!-- card do perfil -->
 							<div class="col-5 mb-4">
 								<div class="card" style="width: 18rem;">
-									<img class="card-img-top" src="../imagens/<?php echo $imagem["nome"] ?>" alt="">
+									<img class="card-img-top" src="<?php echo $imagem["caminho"] ?>" alt="">
 									<div class="card-body">
 										<h5 class="card-title"><?php echo $usuario["nome"]; ?></h5>
 									</div>
@@ -67,17 +67,15 @@ $busca = "SELECT * FROM filiados where id_filiado = '$id_filiado'";
 $resultado = mysqli_query($conexao, $busca);
 while ($res = mysqli_fetch_array($resultado)) {
     if ($id_filiado == 23) {
-        $graduacao = ":<br>Faixa preta 1° dan em Karatê Kenshydokan<br>
-                                Faixa preta 1° dan em Judô Kodokan<br>
-                                Faixa preta em Jiu Jitsu Brasileiro<br>
-                                Faixa roxa 2° kyu em Ju jitsu";
+        $graduacao = ":<br>Faixa preta 3° dan em Karatê Kenshydokan<br>
+                                Faixa preta 2° dan em Judô Kodokan<br>
+                                Faixa preta em Jiu Jitsu Brasileiro";
     } elseif ($id_filiado == 14) {
         $graduacao = ":<br>Faixa coral 10° dan em Karatê Kenshydokan<br>
                                 Faixa coral 6° dan em Judô Kodokan<br>
                                 Faixa coral 7° dan em Ju jitsu";
     } elseif ($id_filiado == 21) {
-        $graduacao = ":<br>Faixa preta 1° dan em Karatê Kenshydokan<br>
-                                Faixa preta 1° dan em Judô Kodokan";
+        $graduacao = ":<br>Faixa preta 1° dan em Karatê Kenshydokan<br>";
     } else {
         $graduacao = $graduacao["graduacao"];
     }

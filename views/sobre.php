@@ -21,12 +21,7 @@
           </ul>
         </div>
       </div>
-      <!-- /.row -->
       <br>
-
-      <!-- Alunos-->
-
-      <!-- Page Heading -->
   <h1 class="my-4">Seus Alunos Graduados
     <small>Faixas Pretas</small>
   </h1>
@@ -73,10 +68,10 @@
     </div>
     <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
-        <a href="filiado/ver_perfil.php?id_usuario=1"><img class="card-img-top" src="../img/sensei_weslley.jpg" alt=""></a>
+        <a href="ver_perfil.php?id_usuario=1"><img class="card-img-top" src="../img/sensei_weslley.jpg" alt=""></a>
         <div class="card-body">
           <h4 class="card-title">
-            <a href="filiado/ver_perfil.php?id_usuario=1">Weslley Henrique Vieira Ferraz</a>
+            <a href="ver_perfil.php?id_usuario=1">Weslley Henrique Vieira Ferraz</a>
           </h4>
           <ul>
               <li>Faixa Preta 3° Dan do Karate Kenshydokan.</li>

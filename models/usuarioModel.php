@@ -1,6 +1,4 @@
 <?php
-include_once "conexao.php";
-
 class Usuario
 {
     private $nome;
@@ -8,17 +6,19 @@ class Usuario
     private $id_imagem;
     private $email;
     private $nivel;
+    private $telefone;
     private $senha;
     private $dataCriacao;
     private $dataMudanca;
 
-    public function __construct($nome, $id_fil, $id_imagem, $email, $senha, $dataMudanca)
+    public function __construct($nome, $id_fil, $id_imagem, $email, $telefone, $senha, $dataMudanca)
     {
         $this->nome = $nome;
         $this->id_fil = $id_fil;
         $this->id_imagem = $id_imagem;
         $this->email = $email;
         $this->nivel = "aluno";
+        $this->telefone = $telefone;
         $this->senha = $senha;
         $this->dataCriacao = date("Y-m-d");
         $this->dataMudanca = $dataMudanca;
@@ -48,6 +48,11 @@ class Usuario
     public function getNivel()
     {
         return $this->nivel;
+    }
+
+    public function getTelefone()
+    {
+        return $this->telefone;
     }
 
     public function getSenha()
@@ -89,6 +94,11 @@ class Usuario
     public function setNivel($nivel)
     {
         $this->nivel = $nivel;
+    }
+
+    public function setTelefone($telefone)
+    {
+        $this->telefone = $telefone;
     }
 
     public function setSenha($senha)

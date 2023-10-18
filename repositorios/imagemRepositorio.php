@@ -15,8 +15,8 @@ class ImagemRepositorio
     public function registrar_imagem(Imagem $imagem): bool
     {
         try {
-            $inserir = $this->conexao->prepare("inserir INTO imagens (nome, caminho) VALUES (?, ?)");
-            $inserir->bind_param("ss", $imagem->getNome(), $imagem->getCaminho());
+            $inserir = $this->conexao->prepare("INSERT INTO imagens (nome, caminho, dataCriacao, dataMudanca) VALUES (?, ?, ?, ?)");
+            $inserir->bind_param("ssss", $imagem->getNome(), $imagem->getCaminho(), $imagem->getDataCriacao(), $imagem->getDataMudanca());
             $resultado = $inserir->execute();
             $inserir->close();
 

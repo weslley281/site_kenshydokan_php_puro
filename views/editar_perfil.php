@@ -17,21 +17,26 @@ $busca_imagem = "SELECT * FROM imagens WHERE id_imagem = '$id_imagem'";
 $resultado_imagem = mysqli_query($conexao, $busca_imagem);
 $imagem = mysqli_fetch_array($resultado_imagem);
 
-$id_filiado = $usuario["id_fil"];
-$busca_filiado = "SELECT * FROM filiados WHERE id_filiado = '$id_filiado'";
-$resultado_filiado = mysqli_query($conexao, $busca_filiado);
-$filiado = mysqli_fetch_array($resultado_filiado);
-$confirmacao = $filiado["confirmacao"];
-if ($confirmacao == "sim") {
-    $ativo = "Você está filiado";
-} else {
-    $ativo = "Aguardando Cofirmação de Filiação, Não Está Filiado Não";
-}
+if ($usuario["id_fil"] != 0 || $usuario["id_fil"] != null && $usuario['nivel'] == "kohai") {
+    $id_filiado = $usuario["id_fil"];
+    $busca_filiado = "SELECT * FROM filiados WHERE id_filiado = '$id_filiado'";
+    $resultado_filiado = mysqli_query($conexao, $busca_filiado);
+    $filiado = mysqli_fetch_array($resultado_filiado);
+    $estaFiliado = ($filiado["confirmacao"] == "sim") ? "Você está filiado" : "Aguardando Confirmação de Filiação, Não Está Filiado Não";
 
-$id_graduacao = $filiado["id_graduacao"];
-$busca_graduacao = "SELECT * FROM graduacao WHERE id_graduacao = '$id_graduacao'";
-$resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
-$graduacao = mysqli_fetch_array($resultado_graduacao);
+    $id_graduacao = $filiado["id_graduacao"];
+    $busca_graduacao = "SELECT * FROM graduacao WHERE id_graduacao = '$id_graduacao'";
+    $resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
+    $graduacao = mysqli_fetch_array($resultado_graduacao);
+} else {
+    $estaFiliado = "Sem dados";
+    $filiado = array(
+        "dojo" => "a definir",
+    );
+    $graduacao = array(
+        'graduacao' => 'sem registro',
+    );
+}
 
 if ($filiado != "") {
     ?>
@@ -68,7 +73,7 @@ if ($filiado != "") {
 								<!-- card do perfil -->
 								<div class="col d-inline-flex mb-4">
 									<div class="card" style="width: 18rem;">
-										<img class="card-img-top" src="../imagens/<?php echo $imagem["nome"] ?>" alt="">
+										<img class="card-img-top" src="<?php echo $imagem["caminho"] ?>" alt="">
 										<div class="card-body">
 											<h5 class="card-title"><?php echo $usuario["nome"]; ?></h5>
 										</div>
@@ -120,30 +125,3 @@ include "rodape.php";
     header("location:login.php");
 }
 ?>
-
-	<!-- Scripts de Telefone -->
-	<script type="text/javascript">
-		function mask(o, f) {
-			setTimeout(function() {
-				var v = mphone(o.value);
-				if (v != o.value) {
-					o.value = v;
-				}
-			}, 1);
-		}
-
-		function mphone(v) {
-			var r = v.replace(/\D/g, "");
-			r = r.replace(/^0/, "");
-			if (r.length > 10) {
-				r = r.replace(/^(\d\d)(\d{5})(\d{4}).*/, "($1) $2-$3");
-			} else if (r.length > 5) {
-				r = r.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, "($1) $2-$3");
-			} else if (r.length > 2) {
-				r = r.replace(/^(\d\d)(\d{0,5})/, "($1) $2");
-			} else {
-				r = r.replace(/^(\d*)/, "($1");
-			}
-			return r;
-		}
-	</script>
