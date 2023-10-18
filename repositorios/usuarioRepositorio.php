@@ -35,13 +35,13 @@ class UsuarioRepositorio
         return $resultado;
     }
 
-    public static function editarNivelUsuario(int $id_usuario, string $nivel): bool
+    public static function editarNivelUsuario(int $id_usuario, string $nivel, string $dataMudanca): bool
     {
         $c = new Conexao();
         $conexao = $c->conectar();
 
-        $atualizar = $conexao->prepare("UPDATE usuarios SET nivel = ? WHERE id_usuario = ?");
-        $atualizar->bind_param("si", $nivel, $id_usuario);
+        $atualizar = $conexao->prepare("UPDATE usuarios SET nivel = ?, dataMudanca = ? WHERE id_usuario = ?");
+        $atualizar->bind_param("ssi", $nivel, $dataMudanca, $id_usuario);
         $resultado = $atualizar->execute();
         $atualizar->close();
 

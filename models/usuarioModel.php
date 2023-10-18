@@ -11,7 +11,7 @@ class Usuario
     private $dataCriacao;
     private $dataMudanca;
 
-    public function __construct($nome, $id_fil, $id_imagem, $email, $telefone, $senha, $dataMudanca)
+    public function __construct($nome, $id_fil, $id_imagem, $email, $telefone, $dataMudanca, $senha = "")
     {
         $this->nome = $nome;
         $this->id_fil = $id_fil;
