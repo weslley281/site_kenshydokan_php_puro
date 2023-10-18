@@ -24,8 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                     if ($imagemRepositorio->registrar_imagem($imagemModel)) {
                         $id_imagem = $imagemRepositorio::procura_id_imagem($nomeImagem);
+                        $dataMudanca = date("Y-m-d");
 
-                        $usuarioModel = new Usuario($_POST["nome"], $_POST["id_fil"], $id_imagem, $_POST["email"], $senhaSegura, $_POST["dataMudanca"]);
+                        $usuarioModel = new Usuario($_POST["nome"], $_POST["id_fil"], $id_imagem, $_POST["email"], $senhaSegura, $dataMudanca);
 
                         if ($usuarioRepositorio->criarUsuario($usuarioModel)) {
                             echo "<script language='javascript'>window.alert('Usuário criado com sucesso'); </script>";
