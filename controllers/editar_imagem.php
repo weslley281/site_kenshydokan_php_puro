@@ -1,9 +1,9 @@
 <?php
 include_once "../db/conexao.php";
-include_once "../repositorios/publicacaoRepositorio.php";
+include_once "../repositorios/imagemRepositorio.php";
 
 $id_usuario = $_POST["id_usuario"];
-$registro = new UsuarioRepositorio;
+$registro = new ImagemRepositorio;
 
 //manda a imagem para a pasta
 $caminho = '../img/' . $_FILES['foto']['name'];
@@ -21,7 +21,7 @@ $linha = mysqli_num_rows($resultado);
 
 //insere a imagem
 if ($linha == 0) {
-    $tentativa = $registro->registrar_imagem($nome, $caminho);
+    $tentativa = $registro->registra_imagem($nome, $caminho);
 }
 
 //busca o id da imagem depois de inserir

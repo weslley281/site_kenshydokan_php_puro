@@ -12,10 +12,10 @@ class ImagemRepositorio
         $this->conexao = $c->conectar();
     }
 
-    public function register_image(Imagem $imagem): bool
+    public function registrar_imagem(Imagem $imagem): bool
     {
         try {
-            $inserir = $this->conexao->prepare("inserir INTO images (name, pathImage) VALUES (?, ?)");
+            $inserir = $this->conexao->prepare("inserir INTO imagens (nome, caminho) VALUES (?, ?)");
             $inserir->bind_param("ss", $imagem->getNome(), $imagem->getCaminho());
             $resultado = $inserir->execute();
             $inserir->close();
@@ -32,11 +32,11 @@ class ImagemRepositorio
         }
     }
 
-    public function delete_image($name, $pathImage): bool
+    public function deleta_imagem($nome, $caminho): bool
     {
         try {
-            $deletar = $this->conexao->prepare("DELETE FROM images WHERE name = ? AND pathImage = ?");
-            $deletar->bind_param("ss", $name, $pathImage);
+            $deletar = $this->conexao->prepare("DELETE FROM imagens WHERE nome = ? AND caminho = ?");
+            $deletar->bind_param("ss", $nome, $caminho);
             $resultado = $deletar->execute();
             $deletar->close();
 
@@ -51,4 +51,34 @@ class ImagemRepositorio
             return false;
         }
     }
+
+    public static function procura_id_imagem($nome)
+    {
+        try {
+            $c = new Conexao();
+            $conexao = $c->conectar();
+
+            $busca = "SELECT id_imagem FROM imagens WHERE nome = ?";
+
+            $procura = $conexao->prepare($busca);
+            $procura->bind_param("s", $nome);
+            $procura->execute();
+            $procura->bind_result($resultado);
+
+            $imagem = null;
+
+            if ($procura->fetch()) {
+                $imagem = $resultado;
+            }
+
+            $procura->close();
+
+            return $imagem;
+        } catch (Exception $e) {
+
+            error_log("Erro ao procurar o ID da imagem: " . $e->getMessage());
+            return null;
+        }
+    }
+
 }
