@@ -31,11 +31,11 @@ class ImagemRepositorio
         }
     }
 
-    public function deleta_imagem($nome, $caminho): bool
+    public function deleta_imagem($id_imagem): bool
     {
         try {
-            $deletar = $this->conexao->prepare("DELETE FROM imagens WHERE nome = ? AND caminho = ?");
-            $deletar->bind_param("ss", $nome, $caminho);
+            $deletar = $this->conexao->prepare("DELETE FROM imagens WHERE id_imagem = ?");
+            $deletar->bind_param("i", $id_imagem);
             $resultado = $deletar->execute();
             $deletar->close();
 
@@ -66,6 +66,35 @@ class ImagemRepositorio
             $imagem = null;
 
             if ($procura->fetch()) {
+                $imagem = $resultado;
+            }
+
+            $procura->close();
+
+            return $imagem;
+        } catch (Exception $e) {
+
+            error_log("Erro ao procurar o ID da imagem: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    public static function procura_imagem($id_imagem)
+    {
+        try {
+            $c = new Conexao();
+            $conexao = $c->conectar();
+
+            $busca = "SELECT * FROM imagens WHERE id_imagem = ?";
+
+            $procura = $conexao->prepare($busca);
+            $procura->bind_param("i", $id_imagem);
+            $procura->execute();
+            $procura->bind_result($resultado);
+
+            $imagem = null;
+
+            while ($procura->fetch()) {
                 $imagem = $resultado;
             }
 

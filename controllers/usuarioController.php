@@ -80,6 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 echo "<script language='javascript'>window.location='../views/editar_perfil.php'; </script>";
             }
         } elseif ($_POST["tipo"] == "editar_imagem") {
+
             $imagemRepositorio = new ImagemRepositorio;
             $usuarioRepositorio = new UsuarioRepositorio;
 
@@ -96,21 +97,50 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     if ($imagemRepositorio->registrar_imagem($imagemModel)) {
                         $id_imagem = $imagemRepositorio::procura_id_imagem($nomeImagem);
 
-                        if ($usuarioRepositorio->editarImagemUsuario($id_imagem, $dataMudanca, $_POST["id_usuario"])) {
-                            echo "<script language='javascript'>window.location='../views/editar_perfil.php.php'; </script>";
+                        $dados_imagem_antiga = $imagemRepositorio::procura_imagem($_POST["id_imagem"]);
+                        $caminhoImagemAntiga = $dados_imagem_antiga["caminho"];
+
+                        // Exclua o arquivo de imagem antiga no sistema de arquivos
+                        if (file_exists($caminhoImagemAntiga)) {
+                            unlink($caminhoImagemAntiga);
+                        }
+
+                        if ($imagemRepositorio->deleta_imagem($_POST["id_imagem"])) {
+                            if ($usuarioRepositorio->editarImagemUsuario($id_imagem, $dataMudanca, $_POST["id_usuario"])) {
+                                // Redirecionar após o sucesso
+                                header("Location: ../views/editar_perfil.php.php");
+                                exit;
+                            } else {
+                                // Lida com falha na edição de imagem do usuário
+                                echo "<script language='javascript'>window.alert('Erro ao editar a imagem do usuário'); </script>";
+                                header("Location: ../views/editar_perfil.php");
+                                exit;
+                            }
+                        } else {
+                            // Lida com erro na exclusão da imagem do repositório
+                            echo "<script language='javascript'>window.alert('Erro: Imagem não deletada do repositório, tente novamente'); </script>";
+                            header("Location: ../views/editar_perfil.php");
+                            exit;
                         }
                     } else {
+                        // Lida com erro no registro da imagem
                         echo "<script language='javascript'>window.alert('Erro: Imagem não salva, tente novamente'); </script>";
-                        echo "<script language='javascript'>window.location='../views/editar_perfil.php.php'; </script>";
+                        header("Location: ../views/editar_perfil.php");
+                        exit;
                     }
                 } else {
+                    // Lida com erro no envio da imagem
                     echo "<script language='javascript'>window.alert('Erro: Imagem não enviada, tente novamente'); </script>";
-                    echo "<script language='javascript'>window.location='../views/editar_perfil.php.php'; </script>";
+                    header("Location: ../views/editar_perfil.php");
+                    exit;
                 }
             } else {
+                // Lida com formato de imagem inválido
                 echo "<script language='javascript'>window.alert('Formato de imagem inválido'); </script>";
-                echo "<script language='javascript'>window.location='../views/editar_perfil.php'; </script>";
+                header("Location: ../views/editar_perfil.php");
+                exit;
             }
+
         } elseif ($_POST["tipo"] == "editar_senha") {
 
         } elseif ($_POST["tipo"] == "deletar") {

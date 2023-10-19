@@ -74,12 +74,12 @@ class UsuarioRepositorio
         return $resultado;
     }
 
-    public static function buscarNomeUsuario($id_usuario)
+    public static function buscarUsuario($id_usuario)
     {
         $c = new Conexao();
         $conexao = $c->conectar();
 
-        $busca = "SELECT nome FROM usuarios WHERE id_usuario = ?";
+        $busca = "SELECT * FROM usuarios WHERE id_usuario = ?";
 
         $procura = $conexao->prepare($busca);
         $procura->bind_param("i", $id_usuario);
