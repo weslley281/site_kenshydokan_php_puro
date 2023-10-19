@@ -56,7 +56,7 @@ if ($usuario["id_fil"] != 0 || $usuario["id_fil"] != null && $usuario['nivel'] =
 <?php if ($usuario["nivel"] == "admin" || $usuario["nivel"] == "sensei") {?>
 								<a href="exame_graduacao.php" class="list-group-item bg-light text-dark">Exame de Graduação</a>
 								<a href="criar_postagem.php" class="list-group-item bg-light text-dark">Criar Postagem</a>
-								<a href="postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
+								<a href="suas_postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
 								<a href="documentos.php" class="list-group-item bg-light text-dark">Arquivos para Baixar</a>
 <?php }?>
 							<a href="eventos.php" class="list-group-item bg-light text-dark">Eventos Online</a>

@@ -15,7 +15,7 @@ class PublicacaoRepositorio
     public function criarPublicacao(Publicacao $publicacao): bool
     {
         $inserir = $this->conexao->prepare("INSERT INTO postagens (id_usuario, titulo, conteudo, status, dataCriacao, dataMudanca) VALUES (?, ?, ?, ?, ?, ?)");
-        $inserir->bind_param("issss", $publicacao->getIdUsuario(), $publicacao->getTitulo(), $publicacao->getConteudo(), $publicacao->getStatus(), $publicacao->getDataCriacao(), $publicacao->getDataMudanca());
+        $inserir->bind_param("isssss", $publicacao->getIdUsuario(), $publicacao->getTitulo(), $publicacao->getConteudo(), $publicacao->getStatus(), $publicacao->getDataCriacao(), $publicacao->getDataMudanca());
         $resultado = $inserir->execute();
         $inserir->close();
 

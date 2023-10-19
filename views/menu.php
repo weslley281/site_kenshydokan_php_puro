@@ -58,7 +58,7 @@ $paginas = array(
     <!-- Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
     <?php
 // Itera sobre as páginas e adiciona a classe "active" se a URL atual corresponder
 foreach ($paginas as $url => $nome_da_pagina) {

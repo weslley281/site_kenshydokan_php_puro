@@ -52,7 +52,7 @@ if ($filiado != "") {
 							<?php if ($usuario["nivel"] == "admin" || $usuario["nivel"] == "sensei") {?>
 								<a href="exame_graduacao.php" class="list-group-item bg-light text-dark">Exame de Graduação</a>
 								<a href="criar_postagem.php" class="list-group-item text-dark bg-danger">Criar Postagem</a>
-								<a href="postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
+								<a href="suas_postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
 								<a href="documentos.php" class="list-group-item bg-light text-dark">Arquivos para Baixar</a>
 							<?php }?>
 							<a href="eventos.php" class="list-group-item bg-light text-dark">Eventos Online</a>
@@ -96,13 +96,20 @@ if ($filiado != "") {
 							<h1><strong>Criar Postagem</strong></h1>
 						</div>
 						<p class="text-danger mx-auto">A sua postagem ira aparecer no site depois que um administrador aprovar</p>
-						<form action="../controllers/criar_postagem.php" method="POST">
+						<form action="../controllers/postagemController.php" method="POST">
 							<div id="sample">
 								<input type="hidden" value="<?php echo $usuario["id_usuario"] ?>" name="id_usuario">
-								<input class="form-control form-control-lg mt-2 mb-2" type="text" placeholder="Titulo" name="titulo" required autofocus>
-								<textarea name="conteudo" rows="20" required>
-	                    Comece a criar.
-	                </textarea>
+								<input type="hidden" value="inserir" name="tipo">
+
+								<div class="form-group">
+									<input class="form-control" type="text" placeholder="Titulo" name="titulo" required autofocus>
+								</div>
+
+								<div class="form-group">
+									<textarea name="conteudo" rows="20" required>
+	                    				Comece a criar.
+	                				</textarea>
+								</div>
 								<input class="btn btn-success mt-3" type="submit" name="salvar" value="salvar">
 							</div>
 						</form>

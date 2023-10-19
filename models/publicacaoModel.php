@@ -8,12 +8,12 @@ class Publicacao
     private $dataCriacao;
     private $dataMudanca;
 
-    public function __construct($id_usuario, $titulo, $conteudo, $dataMudanca)
+    public function __construct($id_usuario, $titulo, $conteudo, $dataMudanca, $status = "aguardando")
     {
         $this->id_usuario = $id_usuario;
         $this->titulo = $titulo;
         $this->conteudo = $conteudo;
-        $this->status = "aguardando";
+        $this->status = $status;
         $this->dataCriacao = date("Y-m-d");
         $this->dataMudanca = $dataMudanca;
     }
@@ -68,6 +68,11 @@ class Publicacao
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    public function setDataCriacao($dataCriacao)
+    {
+        $this->dataCriacao = $dataCriacao;
     }
 
     public function setDataMudanca($dataMudanca)

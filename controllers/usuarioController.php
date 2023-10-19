@@ -55,8 +55,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 }
             }
         } elseif ($_POST["tipo"] == "edidar") {
+            $nome = $_POST["nome"];
+            $id_fil = $_POST["id_fil"];
+            $id_imagem = $_POST["id_imagem"];
+            $email = $_POST["email"];
+            $telefone = $_POST["telefone"];
+
             $usuarioRepositorio = new UsuarioRepositorio;
-            var_dump($_POST["nome"], $_POST["id_fil"], $_POST["id_imagem"], $_POST["email"], $_POST["telefone"], $dataMudanca);
+            var_dump($nome, $id_fil, $id_imagem, $email, $telefone, $dataMudanca);
             $usuarioModel = new Usuario($_POST["nome"], $_POST["id_fil"], $_POST["id_imagem"], $_POST["email"], $_POST["telefone"], $dataMudanca);
 
             $usuarioModel->setNivel($_POST["nivel"]);
@@ -145,12 +151,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 } else {
     exibirMensagemEredirecionar("A requisição não é POST", '../views/cadastrar.php');
-}
-
-function uploadImagem($imagemRepositorio, $dataMudanca)
-{
-    // Lógica para upload e validação de imagem
-    // Retorne o ID da imagem se for bem-sucedido, ou false em caso de erro
 }
 
 function exibirMensagemEredirecionar($mensagem, $destino)

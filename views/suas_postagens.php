@@ -102,7 +102,7 @@ if ($filiado != "") {
 									<h2>Postagens</h2>
 								</div>
 								<div class="table-responsive">
-									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+									<table id="minhaTabela" class="table table-bordered display" id="dataTable" width="100%" cellspacing="0">
 										<thead>
 											<tr>
 												<th>id</th>
@@ -124,13 +124,13 @@ $id_usuario = $usuario["id_usuario"];
         while ($postagem = mysqli_fetch_array($resultado)) {
             ?>
 													<tr>
-														<td><?php echo $postagem["id_postagem"]; ?></td>
+														<td><?php echo $postagem["id_publicacao"]; ?></td>
 														<td><?php echo $postagem["titulo"]; ?></td>
-														<td><?php echo $postagem["data"]; ?></td>
+														<td><?php echo $postagem["dataCriacao"]; ?></td>
 														<td>
-															<a title="Editar" class="btn btn-info" href="editar_postagem.php?id=<?php echo $postagem["id_postagem"]; ?>"><i class="fas fa-edit"></i></a>
+															<a title="Editar" class="btn btn-info" href="editar_postagem.php?id=<?php echo $postagem["id_publicacao"]; ?>"><i class="fas fa-edit"></i></a>
 
-															<a title="Excluir" class="btn btn-danger" href="../controllers/deletar_postagem.php?id=<?php echo $postagem["id_postagem"]; ?>"><i class="fa fa-minus-square"></i></a>
+															<a title="Excluir" class="btn btn-danger" href="../controllers/deletar_postagem.php?id=<?php echo $postagem["id_publicacao"]; ?>"><i class="fa fa-minus-square"></i></a>
 														</td>
 													</tr>
 											<?php }

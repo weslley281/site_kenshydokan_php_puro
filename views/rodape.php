@@ -15,7 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script>
       tinymce.init({
         selector: 'textarea',
@@ -58,25 +58,35 @@
     </script>
 
     <script type="text/javascript">
-    // Função para mostrar a pré-visualização da imagem
-    function showImagePreview(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+        // Função para mostrar a pré-visualização da imagem
+        function showImagePreview(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
-            reader.onload = function(e) {
-                $('#imagePreview').attr('src', e.target.result);
-                $('#imagePreview').show();
-            };
+                reader.onload = function(e) {
+                    $('#imagePreview').attr('src', e.target.result);
+                    $('#imagePreview').show();
+                };
 
-            reader.readAsDataURL(input.files[0]);
+                reader.readAsDataURL(input.files[0]);
+            }
         }
-    }
 
-    // Adicione um ouvinte de evento para o campo de entrada de arquivo
-    $('#imagem').change(function() {
-        showImagePreview(this);
-    });
-</script>
+        // Adicione um ouvinte de evento para o campo de entrada de arquivo
+        $('#imagem').change(function() {
+            showImagePreview(this);
+        });
+    </script>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+          $('#minhaTabela').DataTable({
+              "order": [[0, "asc"]], // Ordena a primeira coluna em ordem crescente
+              "pageLength": 10,      // Define o número de registros por página
+              "searching": true      // Habilita a pesquisa
+          });
+      });
+    </script>
 
   <!-- Video JS -->
   <script src="https://vjs.zencdn.net/8.6.0/video.min.js"></script>
