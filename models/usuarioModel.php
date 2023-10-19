@@ -11,13 +11,13 @@ class Usuario
     private $dataCriacao;
     private $dataMudanca;
 
-    public function __construct($nome, $id_fil, $id_imagem, $email, $telefone, $dataMudanca, $senha = "")
+    public function __construct($nome, $id_fil, $id_imagem, $email, $telefone, $dataMudanca, $senha = "", $nivel = "aluno")
     {
         $this->nome = $nome;
         $this->id_fil = $id_fil;
         $this->id_imagem = $id_imagem;
         $this->email = $email;
-        $this->nivel = "aluno";
+        $this->nivel = $nivel;
         $this->telefone = $telefone;
         $this->senha = $senha;
         $this->dataCriacao = date("Y-m-d");

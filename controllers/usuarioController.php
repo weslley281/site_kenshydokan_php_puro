@@ -7,6 +7,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     include_once "../repositorios/usuarioRepositorio.php";
     include_once "../repositorios/imagemRepositorio.php";
 
+    define("MSG_ERRO", "Erro: Ocorreu um erro. Tente novamente.");
+    define("MSG_SUCESSO", "Operação realizada com sucesso.");
+
     if (isset($_POST["tipo"])) {
         $dataMudanca = date("Y-m-d");
 
@@ -15,9 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $imagemRepositorio = new ImagemRepositorio;
             $usuarioRepositorio = new UsuarioRepositorio;
             if ($usuarioRepositorio::buscarUsuarioExistente($_POST["email"])) {
-                echo "<script language='javascript'>window.alert('Usuário já existe'); </script>";
-                echo "<script language='javascript'>window.location='../views/login.php'; </script>";
 
+                exibirMensagemEredirecionar("Erro: Usuário já existe", '../views/login.php');
             } else {
 
                 $senhaSegura = password_hash($_POST["senha"], PASSWORD_DEFAULT);
@@ -38,46 +40,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             $usuarioModel = new Usuario($_POST["nome"], $_POST["id_fil"], $id_imagem, $_POST["email"], $_POST["telefone"], $dataMudanca, $senhaSegura);
 
                             if ($usuarioRepositorio->criarUsuario($usuarioModel)) {
-                                echo "<script language='javascript'>window.alert('Usuário criado com sucesso'); </script>";
-                                echo "<script language='javascript'>window.location='../views/login.php'; </script>";
+                                exibirMensagemEredirecionar("Usuário criado com sucesso", '../views/login.php');
                             } else {
-                                echo "<script language='javascript'>window.alert('Erro: Usuário não cadastrado, tente novamente'); </script>";
-                                echo "<script language='javascript'>window.location='../views/cadastrar.php'; </script>";
+                                exibirMensagemEredirecionar("Erro: Usuário não cadastrado, tente novamente", '../views/cadastrar.php');
                             }
                         } else {
-                            echo "<script language='javascript'>window.alert('Erro: Imagem não salva, tente novamente'); </script>";
-                            echo "<script language='javascript'>window.location='../views/cadastrar.php'; </script>";
+                            exibirMensagemEredirecionar("Erro: Imagem não salva, tente novamente", '../views/cadastrar.php');
                         }
                     } else {
-                        echo "<script language='javascript'>window.alert('Erro: Imagem não enviada, tente novamente'); </script>";
-                        echo "<script language='javascript'>window.location='../views/cadastrar.php'; </script>";
+                        exibirMensagemEredirecionar("Erro: Imagem não salva, tente novamente", '../views/cadastrar.php');
                     }
                 } else {
-                    echo "<script language='javascript'>window.alert('Formato de imagem inválido'); </script>";
-                    echo "<script language='javascript'>window.location='../views/cadastrar.php'; </script>";
+                    exibirMensagemEredirecionar("Erro: Imagem não salva, tente novamente", '../views/cadastrar.php');
                 }
             }
         } elseif ($_POST["tipo"] == "edidar") {
             $usuarioRepositorio = new UsuarioRepositorio;
+            var_dump($_POST["nome"], $_POST["id_fil"], $_POST["id_imagem"], $_POST["email"], $_POST["telefone"], $dataMudanca);
+            $usuarioModel = new Usuario($_POST["nome"], $_POST["id_fil"], $_POST["id_imagem"], $_POST["email"], $_POST["telefone"], $dataMudanca);
 
-            $usuarioModel = new Usuario($_POST["nome"], $_POST["id_fil"], $id_imagem, $_POST["email"], $_POST["telefone"], $dataMudanca);
+            $usuarioModel->setNivel($_POST["nivel"]);
+            var_dump($usuarioModel);
 
             if ($usuarioRepositorio->editarUsuario($_POST["id_usuario"], $usuarioModel)) {
-                echo "<script language='javascript'>window.alert('Usuário editado com sucesso'); </script>";
-                echo "<script language='javascript'>window.location='../views/editar_perfil.php'; </script>";
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/editar_perfil.php');
             } else {
-                echo "<script language='javascript'>window.alert('Erro: Usuário não cadastrado, tente novamente'); </script>";
-                echo "<script language='javascript'>window.location='../views/editar_perfil.php'; </script>";
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/editar_perfil.php');
             }
 
         } elseif ($_POST["tipo"] == "editar_nivel" && $_SESSION["nivel"] == "admin") {
 
             if ($usuarioRepositorio::editarNivelUsuario($_POST["id_usuario"], $_POST["nivel"], $dataMudanca)) {
-                echo "<script language='javascript'>window.alert('Usuário editado com sucesso'); </script>";
-                echo "<script language='javascript'>window.location='../views/editar_perfil.php'; </script>";
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/editar_perfil.php');
             } else {
-                echo "<script language='javascript'>window.alert('Erro: Usuário não cadastrado, tente novamente'); </script>";
-                echo "<script language='javascript'>window.location='../views/editar_perfil.php'; </script>";
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/editar_perfil.php');
             }
         } elseif ($_POST["tipo"] == "editar_imagem") {
 
@@ -102,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         var_dump($dados_imagem_antiga);
 
                         $caminho = $dados_imagem_antiga != null ? file_exists($dados_imagem_antiga["caminho"]) : "";
-                        // Exclua o arquivo de imagem antiga no sistema de arquivos
+
                         if (file_exists($caminho)) {
                             unlink($caminhoImagemAntiga);
                         }
@@ -110,40 +106,56 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         $imagemRepositorio->deleta_imagem($_POST["id_imagem"]);
 
                         if ($usuarioRepositorio->editarImagemUsuario($_POST["id_usuario"], $id_imagem, $dataMudanca)) {
-                            echo "A imagem foi editada " . $id_imagem;
-                            header("Location: ../views/editar_perfil.php.php");
-                            exit;
+                            exibirMensagemEredirecionar(MSG_SUCESSO, '../views/editar_perfil.php');
                         } else {
-                            echo "<script language='javascript'>window.alert('Erro ao editar a imagem do usuário'); </script>";
-                            header("Location: ../views/editar_perfil.php");
-                            exit;
+                            exibirMensagemEredirecionar("Erro ao editar a imagem do usuário", '../views/editar_perfil.php');
                         }
                     } else {
-                        echo "<script language='javascript'>window.alert('Erro: Imagem não salva, tente novamente'); </script>";
-                        header("Location: ../views/editar_perfil.php");
-                        exit;
+                        exibirMensagemEredirecionar("Erro: Imagem não salva, tente novamente", '../views/editar_perfil.php');
                     }
                 } else {
-                    echo "<script language='javascript'>window.alert('Erro: Imagem não enviada, tente novamente'); </script>";
-                    header("Location: ../views/editar_perfil.php");
-                    exit;
+                    exibirMensagemEredirecionar("Erro: Imagem não enviada, tente novamente", '../views/editar_perfil.php');
                 }
             } else {
-                echo "<script language='javascript'>window.alert('Formato de imagem inválido'); </script>";
-                header("Location: ../views/editar_perfil.php");
-                exit;
+                exibirMensagemEredirecionar("Formato de imagem inválido", '../views/editar_perfil.php');
             }
 
         } elseif ($_POST["tipo"] == "editar_senha") {
+            $id_usuario = $_POST["id_usuario"];
+            $nova_senha = $_POST["nova_senha"];
 
+            $senhaSegura = password_hash($nova_senha, PASSWORD_DEFAULT);
+
+            if ($usuarioRepositorio->editarSenhaUsuario($id_usuario, $senhaSegura)) {
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/editar_perfil.php');
+            } else {
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/editar_perfil.php');
+            }
         } elseif ($_POST["tipo"] == "deletar") {
+            $id_usuario = $_POST["id_usuario"];
 
+            if ($usuarioRepositorio->excluirUsuario($id_usuario)) {
+                exibirMensagemEredirecionar("Usuário excluído com sucesso", '../views/login.php');
+            } else {
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/editar_perfil.php');
+            }
         }
     } else {
-        echo "<script language='javascript'>window.alert('Preencha todos os dados'); </script>";
-        echo "<script language='javascript'>window.location='../views/cadastrar.php'; </script>";
+        exibirMensagemEredirecionar("Preencha todos os dados", '../views/cadastrar.php');
     }
 } else {
-    echo "<script language='javascript'>window.alert('A requisição não é POST'); </script>";
-    echo "<script language='javascript'>window.location='../views/cadastrar.php'; </script>";
+    exibirMensagemEredirecionar("A requisição não é POST", '../views/cadastrar.php');
+}
+
+function uploadImagem($imagemRepositorio, $dataMudanca)
+{
+    // Lógica para upload e validação de imagem
+    // Retorne o ID da imagem se for bem-sucedido, ou false em caso de erro
+}
+
+function exibirMensagemEredirecionar($mensagem, $destino)
+{
+    echo "<script language='javascript'>window.alert('$mensagem'); </script>";
+    echo "<script language='javascript'>window.location='$destino'; </script>";
+    exit;
 }

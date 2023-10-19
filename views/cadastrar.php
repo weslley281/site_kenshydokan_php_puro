@@ -77,7 +77,7 @@ if ($resultado) {
               <label class="custom-control-label" for="customCheck1">Lembrar Senha</label>
             </div>
 
-            <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" name="entrar" value="entrar">
+            <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" name="entrar" value="Cadastrar-se">
             <hr class="my-4">
             <div class="row">
               <div class="col"><a href="recuperar_senha.php">Esqueci a senha</a></div>

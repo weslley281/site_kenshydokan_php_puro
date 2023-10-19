@@ -1,11 +1,9 @@
-<!-- Navigation -->
-<?php include "menu.php";?>
-<!-- /Navigation -->
 <?php
+include "menu.php";
 include_once "../db/conexao.php";
+
 $c = new Conexao();
 $conexao = $c->conectar();
-
 $id_usuario = $_SESSION['id_usuario'];
 
 $busca_usuario = "SELECT * FROM usuarios WHERE id_usuario = '$id_usuario'";
@@ -86,14 +84,33 @@ if ($filiado != "") {
 										<input type="hidden" value="editar_imagem" name="tipo">
 										<input type="hidden" value="<?php echo $usuario["id_imagem"] ?>" name="id_imagem">
 										<input class="form-control mb-2" type="hidden" value="<?php echo $usuario["id_usuario"]; ?>" name="id_usuario" readonly>
-										<input class="form-control mb-2" type="file" id="imagem" name="imagem">
+
+										<div class="form-group">
+											<input class="form-control" type="file" id="imagem" name="imagem">
+										</div>
+
 										<input class="btn btn-secondary mb-2" type="submit" name="atualizar" value="atualizar imagem">
 									</form>
-									<form action="../controllers/editar_perfil.php" method="post">
+
+									<form action="../controllers/usuarioController.php" method="post">
+										<input class="form-control mb-2" type="hidden" value="edidar" name="tipo" readonly>
 										<input class="form-control mb-2" type="hidden" value="<?php echo $usuario["id_usuario"]; ?>" name="id_usuario" readonly>
-										<input class="form-control mb-2" type="text" value="<?php echo $usuario["nome"]; ?>" name="nome" required>
-										<input class="form-control mb-2" type="email" value="<?php echo $usuario["email"]; ?>" name="email" readonly>
-										<input class="form-control mb-2" type="text" value="<?php echo $usuario["telefone"]; ?>" name="telefone" onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" required>
+										<input class="form-control mb-2" type="hidden" value="<?php echo $usuario["id_imagem"]; ?>" name="id_imagem" readonly>
+										<input class="form-control mb-2" type="hidden" value="<?php echo $usuario["id_fil"]; ?>" name="id_fil" readonly>
+										<input class="form-control mb-2" type="hidden" value="<?php echo $usuario["nivel"]; ?>" name="nivel" readonly>
+
+										<div class="form-group">
+											<input class="form-control" type="text" value="<?php echo $usuario["nome"]; ?>" name="nome" required>
+										</div>
+
+										<div class="form-group">
+											<input class="form-control" type="email" value="<?php echo $usuario["email"]; ?>" name="email" readonly>
+										</div>
+
+										<div class="form-group">
+											<input class="form-control" type="text" value="<?php echo $usuario["telefone"]; ?>" name="telefone" onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" required>
+										</div>
+
 										<input class="btn btn-success" type="submit" value="Salvar Alterações" name="editar">
 									</form>
 

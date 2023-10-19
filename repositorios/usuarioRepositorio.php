@@ -17,8 +17,6 @@ class UsuarioRepositorio
         $inserir = $this->conexao->prepare("INSERT INTO usuarios (nome, id_fil, id_imagem, email, nivel, telefone, senha, dataCriacao, dataMudanca) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $inserir->bind_param("siissssss", $usuario->getNome(), $usuario->getIdFil(), $usuario->getIdImagem(), $usuario->getEmail(), $usuario->getNivel(), $usuario->getTelefone(), $usuario->getSenha(), $usuario->getDataCriacao(), $usuario->getDataMudanca());
 
-        //echo "INSERT INTO usuarios (nome, id_fil, id_imagem, email, nivel, telefone, senha, dataCriacao, dataMudanca) VALUES (" . $usuario->getNome() . ", " . $usuario->getIdFil() . ", " . $usuario->getIdImagem() . ", " . $usuario->getEmail() . ", " . $usuario->getNivel() . ", " . $usuario->getSenha() . ", " . $usuario->getDataCriacao() . ", " . $usuario->getDataMudanca() . " )";
-
         $resultado = $inserir->execute();
         $inserir->close();
 
@@ -27,8 +25,9 @@ class UsuarioRepositorio
 
     public function editarUsuario(int $id_usuario, Usuario $usuario): bool
     {
-        $atualizar = $this->conexao->prepare("UPDATE usuarios SET nome = ?, id_fil = ?, id_imagem = ?, email = ?, nivel = ?, telefone = ?, senha = ?, dataMudanca = ? WHERE id_usuario = ?");
-        $atualizar->bind_param("iiisssssi", $usuario->getNome(), $usuario->getIdFil(), $usuario->getIdImagem(), $usuario->getEmail(), $usuario->getNivel(), $usuario->getTelefone(), $usuario->getSenha(), $usuario->getDataMudanca(), $id_usuario);
+        $atualizar = $this->conexao->prepare("UPDATE usuarios SET nome = ?, id_fil = ?, id_imagem = ?, email = ?, nivel = ?, telefone = ?, dataMudanca = ? WHERE id_usuario = ?");
+        var_dump($atualizar);
+        $atualizar->bind_param("siissssi", $usuario->getNome(), $usuario->getIdFil(), $usuario->getIdImagem(), $usuario->getEmail(), $usuario->getNivel(), $usuario->getTelefone(), $usuario->getDataMudanca(), $id_usuario);
         $resultado = $atualizar->execute();
         $atualizar->close();
 
@@ -55,6 +54,17 @@ class UsuarioRepositorio
 
         $atualizar = $conexao->prepare("UPDATE usuarios SET nivel = ?, dataMudanca = ? WHERE id_usuario = ?");
         $atualizar->bind_param("ssi", $nivel, $dataMudanca, $id_usuario);
+        $resultado = $atualizar->execute();
+        $atualizar->close();
+
+        return $resultado;
+    }
+
+    public function editarSenhaUsuario(int $id_usuario, string $nova_senha): bool
+    {
+        $atualizar = $this->conexao->prepare("UPDATE usuarios SET senha = ? WHERE id_usuario = ?");
+        $atualizar->bind_param("si", $nova_senha, $id_usuario);
+
         $resultado = $atualizar->execute();
         $atualizar->close();
 
