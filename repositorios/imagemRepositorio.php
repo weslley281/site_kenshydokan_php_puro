@@ -90,19 +90,19 @@ class ImagemRepositorio
             $procura = $conexao->prepare($busca);
             $procura->bind_param("i", $id_imagem);
             $procura->execute();
-            $procura->bind_result($resultado);
 
-            $imagem = null;
+            $result = $procura->get_result();
 
-            while ($procura->fetch()) {
-                $imagem = $resultado;
+            if ($result->num_rows === 0) {
+                return null;
             }
+
+            $imagem = $result->fetch_assoc();
 
             $procura->close();
 
             return $imagem;
         } catch (Exception $e) {
-
             error_log("Erro ao procurar o ID da imagem: " . $e->getMessage());
             return null;
         }

@@ -73,7 +73,7 @@ if ($filiado != "") {
 								<!-- card do perfil -->
 								<div class="col d-inline-flex mb-4">
 									<div class="card" style="width: 18rem;">
-										<img class="card-img-top" src="<?php echo $imagem["caminho"] ?>" alt="">
+										<img id="imagePreview" class="card-img-top" src="<?php echo $imagem["caminho"] ?>" alt="">
 										<div class="card-body">
 											<h5 class="card-title"><?php echo $usuario["nome"]; ?></h5>
 										</div>
@@ -82,10 +82,12 @@ if ($filiado != "") {
 								<!-- mais informações -->
 								<div class="col">
 
-									<form action="../controllers/editar_imagem.php" method="post" enctype="multipart/form-data">
+									<form action="../controllers/usuarioController.php" method="post" enctype="multipart/form-data">
+										<input type="hidden" value="editar_imagem" name="tipo">
+										<input type="hidden" value="<?php echo $usuario["id_imagem"] ?>" name="id_imagem">
 										<input class="form-control mb-2" type="hidden" value="<?php echo $usuario["id_usuario"]; ?>" name="id_usuario" readonly>
-										<input class="form-control mb-2" type="file" value="<?php echo $usuario["nome"]; ?>" name="foto">
-										<input class="btn btn-secondary mb-2" type="submit" name="atualizar" value="atualizar foto">
+										<input class="form-control mb-2" type="file" id="imagem" name="imagem">
+										<input class="btn btn-secondary mb-2" type="submit" name="atualizar" value="atualizar imagem">
 									</form>
 									<form action="../controllers/editar_perfil.php" method="post">
 										<input class="form-control mb-2" type="hidden" value="<?php echo $usuario["id_usuario"]; ?>" name="id_usuario" readonly>
