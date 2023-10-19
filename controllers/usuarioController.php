@@ -96,49 +96,42 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                     if ($imagemRepositorio->registrar_imagem($imagemModel)) {
                         $id_imagem = $imagemRepositorio::procura_id_imagem($nomeImagem);
+                        echo "id da nova imagem: $id_imagem";
 
                         $dados_imagem_antiga = $imagemRepositorio::procura_imagem($_POST["id_imagem"]);
-                        $caminhoImagemAntiga = $dados_imagem_antiga["caminho"];
+                        var_dump($dados_imagem_antiga);
 
+                        $caminho = $dados_imagem_antiga != null ? file_exists($dados_imagem_antiga["caminho"]) : "";
                         // Exclua o arquivo de imagem antiga no sistema de arquivos
-                        if (file_exists($caminhoImagemAntiga)) {
+                        if (file_exists($caminho)) {
                             unlink($caminhoImagemAntiga);
                         }
 
-                        if ($imagemRepositorio->deleta_imagem($_POST["id_imagem"])) {
-                            if ($usuarioRepositorio->editarImagemUsuario($id_imagem, $dataMudanca, $_POST["id_usuario"])) {
-                                // Redirecionar após o sucesso
-                                //header("Location: ../views/editar_perfil.php.php");
-                                //exit;
-                            } else {
-                                // Lida com falha na edição de imagem do usuário
-                                echo "<script language='javascript'>window.alert('Erro ao editar a imagem do usuário'); </script>";
-                                //header("Location: ../views/editar_perfil.php");
-                                //exit;
-                            }
+                        $imagemRepositorio->deleta_imagem($_POST["id_imagem"]);
+
+                        if ($usuarioRepositorio->editarImagemUsuario($_POST["id_usuario"], $id_imagem, $dataMudanca)) {
+                            echo "A imagem foi editada " . $id_imagem;
+                            header("Location: ../views/editar_perfil.php.php");
+                            exit;
                         } else {
-                            // Lida com erro na exclusão da imagem do repositório
-                            echo "<script language='javascript'>window.alert('Erro: Imagem não deletada do repositório, tente novamente'); </script>";
-                            //header("Location: ../views/editar_perfil.php");
-                            //exit;
+                            echo "<script language='javascript'>window.alert('Erro ao editar a imagem do usuário'); </script>";
+                            header("Location: ../views/editar_perfil.php");
+                            exit;
                         }
                     } else {
-                        // Lida com erro no registro da imagem
                         echo "<script language='javascript'>window.alert('Erro: Imagem não salva, tente novamente'); </script>";
-                        //header("Location: ../views/editar_perfil.php");
-                        //exit;
+                        header("Location: ../views/editar_perfil.php");
+                        exit;
                     }
                 } else {
-                    // Lida com erro no envio da imagem
                     echo "<script language='javascript'>window.alert('Erro: Imagem não enviada, tente novamente'); </script>";
-                    //header("Location: ../views/editar_perfil.php");
-                    //exit;
+                    header("Location: ../views/editar_perfil.php");
+                    exit;
                 }
             } else {
-                // Lida com formato de imagem inválido
                 echo "<script language='javascript'>window.alert('Formato de imagem inválido'); </script>";
-                //header("Location: ../views/editar_perfil.php");
-                //exit;
+                header("Location: ../views/editar_perfil.php");
+                exit;
             }
 
         } elseif ($_POST["tipo"] == "editar_senha") {
