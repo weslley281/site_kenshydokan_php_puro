@@ -11,44 +11,51 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $dataMudanca = date("Y-m-d");
 
         if ($_POST["tipo"] == "inserir") {
+
             $imagemRepositorio = new ImagemRepositorio;
             $usuarioRepositorio = new UsuarioRepositorio;
+            if ($usuarioRepositorio::buscarUsuarioExistente($_POST["email"])) {
+                echo "<script language='javascript'>window.alert('Usuário já existe'); </script>";
+                echo "<script language='javascript'>window.location='../views/login.php'; </script>";
 
-            $senhaSegura = password_hash($_POST["senha"], PASSWORD_DEFAULT);
+            } else {
 
-            $diretorioUpload = "../img/";
-            $nomeImagem = uniqid() . $_FILES["imagem"]["name"];
-            $caminho = $diretorioUpload . $nomeImagem;
+                $senhaSegura = password_hash($_POST["senha"], PASSWORD_DEFAULT);
 
-            $extensaoImagem = strtolower(pathinfo($caminho, PATHINFO_EXTENSION));
+                $diretorioUpload = "../img/";
+                $nomeImagem = uniqid() . $_FILES["imagem"]["name"];
+                $caminho = $diretorioUpload . $nomeImagem;
 
-            if (in_array($extensaoImagem, ["jpg", "jpeg", "gif", "png"])) {
-                if (move_uploaded_file($_FILES["imagem"]["tmp_name"], $caminho)) {
-                    $imagemModel = new Imagem($nomeImagem, $caminho, $dataMudanca);
+                $extensaoImagem = strtolower(pathinfo($caminho, PATHINFO_EXTENSION));
 
-                    if ($imagemRepositorio->registrar_imagem($imagemModel)) {
-                        $id_imagem = $imagemRepositorio::procura_id_imagem($nomeImagem);
+                if (in_array($extensaoImagem, ["jpg", "jpeg", "gif", "png"])) {
+                    if (move_uploaded_file($_FILES["imagem"]["tmp_name"], $caminho)) {
+                        $imagemModel = new Imagem($nomeImagem, $caminho, $dataMudanca);
 
-                        $usuarioModel = new Usuario($_POST["nome"], $_POST["id_fil"], $id_imagem, $_POST["email"], $_POST["telefone"], $dataMudanca, $senhaSegura);
+                        if ($imagemRepositorio->registrar_imagem($imagemModel)) {
+                            $id_imagem = $imagemRepositorio::procura_id_imagem($nomeImagem);
 
-                        if ($usuarioRepositorio->criarUsuario($usuarioModel)) {
-                            echo "<script language='javascript'>window.alert('Usuário criado com sucesso'); </script>";
-                            echo "<script language='javascript'>window.location='../views/login.php'; </script>";
+                            $usuarioModel = new Usuario($_POST["nome"], $_POST["id_fil"], $id_imagem, $_POST["email"], $_POST["telefone"], $dataMudanca, $senhaSegura);
+
+                            if ($usuarioRepositorio->criarUsuario($usuarioModel)) {
+                                echo "<script language='javascript'>window.alert('Usuário criado com sucesso'); </script>";
+                                echo "<script language='javascript'>window.location='../views/login.php'; </script>";
+                            } else {
+                                echo "<script language='javascript'>window.alert('Erro: Usuário não cadastrado, tente novamente'); </script>";
+                                echo "<script language='javascript'>window.location='../views/cadastrar.php'; </script>";
+                            }
                         } else {
-                            echo "<script language='javascript'>window.alert('Erro: Usuário não cadastrado, tente novamente'); </script>";
+                            echo "<script language='javascript'>window.alert('Erro: Imagem não salva, tente novamente'); </script>";
                             echo "<script language='javascript'>window.location='../views/cadastrar.php'; </script>";
                         }
                     } else {
-                        echo "<script language='javascript'>window.alert('Erro: Imagem não salva, tente novamente'); </script>";
+                        echo "<script language='javascript'>window.alert('Erro: Imagem não enviada, tente novamente'); </script>";
                         echo "<script language='javascript'>window.location='../views/cadastrar.php'; </script>";
                     }
                 } else {
-                    echo "<script language='javascript'>window.alert('Erro: Imagem não enviada, tente novamente'); </script>";
+                    echo "<script language='javascript'>window.alert('Formato de imagem inválido'); </script>";
                     echo "<script language='javascript'>window.location='../views/cadastrar.php'; </script>";
                 }
-            } else {
-                echo "<script language='javascript'>window.alert('Formato de imagem inválido'); </script>";
-                //echo "<script language='javascript'>window.location='../views/cadastrar.php'; </script>";
             }
         } elseif ($_POST["tipo"] == "edidar") {
             $usuarioRepositorio = new UsuarioRepositorio;
@@ -76,6 +83,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $imagemRepositorio = new ImagemRepositorio;
             $usuarioRepositorio = new UsuarioRepositorio;
 
+            $diretorioUpload = "../img/";
+            $nomeImagem = uniqid() . $_FILES["imagem"]["name"];
+            $caminho = $diretorioUpload . $nomeImagem;
+
+            $extensaoImagem = strtolower(pathinfo($caminho, PATHINFO_EXTENSION));
+
+            if (in_array($extensaoImagem, ["jpg", "jpeg", "gif", "png"])) {
+                if (move_uploaded_file($_FILES["imagem"]["tmp_name"], $caminho)) {
+                    $imagemModel = new Imagem($nomeImagem, $caminho, $dataMudanca);
+
+                    if ($imagemRepositorio->registrar_imagem($imagemModel)) {
+                        $id_imagem = $imagemRepositorio::procura_id_imagem($nomeImagem);
+
+                        if ($usuarioRepositorio->editarImagemUsuario($id_imagem, $dataMudanca, $_POST["id_usuario"])) {
+                            echo "<script language='javascript'>window.location='../views/editar_perfil.php.php'; </script>";
+                        }
+                    } else {
+                        echo "<script language='javascript'>window.alert('Erro: Imagem não salva, tente novamente'); </script>";
+                        echo "<script language='javascript'>window.location='../views/editar_perfil.php.php'; </script>";
+                    }
+                } else {
+                    echo "<script language='javascript'>window.alert('Erro: Imagem não enviada, tente novamente'); </script>";
+                    echo "<script language='javascript'>window.location='../views/editar_perfil.php.php'; </script>";
+                }
+            } else {
+                echo "<script language='javascript'>window.alert('Formato de imagem inválido'); </script>";
+                echo "<script language='javascript'>window.location='../views/editar_perfil.php'; </script>";
+            }
         } elseif ($_POST["tipo"] == "editar_senha") {
 
         } elseif ($_POST["tipo"] == "deletar") {

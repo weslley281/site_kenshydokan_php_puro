@@ -26,7 +26,6 @@ class ImagemRepositorio
 
             return true;
         } catch (Exception $e) {
-            // Você pode lidar com o erro aqui, como logá-lo ou lançar uma exceção personalizada.
             error_log("Erro ao registrar a imagem: " . $e->getMessage());
             return false;
         }
@@ -46,7 +45,6 @@ class ImagemRepositorio
 
             return true;
         } catch (Exception $e) {
-            // Você pode lidar com o erro aqui, como logá-lo ou lançar uma exceção personalizada.
             error_log("Erro ao excluir a imagem: " . $e->getMessage());
             return false;
         }

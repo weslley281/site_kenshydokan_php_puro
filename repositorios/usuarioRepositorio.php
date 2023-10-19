@@ -28,7 +28,20 @@ class UsuarioRepositorio
     public function editarUsuario(int $id_usuario, Usuario $usuario): bool
     {
         $atualizar = $this->conexao->prepare("UPDATE usuarios SET nome = ?, id_fil = ?, id_imagem = ?, email = ?, nivel = ?, telefone = ?, senha = ?, dataMudanca = ? WHERE id_usuario = ?");
-        $atualizar->bind_param("siisssssi", $usuario->getNome(), $usuario->getIdFil(), $usuario->getIdImagem(), $usuario->getEmail(), $usuario->getNivel(), $usuario->getTelefone(), $usuario->getSenha(), $usuario->getDataMudanca(), $id_usuario);
+        $atualizar->bind_param("iiisssssi", $usuario->getNome(), $usuario->getIdFil(), $usuario->getIdImagem(), $usuario->getEmail(), $usuario->getNivel(), $usuario->getTelefone(), $usuario->getSenha(), $usuario->getDataMudanca(), $id_usuario);
+        $resultado = $atualizar->execute();
+        $atualizar->close();
+
+        return $resultado;
+    }
+
+    public static function editarImagemUsuario(int $id_usuario, $id_imagem, $dataMudanca): bool
+    {
+        $c = new Conexao();
+        $conexao = $c->conectar();
+
+        $atualizar = $conexao->prepare("UPDATE usuarios SET id_imagem = ?, dataMudanca = ? WHERE id_usuario = ?");
+        $atualizar->bind_param("isi", $id_imagem, $dataMudanca, $id_usuario);
         $resultado = $atualizar->execute();
         $atualizar->close();
 
@@ -83,4 +96,30 @@ class UsuarioRepositorio
 
         return $usuario;
     }
+
+    public static function buscarUsuarioExistente($busca)
+    {
+        $c = new Conexao();
+        $conexao = $c->conectar();
+
+        $query = "SELECT * FROM usuarios WHERE nome LIKE ? OR email = ?";
+        $procura = $conexao->prepare($query);
+
+        $parametro = "%$busca%";
+        $procura->bind_param("ss", $parametro, $busca);
+
+        $procura->execute();
+        $result = $procura->get_result();
+
+        $usuario = null;
+
+        if ($row = $result->fetch_assoc()) {
+            $usuario = $row;
+        }
+
+        $procura->close();
+
+        return $usuario;
+    }
+
 }
