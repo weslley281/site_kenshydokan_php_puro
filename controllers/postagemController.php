@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $publicacao = new Publicacao($id_usuario, $titulo, $conteudo, $dataMudanca);
 
             if ($publicacaoRepositorio->criarPublicacao($publicacao)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/postagens2.php');
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/suas_postagens.php');
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/criar_postagem.php');
             }
@@ -41,18 +41,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $id_publicacao = $_POST["id_publicacao"];
 
             if ($publicacaoRepositorio::excluir_publicacao($id_publicacao)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/editar_postagem.php');
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/suas_postagens.php');
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/editar_postagem');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/suas_postagens.php');
             }
         } else {
-            exibirMensagemEredirecionar("Tipo de operação inválido", '../views/postagens2.php');
+            exibirMensagemEredirecionar("Tipo de operação inválido", '../views/suas_postagens.php');
         }
     } else {
-        exibirMensagemEredirecionar("Preencha todos os dados", '../views/postagens2.php');
+        exibirMensagemEredirecionar("Preencha todos os dados", '../views/suas_postagens.php');
     }
 } else {
-    exibirMensagemEredirecionar("Não é uma requisição post", '../views/postagens2.php');
+    exibirMensagemEredirecionar("Não é uma requisição post", '../views/suas_postagens.php');
 }
 
 function exibirMensagemEredirecionar($mensagem, $destino)
