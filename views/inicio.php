@@ -114,41 +114,41 @@
 
   <!-- Três colunas de texto-->
   <div class="container mt-3 mb-3">
-    <center>
+    <div class="text-center">
       <h2><b>Contribuintes</b></h2>
-    </center>
+    </div>
     <div class="row mt-3 mb-3">
       <div class="col-lg-4">
-        <center>
+        <div class="text-center">
           <img class="rounded-circle" src="../img/Jonas.jpg" alt="Generic placeholder image" width="200" height="200" alt="Foto de Jonas Teixeira de Andrade">
           <h2>Jonas Teixeira de Andrade</h2>
           <p><u>Presidente da FKCMT.</u></p>
-        </center>
+        </div>
         <ul>
           <li>10° Dan Karatê Kenshydokan</li>
           <li>7° Dan Ju jitsu</li>
           <li>7° Dan em KickBoxing</li>
           <li>6° Dan Judo Kodokan</li>
           <li>5° Dan em Karate Kyokushin</li>
+          <li>Faixa Preta Quinto Grau Brasilian Jiu Jitsu</li>
         </ul>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
-        <center>
+        <div class="text-center">
           <img class="rounded-circle" src="../img/sensei-everson.jpg" alt="Generic placeholder image" width="200" height="200">
           <h2>Everson Jones Batista Leite</h2>
           <p><u>Diretor Técnico.</u></p>
-        </center>
+        </div>
         <ul>
           <li>3° Dan Karatê Kenshydokan</li>
-          <li>1° Dan Judo Kodokan</li>
         </ul>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
-        <center>
+        <div class="text-center">
           <img class="rounded-circle" src="../img/sensei_elyakin.jpg" alt="Generic placeholder image" width="200" height="200">
           <h2>Elyakin Vinicius Mettelo</h2>
           <p><u>Diretor de Arbitragem.</u></p>
-        </center>
+        </div>
         <ul>
           <li>1° Dan Karatê Kenshydokan</li>
         </ul>
@@ -156,28 +156,28 @@
     </div><!-- /.row -->
     <div class="row mt-3 mb-3">
       <div class="col-lg-4">
-        <center>
+        <div class="text-center">
           <img class="rounded-circle" src="../img/sensei_weslley.jpg" alt="Generic placeholder image" width="200" height="200">
           <h2>Weslley Henrique Vieira Ferraz</h2>
           <p><u>Diretor Técnico</u></p>
-        </center>
+        </div>
         <ul>
           <li>3° Dan Karatê Kenshydokan</li>
           <li>2° Dan Judo Kodokan</li>
-          <li>Faixa preta Jiu Jitsu Brasileiro.</li>
+          <li>Faixa Preta Brasilian Jiu Jitsu</li>
         </ul>
       </div>
       <div class="col-lg-4">
-        <center>
+        <div class="text-center">
           <img class="rounded-circle" src="../img/sensei_murilo.jpg" alt="Generic placeholder image" width="200" height="200">
           <h2>Murilo Cardoso de Resende</h2>
           <p><u>Diretor de Arbitragem</u></p>
-        </center>
+        </div>
         <ul>
           <li>14° Khan Muay Thai</li>
           <li>3° Dan Kickboxing</li>
           <li>2° Dan Karatê Kenshydokan</li>
-          <li>Faixa Roxa Jiu Jitsu Brasileiro</li>
+          <li>Faixa Roxa Brasilian Jiu Jitsu</li>
         </ul>
       </div>
     </div>

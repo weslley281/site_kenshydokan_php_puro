@@ -4,12 +4,12 @@
         <!-- Project One -->
       <div class="row mt-5">
         <div class="col-md-7">
-          <a href="filiado/ver_perfil.php?id_usuario=2">
+          <a href="ver_perfil.php?id_usuario=5">
             <img class="img-fluid rounded mb-3 mb-md-0" src="../img/shihan.jpg" alt="">
           </a>
         </div>
         <div class="col-md-5">
-          <h3><a href="filiado/ver_perfil.php?id_usuario=2">Jonas Teixeira de Andrade</a></h3>
+          <h3><a href="ver_perfil.php?id_usuario=5">Jonas Teixeira de Andrade</a></h3>
           <p>Presidente da FKCMT.</p>
           <ul>
               <li>10° Dan Karate Kenshydokan</li>
@@ -17,6 +17,7 @@
               <li>7° Dan em KickBoxing</li>
               <li>6° Dan Judo Kodokan</li>
               <li>5° Dan em Karate Kyokushin</li>
+              <li>Faixa Preta Quinto Grau Brasilian Jiu Jitsu</li>
           </ul>
         </div>
       </div>
@@ -28,10 +29,10 @@
   <div class="row mb-4">
     <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
-        <a href="filiado/ver_perfil.php?id_usuario=5"><img class="card-img-top" src="../img/sensei-everson.jpg" alt=""></a>
+        <a href="ver_perfil.php?id_usuario=5"><img class="card-img-top" src="../img/sensei-everson.jpg" alt=""></a>
         <div class="card-body">
           <h4 class="card-title">
-            <a href="filiado/ver_perfil.php?id_usuario=5">Everson Jones Batista Leite</a>
+            <a href="ver_perfil.php?id_usuario=5">Everson Jones Batista Leite</a>
           </h4>
           <ul>
               <li>Faixa Preta 3° Dan do Karate Kenshydokan.</li>
@@ -41,10 +42,10 @@
     </div>
     <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
-        <a href="filiado/ver_perfil.php?id_usuario=5"><img class="card-img-top" src="../img/sensei-patrick2.jpg" alt=""></a>
+        <a href="ver_perfil.php?id_usuario=5"><img class="card-img-top" src="../img/sensei-patrick2.jpg" alt=""></a>
         <div class="card-body">
           <h4 class="card-title">
-            <a href="filiado/ver_perfil.php?id_usuario=5">Patrick jordhan dos Santos</a>
+            <a href="ver_perfil.php?id_usuario=5">Patrick jordhan dos Santos</a>
           </h4>
           <ul>
               <li>Faixa Preta 1° Dan do Karate Kenshydokan.</li>
@@ -54,10 +55,10 @@
     </div>
     <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
-        <a href="filiado/ver_perfil.php?id_usuario=3"><img class="card-img-top" src="../img/sensei_elyakin.jpg" alt=""></a>
+        <a href="ver_perfil.php?id_usuario=3"><img class="card-img-top" src="../img/sensei_elyakin.jpg" alt=""></a>
         <div class="card-body">
           <h4 class="card-title">
-            <a href="filiado/ver_perfil.php?id_usuario=3">Elyakin Vinicius Mettelo</a>
+            <a href="ver_perfil.php?id_usuario=3">Elyakin Vinicius Mettelo</a>
           </h4>
             <ul>
               <li>Faixa Preta 1° Dan do Karate Kenshydokan.</li>

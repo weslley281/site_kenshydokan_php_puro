@@ -49,9 +49,9 @@ if ($usuario["id_fil"] != 0 || $usuario["id_fil"] != null && $usuario['nivel'] =
 				<div class="row">
 
 					<div class="col-lg-3">
-						<h1 class="my-4">Meu Perfil</h1>
+						<h1 class="my-4">Eventos</h1>
 						<div class="list-group">
-							<a href="perfil.php" class="list-group-item bg-danger text-dark">Perfil</a>
+							<a href="perfil.php" class="list-group-item bg-light text-dark">Perfil</a>
 							<a href="editar_perfil.php" class="list-group-item bg-light text-dark">Editar Perfil</a>
 <?php if ($usuario["nivel"] == "admin" || $usuario["nivel"] == "sensei") {?>
 								<a href="exame_graduacao.php" class="list-group-item bg-light text-dark">Exame de Graduação</a>
@@ -59,7 +59,7 @@ if ($usuario["id_fil"] != 0 || $usuario["id_fil"] != null && $usuario['nivel'] =
 								<a href="suas_postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
 								<a href="documentos.php" class="list-group-item bg-light text-dark">Arquivos para Baixar</a>
 <?php }?>
-							<a href="eventos.php" class="list-group-item bg-light text-dark">Eventos Online</a>
+							<a href="eventos.php" class="list-group-item  bg-danger text-dark">Eventos Online</a>
 							<a href="../controllers/sair.php" class="list-group-item bg-light text-dark">Sair</a>
 						</div>
 
@@ -95,7 +95,7 @@ if ($usuario["id_fil"] != 0 || $usuario["id_fil"] != null && $usuario['nivel'] =
 						<!--Fim dados do perfil -->
 						<hr>
 						<div class="text-center">
-							<h1><strong>Cursos</strong></h1>
+							<h1><strong>Eventos</strong></h1>
 						</div>
 						<div class="row">
 							<h3>Em breve terá eventos aqui</h3>

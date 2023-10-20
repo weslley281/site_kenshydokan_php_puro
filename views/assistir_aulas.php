@@ -92,7 +92,7 @@ if ($filiado != "") {
 						<hr>
 						<?php
 $id_curso = @$_GET["id"];
-    $busca_curso = "SELECT * FROM curso where id_curso = '$id_curso'";
+    $busca_curso = "SELECT * FROM cursos where id_curso = '$id_curso'";
     $resultado_curso = mysqli_query($conexao, $busca_curso);
     $curso = mysqli_fetch_array($resultado_curso);
     ?>
