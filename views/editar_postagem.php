@@ -4,7 +4,7 @@ include_once "../db/conexao.php";
 
 $c = new Conexao();
 $conexao = $c->conectar();
-$id_postagem = $_GET["id"];
+$id_publicacao = $_GET["id"];
 
 $id_usuario = $_SESSION['id_usuario'];
 
@@ -96,19 +96,27 @@ if ($filiado != "") {
 							<h1><strong>Editar Postagem</strong></h1>
 						</div>
 						<?php
-$query = "SELECT * from postagens where id_postagem = '$id_postagem'";
+$query = "SELECT * from postagens where id_publicacao = '$id_publicacao'";
     $result = mysqli_query($conexao, $query);
     while ($postagem = mysqli_fetch_array($result)) {
         ?>
-							<form class="mb-3" action="../controllers/editar_postagem.php" method="POST">
-								<div id="sample">
-									<input class="form-control form-control-lg mt-2" type="hidden" value="<?php echo $id_postagem ?>" name="id_postagem">
-									<input class="form-control form-control-lg mt-2 mb-2" type="text" value="<?php echo $postagem["titulo"] ?>" name="titulo">
-									<textarea name="conteudo" rows="20">
-	                   <?php echo $postagem["conteudo"]; ?>
-	                </textarea>
-									<input class="btn btn-success mt-3" type="submit" name="editar" value="editar">
-								</div>
+							<form class="mb-3" action="../controllers/postagemController.php" method="POST">
+									<input type="hidden" value="editar" name="tipo">
+									<input type="hidden" value="<?php echo $id_publicacao ?>" name="id_publicacao">
+
+									<div class="form-group">
+										<input class="form-control" type="text" value="<?php echo $postagem["titulo"] ?>" name="titulo">
+									</div>
+
+									<div class="form-group">
+										<textarea name="conteudo" rows="20">
+	                   						<?php echo $postagem["conteudo"]; ?>
+	               						</textarea>
+									</div>
+
+									<div class="form-group">
+										<input class="btn btn-success" type="submit" name="salvar" value="editar">
+									</div>
 							</form>
 						<?php }?>
 					</div>

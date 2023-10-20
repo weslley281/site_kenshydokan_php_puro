@@ -29,12 +29,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $id_publicacao = $_POST["id_publicacao"];
             $titulo = $_POST["titulo"];
             $conteudo = $_POST["conteudo"];
-            $status = $_POST["status"];
 
-            $publicacao = new Publicacao(null, $titulo, $conteudo, $dataMudanca, $status);
+            $publicacao = new Publicacao(null, $titulo, $conteudo, $dataMudanca);
 
             if ($publicacaoRepositorio->editar_publicacao($id_publicacao, $publicacao)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/postagen2.php');
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/suas_postagens.php');
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/editar_postagem.php');
             }
