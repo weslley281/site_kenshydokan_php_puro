@@ -1,5 +1,4 @@
-  <!-- Navigation -->
-  <?php include "menu.php";?>
+<?php include "menu.php";?>
   <!-- /Navigation -->
   <div class="container mt-5">
         <!-- Project One -->

@@ -1,7 +1,7 @@
 <?php
+include_once "menu.php";
 include_once "../db/conexao.php";
 include_once "../repositorios/publicacaoRepositorio.php";
-include_once "menu.php";
 
 $c = new Conexao();
 $conexao = $c->conectar();

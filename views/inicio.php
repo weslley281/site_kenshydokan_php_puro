@@ -1,6 +1,4 @@
-<!-- Navigation -->
 <?php include "menu.php";?>
-<!-- /Navigation -->
 
 <div class="container-fluid py-5">
   <img class="img-fluid rounded" src="../img/foto_principal.jpg" alt="foto dos alunos de karate">

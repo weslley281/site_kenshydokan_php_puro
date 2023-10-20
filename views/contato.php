@@ -1,6 +1,4 @@
-<!-- Navigation -->
-  <?php include "menu.php";?>
-<!-- /Navigation -->
+<?php include "menu.php";?>
 
  <div class="container text-center mt-5">
         <form action="../controllers/enviar.php" method="post">

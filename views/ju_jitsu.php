@@ -1,6 +1,4 @@
-<!-- Navigation -->
-  <?php include "menu.php";?>
-<!-- /Navigation -->
+<?php include "menu.php";?>
 
 <div class="container">
 <div class="dmBody u_dmStyle_template_jiu-jitsu" id="dmFirstContainer">

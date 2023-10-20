@@ -1,11 +1,10 @@
 <?php
+include "menu.php";
 include_once "../db/conexao.php";
+
 $c = new Conexao();
 $conexao = $c->conectar();
 ?>
-<!-- Navigation -->
-<?php include "menu.php";?>
-<!-- /Navigation -->
 
 <div class="container mt-5">
 	<table id="minhaTabela" class="table table-bordered" width="100%" cellspacing="0">

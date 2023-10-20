@@ -1,12 +1,9 @@
-<!-- <link rel="stylesheet" type="text/css" href="../css/galeria.css">
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen"> -->
-
 <?php
+include "menu.php";
 include_once "../db/conexao.php";
 $c = new Conexao();
 $conexao = $c->conectar();
 
-include "menu.php";
 ?>
 
 <br>

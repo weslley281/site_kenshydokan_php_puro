@@ -1,8 +1,7 @@
-<!-- Navigation -->
-<?php include "menu.php";?>
-<!-- /Navigation -->
 <?php
+include "menu.php";
 include_once "../db/conexao.php";
+
 $c = new Conexao();
 $conexao = $c->conectar();
 
