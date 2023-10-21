@@ -241,4 +241,22 @@ class Migration
             echo "Erro ao criar tabela de categorias: " . $this->conexao->error;
         }
     }
+
+    public function criarTabelaEstados()
+    {
+        $sql = "
+        CREATE TABLE IF NOT EXISTS estados (
+            `id_estado` INT AUTO_INCREMENT PRIMARY KEY,
+            `estado` VARCHAR(255) NOT NULL,
+            `dataCriacao` DATE,
+            `dataMudanca` DATE
+        );
+        ";
+
+        if ($this->conexao->query($sql) === true) {
+            //echo "Tabela 'estados' criada com sucesso!";
+        } else {
+            echo "Erro ao criar tabela de estados: " . $this->conexao->error;
+        }
+    }
 }
