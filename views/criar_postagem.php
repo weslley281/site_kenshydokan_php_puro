@@ -32,7 +32,7 @@ $busca_graduacao = "SELECT * FROM graduacao WHERE id_graduacao = '$id_graduacao'
 $resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
 $graduacao = mysqli_fetch_array($resultado_graduacao);
 
-if ($filiado != "") {
+if (isset($_SESSION["id_usuario"])) {
     ?>
 
 	<body>
@@ -53,6 +53,9 @@ if ($filiado != "") {
 								<a href="criar_postagem.php" class="list-group-item text-dark bg-danger">Criar Postagem</a>
 								<a href="suas_postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
 								<a href="documentos.php" class="list-group-item bg-light text-dark">Arquivos para Baixar</a>
+							<?php }?>
+							<?php if ($usuario["nivel"] == "admin") {?>
+								<a href="admin.php" class="list-group-item bg-light text-dark">Administrativo</a>
 							<?php }?>
 							<a href="eventos.php" class="list-group-item bg-light text-dark">Eventos Online</a>
 							<a href="../controllers/sair.php" class="list-group-item bg-light text-dark">Sair</a>
@@ -126,9 +129,9 @@ if ($filiado != "") {
 		<!-- /.container -->
 		</div>
 
-	<?php
+<?php
 include "rodape.php";
 } else {
-    header("location:login.php");
+    echo "<script language='javascript'>window.location='login.php'; </script>";
 }
 ?>

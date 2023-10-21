@@ -37,7 +37,8 @@ if ($usuario["id_fil"] != 0 || $usuario["id_fil"] != null && $usuario['nivel'] =
     );
 }
 
-?>
+if (isset($_SESSION["id_usuario"])) {
+    ?>
 
 	<body>
 
@@ -59,6 +60,9 @@ if ($usuario["id_fil"] != 0 || $usuario["id_fil"] != null && $usuario['nivel'] =
 								<a href="suas_postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
 								<a href="documentos.php" class="list-group-item bg-light text-dark">Arquivos para Baixar</a>
 <?php }?>
+<?php if ($usuario["nivel"] == "admin") {?>
+								<a href="admin.php" class="list-group-item bg-light text-dark">Administrativo</a>
+							<?php }?>
 							<a href="eventos.php" class="list-group-item  bg-danger text-dark">Eventos Online</a>
 							<a href="../controllers/sair.php" class="list-group-item bg-light text-dark">Sair</a>
 						</div>
@@ -112,4 +116,9 @@ if ($usuario["id_fil"] != 0 || $usuario["id_fil"] != null && $usuario['nivel'] =
 			</div>
 			<!-- /.container -->
 		</div>
-<?php include "rodape.php";
+<?php
+include "rodape.php";
+} else {
+    echo "<script language='javascript'>window.location='login.php'; </script>";
+}
+?>

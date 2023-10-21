@@ -36,8 +36,8 @@ if ($usuario["id_fil"] != 0 || $usuario["id_fil"] != null && $usuario['nivel'] =
         'graduacao' => 'sem registro',
     );
 }
-
-?>
+if (isset($_SESSION["id_usuario"])) {
+    ?>
 
 	<body>
 
@@ -59,6 +59,9 @@ if ($usuario["id_fil"] != 0 || $usuario["id_fil"] != null && $usuario['nivel'] =
 								<a href="suas_postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
 								<a href="documentos.php" class="list-group-item bg-light text-dark">Arquivos para Baixar</a>
 <?php }?>
+<?php if ($usuario["nivel"] == "admin") {?>
+								<a href="admin.php" class="list-group-item bg-light text-dark">Administrativo</a>
+							<?php }?>
 							<a href="eventos.php" class="list-group-item bg-light text-dark">Eventos Online</a>
 							<a href="../controllers/sair.php" class="list-group-item bg-light text-dark">Sair</a>
 						</div>
@@ -100,19 +103,19 @@ if ($usuario["id_fil"] != 0 || $usuario["id_fil"] != null && $usuario['nivel'] =
 						<div class="row">
 							<?php
 $busca = "SELECT * FROM cursos";
-$resultado = mysqli_query($conexao, $busca);
-while ($curso = mysqli_fetch_array($resultado)) {
-    $id_imagem_curso = $curso["id_imagem"];
+    $resultado = mysqli_query($conexao, $busca);
+    while ($curso = mysqli_fetch_array($resultado)) {
+        $id_imagem_curso = $curso["id_imagem"];
 
-    $busca_imagem_curso = "SELECT * FROM imagens WHERE id_imagem = '$id_imagem_curso'";
-    $resultado_imagem_curso = mysqli_query($conexao, $busca_imagem_curso);
-    $imagem_curso = mysqli_fetch_array($resultado_imagem_curso);
+        $busca_imagem_curso = "SELECT * FROM imagens WHERE id_imagem = '$id_imagem_curso'";
+        $resultado_imagem_curso = mysqli_query($conexao, $busca_imagem_curso);
+        $imagem_curso = mysqli_fetch_array($resultado_imagem_curso);
 
-    $id_categoria = $curso["id_categoria"];
-    $busca_categoria = "SELECT * FROM categorias WHERE id_categoria = '$id_categoria'";
-    $resultado_categoria = mysqli_query($conexao, $busca_categoria);
-    $categoria = mysqli_fetch_array($resultado_categoria);
-    ?>
+        $id_categoria = $curso["id_categoria"];
+        $busca_categoria = "SELECT * FROM categorias WHERE id_categoria = '$id_categoria'";
+        $resultado_categoria = mysqli_query($conexao, $busca_categoria);
+        $categoria = mysqli_fetch_array($resultado_categoria);
+        ?>
 								<div class="col-lg-4 col-md-6 mb-4">
 									<div class="card h-100">
 										<a href="assistir_aulas.php?id=<?php echo $curso["id_curso"]; ?>"><img class="card-img-top" src="../img/<?php echo $imagem_curso["nome"]; ?>" alt="" width="150px" height="150px"></a>
@@ -144,4 +147,8 @@ while ($curso = mysqli_fetch_array($resultado)) {
 			</div>
 			<!-- /.container -->
 		</div>
-<?php include "rodape.php";
+<?php
+include "rodape.php";
+} else {
+    echo "<script language='javascript'>window.location='login.php'; </script>";
+}
