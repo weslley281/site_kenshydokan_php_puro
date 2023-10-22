@@ -79,36 +79,36 @@ $busca = "SELECT * FROM usuarios";
 						<td class="text-capitalize"><?php echo date_format(date_create($dataMudanca), "d/m/Y"); ?></td>
 						<td class="text-capitalize">
 
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#usuarioModal<?php echo $id_usuario ?>">
-              <i class="fas fa-edit"></i>
-            </button>
+            <a title="Editar" class="btn btn-info" href="editar_usuario_admin.php?id=<?php echo $id_usuario; ?>"><i class="fas fa-edit"></i></a>
 
-            <a title="Excluir" class="btn btn-danger" href="../controllers/deletar_postagem.php?id=<?php echo $id_usuario; ?>"><i class="fa fa-minus-square"></i></a>
+            <button title="Excluir" type="button" class="btn btn-danger" data-toggle="modal" data-target="#usuarioModal<?php echo $id_usuario ?>">
+              <i class="fa fa-minus-square"></i>
+            </button>
             </td>
 					</tr>
 
           <!-- Modal -->
           <div class="modal fade" id="usuarioModal<?php echo $id_usuario ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-              <div class="modal-content">
+              <div class="modal-content bg-danger">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Editar usuário</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Você deseja realmente deletar esse usuário:</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form action="" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                      <input type="text" class="form-control" value="<?php echo $nome ?>" name="nome" required />
-                    </div>
-
-
-                  </form>
+                  <div class="form-group">
+                    <h2><?php echo $nome ?>?</h2>
+                  </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
+                  <form action="../controllers/usuarioController.php" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="tipo" value="deletar">
+                    <input type="hidden" name="id_usuario" value="<?php echo $id_usuario; ?>">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                  </form>
                 </div>
               </div>
             </div>
