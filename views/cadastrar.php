@@ -25,19 +25,16 @@ if (isset($_SESSION["id_usuario"])) {
               <input id="nome" type="text" class="form-control" placeholder="Nome" name="nome" required autofocus>
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group">
               <label for="id_fil">Registro de Filiado: </label>
                 <select id="id_fil" class="form-select form-control js-example-basic-single"" aria-label="Default select example" name="id_fil">
                 <option value="0" selected>Não sou filiado</option>
             <?php
 $consulta = "SELECT id_filiado, nome FROM filiados ORDER BY nome";
-var_dump($consulta);
 $resultado = mysqli_query($conexao, $consulta);
-var_dump($resultado);
-// Verifica se a consulta foi bem-sucedida
 if ($resultado) {
     while ($dado = mysqli_fetch_array($resultado)) {
-        echo '<option value="' . $dado["id_fil"] . '">' . $dado["nome"] . '</option>';
+        echo '<option value="' . $dado["id_filiado"] . '">' . $dado["nome"] . '</option>';
     }
 } else {
     echo '<option>Erro ao carregar os dados</option>';
@@ -46,7 +43,7 @@ if ($resultado) {
                 </select>
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group">
               <label for="imagem">Imagem de Perfil</label>
                 <input type="file" class="form-control" id="imagem" accept="image/*" required name="imagem">
 
@@ -56,7 +53,7 @@ if ($resultado) {
             </div>
 
 
-            <div class="form-group mb-3">
+            <div class="form-group">
               <label for="email">Email: </label>
                 <input id="email" type="email" class="form-control" placeholder="Endereço de Email" name="email" required>
             </div>
@@ -66,14 +63,14 @@ if ($resultado) {
               <input id="telefone" type="text" class="form-control" placeholder="Nome" name="telefone" onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" required>
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group">
               <label for="senha">Senha</label>
               <input id="senha" type="password" class="form-control" placeholder="Senha" name="senha" required>
             </div>
 
             <input type="hidden" name="tipo" value="inserir">
 
-            <div class="custom-control custom-checkbox mb-3">
+            <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="customCheck1">
               <label class="custom-control-label" for="customCheck1">Lembrar Senha</label>
             </div>

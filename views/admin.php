@@ -12,7 +12,7 @@ $id_usuario = $_SESSION['id_usuario'];
 $busca_usuario = "SELECT * FROM usuarios WHERE id_usuario = '$id_usuario'";
 $resultado_usuario = mysqli_query($conexao, $busca_usuario);
 $usuario = mysqli_fetch_array($resultado_usuario);
-var_dump($_SESSION["id_usuario"], $_SESSION['nivel']);
+
 if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
     ?>
 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -59,10 +59,15 @@ $busca = "SELECT * FROM usuarios";
             $nome = $res_usuario["nome"];
             $nivel = $res_usuario["nivel"];
             $id_imagem = $res_usuario["id_imagem"];
+            $id_fil = $res_usuario["id_fil"];
             $email = $res_usuario["email"];
             $telefone = $res_usuario["telefone"];
             $dataCriacao = $res_usuario["dataCriacao"];
             $dataMudanca = $res_usuario["dataMudanca"];
+
+            $consulta = "SELECT nome FROM filiados WHERE id_filiado = '$id_fil'";
+            $resultado = mysqli_query($conexao, $consulta);
+            $filiado = mysqli_fetch_array($resultado);
 
             $res_imagem = ImagemRepositorio::procura_imagem($id_imagem);
             $caminho_imagem = $res_imagem["caminho"];
@@ -76,10 +81,61 @@ $busca = "SELECT * FROM usuarios";
 						<td class="text-capitalize"><?php echo $telefone; ?></td>
 						<td class="text-capitalize"><?php echo date_format(date_create($dataCriacao), "d/m/Y"); ?></td>
 						<td class="text-capitalize"><?php echo date_format(date_create($dataMudanca), "d/m/Y"); ?></td>
-						<td class="text-capitalize"></td>
+						<td class="text-capitalize">
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#usuarioModal<?php echo $id_usuario ?>">
+              <i class="fas fa-edit"></i>
+            </button>
+
+            <a title="Excluir" class="btn btn-danger" href="../controllers/deletar_postagem.php?id=<?php echo $id_usuario; ?>"><i class="fa fa-minus-square"></i></a>
+            </td>
 					</tr>
-			<?php }
-    }?>
+
+          <!-- Modal -->
+          <div class="modal fade" id="usuarioModal<?php echo $id_usuario ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Editar usuário</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action="" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                      <input type="text" class="form-control" value="<?php echo $nome ?>" name="nome" required />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="id_fil">Registro de Filiado: </label>
+                        <select id="id_fil" class="form-select form-control js-example-basic-single" aria-label="Default select example" name="id_fil">
+                        <option value="0" selected><?php echo $filiado["nome"] ?></option>
+                        <option value="0" selected>Não sou filiado</option>
+                    <?php
+$consulta = "SELECT id_filiado, nome FROM filiados ORDER BY nome";
+            $resultado = mysqli_query($conexao, $consulta);
+            // Verifica se a consulta foi bem-sucedida
+            if ($resultado) {
+                while ($dado = mysqli_fetch_array($resultado)) {
+                    echo '<option value="' . $dado["id_filiado"] . '">' . $dado["nome"] . '</option>';
+                }
+            } else {
+                echo '<option>Erro ao carregar os dados</option>';
+            }
+            ?>
+                        </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+			<?php }}?>
 		</tbody>
 	</table>
     </div>
@@ -120,7 +176,7 @@ $busca = "SELECT * FROM postagens";
 						<td class="text-capitalize">
               <a title="Editar" class="btn btn-info" href="editar_postagem.php?id=<?php echo $id_publicacao; ?>"><i class="fas fa-edit"></i></a>
 
-            <a title="Editar" class="btn btn-info" href="mudar_status_postagem.php?id=<?php echo $id_publicacao; ?>">
+            <a title="Editar" class="btn btn-info" href="../controllers/mudar_status_postagem.php?id=<?php echo $id_publicacao; ?>">
               <?php echo $status == "aguardando" ? '<i class="fa-regular fa-thumbs-down"></i>' : '<i class="fa-regular fa-thumbs-up"></i>' ?></a>
             </td>
 					</tr>

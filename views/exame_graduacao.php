@@ -70,7 +70,7 @@ if (isset($_SESSION["id_usuario"])) {
               <!-- card do perfil -->
               <div class="col-5 mb-4">
                 <div class="card" style="width: 18rem;">
-                  <img class="card-img-top" src="../imagens/<?php echo $imagem["nome"] ?>" alt="">
+                  <img class="card-img-top" src="../imagens/<?php echo $imagem["nome"] ?>" alt="<?php echo $usuario["nome"]; ?>">
                   <div class="card-body">
                     <h5 class="card-title"><?php echo $usuario["nome"]; ?></h5>
                   </div>

@@ -10,7 +10,7 @@ $conexao = $c->conectar();
 
 <section class="container">
   <?php
-$busca_postagen = "SELECT * FROM postagens WHERE status = 'sim' order by id_publicacao desc";
+$busca_postagen = "SELECT * FROM postagens WHERE status = 'aprovado' order by id_publicacao desc";
 //echo "busca: " . var_dump($busca_postagen) . "<br>";
 $resultado_postagen = mysqli_query($conexao, $busca_postagen);
 //echo "resultado: " . var_dump($resultado_postagen) . "<br>";

@@ -135,7 +135,7 @@
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
         <div class="text-center">
-          <img class="rounded-circle" src="../img/sensei-everson.jpg" alt="Generic placeholder image" width="200" height="200">
+          <img class="rounded-circle" src="../img/sensei-everson.jpg" alt="Everson Jones Batista Leite" width="200" height="200">
           <h2>Everson Jones Batista Leite</h2>
           <p><u>Diretor Técnico.</u></p>
         </div>
@@ -145,7 +145,7 @@
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
         <div class="text-center">
-          <img class="rounded-circle" src="../img/sensei_elyakin.jpg" alt="Generic placeholder image" width="200" height="200">
+          <img class="rounded-circle" src="../img/sensei_elyakin.jpg" alt="Elyakin Vinicius Mettelo" width="200" height="200">
           <h2>Elyakin Vinicius Mettelo</h2>
           <p><u>Diretor de Arbitragem.</u></p>
         </div>
@@ -157,7 +157,7 @@
     <div class="row mt-3 mb-3">
       <div class="col-lg-4">
         <div class="text-center">
-          <img class="rounded-circle" src="../img/sensei_weslley.jpg" alt="Generic placeholder image" width="200" height="200">
+          <img class="rounded-circle" src="../img/sensei_weslley.jpg" alt="Weslley Henrique Vieira Ferraz" width="200" height="200">
           <h2>Weslley Henrique Vieira Ferraz</h2>
           <p><u>Diretor Técnico</u></p>
         </div>
@@ -169,7 +169,7 @@
       </div>
       <div class="col-lg-4">
         <div class="text-center">
-          <img class="rounded-circle" src="../img/sensei_murilo.jpg" alt="Generic placeholder image" width="200" height="200">
+          <img class="rounded-circle" src="../img/sensei_murilo.jpg" alt="Murilo Cardoso de Resende" width="200" height="200">
           <h2>Murilo Cardoso de Resende</h2>
           <p><u>Diretor de Arbitragem</u></p>
         </div>

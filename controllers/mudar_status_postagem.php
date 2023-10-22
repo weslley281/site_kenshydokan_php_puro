@@ -8,6 +8,7 @@ if (!isset($_SESSION["id_usuario"]) || $_SESSION['nivel'] != "admin") {
 }
 
 include_once "../db/conexao.php";
+include_once "../repositorios/publicacaoRepositorio.php";
 
 $c = new Conexao;
 $conexao = $c->conectar();
@@ -20,10 +21,9 @@ $publicacao = mysqli_fetch_array($resultado);
 
 $status = $publicacao["status"] == "aguardando" ? "aprovado" : "aguardando";
 
-if (PublicacaoRepositorio::excluir_publicacao($id_publicacao)) {
-    echo "<script language='javascript'>window.alert('Postagem Excluida com sucesso'); </script>";
-    echo "<script language='javascript'>window.location='../views/suas_postagens.php'; </script>";
+if (PublicacaoRepositorio::editar_status_publicacao($id_publicacao, $status)) {
+    echo "<script language='javascript'>window.location='../views/admin.php#postagens'; </script>";
 } else {
-    echo "<script language='javascript'>window.alert('Erro ao Excluir'); </script>";
-    echo "<script language='javascript'>window.location='../views/suas_postagens.php; </script>";
+    echo "<script language='javascript'>window.alert('Erro'); </script>";
+    echo "<script language='javascript'>window.location='../views/admin.php#postagens; </script>";
 }

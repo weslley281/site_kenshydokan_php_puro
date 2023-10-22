@@ -22,6 +22,7 @@ $paginas = array(
     '/views/criar_postagem.php' => 'Postagem',
     '/views/contato.php' => 'Contato',
     '/views/campeonatos.php' => 'Campeonatos',
+    '/views/cadastrar.php' => 'Cadastrar',
 );
 ?>
 <!DOCTYPE html>
@@ -115,13 +116,18 @@ contar_pagina($url_atual);
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Minha Conta
                     </a>
+
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <?php if (isset($_SESSION['id_usuario'])) {?>
                     <a class="dropdown-item <?php echo ($url_atual == "/views/perfil.php") ? 'active' : ''; ?>" href="perfil.php">Perfil</a>
                     <a class="dropdown-item" href="../controllers/sair.php">Sair</a>
+
                     <?php } else {?>
-                    <div class="dropdown-divider"></div>
+
                     <a class="dropdown-item <?php echo ($url_atual == "/views/login.php") ? 'active' : ''; ?>" href="login.php">Login</a>
+
+                    <a class="dropdown-item <?php echo ($url_atual == "/views/cadastrar.php") ? 'active' : ''; ?>" href="cadastrar.php">Cadastrar-se</a>
+
                     <?php }?>
                     </div>
                 </li>
