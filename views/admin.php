@@ -65,10 +65,6 @@ $busca = "SELECT * FROM usuarios";
             $dataCriacao = $res_usuario["dataCriacao"];
             $dataMudanca = $res_usuario["dataMudanca"];
 
-            $consulta = "SELECT nome FROM filiados WHERE id_filiado = '$id_fil'";
-            $resultado = mysqli_query($conexao, $consulta);
-            $filiado = mysqli_fetch_array($resultado);
-
             $res_imagem = ImagemRepositorio::procura_imagem($id_imagem);
             $caminho_imagem = $res_imagem["caminho"];
             $nome_imagem = $res_imagem["nome"];
@@ -107,25 +103,7 @@ $busca = "SELECT * FROM usuarios";
                       <input type="text" class="form-control" value="<?php echo $nome ?>" name="nome" required />
                     </div>
 
-                    <div class="form-group">
-                      <label for="id_fil">Registro de Filiado: </label>
-                        <select id="id_fil" class="form-select form-control js-example-basic-single" aria-label="Default select example" name="id_fil">
-                        <option value="0" selected><?php echo $filiado["nome"] ?></option>
-                        <option value="0" selected>Não sou filiado</option>
-                    <?php
-$consulta = "SELECT id_filiado, nome FROM filiados ORDER BY nome";
-            $resultado = mysqli_query($conexao, $consulta);
-            // Verifica se a consulta foi bem-sucedida
-            if ($resultado) {
-                while ($dado = mysqli_fetch_array($resultado)) {
-                    echo '<option value="' . $dado["id_filiado"] . '">' . $dado["nome"] . '</option>';
-                }
-            } else {
-                echo '<option>Erro ao carregar os dados</option>';
-            }
-            ?>
-                        </select>
-                    </div>
+
                   </form>
                 </div>
                 <div class="modal-footer">
