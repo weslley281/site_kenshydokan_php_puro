@@ -12,8 +12,8 @@ $id_usuario = $_SESSION['id_usuario'];
 $busca_usuario = "SELECT * FROM usuarios WHERE id_usuario = '$id_usuario'";
 $resultado_usuario = mysqli_query($conexao, $busca_usuario);
 $usuario = mysqli_fetch_array($resultado_usuario);
-
-if (isset($_SESSION["id_usuario"]) || $usuario["nivel"] == "admin") {
+var_dump($_SESSION["id_usuario"], $_SESSION['nivel']);
+if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
     ?>
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
@@ -92,7 +92,6 @@ $busca = "SELECT * FROM usuarios";
 			<tr>
 				<th scope="col">Codigo</th>
 				<th scope="col">Titulo</th>
-				<th scope="col">Status</th>
 				<th scope="col">Criação</th>
 				<th scope="col">Alteração</th>
 				<th scope="col">Ações</th>
@@ -116,10 +115,14 @@ $busca = "SELECT * FROM postagens";
 					<tr>
 						<th class="font-weight-bold" scope="row"><?php echo $id_publicacao; ?></th>
 						<td class="text-capitalize"><?php echo $titulo; ?></td>
-						<td class="text-capitalize"><?php echo $status; ?></td>
 						<td class="text-capitalize"><?php echo date_format(date_create($dataCriacao), "d/m/Y"); ?></td>
 						<td class="text-capitalize"><?php echo date_format(date_create($dataMudanca), "d/m/Y"); ?></td>
-						<td class="text-capitalize"></td>
+						<td class="text-capitalize">
+              <a title="Editar" class="btn btn-info" href="editar_postagem.php?id=<?php echo $id_publicacao; ?>"><i class="fas fa-edit"></i></a>
+
+            <a title="Editar" class="btn btn-info" href="mudar_status_postagem.php?id=<?php echo $id_publicacao; ?>">
+              <?php echo $status == "aguardando" ? '<i class="fa-regular fa-thumbs-down"></i>' : '<i class="fa-regular fa-thumbs-up"></i>' ?></a>
+            </td>
 					</tr>
 			<?php }
     }?>

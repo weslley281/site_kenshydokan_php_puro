@@ -108,6 +108,7 @@
     </script>
 
   <!-- Video JS -->
-  <script src="https://vjs.zencdn.net/8.6.0/video.min.js"></script>
+  <script type="text/javascript" src="https://vjs.zencdn.net/8.6.0/video.min.js"></script>
+  <script src="https://kit.fontawesome.com/e880bf5077.js" crossorigin="anonymous"></script>
   </body>
 </html>

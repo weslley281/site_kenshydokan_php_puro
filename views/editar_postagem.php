@@ -102,6 +102,11 @@ if (isset($_SESSION["id_usuario"])) {
 $query = "SELECT * from postagens where id_publicacao = '$id_publicacao'";
     $result = mysqli_query($conexao, $query);
     while ($postagem = mysqli_fetch_array($result)) {
+        if ($postagem["id_usuario"] != $_SESSION["id_usuario"]) {
+            echo "<script language='javascript'>window.alert('Você não pode fazer isso'); </script>";
+            echo "<script language='javascript'>window.location='../views/login.php'; </script>";
+            exit();
+        }
         ?>
 							<form class="mb-3" action="../controllers/postagemController.php" method="POST">
 									<input type="hidden" value="editar" name="tipo">
