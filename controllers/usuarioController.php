@@ -62,11 +62,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $telefone = $_POST["telefone"];
 
             $usuarioRepositorio = new UsuarioRepositorio;
-            var_dump($nome, $id_fil, $id_imagem, $email, $telefone, $dataMudanca);
             $usuarioModel = new Usuario($_POST["nome"], $_POST["id_fil"], $_POST["id_imagem"], $_POST["email"], $_POST["telefone"], $dataMudanca);
 
             $usuarioModel->setNivel($_POST["nivel"]);
-            var_dump($usuarioModel);
+
+            if ($usuarioRepositorio->editarUsuario($_POST["id_usuario"], $usuarioModel)) {
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/editar_perfil.php');
+            } else {
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/editar_perfil.php');
+            }
+
+        } elseif ($_POST["tipo"] == "edidar_admin") {
+            $nome = $_POST["nome"];
+            $id_fil = $_POST["id_fil"];
+            $id_imagem = $_POST["id_imagem"];
+            $nivel = $_POST["nivel"];
+            $email = $_POST["email"];
+            $telefone = $_POST["telefone"];
+
+            $usuarioRepositorio = new UsuarioRepositorio;
+            $usuarioModel = new Usuario($_POST["nome"], $_POST["id_fil"], $_POST["id_imagem"], $_POST["email"], $_POST["telefone"], $dataMudanca, null, $nivel);
+
+            $usuarioModel->setNivel($_POST["nivel"]);
 
             if ($usuarioRepositorio->editarUsuario($_POST["id_usuario"], $usuarioModel)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/editar_perfil.php');
@@ -101,7 +118,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         echo "id da nova imagem: $id_imagem";
 
                         $dados_imagem_antiga = $imagemRepositorio::procura_imagem($_POST["id_imagem"]);
-                        var_dump($dados_imagem_antiga);
 
                         $caminho = $dados_imagem_antiga != null ? file_exists($dados_imagem_antiga["caminho"]) : "";
 
