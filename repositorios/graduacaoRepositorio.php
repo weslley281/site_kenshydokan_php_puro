@@ -75,7 +75,7 @@ class GraduacaoRepositorio
             $c = new Conexao();
             $conexao = $c->conectar();
 
-            $busca = "SELECT * FROM graduacoes WHERE id_graduacao = ?";
+            $busca = "SELECT * FROM graduacao WHERE id_graduacao = ?";
             $procura = $conexao->prepare($busca);
             $procura->bind_param("i", $id_graduacao);
             $procura->execute();

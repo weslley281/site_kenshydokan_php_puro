@@ -87,7 +87,7 @@ $busca = "SELECT * FROM usuarios";
   <div class="tab-pane fade" id="postagens" role="tabpanel" aria-labelledby="postagens-tab">
   <div class="container text-center">
       <h2>Todas as  Postagens</h2>
-      <table id="minhaTabela" class="table table-bordered" width="100%" cellspacing="0">
+      <table id="minhaTabela2" class="table table-bordered" width="100%" cellspacing="0">
 		<thead>
 			<tr>
 				<th scope="col">Codigo</th>
@@ -130,7 +130,7 @@ $busca = "SELECT * FROM postagens";
   <div class="tab-pane fade" id="cursos" role="tabpanel" aria-labelledby="cursos-tab">
   <div class="container text-center">
       <h2>Todos os Cursos</h2>
-      <table id="minhaTabela" class="table table-bordered" width="100%" cellspacing="0">
+      <table id="minhaTabela3" class="table table-bordered" width="100%" cellspacing="0">
 		<thead>
 			<tr>
 				<th scope="col">Imagem</th>
@@ -179,8 +179,8 @@ $busca = "SELECT * FROM cursos";
   </div>
   <div class="tab-pane fade" id="filiados" role="tabpanel" aria-labelledby="filiados-tab">
   <div class="container text-center">
-      <h2>Todas os Filiados</h2>
-      <table id="minhaTabela" class="table table-bordered" width="100%" cellspacing="0">
+      <h2>Todos os Filiados</h2>
+      <table id="minhaTabela4" class="table table-bordered" width="100%" cellspacing="0">
 		<thead>
 			<tr>
 				<th scope="col">Codigo</th>
@@ -224,12 +224,12 @@ $busca = "SELECT * FROM filiados";
 					<tr>
 						<th class="font-weight-bold" scope="row"><?php echo $id_filiado; ?></th>
 						<td class="text-capitalize"><?php echo $nome; ?></td>
-						<td class="text-capitalize"><?php echo $graduacao['graduacao']; ?></td>
+						<td class="text-capitalize"><?php echo $graduacao; ?></td>
 						<td class="text-capitalize"><?php echo $dojo; ?></td>
 						<td class="text-capitalize"><?php echo $email; ?></td>
 						<td class="text-capitalize"><?php echo $telefone; ?></td>
 						<td class="text-capitalize"><?php echo $cidade; ?></td>
-						<td class="text-capitalize"><?php echo $estado["estado"]; ?></td>
+						<td class="text-capitalize"><?php echo $estado["estado"] != null ? $estado["estado"] : "" ?></td>
 						<td class="text-capitalize"><?php echo date_format(date_create($dataCriacao), "d/m/Y"); ?></td>
 						<td class="text-capitalize"><?php echo date_format(date_create($dataMudanca), "d/m/Y"); ?></td>
 						<td class="text-capitalize"></td>

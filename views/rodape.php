@@ -86,6 +86,24 @@
               "pageLength": 10,      // Define o número de registros por página
               "searching": true      // Habilita a pesquisa
           });
+
+          $('#minhaTabela2').DataTable({
+              "order": [[0, "asc"]], // Ordena a primeira coluna em ordem crescente
+              "pageLength": 10,      // Define o número de registros por página
+              "searching": true      // Habilita a pesquisa
+          });
+
+          $('#minhaTabela3').DataTable({
+              "order": [[0, "asc"]], // Ordena a primeira coluna em ordem crescente
+              "pageLength": 10,      // Define o número de registros por página
+              "searching": true      // Habilita a pesquisa
+          });
+
+          $('#minhaTabela4').DataTable({
+              "order": [[0, "asc"]], // Ordena a primeira coluna em ordem crescente
+              "pageLength": 10,      // Define o número de registros por página
+              "searching": true      // Habilita a pesquisa
+          });
       });
     </script>
 
