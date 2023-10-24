@@ -1,33 +1,23 @@
-<?php include "menu.php";?>
+<?php include "menu.php"; ?>
 
 <div class="container-fluid py-5">
   <img class="img-fluid rounded" src="../img/foto_principal.jpg" alt="foto dos alunos de karate">
   <div class="container mx-2">
-        <h3 class="text-dark bold text-uppercase font-weight-bold py-3">Federação de Karatê de Contato do Estado de Mato Grosso.</h3>
-        <h3 class="text-dark bold text-uppercase font-weight-bold py-3">Instituto de Artes Marciais e Defesa Pessoal Kenshydokan.</h3>
+    <h3 class="text-dark bold text-uppercase font-weight-bold py-3">Federação de Karatê de Contato do Estado de Mato Grosso.</h3>
+    <h3 class="text-dark bold text-uppercase font-weight-bold py-3">Instituto de Artes Marciais e Defesa Pessoal Kenshydokan.</h3>
   </div>
 </div>
 
 <div class="main main-raised">
   <!-- Começo do Carrossel -->
   <div class="container-fluid text-center">
-    <video id="my-video"
-      class="video-js embed-responsive embed-responsive-16by9"
-      preload="auto"
-      data-setup="{}"
-      controls
-      autoplay=""
-      muted=""
-      loop=""
-      >
+    <video id="my-video" class="video-js embed-responsive embed-responsive-16by9" preload="auto" data-setup="{}" controls autoplay="" muted="" loop="">
       <source class="embed-responsive-item" src="../videos/slide-kenshydokan.mp4" type="video/mp4">
       <p class="vjs-no-js">
-      To view this video please enable JavaScript, and consider upgrading to a
-      web browser that
-      <a href="https://videojs.com/html5-video-support/" target="_blank"
-        >supports HTML5 video</a
-      >
-    </p>
+        To view this video please enable JavaScript, and consider upgrading to a
+        web browser that
+        <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+      </p>
     </video>
   </div>
   <hr>
@@ -120,7 +110,9 @@
     <div class="row mt-3 mb-3">
       <div class="col-lg-4">
         <div class="text-center">
-          <img class="rounded-circle" src="../img/Jonas.jpg" alt="Generic placeholder image" width="200" height="200" alt="Foto de Jonas Teixeira de Andrade">
+          <a href="ver_perfil.php?id_usuario=5">
+            <img class="rounded-circle" src="../img/Jonas.jpg" alt="Generic placeholder image" width="200" height="200" alt="Foto de Jonas Teixeira de Andrade">
+          </a>
           <h2>Jonas Teixeira de Andrade</h2>
           <p><u>Presidente da FKCMT.</u></p>
         </div>
@@ -157,7 +149,9 @@
     <div class="row mt-3 mb-3">
       <div class="col-lg-4">
         <div class="text-center">
-          <img class="rounded-circle" src="../img/sensei_weslley.jpg" alt="Weslley Henrique Vieira Ferraz" width="200" height="200">
+          <a href="ver_perfil.php?id_usuario=1">
+            <img class="rounded-circle" src="../img/sensei_weslley.jpg" alt="Weslley Henrique Vieira Ferraz" width="200" height="200">
+          </a>
           <h2>Weslley Henrique Vieira Ferraz</h2>
           <p><u>Diretor Técnico</u></p>
         </div>
@@ -169,7 +163,9 @@
       </div>
       <div class="col-lg-4">
         <div class="text-center">
-          <img class="rounded-circle" src="../img/sensei_murilo.jpg" alt="Murilo Cardoso de Resende" width="200" height="200">
+          <a href="ver_perfil.php?id_usuario=7">
+            <img class="rounded-circle" src="../img/sensei_murilo.jpg" alt="Murilo Cardoso de Resende" width="200" height="200">
+          </a>
           <h2>Murilo Cardoso de Resende</h2>
           <p><u>Diretor de Arbitragem</u></p>
         </div>
@@ -183,5 +179,5 @@
     </div>
   </div>
   <?php
-include "rodape.php";
-?>
+  include "rodape.php";
+  ?>

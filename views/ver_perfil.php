@@ -20,9 +20,9 @@ $resultado_filiado = mysqli_query($conexao, $busca_filiado);
 $filiado = mysqli_fetch_array($resultado_filiado);
 $confirmacao = $filiado["confirmacao"];
 if ($confirmacao == "sim") {
-    $ativo = "Ele está filiado";
+	$ativo = "Ele está filiado";
 } else {
-    $ativo = "Aguardando Cofirmação de Filiação, Não Está Filiado Não";
+	$ativo = "Aguardando Cofirmação de Filiação, Não Está Filiado Não";
 }
 
 $id_graduacao = $filiado["id_graduacao"];
@@ -61,35 +61,31 @@ $graduacao = mysqli_fetch_array($resultado_graduacao);
 							</div>
 							<!-- mais informações -->
 							<?php
-$busca = "SELECT * FROM filiados where id_filiado = '$id_filiado'";
-$resultado = mysqli_query($conexao, $busca);
-while ($res = mysqli_fetch_array($resultado)) {
-    if ($id_filiado == 23) {
-        $graduacao = ":<br>Faixa preta 3° dan em Karatê Kenshydokan<br>
-                                Faixa preta 2° dan em Judô Kodokan<br>
-                                Faixa preta em Jiu Jitsu Brasileiro";
-    } elseif ($id_filiado == 14) {
-        $graduacao = ":<br>Faixa coral 10° dan em Karatê Kenshydokan<br>
-                                Faixa coral 6° dan em Judô Kodokan<br>
-                                Faixa coral 7° dan em Ju jitsu";
-    } elseif ($id_filiado == 21) {
-        $graduacao = ":<br>Faixa preta 1° dan em Karatê Kenshydokan<br>";
-    } else {
-        $graduacao = $graduacao["graduacao"];
-    }
-    ?>
+							$busca = "SELECT * FROM filiados where id_filiado = '$id_filiado'";
+							$resultado = mysqli_query($conexao, $busca);
+							while ($res = mysqli_fetch_array($resultado)) {
+								if ($id_filiado == 23) {
+									$graduacao = ':<br><ul class="list-group mt-1"><li class="list-group-item">Faixa preta 3° dan em Karatê Kenshydokan</li><li class="list-group-item">Faixa preta 2° dan em Judô Kodokan</li><li class="list-group-item">Faixa preta em Jiu Jitsu Brasileiro</li></ul>';
+								} elseif ($id_filiado == 14) {
+									$graduacao = ':<br><ul class="list-group mt-1"><li class="list-group-item">10° Dan Karate Kenshydokan</li><li class="list-group-item">7° Dan Ju jitsu</li><li class="list-group-item">7° Dan em KickBoxing</li><li class="list-group-item">6° Dan Judo Kodokan</li><li class="list-group-item">5° Dan em Karate Kyokushin</li><li class="list-group-item">Faixa Preta Quinto Grau Brasilian Jiu Jitsu</li></ul>';
+								} elseif ($id_filiado == 79) {
+									$graduacao = ':<br><ul class="list-group mt-1"><li class="list-group-item">14° Khan Muay Thai</li><li class="list-group-item">3° Dan Kickboxing</li><li class="list-group-item">2° Dan Karatê</li><li class="list-group-item">Faixa Roxa Jiu Jitsu Brasileiro</li></ul>';
+								} else {
+									$graduacao = $graduacao["graduacao"];
+								}
+							?>
 								<div class="col mb-4">
 									<div class="card">
 										<h5 class="card-header"><?php echo "$ativo"; ?></h5>
 										<div class="card-body">
-											<h5 class="card-title">Sua graduação é <?php echo $graduacao; ?></h5>
+											<h3 class="card-title">Sua graduação é <?php echo $graduacao; ?></h3>
 											<p class="card-text">Dojo: <?php echo $filiado["dojo"]; ?></p>
 											<p class="card-text">E-mail: <?php echo $usuario["email"]; ?></p>
 											<p class="card-text">Telefone: <?php echo $usuario["telefone"]; ?></p>
 										</div>
 									</div>
 								</div>
-							<?php }?>
+							<?php } ?>
 						</div>
 					</div>
 					<!--Fim dados do perfil -->
@@ -110,4 +106,4 @@ while ($res = mysqli_fetch_array($resultado)) {
 		<!-- /.container -->
 	</div>
 
-<?php include "rodape.php";?>
+	<?php include "rodape.php"; ?>

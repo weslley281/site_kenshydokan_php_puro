@@ -25,4 +25,4 @@ $migration->criarTabelaCategorias();
 echo "<br>";
 $migration->criarTabelaEstados();
 
-//echo "<script language='javascript'>window.location='views/inicio.php'; </script>";
+echo "<script language='javascript'>window.location='views/inicio.php'; </script>";
