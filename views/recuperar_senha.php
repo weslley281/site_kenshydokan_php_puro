@@ -15,6 +15,11 @@ $conexao = $c->conectar();
           <?php
           if (isset($_GET["id"])) {
             $usuario = UsuarioRepositorio::buscarUsuarioExistente($_GET["id"]);
+            if (!$usuario) {
+              echo "<script language='javascript'>window.location='../views/recuperar_senha.php'; </script>";
+              exit();
+            }
+            UsuarioRepositorio::editarTokenUsuario($usuario["id_usuario"], "");
           ?>
             <form class="form-signin" action="../controllers/usuarioController.php" method="post">
               <div class="form-group">
