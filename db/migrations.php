@@ -24,7 +24,6 @@ class Migration
             nivel VARCHAR(255) NOT NULL,
             telefone VARCHAR(255) NOT NULL,
             senha VARCHAR(300) NOT NULL,
-            senha VARCHAR(300) NOT NULL,
             dataCriacao DATE,
             dataMudanca DATE
         );
