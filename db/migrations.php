@@ -16,14 +16,17 @@ class Migration
         $sql = "
 
         CREATE TABLE IF NOT EXISTS usuarios (
-            `id_usuario` int(11) NOT NULL,
-            `id_fil` int(11) DEFAULT NULL,
-            `id_imagem` int(11) DEFAULT NULL,
-            `nome` VARCHAR(255) NOT NULL,
-            `email` VARCHAR(255) NOT NULL,
-            `nivel` VARCHAR(255) NOT NULL,
-            `telefone` VARCHAR(255) NOT NULL,
-            `senha` VARCHAR(300) NOT NULL
+            id_usuario int(11) NOT NULL,
+            id_fil int(11) DEFAULT NULL,
+            id_imagem int(11) DEFAULT NULL,
+            nome VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL,
+            nivel VARCHAR(255) NOT NULL,
+            telefone VARCHAR(255) NOT NULL,
+            senha VARCHAR(300) NOT NULL,
+            senha VARCHAR(300) NOT NULL,
+            dataCriacao DATE,
+            dataMudanca DATE
         );
         ";
 

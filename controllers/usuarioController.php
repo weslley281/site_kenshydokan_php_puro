@@ -71,7 +71,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/editar_perfil.php');
             }
-
         } elseif ($_POST["tipo"] == "edidar_admin") {
             $nome = $_POST["nome"];
             $id_fil = $_POST["id_fil"];
@@ -90,7 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/editar_perfil.php');
             }
-
         } elseif ($_POST["tipo"] == "editar_nivel" && $_SESSION["nivel"] == "admin") {
 
             if ($usuarioRepositorio::editarNivelUsuario($_POST["id_usuario"], $_POST["nivel"], $dataMudanca)) {
@@ -141,8 +139,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             } else {
                 exibirMensagemEredirecionar("Formato de imagem inválido", '../views/editar_perfil.php');
             }
-
         } elseif ($_POST["tipo"] == "editar_senha") {
+            $usuarioRepositorio = new UsuarioRepositorio();
+
+            if ($_POST["nova_senha"] != $_POST["senha2"]) {
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/login.php');
+                exit();
+            }
+
             $id_usuario = $_POST["id_usuario"];
             $nova_senha = $_POST["nova_senha"];
 

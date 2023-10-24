@@ -1,6 +1,7 @@
 <?php
 include "menu.php";
 include_once "../db/conexao.php";
+include_once "../repositorios/usuarioRepositorio.php";
 $c = new Conexao();
 $conexao = $c->conectar();
 ?>
@@ -11,21 +12,43 @@ $conexao = $c->conectar();
       <div class="card card-signin my-5">
         <div class="card-body">
           <h5 class="card-title text-center">Recuperar Senha</h5>
-          <form class="form-signin" action="../controllers/autenticar.php" method="post">
-            <div class="form-group mb-3">
-              <input type="email" id="inputEmail" class="form-control" placeholder="Endereço de Email" name="usuario" required autofocus>
-            </div>
-            <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" name="entrar" value="entrar">
-            <hr class="my-4">
-            <div class="row">
-              <div class="col"><a href="login.php">Fazer Login</a></div>
-              <div class="col"><a href="cadastrar.php">Cadastrar-se</a></div>
-            </div>
-          </form>
+          <?php
+          if (isset($_GET["id"])) {
+            $usuario = UsuarioRepositorio::buscarUsuarioExistente($_GET["id"]);
+          ?>
+            <form class="form-signin" action="../controllers/usuarioController.php" method="post">
+              <div class="form-group">
+                <input type="hidden" value="editar_senha" name="tipo">
+                <input type="hidden" value="<?php echo $usuario["id_usuario"]; ?>" name="id_usuario">
+                <input type="password" id="nova_senha" class="form-control" placeholder="Digite a senha" name="nova_senha" required autofocus>
+              </div>
+              <div class="form-group">
+                <input type="password" id="senha2" class="form-control" placeholder="Repita a senha" name="senha2" required>
+              </div>
+              <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" name="entrar" value="salvar">
+              <hr class="my-4">
+              <div class="row">
+                <div class="col"><a href="login.php">Fazer Login</a></div>
+                <div class="col"><a href="cadastrar.php">Cadastrar-se</a></div>
+              </div>
+            </form>
+          <?php } else { ?>
+            <form class="form-signin" action="../controllers/recuperar_senha.php" method="post">
+              <div class="form-group">
+                <input type="email" id="inputEmail" class="form-control" placeholder="Endereço de Email" name="email" required autofocus>
+              </div>
+              <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" name="entrar" value="enviar">
+              <hr class="my-4">
+              <div class="row">
+                <div class="col"><a href="login.php">Fazer Login</a></div>
+                <div class="col"><a href="cadastrar.php">Cadastrar-se</a></div>
+              </div>
+            </form>
+          <?php } ?>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<?php include "rodape.php";?>
+<?php include "rodape.php"; ?>

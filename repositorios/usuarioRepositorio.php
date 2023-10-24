@@ -60,6 +60,19 @@ class UsuarioRepositorio
         return $resultado;
     }
 
+    public static function editarTokenUsuario(int $id_usuario, string $token): bool
+    {
+        $c = new Conexao();
+        $conexao = $c->conectar();
+
+        $atualizar = $conexao->prepare("UPDATE usuarios SET token = ? WHERE id_usuario = ?");
+        $atualizar->bind_param("si", $token, $id_usuario);
+        $resultado = $atualizar->execute();
+        $atualizar->close();
+
+        return $resultado;
+    }
+
     public function editarSenhaUsuario(int $id_usuario, string $nova_senha): bool
     {
         $atualizar = $this->conexao->prepare("UPDATE usuarios SET senha = ? WHERE id_usuario = ?");
@@ -70,6 +83,8 @@ class UsuarioRepositorio
 
         return $resultado;
     }
+
+
 
     public static function excluirUsuario(int $id_usuario): bool
     {
@@ -112,11 +127,11 @@ class UsuarioRepositorio
         $c = new Conexao();
         $conexao = $c->conectar();
 
-        $query = "SELECT * FROM usuarios WHERE nome LIKE ? OR email = ?";
+        $query = "SELECT * FROM usuarios WHERE nome LIKE ? OR email = ? OR token = ?";
         $procura = $conexao->prepare($query);
 
         $parametro = "%$busca%";
-        $procura->bind_param("ss", $parametro, $busca);
+        $procura->bind_param("sss", $parametro, $busca, $busca);
 
         $procura->execute();
         $result = $procura->get_result();
@@ -131,5 +146,4 @@ class UsuarioRepositorio
 
         return $usuario;
     }
-
 }

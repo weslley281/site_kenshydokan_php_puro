@@ -16,28 +16,28 @@ $resultado_imagem = mysqli_query($conexao, $busca_imagem);
 $imagem = mysqli_fetch_array($resultado_imagem);
 
 if ($usuario["id_fil"] != 0 || $usuario["id_fil"] != null && $usuario['nivel'] == "kohai") {
-    $id_filiado = $usuario["id_fil"];
-    $busca_filiado = "SELECT * FROM filiados WHERE id_filiado = '$id_filiado'";
-    $resultado_filiado = mysqli_query($conexao, $busca_filiado);
-    $filiado = mysqli_fetch_array($resultado_filiado);
-    $estaFiliado = ($filiado["confirmacao"] == "sim") ? "Você está filiado" : "Aguardando Confirmação de Filiação, Não Está Filiado Não";
+	$id_filiado = $usuario["id_fil"];
+	$busca_filiado = "SELECT * FROM filiados WHERE id_filiado = '$id_filiado'";
+	$resultado_filiado = mysqli_query($conexao, $busca_filiado);
+	$filiado = mysqli_fetch_array($resultado_filiado);
+	$estaFiliado = ($filiado["confirmacao"] == "sim") ? "Você está filiado" : "Aguardando Confirmação de Filiação, Não Está Filiado Não";
 
-    $id_graduacao = $filiado["id_graduacao"];
-    $busca_graduacao = "SELECT * FROM graduacao WHERE id_graduacao = '$id_graduacao'";
-    $resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
-    $graduacao = mysqli_fetch_array($resultado_graduacao);
+	$id_graduacao = $filiado["id_graduacao"];
+	$busca_graduacao = "SELECT * FROM graduacao WHERE id_graduacao = '$id_graduacao'";
+	$resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
+	$graduacao = mysqli_fetch_array($resultado_graduacao);
 } else {
-    $estaFiliado = "Sem dados";
-    $filiado = array(
-        "dojo" => "a definir",
-    );
-    $graduacao = array(
-        'graduacao' => 'sem registro',
-    );
+	$estaFiliado = "Sem dados";
+	$filiado = array(
+		"dojo" => "a definir",
+	);
+	$graduacao = array(
+		'graduacao' => 'sem registro',
+	);
 }
 
 if (isset($_SESSION["id_usuario"])) {
-    ?>
+?>
 
 	<body>
 		<div class="container mt-5">
@@ -52,15 +52,15 @@ if (isset($_SESSION["id_usuario"])) {
 						<div class="list-group">
 							<a href="perfil.php" class="list-group-item bg-light text-dark">Perfil</a>
 							<a href="editar_perfil.php" class="list-group-item bg-danger text-dark">Editar Perfil</a>
-<?php if ($usuario["nivel"] == "admin" || $usuario["nivel"] == "sensei") {?>
+							<?php if ($usuario["nivel"] == "admin" || $usuario["nivel"] == "sensei") { ?>
 								<a href="exame_graduacao.php" class="list-group-item bg-light text-dark">Exame de Graduação</a>
 								<a href="criar_postagem.php" class="list-group-item bg-light text-dark">Criar Postagem</a>
 								<a href="suas_postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
 								<a href="documentos.php" class="list-group-item bg-light text-dark">Arquivos para Baixar</a>
-<?php }?>
-<?php if ($usuario["nivel"] == "admin") {?>
+							<?php } ?>
+							<?php if ($usuario["nivel"] == "admin") { ?>
 								<a href="admin.php" class="list-group-item bg-light text-dark">Administrativo</a>
-							<?php }?>
+							<?php } ?>
 							<a href="eventos.php" class="list-group-item bg-light text-dark">Eventos Online</a>
 							<a href="../controllers/sair.php" class="list-group-item bg-light text-dark">Sair</a>
 						</div>
@@ -120,9 +120,15 @@ if (isset($_SESSION["id_usuario"])) {
 									<div id="trocar_senha">
 										<form v-if="senha" action="../controllers/editar_senha.php" method="post">
 											<input type="hidden" value="<?php echo $usuario["id_usuario"] ?>" name="id_usuario">
-											<input type="password" class="form-control mt-2 mb-2" placeholder="Digite a Senha Antiga" name="senha_antiga">
-											<input type="password" class="form-control mb-2" placeholder="Digite a Senha a Nova Senha" name="senha1">
-											<input type="password" class="form-control mb-2" placeholder="Repita a Senha a Nova Senha" name="senha2">
+											<input type="hidden" value="editar_senha" name="tipo">
+
+											<div class="form-group">
+												<input type="password" class="form-control" placeholder="Digite a Senha a Nova Senha" name="nova_senha">
+											</div>
+
+											<div class="form-group">
+												<input type="password" class="form-control" placeholder="Repita a Senha a Nova Senha" name="senha2">
+											</div>
 											<input type="submit" class="btn btn-success" value="Salvar Senha" name="">
 										</form>
 									</div>
@@ -141,9 +147,9 @@ if (isset($_SESSION["id_usuario"])) {
 			<!-- /.container -->
 		</div>
 
-<?php
-include "rodape.php";
+	<?php
+	include "rodape.php";
 } else {
-    echo "<script language='javascript'>window.location='login.php'; </script>";
+	echo "<script language='javascript'>window.location='login.php'; </script>";
 }
-?>
+	?>
