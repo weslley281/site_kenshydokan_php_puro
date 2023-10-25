@@ -3,6 +3,7 @@ session_start();
 
 include_once "../db/conexao.php";
 include_once "../repositorios/usuarioRepositorio.php";
+
 $c = new Conexao();
 $conexao = $c->conectar();
 
@@ -12,6 +13,14 @@ $limiteTentativas = 3;
 // Verifique se a variável de sessão para tentativas existe
 if (!isset($_SESSION['tentativas'])) {
     $_SESSION['tentativas'] = 0;
+}
+
+if (isset($_SESSION['bloqueio']) && $_SESSION['bloqueio'] > time()) {
+    $tempoRestante = $_SESSION['bloqueio'] - time();
+    $mensagem = "Usuário bloqueado, tente novamente em " . gmdate("H:i:s", $tempoRestante);
+    echo "<script language='javascript'>window.alert('$mensagem'); </script>";
+    echo "<script language='javascript'>window.location='../views/login.php'; </script>";
+    exit();
 }
 
 if (isset($_POST['usuario'], $_POST['senha'])) {
@@ -42,9 +51,12 @@ if (isset($_POST['usuario'], $_POST['senha'])) {
 
     // Verifica se o limite de tentativas foi atingido
     if ($_SESSION['tentativas'] >= $limiteTentativas) {
-        UsuarioRepositorio::editarNivelUsuario($resultado);
+        // Bloqueia o usuário por 1 hora a partir deste momento
+        $_SESSION['bloqueio'] = time() + 3600;
     }
 }
 
-// Se o login falhar, redirecione de volta para a página de login com uma mensagem de erro.
+// Se o login falhar, redirecione de volta para a página de login com uma mensagem de erro
+echo "<script language='javascript'>window.alert('Erro'); </script>";
 echo "<script language='javascript'>window.location='../views/login.php'; </script>";
+exit();

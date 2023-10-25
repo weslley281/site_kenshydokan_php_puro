@@ -27,10 +27,30 @@ $paginas = array(
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
+
+<head>
     <!-- Meta tags Obrigatórias -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=TAG_ID
+
+"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118512913-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-118512913-1');
+    </script>
+
+
 
     <meta name="author" content="Weslley Henrique Vieira Ferraz" />
     <meta name="owner" content="Federação de Karate de Contato do Estado de Mato Grosso" />
@@ -53,19 +73,20 @@ $paginas = array(
 
     <link rel="stylesheet" href="../libs/DataTables/datatables.css" />
     <?php
-// Itera sobre as páginas e adiciona a classe "active" se a URL atual corresponder
-foreach ($paginas as $url => $nome_da_pagina) {
-    if ($url_atual === $url) {
-        echo "<title>Ferraz Dojos | $nome_da_pagina </title>";
+    // Itera sobre as páginas e adiciona a classe "active" se a URL atual corresponder
+    foreach ($paginas as $url => $nome_da_pagina) {
+        if ($url_atual === $url) {
+            echo "<title>Kenshydokan | $nome_da_pagina </title>";
+        }
     }
-}
 
-contar_pagina($url_atual);
-?>
+    contar_pagina($url_atual);
+    ?>
 
     <script src="../libs/tinymce/tinymce.min.js"></script>
-  </head>
-  <body class="bg-light">
+</head>
+
+<body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand bg-light rounded px-1 py-1 text-dark" href="inicio.php"><img src="../img/kenshydokan.jpg" width="30" height="30" alt="logo da kenshydokan"> Kenshydokan</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
@@ -114,27 +135,27 @@ contar_pagina($url_atual);
 
                 <li class="nav-item dropdown <?php echo ($url_atual == "/views/perfil.php" || $url_atual == "/views/login.php") ? 'active' : ''; ?>">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Minha Conta
+                        Minha Conta
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <?php if (isset($_SESSION['id_usuario'])) {?>
-                    <a class="dropdown-item <?php echo ($url_atual == "/views/perfil.php") ? 'active' : ''; ?>" href="perfil.php">Perfil</a>
-                    <a class="dropdown-item" href="../controllers/sair.php">Sair</a>
+                        <?php if (isset($_SESSION['id_usuario'])) { ?>
+                            <a class="dropdown-item <?php echo ($url_atual == "/views/perfil.php") ? 'active' : ''; ?>" href="perfil.php">Perfil</a>
+                            <a class="dropdown-item" href="../controllers/sair.php">Sair</a>
 
-                    <?php } else {?>
+                        <?php } else { ?>
 
-                    <a class="dropdown-item <?php echo ($url_atual == "/views/login.php") ? 'active' : ''; ?>" href="login.php">Login</a>
+                            <a class="dropdown-item <?php echo ($url_atual == "/views/login.php") ? 'active' : ''; ?>" href="login.php">Login</a>
 
-                    <a class="dropdown-item <?php echo ($url_atual == "/views/cadastrar.php") ? 'active' : ''; ?>" href="cadastrar.php">Cadastrar-se</a>
+                            <a class="dropdown-item <?php echo ($url_atual == "/views/cadastrar.php") ? 'active' : ''; ?>" href="cadastrar.php">Cadastrar-se</a>
 
-                    <?php }?>
+                        <?php } ?>
                     </div>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+                <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
             </form>
         </div>
     </nav>

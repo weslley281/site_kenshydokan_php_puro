@@ -19,17 +19,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $mensagem_email .= "Email: $telefone\n";
         $mensagem_email .= "Você recebeu uma nova mensagem do formulário de contato do seu site: \n$mensagem";
 
-
-
         $headers = "From: $email\n";
         $headers .= "Reply-To: $email";
 
         if (mail($destino, $assunto, $mensagem_email)) {
             echo "<script>alert('Mensagem Enviada com sucesso');</script>";
-            //echo "<script>window.location='../views/contato.php';</script>";
+            echo "<script>window.location='../views/contato.php';</script>";
         } else {
             echo "<script>alert('Erro ao enviar a mensagem');</script>";
-            //echo "<script>window.location='../views/contato.php';</script>";
+            echo "<script>window.location='../views/contato.php';</script>";
         }
     }
 }
