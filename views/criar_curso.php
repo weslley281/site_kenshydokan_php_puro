@@ -90,7 +90,7 @@ $consulta = "SELECT id_filiado, nome FROM filiados ORDER BY nome";
                     <option value="kohai">Kohai</option>
                 <?php }?>
 
-                <?php if ($usuario["nivel"] != "sensei") {?>
+                <?php if ($usuario["nivel"] != "sense") {?>
                     <option value="sensei">Sensei</option>
                 <?php }?>
 
