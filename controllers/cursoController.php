@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_POST["descricao"],
                 $_POST["professor"],
                 $_POST["id_imagem"],
-                $_POST["situacao"],
+                "aguardando",
                 $dataMudanca
             );
 

@@ -17,23 +17,41 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
     ?>
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link" id="usuario-tab" href="admin.php?pagina=usuarios">Usuários</a>
+    <a class="nav-link" href="admin.php?pagina=visualizacoes">Visualizações</a>
   </li>
   <li class="nav-item">
-  <a class="nav-link" id="usuario-tab" href="admin.php?pagina=postagens">Postagens</a>
+    <a class="nav-link" href="admin.php?pagina=usuarios">Usuários</a>
   </li>
   <li class="nav-item">
-  <a class="nav-link" id="usuario-tab" href="admin.php?pagina=cursos">Cursos</a>
+  <a class="nav-link" href="admin.php?pagina=postagens">Postagens</a>
   </li>
   <li class="nav-item">
-  <a class="nav-link" id="usuario-tab" href="admin.php?pagina=filiados">Filiados</a>
+  <a class="nav-link" href="admin.php?pagina=cursos">Cursos</a>
+  </li>
+  <li class="nav-item">
+  <a class="nav-link" href="admin.php?pagina=filiados">Filiados</a>
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">
+  <?php if (isset($_GET["pagina"]) && $_GET["pagina"] == "visualizacoes") {include_once "admin/visualizacoes.php";}?>
   <?php if (isset($_GET["pagina"]) && $_GET["pagina"] == "usuarios") {include_once "admin/usuarios.php";}?>
   <?php if (isset($_GET["pagina"]) && $_GET["pagina"] == "postagens") {include_once "admin/postagens.php";}?>
   <?php if (isset($_GET["pagina"]) && $_GET["pagina"] == "cursos") {include_once "admin/cursos.php";}?>
   <?php if (isset($_GET["pagina"]) && $_GET["pagina"] == "filiados") {include_once "admin/filiados.php";}?>
+  <?php if (!isset($_GET["pagina"])) {?>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+  <?php }?>
 </div>
 
 <?php

@@ -34,6 +34,8 @@ if ($linha == '') {
         $telefone = $res_filiado["telefone"];
         $cidade = $res_filiado["cidade"];
         $id_estado = $res_filiado["id_estado"];
+        $dataCriacao = $res_filiado["dataCriacao"];
+        $dataMudanca = $res_filiado["dataMudanca"];
 
         $res_graduacao = GraduacaoRepositorio::buscarGraduacao($id_graduacao);
         $graduacao = $res_graduacao["graduacao"];

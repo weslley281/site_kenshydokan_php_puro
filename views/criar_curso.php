@@ -17,7 +17,7 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
 
             <div class="form-group">
               <label for="nome">Nome: </label>
-              <input id="nome" type="text" class="form-control" value="<?php echo $usuario["nome"] ?>" name="nome" required autofocus>
+              <input id="nome" type="text" class="form-control" name="nome" required autofocus>
             </div>
 
             <div class="form-group">
@@ -38,13 +38,22 @@ $consulta = "SELECT id_categoria, categoria FROM categorias";
             </div>
 
             <div class="form-group">
-              <label for="email">Email: </label>
-                <input id="email" type="email" class="form-control" value="<?php echo $usuario["email"] ?>" name="email" required>
+              <label for="descricao">Descrição: </label>
+              <input id="descricao" type="text" class="form-control" name="descricao" required autofocus>
             </div>
 
             <div class="form-group">
-              <label for="telefone">Telefone: </label>
-              <input id="telefone" type="text" class="form-control" value="<?php echo $usuario["telefone"] ?>" name="telefone" onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" required>
+              <label for="professor">Professor: </label>
+              <input id="professor" type="text" class="form-control" name="professor" required autofocus>
+            </div>
+
+            <div class="form-group">
+              <label for="imagem">Imagem de Perfil</label>
+                <input type="file" class="form-control" id="imagem" accept="image/*" required name="imagem">
+
+                <div class="text-center mt-2">
+                  <img src="#" class="img-thumbnail" alt="Prévia da Imagem" id="imagePreview" style="max-width: 100%; display: none;">
+                </div>
             </div>
 
             <input class="btn btn-lg btn-success btn-block text-uppercase" type="submit" value="Salvar">
