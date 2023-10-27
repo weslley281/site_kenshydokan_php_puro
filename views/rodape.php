@@ -4,6 +4,7 @@
             <br>
             <br>
             <p class="m-0 text-white">© Federação de Karatê de Contato do Estado de Mato Grosso <?php echo date("Y"); ?>. Todos os direitos reservados.</p>
+            <p class="m-0 text-white"><a class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="politicas.php">Politicas e Privácidade</a> | <a class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="termos.php">Termos e Condições</a></p>
             <hr class="bg-light">
             <p class="m-0 text-white">Desenvolvido por Weslley Henrique Vieira Ferraz<br>
             Tenha um site incrivel como esse faça um orçamento sem compromisso <a href="https://api.whatsapp.com/send/?phone=5565999157130">clicando aqui</a></p>
