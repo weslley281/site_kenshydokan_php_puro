@@ -11,7 +11,7 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
       <div class="card card-signin my-5">
         <div class="card-body">
-          <h5 class="card-title text-center">Editar</h5>
+          <h5 class="card-title text-center">Criar Categoria de Curso</h5>
           <form class="form-signin" enctype="multipart/form-data" action="../controllers/categoriaController.php" method="post">
             <input type="hidden" name="tipo" value="inserir">
 

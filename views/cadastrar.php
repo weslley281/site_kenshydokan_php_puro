@@ -27,7 +27,7 @@ if (isset($_SESSION["id_usuario"])) {
 
             <div class="form-group">
               <label for="id_fil">Registro de Filiado: </label>
-                <select id="id_fil" class="form-select form-control js-example-basic-single"" aria-label="Default select example" name="id_fil">
+                <select id="id_fil" class="form-select form-control js-example-basic-single" aria-label="Default select example" name="id_fil">
                 <option value="0" selected>Não sou filiado</option>
             <?php
 $consulta = "SELECT id_filiado, nome FROM filiados ORDER BY nome";

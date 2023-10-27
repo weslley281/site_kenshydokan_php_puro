@@ -1,3 +1,34 @@
+<?php
+// Verifique se o cookie "cookie_accepted" não foi definido
+if (!isset($_COOKIE['cookie_accepted'])) {
+    // Se o cookie não foi definido, exiba a mensagem de uso de cookies
+    echo '<div class="alert alert-info mb-0 text-center" role="alert" id="cookie-message">
+        Este site utiliza cookies para garantir a melhor experiência. <a href="#" id="accept-cookie" class="alert-link">Aceitar</a>
+    </div>';
+}
+
+// Verifique se o usuário clicou em "Aceitar" na mensagem de uso de cookies
+if (isset($_POST['accept_cookie'])) {
+    // Defina o cookie "cookie_accepted" com um valor para indicar que o usuário aceitou os cookies
+    setcookie('cookie_accepted', 'yes', time() + 365 * 24 * 60 * 60, '/');
+}
+?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Quando a página é carregada, verifique se o cookie "cookie_accepted" foi definido
+            if (document.cookie.indexOf("cookie_accepted=yes") === -1) {
+                // Se não foi definido, mostre a mensagem de uso de cookies
+                document.getElementById("cookie-message").style.display = "block";
+            }
+
+            // Quando o usuário clica em "Aceitar", defina o cookie e esconda a mensagem
+            document.getElementById("accept-cookie").addEventListener("click", function() {
+                document.cookie = "cookie_accepted=yes; expires=" + new Date(new Date().getTime() + 365 * 24 * 60 * 60 * 1000).toUTCString() + "; path=/";
+                document.getElementById("cookie-message").style.display = "none";
+            });
+        });
+    </script>
+
     <footer class="py-5 bg-dark">
         <div class="container">
             <p class="m-0 text-center text-white">Copyright &copy; Weslley Henrique Vieira Ferraz <?php echo date("Y"); ?></p>
