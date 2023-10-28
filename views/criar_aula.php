@@ -5,37 +5,21 @@ include_once "../db/conexao.php";
 $c = new Conexao();
 $conexao = $c->conectar();
 
-if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
+if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] == "admin") {
     ?>
 <div class="container">
   <div class="row">
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
       <div class="card card-signin my-5">
         <div class="card-body">
-          <h5 class="card-title text-center">Criar Curso</h5>
+          <h5 class="card-title text-center">Criar Aula</h5>
           <form class="form-signin" enctype="multipart/form-data" action="../controllers/cursoController.php" method="post">
             <input type="hidden" name="tipo" value="inserir">
+            <input type="hidden" name="id_curso" value="<?php echo $_GET["id"]; ?>">
 
             <div class="form-group">
               <label for="nome">Nome: </label>
               <input id="nome" type="text" class="form-control" name="nome" required autofocus>
-            </div>
-
-            <div class="form-group">
-              <label for="id_categoria">Categoria: </label>
-                <select id="id_categoria" class="form-select form-control js-example-basic-single" aria-label="Default select example" name="id_categoria">
-            <?php
-$consulta = "SELECT id_categoria, categoria FROM categorias";
-    $resultado = mysqli_query($conexao, $consulta);
-    if ($resultado) {
-        while ($dado = mysqli_fetch_array($resultado)) {
-            echo '<option value="' . $dado["id_categoria"] . '">' . $dado["categoria"] . '</option>';
-        }
-    } else {
-        echo '<option>Erro ao carregar os dados</option>';
-    }
-    ?>
-                </select>
             </div>
 
             <div class="form-group">

@@ -2,11 +2,11 @@
   <div class="container text-center">
       <h2>Todos os Cursos</h2>
       <div class="row my-4">
-        <div class="col">
-          <a href="../views/criar_categoria.php" class="btn btn-outline-success">Criar Categoria de curso</a>
+        <div class="col mx-1 my-1">
+          <a href="../views/criar_categoria.php" class="btn btn-outline-success btn-lg btn-block">Criar Categoria de curso</a>
         </div>
-        <div class="col">
-          <a href="../views/criar_curso.php" class="btn btn-outline-success">Criar Curso</a>
+        <div class="col mx-1 my-1">
+          <a href="../views/criar_curso.php" class="btn btn-outline-success btn-lg btn-block">Criar Curso</a>
         </div>
       </div>
       <table id="minhaTabela3" class="table table-bordered" width="100%" cellspacing="0">
@@ -49,7 +49,20 @@ if ($linha == '') {
 						<td class="text-capitalize"><?php echo $status; ?></td>
 						<td class="text-capitalize"><?php echo date_format(date_create($dataCriacao), "d/m/Y"); ?></td>
 						<td class="text-capitalize"><?php echo date_format(date_create($dataMudanca), "d/m/Y"); ?></td>
-						<td class="text-capitalize"></td>
+						<td class="text-capitalize">
+              <div class="form-group">
+                <a class="btn btn-success" href="" title="Emitir Certificado"><i class="fa-solid fa-graduation-cap"></i></a>
+              </div>
+              <div class="form-group">
+                <a class="btn btn-success" href="../views/criar_aula.php?id=<?php echo $id_curso; ?>" title="Adcionar Aulas"><i class="fa-solid fa-person-chalkboard"></i></a>
+              </div>
+              <div class="form-group">
+                <a class="btn btn-primary" href="" title="Editar Curso"><i class="fa-solid fa-pen-to-square"></i></a>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-danger" title="Excluir curso"><i class="fa-regular fa-calendar-xmark"></i></button>
+              </div>
+            </td>
 					</tr>
 			<?php }
 }?>
