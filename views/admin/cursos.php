@@ -57,7 +57,7 @@ if ($linha == '') {
                 <a class="btn btn-success" href="../views/criar_aula.php?id=<?php echo $id_curso; ?>" title="Adcionar Aulas"><i class="fa-solid fa-person-chalkboard"></i></a>
               </div>
               <div class="form-group">
-                <a class="btn btn-primary" href="" title="Editar Curso"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a class="btn btn-primary" href="../views/editar_curso.php?id=<?php echo $id_curso; ?>" title="Editar Curso"><i class="fa-solid fa-pen-to-square"></i></a>
               </div>
               <div class="form-group">
                 <button class="btn btn-danger" title="Excluir curso"><i class="fa-regular fa-calendar-xmark"></i></button>

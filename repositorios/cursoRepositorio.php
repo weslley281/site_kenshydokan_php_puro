@@ -34,8 +34,8 @@ class CursoRepositorio
     public function editarCurso($id_curso, CursoModel $curso): bool
     {
         try {
-            $editar = $this->conexao->prepare("UPDATE cursos SET id_categoria = ?, nome = ?, descricao = ?, professor = ?, id_imagem = ?, situacao = ?, dataMudanca = ? WHERE id_curso = ?");
-            $editar->bind_param("issssssi", $curso->getIdCategoria(), $curso->getNome(), $curso->getDescricao(), $curso->getProfessor(), $curso->getIdImagem(), $curso->getSituacao(), $curso->getDataMudanca(), $id_curso);
+            $editar = $this->conexao->prepare("UPDATE cursos SET id_categoria = ?, nome = ?, descricao = ?, professor = ?, situacao = ?, dataMudanca = ? WHERE id_curso = ?");
+            $editar->bind_param("isssssi", $curso->getIdCategoria(), $curso->getNome(), $curso->getDescricao(), $curso->getProfessor(), $curso->getSituacao(), $curso->getDataMudanca(), $id_curso);
             $resultado = $editar->execute();
             $editar->close();
 
@@ -48,6 +48,19 @@ class CursoRepositorio
             error_log("Erro ao editar o curso: " . $e->getMessage());
             return false;
         }
+    }
+
+    public static function editarImagemCurso(int $id_curso, $id_imagem, $dataMudanca): bool
+    {
+        $c = new Conexao();
+        $conexao = $c->conectar();
+
+        $atualizar = $conexao->prepare("UPDATE cursos SET id_imagem = ?, dataMudanca = ? WHERE id_curso = ?");
+        $atualizar->bind_param("isi", $id_imagem, $dataMudanca, $id_curso);
+        $resultado = $atualizar->execute();
+        $atualizar->close();
+
+        return $resultado;
     }
 
     public function excluirCurso($id_curso): bool

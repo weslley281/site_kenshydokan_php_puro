@@ -22,8 +22,8 @@ $publicacao = mysqli_fetch_array($resultado);
 $status = $publicacao["status"] == "aguardando" ? "aprovado" : "aguardando";
 
 if (PublicacaoRepositorio::editar_status_publicacao($id_publicacao, $status)) {
-    echo "<script language='javascript'>window.location='../views/admin.php#postagens'; </script>";
+    echo "<script language='javascript'>window.location='../views/admin.php?pagina=postagens'; </script>";
 } else {
     echo "<script language='javascript'>window.alert('Erro'); </script>";
-    echo "<script language='javascript'>window.location='../views/admin.php#postagens; </script>";
+    echo "<script language='javascript'>window.location='../views/admin.php?pagina=postagens; </script>";
 }

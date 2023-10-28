@@ -46,12 +46,14 @@ if ($linha == '') {
 						<td class="text-capitalize"><?php echo date_format(date_create($dataCriacao), "d/m/Y"); ?></td>
 						<td class="text-capitalize"><?php echo date_format(date_create($dataMudanca), "d/m/Y"); ?></td>
 						<td class="text-capitalize">
+            <div class="form-group">
+              <a title="Editar" class="btn btn-info" href="editar_usuario_admin.php?id=<?php echo $id_usuario; ?>"><i class="fas fa-edit"></i></a>
+            </div>
 
-            <a title="Editar" class="btn btn-info" href="editar_usuario_admin.php?id=<?php echo $id_usuario; ?>"><i class="fas fa-edit"></i></a>
-
-            <button title="Excluir" type="button" class="btn btn-danger" data-toggle="modal" data-target="#usuarioModal<?php echo $id_usuario ?>">
-              <i class="fa fa-minus-square"></i>
+            <div class="form-group">
+              <button title="Excluir" type="button" class="btn btn-danger" data-toggle="modal" data-target="#usuarioModal<?php echo $id_usuario ?>"><i class="fa fa-minus-square"></i>
             </button>
+            </div>
             </td>
 					</tr>
 

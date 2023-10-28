@@ -113,7 +113,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                     if ($imagemRepositorio->registrar_imagem($imagemModel)) {
                         $id_imagem = $imagemRepositorio::procura_id_imagem($nomeImagem);
-                        echo "id da nova imagem: $id_imagem";
 
                         $dados_imagem_antiga = $imagemRepositorio::procura_imagem($_POST["id_imagem"]);
 
