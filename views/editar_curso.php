@@ -17,14 +17,20 @@ $busca = "SELECT * FROM categorias WHERE id_categoria = '$id_categoria'";
 $resultado = mysqli_query($conexao, $busca);
 $categoria = mysqli_fetch_array($resultado);
 
+$id_imagem = $curso["id_imagem"];
+$busca = "SELECT * FROM imagens WHERE id_imagem = '$id_imagem'";
+$resultado = mysqli_query($conexao, $busca);
+$imagem = mysqli_fetch_array($resultado);
+
 if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] == "admin") {
     ?>
 <div class="container">
   <div class="row">
+    <!-- esquerda -->
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
       <div class="card card-signin my-5">
         <div class="card-body">
-          <h5 class="card-title text-center">Criar Curso</h5>
+          <h5 class="card-title text-center">Editar Curso</h5>
           <form class="form-signin" enctype="multipart/form-data" action="../controllers/cursoController.php" method="post">
             <input type="hidden" name="tipo" value="editar">
             <input type="hidden" name="id_curso" value="<?php echo $id_curso; ?>">
@@ -61,9 +67,69 @@ $consulta = "SELECT id_categoria, categoria FROM categorias";
               <label for="professor">Professor: </label>
               <input id="professor" type="text" class="form-control" value="<?php echo $curso["professor"]; ?>" name="professor" required>
             </div>
+            <input class="btn btn-lg btn-success btn-block text-uppercase" type="submit" value="Salvar">
+          </form>
+
+          <h5 class="mt-5">Editar Imagem</h5>
+
+          <form class="form-signin" enctype="multipart/form-data" action="../controllers/cursoController.php" method="post">
+            <input type="hidden" name="tipo" value="editar_imagem">
+            <input type="hidden" name="id_curso" value="<?php echo $id_curso; ?>">
+                <div class="form-group">
+                    <label for="imagem">Imagem: </label>
+                    <input type="file" class="form-control" id="imagem" accept="image/*" required name="imagem">
+
+                    <div class="text-center mt-2">
+                    <img src="<?php echo $imagem["caminho"]; ?>" class="img-thumbnail" alt="<?php echo $imagem["nome"]; ?>" id="imagePreview" style="max-width: 100%;">
+                    </div>
+            </div>
 
             <input class="btn btn-lg btn-success btn-block text-uppercase" type="submit" value="Salvar">
           </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Direita -->
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h5 class="card-title text-center">Aulas</h5>
+          <table class="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Aula</th>
+                <th scope="col">Link</th>
+                <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+$busca = "SELECT * FROM aulas WHERE id_curso = '$id_curso'";
+    $resultado = mysqli_query($conexao, $busca);
+    $linha = mysqli_num_rows($resultado);
+    if ($linha == '') {
+        echo "<h3> Não foram encontrados dados Cadastrados no Banco!! </h3>";
+    } else {
+        while ($aula = mysqli_fetch_array($resultado)) {
+            ?>
+                <tr>
+                    <th scope="row"><?php echo $aula["id_aula"]; ?></th>
+                    <td><?php echo $aula["titulo"]; ?></td>
+                    <td><a href="<?php echo $aula["link"]; ?>">ver</a></td>
+                    <td>
+                        <div class="form-group">
+                            <a class="btn btn-primary" href="../views/editar_aula.php?id=<?php echo $aula["id_aula"]; ?>" title="Editar Aula"><i class="fa-solid fa-pen-to-square"></i></a>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-danger" title="Excluir"><i class="fa-regular fa-calendar-xmark"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <?php }}?>
+            </tbody>
+        </table>
         </div>
       </div>
     </div>
