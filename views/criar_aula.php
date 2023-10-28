@@ -18,27 +18,13 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
             <input type="hidden" name="id_curso" value="<?php echo $_GET["id"]; ?>">
 
             <div class="form-group">
-              <label for="nome">Nome: </label>
-              <input id="nome" type="text" class="form-control" name="nome" required autofocus>
+              <label for="titulo">Nome: </label>
+              <input id="titulo" type="text" class="form-control" name="titulo" required autofocus>
             </div>
 
             <div class="form-group">
-              <label for="descricao">Descrição: </label>
-              <input id="descricao" type="text" class="form-control" name="descricao" required autofocus>
-            </div>
-
-            <div class="form-group">
-              <label for="professor">Professor: </label>
-              <input id="professor" type="text" class="form-control" name="professor" required autofocus>
-            </div>
-
-            <div class="form-group">
-              <label for="imagem">Imagem: </label>
-                <input type="file" class="form-control" id="imagem" accept="image/*" required name="imagem">
-
-                <div class="text-center mt-2">
-                  <img src="#" class="img-thumbnail" alt="Prévia da Imagem" id="imagePreview" style="max-width: 100%; display: none;">
-                </div>
+              <label for="link">link da Aula: </label>
+              <input id="link" type="text" class="form-control" name="link required autofocus">
             </div>
 
             <input class="btn btn-lg btn-success btn-block text-uppercase" type="submit" value="Salvar">
