@@ -13,7 +13,7 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
       <div class="card card-signin my-5">
         <div class="card-body">
           <h5 class="card-title text-center">Criar Aula</h5>
-          <form class="form-signin" enctype="multipart/form-data" action="../controllers/cursoController.php" method="post">
+          <form class="form-signin" enctype="multipart/form-data" action="../controllers/aulaController.php" method="post">
             <input type="hidden" name="tipo" value="inserir">
             <input type="hidden" name="id_curso" value="<?php echo $_GET["id"]; ?>">
 
@@ -24,7 +24,7 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
 
             <div class="form-group">
               <label for="link">link da Aula: </label>
-              <input id="link" type="text" class="form-control" name="link required autofocus">
+              <input id="link" type="text" class="form-control" name="link" required autofocus>
             </div>
 
             <input class="btn btn-lg btn-success btn-block text-uppercase" type="submit" value="Salvar">

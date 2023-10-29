@@ -10,25 +10,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (isset($_POST["tipo"])) {
         $dataMudanca = date("Y-m-d");
+        $id_curso = $_POST['id_curso'];
 
         $aulaRepositorio = new AulaRepositorio();
 
         if ($_POST["tipo"] == "inserir") {
             $aulaModel = new AulaModel(
                 null,
-                $_POST["id_curso"],
+                $id_curso,
                 $_POST["titulo"],
                 $_POST["link"],
                 $dataMudanca
             );
 
+            $destino = "../views/editar_curso.php?id=$id_curso";
             if ($aulaRepositorio->criarAula($aulaModel)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=aulas');
+                exibirMensagemEredirecionar(MSG_SUCESSO, $destino);
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin.php?pagina=aulas');
+                exibirMensagemEredirecionar(MSG_ERRO, $destino);
             }
         } elseif ($_POST["tipo"] == "editar") {
             $id_aula = $_POST["id_aula"];
+            $id_curso = $_POST["id_curso"];
 
             $aulaModel = new AulaModel(
                 $id_aula,
@@ -37,19 +40,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_POST["link"],
                 $dataMudanca
             );
-
+            
+            $destino = "../views/editar_aula.php?id=$id_aula&id_curso=$id_curso";
             if ($aulaRepositorio->editarAula($id_aula, $aulaModel)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=aulas');
+                exibirMensagemEredirecionar(MSG_SUCESSO, $destino);
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin.php?pagina=aulas');
+                exibirMensagemEredirecionar(MSG_ERRO, $destino);
             }
         } elseif ($_POST["tipo"] == "excluir") {
             $id_aula = $_POST["id_aula"];
+            $id_curso = $_POST["id_curso"];
 
             if ($aulaRepositorio->excluirAula($id_aula)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=aulas');
+                $destino = "../views/editar_curso.php?id=$id_curso";
+                exibirMensagemEredirecionar(MSG_SUCESSO, $destino);
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin.php?pagina=aulas');
+                $destino = "../views/editar_curso.php?id=$id_curso";
+                exibirMensagemEredirecionar(MSG_ERRO, $destino);
             }
         }
     } else {

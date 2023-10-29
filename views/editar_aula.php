@@ -5,7 +5,11 @@ include_once "../db/conexao.php";
 $c = new Conexao();
 $conexao = $c->conectar();
 
-$id_curso = $_GET["id"];
+$id_aula = $_GET["id"];
+
+$busca = "SELECT * FROM aulas WHERE id_aula = '$id_aula'";
+$resultado = mysqli_query($conexao, $busca);
+$aula = mysqli_fetch_array($resultado);
 
 if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] == "admin") {
     ?>
@@ -15,18 +19,19 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
       <div class="card card-signin my-5">
         <div class="card-body">
           <h5 class="card-title text-center">Editar Aula</h5>
-          <form class="form-signin" enctype="multipart/form-data" action="../controllers/cursoController.php" method="post">
-            <input type="hidden" name="tipo" value="inserir">
-            <input type="hidden" name="id_curso" value="<?php echo $_GET["id"]; ?>">
+          <form class="form-signin" enctype="multipart/form-data" action="../controllers/aulaController.php" method="post">
+            <input type="hidden" name="tipo" value="editar">
+            <input type="hidden" name="id_aula" value="<?php echo $_GET["id"]; ?>">
+            <input type="hidden" name="id_curso" value="<?php echo $_GET["id_curso"]; ?>">
 
             <div class="form-group">
               <label for="titulo">Nome: </label>
-              <input id="titulo" type="text" class="form-control" name="titulo" required autofocus>
+              <input id="titulo" type="text" class="form-control" value="<?php echo $aula["titulo"]; ?>" name="titulo" required autofocus>
             </div>
 
             <div class="form-group">
               <label for="link">link da Aula: </label>
-              <input id="link" type="text" class="form-control" name="link required autofocus">
+              <input id="link" type="text" class="form-control" value="<?php echo $aula["link"]; ?>" name="link" required autofocus>
             </div>
 
             <input class="btn btn-lg btn-success btn-block text-uppercase" type="submit" value="Salvar">

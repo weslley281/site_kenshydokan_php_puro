@@ -17,27 +17,27 @@ $resultado_imagem = mysqli_query($conexao, $busca_imagem);
 $imagem = mysqli_fetch_array($resultado_imagem);
 
 if ($usuario["id_fil"] != 0 || $usuario["id_fil"] != null && $usuario['nivel'] == "kohai") {
-    $id_filiado = $usuario["id_fil"];
-    $busca_filiado = "SELECT * FROM filiados WHERE id_filiado = '$id_filiado'";
-    $resultado_filiado = mysqli_query($conexao, $busca_filiado);
-    $filiado = mysqli_fetch_array($resultado_filiado);
-    $estaFiliado = ($filiado["confirmacao"] == "sim") ? "Você está filiado" : "Aguardando Confirmação de Filiação, Não Está Filiado Não";
+	$id_filiado = $usuario["id_fil"];
+	$busca_filiado = "SELECT * FROM filiados WHERE id_filiado = '$id_filiado'";
+	$resultado_filiado = mysqli_query($conexao, $busca_filiado);
+	$filiado = mysqli_fetch_array($resultado_filiado);
+	$estaFiliado = ($filiado["confirmacao"] == "sim") ? "Você está filiado" : "Aguardando Confirmação de Filiação, Não Está Filiado Não";
 
-    $id_graduacao = $filiado["id_graduacao"];
-    $busca_graduacao = "SELECT * FROM graduacao WHERE id_graduacao = '$id_graduacao'";
-    $resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
-    $graduacao = mysqli_fetch_array($resultado_graduacao);
+	$id_graduacao = $filiado["id_graduacao"];
+	$busca_graduacao = "SELECT * FROM graduacao WHERE id_graduacao = '$id_graduacao'";
+	$resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
+	$graduacao = mysqli_fetch_array($resultado_graduacao);
 } else {
-    $estaFiliado = "Sem dados";
-    $filiado = array(
-        "dojo" => "a definir",
-    );
-    $graduacao = array(
-        'graduacao' => 'sem registro',
-    );
+	$estaFiliado = "Sem dados";
+	$filiado = array(
+		"dojo" => "a definir",
+	);
+	$graduacao = array(
+		'graduacao' => 'sem registro',
+	);
 }
 if (isset($_SESSION["id_usuario"])) {
-    ?>
+	?>
 
 	<body>
 
@@ -53,13 +53,13 @@ if (isset($_SESSION["id_usuario"])) {
 						<div class="list-group">
 							<a href="perfil.php" class="list-group-item bg-danger text-dark">Perfil</a>
 							<a href="editar_perfil.php" class="list-group-item bg-light text-dark">Editar Perfil</a>
-<?php if ($usuario["nivel"] == "admin" || $usuario["nivel"] == "sensei") {?>
+							<?php if ($usuario["nivel"] == "admin" || $usuario["nivel"] == "sensei") {?>
 								<a href="exame_graduacao.php" class="list-group-item bg-light text-dark">Exame de Graduação</a>
 								<a href="criar_postagem.php" class="list-group-item bg-light text-dark">Criar Postagem</a>
 								<a href="suas_postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
 								<a href="documentos.php" class="list-group-item bg-light text-dark">Arquivos para Baixar</a>
-<?php }?>
-<?php if ($usuario["nivel"] == "admin") {?>
+							<?php }?>
+							<?php if ($usuario["nivel"] == "admin") {?>
 								<a href="admin.php" class="list-group-item bg-light text-dark">Administrativo</a>
 							<?php }?>
 							<a href="eventos.php" class="list-group-item bg-light text-dark">Eventos Online</a>
@@ -102,20 +102,20 @@ if (isset($_SESSION["id_usuario"])) {
 						</div>
 						<div class="row">
 							<?php
-$busca = "SELECT * FROM cursos";
-    $resultado = mysqli_query($conexao, $busca);
-    while ($curso = mysqli_fetch_array($resultado)) {
-        $id_imagem_curso = $curso["id_imagem"];
+							$busca = "SELECT * FROM cursos";
+							$resultado = mysqli_query($conexao, $busca);
+							while ($curso = mysqli_fetch_array($resultado)) {
+								$id_imagem_curso = $curso["id_imagem"];
 
-        $busca_imagem_curso = "SELECT * FROM imagens WHERE id_imagem = '$id_imagem_curso'";
-        $resultado_imagem_curso = mysqli_query($conexao, $busca_imagem_curso);
-        $imagem_curso = mysqli_fetch_array($resultado_imagem_curso);
+								$busca_imagem_curso = "SELECT * FROM imagens WHERE id_imagem = '$id_imagem_curso'";
+								$resultado_imagem_curso = mysqli_query($conexao, $busca_imagem_curso);
+								$imagem_curso = mysqli_fetch_array($resultado_imagem_curso);
 
-        $id_categoria = $curso["id_categoria"];
-        $busca_categoria = "SELECT * FROM categorias WHERE id_categoria = '$id_categoria'";
-        $resultado_categoria = mysqli_query($conexao, $busca_categoria);
-        $categoria = mysqli_fetch_array($resultado_categoria);
-        ?>
+								$id_categoria = $curso["id_categoria"];
+								$busca_categoria = "SELECT * FROM categorias WHERE id_categoria = '$id_categoria'";
+								$resultado_categoria = mysqli_query($conexao, $busca_categoria);
+								$categoria = mysqli_fetch_array($resultado_categoria);
+								?>
 								<div class="col-lg-4 col-md-6 mb-4">
 									<div class="card h-100">
 										<a href="assistir_aulas.php?id=<?php echo $curso["id_curso"]; ?>"><img class="card-img-top" src="../img/<?php echo $imagem_curso["nome"]; ?>" alt="" width="150px" height="150px"></a>
@@ -147,8 +147,8 @@ $busca = "SELECT * FROM cursos";
 			</div>
 			<!-- /.container -->
 		</div>
-<?php
-include "rodape.php";
-} else {
-    echo "<script language='javascript'>window.location='login.php'; </script>";
-}
+		<?php
+		include "rodape.php";
+	} else {
+		echo "<script language='javascript'>window.location='login.php'; </script>";
+	}

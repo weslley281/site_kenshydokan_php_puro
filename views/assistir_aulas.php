@@ -21,9 +21,9 @@ $resultado_filiado = mysqli_query($conexao, $busca_filiado);
 $filiado = mysqli_fetch_array($resultado_filiado);
 $confirmacao = $filiado["confirmacao"];
 if ($confirmacao == "sim") {
-    $ativo = "Você está filiado";
+	$ativo = "Você está filiado";
 } else {
-    $ativo = "Aguardando Cofirmação de Filiação, Não Está Filiado Não";
+	$ativo = "Aguardando Cofirmação de Filiação, Não Está Filiado Não";
 }
 
 $id_graduacao = $filiado["id_graduacao"];
@@ -32,7 +32,7 @@ $resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
 $graduacao = mysqli_fetch_array($resultado_graduacao);
 
 if (isset($_SESSION["id_usuario"])) {
-    ?>
+	?>
 
 	<body>
 		<div class="container mt-5">
@@ -94,11 +94,11 @@ if (isset($_SESSION["id_usuario"])) {
 						<!--Fim dados do perfil -->
 						<hr>
 						<?php
-$id_curso = @$_GET["id"];
-    $busca_curso = "SELECT * FROM cursos where id_curso = '$id_curso'";
-    $resultado_curso = mysqli_query($conexao, $busca_curso);
-    $curso = mysqli_fetch_array($resultado_curso);
-    ?>
+						$id_curso = @$_GET["id"];
+						$busca_curso = "SELECT * FROM cursos where id_curso = '$id_curso'";
+						$resultado_curso = mysqli_query($conexao, $busca_curso);
+						$curso = mysqli_fetch_array($resultado_curso);
+						?>
 						<div class="text-center">
 							<h1><strong>Curso de <?php echo $curso["nome"] ?></strong></h1>
 						</div>
@@ -111,20 +111,24 @@ $id_curso = @$_GET["id"];
 								</thead>
 								<tbody>
 									<?php
-$busca = "SELECT * FROM aulas WHERE id_curso = $id_curso";
-    $resultado = mysqli_query($conexao, $busca);
-    $linha = mysqli_num_rows($resultado);
+									$busca = "SELECT * FROM aulas WHERE id_curso = $id_curso";
+									$resultado = mysqli_query($conexao, $busca);
+									$linha = mysqli_num_rows($resultado);
 
-    if ($linha == 0) {
-        echo "<h3> Não há aulas cadastradas nesse curso!! </h3>";
-    } else {
-        while ($aula = mysqli_fetch_array($resultado)) {
-            ?>
+									if ($linha == 0) {
+										echo "<h3> Não há aulas cadastradas nesse curso!! </h3>";
+									} else {
+										while ($aula = mysqli_fetch_array($resultado)) {
+											?>
 											<tr>
-												<th scope="col"><a href="<?php echo $aula["link"]; ?>"><?php echo $aula["titulo"]; ?></a></th>
+												<th scope="col">
+													<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#aulaModal<?php echo $aula["id_aula"]; ?>">
+														<?php echo $aula["titulo"]; ?>
+													</button>
+												</th>
 											</tr>
-									<?php }
-    }?>
+										<?php }
+									}?>
 								</tbody>
 							</table>
 
@@ -142,9 +146,38 @@ $busca = "SELECT * FROM aulas WHERE id_curso = $id_curso";
 			<!-- /.container -->
 		</div>
 		<script src="https://vjs.zencdn.net/7.8.4/video.js"></script>
-<?php
-include "rodape.php";
-} else {
-    echo "<script language='javascript'>window.location='login.php'; </script>";
-}
+		<?php
+		$busca = "SELECT * FROM aulas WHERE id_curso = $id_curso";
+		$resultado = mysqli_query($conexao, $busca);
+		$linha = mysqli_num_rows($resultado);
+
+		if ($linha > 0) {
+			while ($aula = mysqli_fetch_array($resultado)) {
+				?>
+				<!-- Modal para aula -->
+				<div class="modal fade" id="aulaModal<?php echo $aula["id_aula"]; ?>" tabindex="-1" role="dialog" aria-labelledby="aulaModalLabel<?php echo $aula["id_aula"]; ?>" aria-hidden="true">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="aulaModalLabel<?php echo $aula["id_aula"]; ?>"><?php echo $aula["titulo"]; ?></h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<iframe src="<?php echo $aula["link"]; ?>" width="100%" height="500" frameborder="0"></iframe>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<?php
+			}
+		}
+		include "rodape.php";
+	} else {
+		echo "<script language='javascript'>window.location='login.php'; </script>";
+	}
 ?>
