@@ -1,4 +1,3 @@
-
 <?php
 include_once "menu.php";
 include_once "../db/conexao.php";
@@ -167,7 +166,6 @@ $busca = "SELECT * FROM aulas WHERE id_curso = '$id_curso'";
 <?php
 include "rodape.php";
 } else {
-    var_dump($_SESSION["id_usuario"], $_GET["id"], $_SESSION['nivel']);
-    //echo "<script language='javascript'>window.location='login.php'; </script>";
+    echo "<script language='javascript'>window.location='login.php'; </script>";
 }
 ?>
