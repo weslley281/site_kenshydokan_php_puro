@@ -10,6 +10,10 @@
     <div class="container">
         <h1 class="mt-5">Aula 3: Kata no Karate de Contato</h1>
 
+        <div class="text-center">
+            <img class="img-fluid rounded" height="200" width="500" src="https://cdn.pixabay.com/photo/2022/09/18/20/08/athlete-7463971_960_720.jpg">
+        </div>
+
         <h2 class="mt-4">O que é Kata?</h2>
         <p>O Kata é uma parte essencial do Karate de Contato, incluindo o Kyokushin Karate e Kenshydokan Karatê. Kata se refere a sequências de movimentos pré-definidos que representam situações de combate contra adversários imaginários.</p>
 

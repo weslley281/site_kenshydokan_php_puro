@@ -9,9 +9,11 @@
 </head>
 <body>
 	<div class="container">
-		<h1 class="mt-5">Federação de Karate de Contato do Estado de Mato Grosso</h1>
+		<h1 class="mt-5">Aula 1: Início da Aula</h1>
 
-		<h2 class="mt-4">Início da Aula</h2>
+		<div class="text-center">
+            <img class="img-fluid rounded" height="200" width="500" src="https://cdn.pixabay.com/photo/2015/02/11/17/58/beach-632843_960_720.jpg">
+        </div>
 
 		<p>No Karate Kenshydokan, seguimos normas rígidas em relação ao pré-aula, que ocorre quando os alunos chegam ao dojo. Aqui estão as etapas importantes:</p>
 

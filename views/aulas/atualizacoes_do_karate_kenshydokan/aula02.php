@@ -10,6 +10,10 @@
     <div class="container">
         <h1 class="mt-5">Aula 2: Kihon no Karate de Contato</h1>
 
+        <div class="text-center">
+            <img class="img-fluid rounded" height="200" width="500" src="https://cdn.pixabay.com/photo/2020/04/03/07/13/sport-4997685_960_720.jpg">
+        </div>
+
         <h2 class="mt-4">O que é Kihon?</h2>
         <p>O Kihon é a base do treinamento no Karate de Contato, incluindo estilos como o Kyokushin Karate e Kenshydokan Karate. Kihon se refere aos fundamentos e técnicas básicas que formam a essência do karate.</p>
 
