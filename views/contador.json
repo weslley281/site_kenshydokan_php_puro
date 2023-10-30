@@ -1,1 +1,86 @@
-{"site_kenshydokan_php_puro\/views\/inicio.php":{"data":"2023-10-30 00:32:42","contagem":7},"site_kenshydokan_php_puro\/views\/login.php":{"data":"2023-10-29 18:55:45","contagem":5},"site_kenshydokan_php_puro\/views\/perfil.php":{"data":"2023-10-29 18:55:55","contagem":10},"site_kenshydokan_php_puro\/views\/assistir_aulas.php?id=13":{"data":"2023-10-28 13:40:47","contagem":1},"site_kenshydokan_php_puro\/views\/admin.php":{"data":"2023-10-29 18:56:23","contagem":6},"site_kenshydokan_php_puro\/views\/admin.php?pagina=visualizacoes":{"data":"2023-10-29 19:04:13","contagem":4},"site_kenshydokan_php_puro\/views\/admin.php?pagina=usuarios":{"data":"2023-10-29 19:04:17","contagem":6},"site_kenshydokan_php_puro\/views\/admin.php?pagina=postagens":{"data":"2023-10-29 19:04:50","contagem":7},"site_kenshydokan_php_puro\/views\/editar_postagem.php?id=4":{"data":"2023-10-28 13:43:46","contagem":1},"site_kenshydokan_php_puro\/views\/admin.php?pagina=cursos":{"data":"2023-10-29 19:07:17","contagem":26},"site_kenshydokan_php_puro\/views\/editar_curso.php?id=7":{"data":"2023-10-29 20:18:54","contagem":46},"site_kenshydokan_php_puro\/views\/editar_curso.php?id=13":{"data":"2023-10-29 10:01:49","contagem":12},"site_kenshydokan_php_puro\/views\/criar_aula.php?id=7":{"data":"2023-10-29 19:18:27","contagem":9},"site_kenshydokan_php_puro\/views\/editar_aula.php?id=8":{"data":"2023-10-29 10:10:05","contagem":5},"site_kenshydokan_php_puro\/views\/editar_aula.php?id=9&id_curso=7":{"data":"2023-10-29 13:47:15","contagem":10},"site_kenshydokan_php_puro\/views\/editar_aula.php?id=9":{"data":"2023-10-29 10:44:26","contagem":1},"site_kenshydokan_php_puro\/views\/editar_aula.php?id=8&id_curso=7":{"data":"2023-10-29 15:41:56","contagem":3},"site_kenshydokan_php_puro\/views\/admin.php?pagina=filiados":{"data":"2023-10-29 16:45:33","contagem":2},"site_kenshydokan_php_puro\/views\/admin.php?pagina=aulas":{"data":"2023-10-29 16:48:38","contagem":1},"site_kenshydokan_php_puro\/views\/assistir_aulas.php?id=7":{"data":"2023-10-29 17:13:06","contagem":8},"site_kenshydokan_php_puro\/views\/postagens.php":{"data":"2023-10-29 19:19:42","contagem":2}}
+{
+  "site_kenshydokan_php_puro/views/inicio.php": {
+    "data": "2023-10-30 00:32:42",
+    "contagem": 7
+  },
+  "site_kenshydokan_php_puro/views/login.php": {
+    "data": "2023-10-29 18:55:45",
+    "contagem": 5
+  },
+  "site_kenshydokan_php_puro/views/perfil.php": {
+    "data": "2023-10-29 18:55:55",
+    "contagem": 10
+  },
+  "site_kenshydokan_php_puro/views/assistir_aulas.php?id=13": {
+    "data": "2023-10-28 13:40:47",
+    "contagem": 1
+  },
+  "site_kenshydokan_php_puro/views/admin.php": {
+    "data": "2023-10-29 18:56:23",
+    "contagem": 6
+  },
+  "site_kenshydokan_php_puro/views/admin.php?pagina=visualizacoes": {
+    "data": "2023-10-29 19:04:13",
+    "contagem": 4
+  },
+  "site_kenshydokan_php_puro/views/admin.php?pagina=usuarios": {
+    "data": "2023-10-29 19:04:17",
+    "contagem": 6
+  },
+  "site_kenshydokan_php_puro/views/admin.php?pagina=postagens": {
+    "data": "2023-10-29 19:04:50",
+    "contagem": 7
+  },
+  "site_kenshydokan_php_puro/views/editar_postagem.php?id=4": {
+    "data": "2023-10-28 13:43:46",
+    "contagem": 1
+  },
+  "site_kenshydokan_php_puro/views/admin.php?pagina=cursos": {
+    "data": "2023-10-29 19:07:17",
+    "contagem": 26
+  },
+  "site_kenshydokan_php_puro/views/editar_curso.php?id=7": {
+    "data": "2023-10-29 20:18:54",
+    "contagem": 46
+  },
+  "site_kenshydokan_php_puro/views/editar_curso.php?id=13": {
+    "data": "2023-10-29 10:01:49",
+    "contagem": 12
+  },
+  "site_kenshydokan_php_puro/views/criar_aula.php?id=7": {
+    "data": "2023-10-29 19:18:27",
+    "contagem": 9
+  },
+  "site_kenshydokan_php_puro/views/editar_aula.php?id=8": {
+    "data": "2023-10-29 10:10:05",
+    "contagem": 5
+  },
+  "site_kenshydokan_php_puro/views/editar_aula.php?id=9&id_curso=7": {
+    "data": "2023-10-29 13:47:15",
+    "contagem": 10
+  },
+  "site_kenshydokan_php_puro/views/editar_aula.php?id=9": {
+    "data": "2023-10-29 10:44:26",
+    "contagem": 1
+  },
+  "site_kenshydokan_php_puro/views/editar_aula.php?id=8&id_curso=7": {
+    "data": "2023-10-29 15:41:56",
+    "contagem": 3
+  },
+  "site_kenshydokan_php_puro/views/admin.php?pagina=filiados": {
+    "data": "2023-10-29 16:45:33",
+    "contagem": 2
+  },
+  "site_kenshydokan_php_puro/views/admin.php?pagina=aulas": {
+    "data": "2023-10-29 16:48:38",
+    "contagem": 1
+  },
+  "site_kenshydokan_php_puro/views/assistir_aulas.php?id=7": {
+    "data": "2023-10-29 17:13:06",
+    "contagem": 8
+  },
+  "site_kenshydokan_php_puro/views/postagens.php": {
+    "data": "2023-10-29 19:19:42",
+    "contagem": 2
+  }
+}

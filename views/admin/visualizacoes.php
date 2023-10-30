@@ -20,7 +20,7 @@ if (file_exists($contador_json)) {
         $nome = explode("/", $url);
         echo "<tr>";
         echo "<td>$contador</td>";
-        echo "<td>$nome[2]</td>";
+        echo "<td>$nome[2] $url</td>";
         echo "<td>{$info['contagem']}</td>";
         echo "</tr>";
         $contador++;

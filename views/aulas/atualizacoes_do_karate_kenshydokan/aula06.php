@@ -16,7 +16,7 @@
         
 
         <h2 class="mt-4">O que é Tameshiwari?</h2>
-        <p>O Tameshiwari é uma prática no Karate de Contato que envolve quebrar objetos sólidos com técnicas de mão e pé. É uma demonstração de força, precisão e controle das técnicas de golpe.</p>
+        <p>O Tameshiwari é uma prática no Karate de Contato que envolve quebrar objetos sólidos com técnicas de mão, cotovelo, joelho, canela, calcanhar e pé. É uma demonstração de força, precisão e controle das técnicas de golpe.</p>
 
         <h2 class="mt-4">Objetivos do Tameshiwari</h2>
         <p>O Tameshiwari tem vários objetivos importantes, incluindo:</p>

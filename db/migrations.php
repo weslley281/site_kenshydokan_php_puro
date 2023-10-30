@@ -193,6 +193,8 @@ class Migration
             `descricao` TEXT NOT NULL,
             `professor` VARCHAR(255) NOT NULL,
             `id_imagem` VARCHAR(255) NOT NULL,
+            `cargaHoraria` VARCHAR(255) NOT NULL,
+            `matriculas` VARCHAR(255) NULL,
             `situacao` VARCHAR(255) NOT NULL,
             `dataCriacao` DATE,
             `dataMudanca` DATE
@@ -203,6 +205,27 @@ class Migration
             //echo "Tabela 'cursos' criada com sucesso!";
         } else {
             echo "Erro ao criar tabela de cursos: " . $this->conexao->error;
+        }
+    }
+
+    public function criarTabelaAvaliacoes()
+    {
+        $sql = "
+        CREATE TABLE IF NOT EXISTS avaliacoes (
+            `id_avaliacao` INT AUTO_INCREMENT PRIMARY KEY,
+            `id_curso` INT,
+            `id_usuario` INT,
+            `nota` INT,
+            `comentario` VARCHAR(255) NOT NULL,
+            `dataCriacao` DATE,
+            `dataMudanca` DATE
+        );
+        ";
+
+        if ($this->conexao->query($sql) === true) {
+            //echo "Tabela 'avaliacoes' criada com sucesso!";
+        } else {
+            echo "Erro ao criar tabela de avaliacoes: " . $this->conexao->error;
         }
     }
 
@@ -259,6 +282,25 @@ class Migration
             //echo "Tabela 'estados' criada com sucesso!";
         } else {
             echo "Erro ao criar tabela de estados: " . $this->conexao->error;
+        }
+    }
+
+    public function criarTabelaCertificados()
+    {
+        $sql = "
+        CREATE TABLE IF NOT EXISTS certificados (
+            `id_certificadp` INT AUTO_INCREMENT PRIMARY KEY,
+            `id_usuario` INT,
+            `id_curso` INT,
+            `dataCriacao` DATE,
+            `dataMudanca` DATE
+        );
+        ";
+
+        if ($this->conexao->query($sql) === true) {
+            //echo "Tabela 'certificados' criada com sucesso!";
+        } else {
+            echo "Erro ao criar tabela de certificados: " . $this->conexao->error;
         }
     }
 }

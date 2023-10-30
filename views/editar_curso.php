@@ -45,16 +45,16 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
                   <select id="id_categoria" class="form-select form-control js-example-basic-single" aria-label="Default select example" name="id_categoria">
                     <option value="<?php echo $curso["id_categoria"]; ?>"><?php echo $categoria["categoria"]; ?></option>
                     <?php
-                    $consulta = "SELECT id_categoria, categoria FROM categorias";
-                    $resultado = mysqli_query($conexao, $consulta);
-                    if ($resultado) {
-                        while ($dado = mysqli_fetch_array($resultado)) {
-                            echo '<option value="' . $dado["id_categoria"] . '">' . $dado["categoria"] . '</option>';
-                        }
-                    } else {
-                        echo '<option>Erro ao carregar os dados</option>';
-                    }
-                    ?>
+$consulta = "SELECT id_categoria, categoria FROM categorias";
+    $resultado = mysqli_query($conexao, $consulta);
+    if ($resultado) {
+        while ($dado = mysqli_fetch_array($resultado)) {
+            echo '<option value="' . $dado["id_categoria"] . '">' . $dado["categoria"] . '</option>';
+        }
+    } else {
+        echo '<option>Erro ao carregar os dados</option>';
+    }
+    ?>
                 </select>
             </div>
 
@@ -106,14 +106,14 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
         </thead>
         <tbody>
             <?php
-            $busca = "SELECT * FROM aulas WHERE id_curso = '$id_curso'";
-            $resultado = mysqli_query($conexao, $busca);
-            $linha = mysqli_num_rows($resultado);
-            if ($linha == '') {
-                echo "<h3> Não foram encontrados dados Cadastrados no Banco!! </h3>";
-            } else {
-                while ($aula = mysqli_fetch_array($resultado)) {
-                    ?>
+$busca = "SELECT * FROM aulas WHERE id_curso = '$id_curso'";
+    $resultado = mysqli_query($conexao, $busca);
+    $linha = mysqli_num_rows($resultado);
+    if ($linha == '') {
+        echo "<h3> Não foram encontrados dados Cadastrados no Banco!! </h3>";
+    } else {
+        while ($aula = mysqli_fetch_array($resultado)) {
+            ?>
                     <tr>
                         <th scope="row"><?php echo $aula["id_aula"]; ?></th>
                         <td><?php echo $aula["titulo"]; ?></td>
@@ -167,6 +167,7 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
 <?php
 include "rodape.php";
 } else {
-    echo "<script language='javascript'>window.location='login.php'; </script>";
+    var_dump($_SESSION["id_usuario"], $_GET["id"], $_SESSION['nivel']);
+    //echo "<script language='javascript'>window.location='login.php'; </script>";
 }
 ?>
