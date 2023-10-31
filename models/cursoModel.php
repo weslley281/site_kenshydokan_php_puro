@@ -7,11 +7,12 @@ class CursoModel
     private $descricao;
     private $professor;
     private $id_imagem;
+    private $cargaHoraria;
     private $situacao;
     private $dataCriacao;
     private $dataMudanca;
 
-    public function __construct($id_curso, $id_categoria, $nome, $descricao, $professor, $id_imagem, $situacao, $dataMudanca)
+    public function __construct($id_curso, $id_categoria, $nome, $descricao, $professor, $id_imagem, $cargaHoraria, $situacao, $dataMudanca)
     {
         $this->id_curso = $id_curso;
         $this->id_categoria = $id_categoria;
@@ -19,6 +20,7 @@ class CursoModel
         $this->descricao = $descricao;
         $this->professor = $professor;
         $this->id_imagem = $id_imagem;
+        $this->cargaHoraria = $cargaHoraria;
         $this->situacao = $situacao;
         $this->dataCriacao = date("Y-m-d");
         $this->dataMudanca = $dataMudanca;
@@ -82,6 +84,16 @@ class CursoModel
     public function setIdImagem($id_imagem)
     {
         $this->id_imagem = $id_imagem;
+    }
+
+    public function getCargaHoraria()
+    {
+        return $this->cargaHoraria;
+    }
+
+    public function setCargaHoraria($cargaHoraria)
+    {
+        $this->cargaHoraria = $cargaHoraria;
     }
 
     public function getSituacao()

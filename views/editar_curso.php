@@ -66,6 +66,12 @@ $consulta = "SELECT id_categoria, categoria FROM categorias";
               <label for="professor">Professor: </label>
               <input id="professor" type="text" class="form-control" value="<?php echo $curso["professor"]; ?>" name="professor" required>
           </div>
+
+          <div class="form-group">
+              <label for="cargaHoraria">Carga Horária: </label>
+              <input id="cargaHoraria" type="text" class="form-control" value="<?php echo $curso["cargaHoraria"]; ?> name="cargaHoraria" required>
+            </div>
+
           <input class="btn btn-lg btn-success btn-block text-uppercase" type="submit" value="Salvar">
       </form>
 

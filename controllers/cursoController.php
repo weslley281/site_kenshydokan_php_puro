@@ -39,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         $_POST["nome"],
                         $_POST["descricao"],
                         $_POST["professor"],
+                        $_POST["cargaHoraria"],
                         $id_imagem,
                         "aguardando",
                         $dataMudanca
@@ -64,6 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_POST["nome"],
                 $_POST["descricao"],
                 $_POST["professor"],
+                $_POST["cargaHoraria"],
                 null,
                 "aguardando",
                 $dataMudanca

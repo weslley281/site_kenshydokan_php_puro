@@ -24,5 +24,9 @@ echo "<br>";
 $migration->criarTabelaCategorias();
 echo "<br>";
 $migration->criarTabelaEstados();
+echo "<br>";
+$migration->criarTabelaAvaliacoes();
+echo "<br>";
+$migration->criarTabelaCertificados();
 
 echo "<script language='javascript'>window.location='views/inicio.php'; </script>";

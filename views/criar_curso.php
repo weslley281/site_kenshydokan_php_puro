@@ -40,12 +40,17 @@ $consulta = "SELECT id_categoria, categoria FROM categorias";
 
             <div class="form-group">
               <label for="descricao">Descrição: </label>
-              <input id="descricao" type="text" class="form-control" name="descricao" required autofocus>
+              <input id="descricao" type="text" class="form-control" name="descricao" required>
             </div>
 
             <div class="form-group">
               <label for="professor">Professor: </label>
-              <input id="professor" type="text" class="form-control" name="professor" required autofocus>
+              <input id="professor" type="text" class="form-control" name="professor" required>
+            </div>
+
+            <div class="form-group">
+              <label for="cargaHoraria">Carga Horária: </label>
+              <input id="cargaHoraria" type="text" class="form-control" name="cargaHoraria" required>
             </div>
 
             <div class="form-group">

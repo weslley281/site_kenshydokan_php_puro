@@ -15,8 +15,8 @@ class CursoRepositorio
     public function criarCurso(CursoModel $curso): bool
     {
         try {
-            $inserir = $this->conexao->prepare("INSERT INTO cursos (id_categoria, nome, descricao, professor, id_imagem, situacao, dataMudanca, dataCriacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $inserir->bind_param("isssssss", $curso->getIdCategoria(), $curso->getNome(), $curso->getDescricao(), $curso->getProfessor(), $curso->getIdImagem(), $curso->getSituacao(), $curso->getDataMudanca(), $curso->getDataCriacao());
+            $inserir = $this->conexao->prepare("INSERT INTO cursos (id_categoria, nome, descricao, professor, id_imagem, cargaHoraria, situacao, dataMudanca, dataCriacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $inserir->bind_param("isssiisss", $curso->getIdCategoria(), $curso->getNome(), $curso->getDescricao(), $curso->getProfessor(), $curso->getIdImagem(), $curso->getCargaHoraria(), $curso->getSituacao(), $curso->getDataMudanca(), $curso->getDataCriacao());
             $resultado = $inserir->execute();
             $inserir->close();
 
@@ -34,8 +34,8 @@ class CursoRepositorio
     public function editarCurso($id_curso, CursoModel $curso): bool
     {
         try {
-            $editar = $this->conexao->prepare("UPDATE cursos SET id_categoria = ?, nome = ?, descricao = ?, professor = ?, situacao = ?, dataMudanca = ? WHERE id_curso = ?");
-            $editar->bind_param("isssssi", $curso->getIdCategoria(), $curso->getNome(), $curso->getDescricao(), $curso->getProfessor(), $curso->getSituacao(), $curso->getDataMudanca(), $id_curso);
+            $editar = $this->conexao->prepare("UPDATE cursos SET id_categoria = ?, nome = ?, descricao = ?, professor = ?, cargaHoraria = ? situacao = ?, dataMudanca = ? WHERE id_curso = ?");
+            $editar->bind_param("isssissi", $curso->getIdCategoria(), $curso->getNome(), $curso->getDescricao(), $curso->getProfessor(), $curso->getCargaHoraria(), $curso->getSituacao(), $curso->getDataMudanca(), $id_curso);
             $resultado = $editar->execute();
             $editar->close();
 

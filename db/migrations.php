@@ -194,7 +194,6 @@ class Migration
             `professor` VARCHAR(255) NOT NULL,
             `id_imagem` VARCHAR(255) NOT NULL,
             `cargaHoraria` VARCHAR(255) NOT NULL,
-            `matriculas` VARCHAR(255) NULL,
             `situacao` VARCHAR(255) NOT NULL,
             `dataCriacao` DATE,
             `dataMudanca` DATE
