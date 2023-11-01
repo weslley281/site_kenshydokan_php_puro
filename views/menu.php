@@ -73,15 +73,15 @@ $paginas = array(
 
     <link rel="stylesheet" href="../libs/DataTables/datatables.css" />
     <?php
-    // Itera sobre as páginas e adiciona a classe "active" se a URL atual corresponder
-    foreach ($paginas as $url => $nome_da_pagina) {
-        if ($url_atual === $url) {
-            echo "<title>Kenshydokan | $nome_da_pagina </title>";
-        }
+// Itera sobre as páginas e adiciona a classe "active" se a URL atual corresponder
+foreach ($paginas as $url => $nome_da_pagina) {
+    if ($url_atual === $url) {
+        echo "<title>Kenshydokan | $nome_da_pagina </title>";
     }
+}
 
-    contar_pagina($url_atual);
-    ?>
+contar_pagina($url_atual);
+?>
 
     <script src="../libs/tinymce/tinymce.min.js"></script>
 </head>
@@ -139,23 +139,23 @@ $paginas = array(
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <?php if (isset($_SESSION['id_usuario'])) { ?>
+                        <?php if (isset($_SESSION['id_usuario'])) {?>
                             <a class="dropdown-item <?php echo ($url_atual == "/views/perfil.php") ? 'active' : ''; ?>" href="perfil.php">Perfil</a>
                             <a class="dropdown-item" href="../controllers/sair.php">Sair</a>
 
-                        <?php } else { ?>
+                        <?php } else {?>
 
                             <a class="dropdown-item <?php echo ($url_atual == "/views/login.php") ? 'active' : ''; ?>" href="login.php">Login</a>
 
                             <a class="dropdown-item <?php echo ($url_atual == "/views/cadastrar.php") ? 'active' : ''; ?>" href="cadastrar.php">Cadastrar-se</a>
 
-                        <?php } ?>
+                        <?php }?>
                     </div>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
+            <!-- <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
-            </form>
+            </form> -->
         </div>
     </nav>
