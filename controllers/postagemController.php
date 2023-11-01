@@ -41,8 +41,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $id_publicacao = $_POST["id_publicacao"];
 
             if ($publicacaoRepositorio::excluir_publicacao($id_publicacao)) {
+                if (isset($_SESSION["nivel"] && $_SESSION['nivel'] == "admin")) {
+                    exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=postagens');
+                    exit();
+                }
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/suas_postagens.php');
             } else {
+                if (isset($_SESSION["nivel"] && $_SESSION['nivel'] == "admin")) {
+                    exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=postagens');
+                    exit();
+                }
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/suas_postagens.php');
             }
         } else {
