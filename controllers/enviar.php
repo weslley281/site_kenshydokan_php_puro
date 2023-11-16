@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Montar a mensagem de email
         $mensagem_email = "Nome: $nome\n";
         $mensagem_email .= "Email: $email\n";
-        $mensagem_email .= "Email: $telefone\n";
+        $mensagem_email .= "Telefone: $telefone\n";
         $mensagem_email .= "Você recebeu uma nova mensagem do formulário de contato do seu site: \n$mensagem";
 
         $headers = "From: $email\n";
