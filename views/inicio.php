@@ -1,4 +1,4 @@
-<?php include "menu.php"; ?>
+<?php include "menu.php";?>
 
 <div class="container-fluid py-5">
   <img class="img-fluid rounded" src="../img/foto_principal.jpg" alt="foto dos alunos de karate">
@@ -127,16 +127,6 @@
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
         <div class="text-center">
-          <img class="rounded-circle" src="../img/sensei-everson.jpg" alt="Everson Jones Batista Leite" width="200" height="200">
-          <h2>Everson Jones Batista Leite</h2>
-          <p><u>Diretor Técnico.</u></p>
-        </div>
-        <ul>
-          <li>3° Dan Karatê Kenshydokan</li>
-        </ul>
-      </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <div class="text-center">
           <img class="rounded-circle" src="../img/sensei_elyakin.jpg" alt="Elyakin Vinicius Mettelo" width="200" height="200">
           <h2>Elyakin Vinicius Mettelo</h2>
           <p><u>Diretor de Arbitragem.</u></p>
@@ -179,5 +169,5 @@
     </div>
   </div>
   <?php
-  include "rodape.php";
-  ?>
+include "rodape.php";
+?>

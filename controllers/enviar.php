@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     } else {
         // Configurar o email de destino
-        $destino = "weslleyhenrique800@gmail.com";
+        $destino = "instituto@kenshydokan.org.br";
         $assunto = "Contato do site Kenshydokan";
         // Montar a mensagem de email
         $mensagem_email = "Nome: $nome\n";
