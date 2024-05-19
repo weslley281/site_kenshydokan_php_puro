@@ -127,18 +127,6 @@
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
         <div class="text-center">
-          <img class="rounded-circle" src="../img/sensei_elyakin.jpg" alt="Elyakin Vinicius Mettelo" width="200" height="200">
-          <h2>Elyakin Vinicius Mettelo</h2>
-          <p><u>Diretor de Arbitragem.</u></p>
-        </div>
-        <ul>
-          <li>1° Dan Karatê Kenshydokan</li>
-        </ul>
-      </div><!-- /.col-lg-4 -->
-    </div><!-- /.row -->
-    <div class="row mt-3 mb-3">
-      <div class="col-lg-4">
-        <div class="text-center">
           <a href="ver_perfil.php?id_usuario=1">
             <img class="rounded-circle" src="../img/sensei_weslley.jpg" alt="Weslley Henrique Vieira Ferraz" width="200" height="200">
           </a>
@@ -149,8 +137,22 @@
           <li>3° Dan Karatê Kenshydokan</li>
           <li>2° Dan Judo Kodokan</li>
           <li>Faixa Preta Brasilian Jiu Jitsu</li>
+          <li>Faixa Roxa Ju Jitsu</li>
         </ul>
       </div>
+      <div class="col-lg-4">
+        <div class="text-center">
+          <img class="rounded-circle" src="../img/sensei_elyakin.jpg" alt="Elyakin Vinicius Mettelo" width="200" height="200">
+          <h2>Elyakin Vinicius Mettelo</h2>
+          <p><u>Diretor de Arbitragem.</u></p>
+        </div>
+        <ul>
+          <li>3° Dan Karatê Kenshydokan</li>
+        </ul>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+    <div class="row mt-3 mb-3">
+
       <div class="col-lg-4">
         <div class="text-center">
           <a href="ver_perfil.php?id_usuario=7">
