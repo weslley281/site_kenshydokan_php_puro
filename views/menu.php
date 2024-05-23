@@ -70,18 +70,19 @@ $paginas = array(
 
     <!-- Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet">
 
     <link rel="stylesheet" href="../libs/DataTables/datatables.css" />
     <?php
-// Itera sobre as páginas e adiciona a classe "active" se a URL atual corresponder
-foreach ($paginas as $url => $nome_da_pagina) {
-    if ($url_atual === $url) {
-        echo "<title>Kenshydokan | $nome_da_pagina </title>";
+    // Itera sobre as páginas e adiciona a classe "active" se a URL atual corresponder
+    foreach ($paginas as $url => $nome_da_pagina) {
+        if ($url_atual === $url) {
+            echo "<title>Kenshydokan | $nome_da_pagina </title>";
+        }
     }
-}
 
-contar_pagina($url_atual);
-?>
+    contar_pagina($url_atual);
+    ?>
 
     <script src="../libs/tinymce/tinymce.min.js"></script>
 </head>
@@ -118,8 +119,14 @@ contar_pagina($url_atual);
                     <a class="nav-link" href="postagens.php">Postagens</a>
                 </li>
 
-                <li class="nav-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>">
-                    <a class="nav-link disabled" href="#">Artes Marciais</a>
+                <li class="nav-item dropdown <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-journal-text"></i> Artes Marciais</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>" href="katas.php">Kata</a>
+                        <a class="dropdown-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>" href="atemi_waza.php">Atemi Waza</a>
+                        <a class="dropdown-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>" href="nage_waza.php">Nage Waza</a>
+                        <a class="dropdown-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>" href="katame_waza.php">Katame Waza</a>
+                    </div>
                 </li>
 
                 <li class="nav-item dropdown <?php echo ($url_atual == "/views/campeonatos.php") ? 'active' : ''; ?>">
@@ -127,6 +134,7 @@ contar_pagina($url_atual);
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item <?php echo ($url_atual == "/views/campeonatos.php") ? 'active' : ''; ?>" href="campeonatos.php">Agenda de Campeonatos</a>
                         <a class="dropdown-item <?php echo ($url_atual == "/views/campeonatos.php") ? 'active' : ''; ?>" href="campeonatos.php">Se Inscreva</a>
+                    </div>
                 </li>
 
                 <li class="nav-item <?php echo ($url_atual == "/views/contato.php") ? 'active' : ''; ?>">
@@ -139,17 +147,17 @@ contar_pagina($url_atual);
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <?php if (isset($_SESSION['id_usuario'])) {?>
+                        <?php if (isset($_SESSION['id_usuario'])) { ?>
                             <a class="dropdown-item <?php echo ($url_atual == "/views/perfil.php") ? 'active' : ''; ?>" href="perfil.php">Perfil</a>
                             <a class="dropdown-item" href="../controllers/sair.php">Sair</a>
 
-                        <?php } else {?>
+                        <?php } else { ?>
 
                             <a class="dropdown-item <?php echo ($url_atual == "/views/login.php") ? 'active' : ''; ?>" href="login.php">Login</a>
 
                             <a class="dropdown-item <?php echo ($url_atual == "/views/cadastrar.php") ? 'active' : ''; ?>" href="cadastrar.php">Cadastrar-se</a>
 
-                        <?php }?>
+                        <?php } ?>
                     </div>
                 </li>
             </ul>
