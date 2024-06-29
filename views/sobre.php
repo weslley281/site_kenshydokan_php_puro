@@ -17,7 +17,6 @@
         <li>7° Dan em KickBoxing</li>
         <li>6° Dan Judo Kodokan</li>
         <li>5° Dan em Karate Kyokushin</li>
-        <li>1° Dan Karatê Kyokushin</li>
         <li>Faixa Preta Quinto Grau Brasilian Jiu Jitsu</li>
       </ul>
     </div>
@@ -77,7 +76,9 @@
           <ul>
             <li>Faixa Preta 3° Dan do Karate Kenshydokan.</li>
             <li>Faixa preta 2° Dan em Judo Kodokan.</li>
+            <li>1° Dan Karatê Kyokushin</li>
             <li>Faixa preta de Jiu Jitsu Brasileiro.</li>
+            <li>Faixa Roxa Ju Jitsu</li>
           </ul>
         </div>
       </div>
