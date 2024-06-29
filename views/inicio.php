@@ -1,4 +1,4 @@
-<?php include "menu.php";?>
+<?php include "menu.php"; ?>
 
 <div class="container-fluid py-5">
   <img class="img-fluid rounded" src="../img/foto_principal.jpg" alt="foto dos alunos de karate">
@@ -171,5 +171,5 @@
     </div>
   </div>
   <?php
-include "rodape.php";
-?>
+  include "rodape.php";
+  ?>
