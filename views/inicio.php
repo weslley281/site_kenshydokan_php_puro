@@ -3,6 +3,7 @@
 <div class="container-fluid py-5">
   <img class="img-fluid rounded" src="../img/foto_principal.jpg" alt="foto dos alunos de karate">
   <div class="container mx-2">
+    <h3 class="text-dark bold text-uppercase font-weight-bold py-3">World Kenshydokan Karate Association.</h3>
     <h3 class="text-dark bold text-uppercase font-weight-bold py-3">Federação de Karatê de Contato do Estado de Mato Grosso.</h3>
     <h3 class="text-dark bold text-uppercase font-weight-bold py-3">Instituto de Artes Marciais e Defesa Pessoal Kenshydokan.</h3>
   </div>
@@ -122,6 +123,7 @@
           <li>7° Dan em KickBoxing</li>
           <li>6° Dan Judo Kodokan</li>
           <li>5° Dan em Karate Kyokushin</li>
+          <li>15° Khan Muay Thai</li>
           <li>Faixa Preta Quinto Grau Brasilian Jiu Jitsu</li>
         </ul>
       </div><!-- /.col-lg-4 -->
@@ -137,6 +139,7 @@
           <li>3° Dan Karatê Kenshydokan</li>
           <li>2° Dan Judo Kodokan</li>
           <li>1° Dan Karatê Kyokushin</li>
+          <li>12° Khan Muay Thai</li>
           <li>Faixa Preta Brasilian Jiu Jitsu</li>
           <li>Faixa Roxa Ju Jitsu</li>
         </ul>
@@ -152,24 +155,6 @@
         </ul>
       </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->
-    <div class="row mt-3 mb-3">
-
-      <div class="col-lg-4">
-        <div class="text-center">
-          <a href="ver_perfil.php?id_usuario=7">
-            <img class="rounded-circle" src="../img/sensei_murilo.jpg" alt="Murilo Cardoso de Resende" width="200" height="200">
-          </a>
-          <h2>Murilo Cardoso de Resende</h2>
-          <p><u>Diretor de Arbitragem</u></p>
-        </div>
-        <ul>
-          <li>14° Khan Muay Thai</li>
-          <li>3° Dan Kickboxing</li>
-          <li>2° Dan Karatê Kenshydokan</li>
-          <li>Faixa Roxa Brasilian Jiu Jitsu</li>
-        </ul>
-      </div>
-    </div>
   </div>
   <?php
   include "rodape.php";
