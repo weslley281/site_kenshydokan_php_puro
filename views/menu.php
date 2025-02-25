@@ -53,14 +53,14 @@ $paginas = array(
 
 
     <meta name="author" content="Weslley Henrique Vieira Ferraz" />
-    <meta name="owner" content="Federação de Karate de Contato do Estado de Mato Grosso" />
+    <meta name="owner" content="World Kenshydokan Karate Association" />
     <meta name="copyright" content="Weslley Henrique Vieira Ferraz" />
     <meta name="keywords" content="kenshydokan, kyokushin, federação, karate, carate, karatê, caratê, de contato, full, contact, luta, aula, aulas, Karatê, kata, kumite, mato grosso, cuiaba, varzea grande, weslley ferraz, weslley, ferraz, judo, judô, kodokan, jiu, jiu jitsu, muay thai, muay boran, kickboxing">
-    <meta name="description" content="Somos uma federação, criada com o intuito de divulgar o karate kenshydokan e outras artes marciais.">
+    <meta name="description" content="Somos uma instituição, criada com o intuito de divulgar o karate kenshydokan e outras artes marciais.">
     <meta http-equiv="refresh" content="3600">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <link rel="icon" href="../img/kenshydokan.jpg" type="image/jpg">
+    <link rel="icon" href="../img/wkka.jpg" type="image/jpg">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -89,7 +89,7 @@ $paginas = array(
 
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand bg-light rounded px-1 py-1 text-dark" href="inicio.php"><img src="../img/kenshydokan.jpg" width="30" height="30" alt="logo da kenshydokan"> Kenshydokan</a>
+        <a class="navbar-brand bg-light rounded px-1 py-1 text-dark" href="inicio.php"><img src="../img/wkka.jpg" width="30" height="30" alt="logo da kenshydokan"> Kenshydokan</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
             <span class="navbar-toggler-icon"></span>
         </button>

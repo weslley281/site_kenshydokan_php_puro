@@ -10,13 +10,14 @@
     </div>
     <div class="col-md-5">
       <h3><a href="ver_perfil.php?id_usuario=5">Jonas Teixeira de Andrade</a></h3>
-      <p>Presidente da FKCMT.</p>
+      <p>Presidente da WKKA.</p>
       <ul>
         <li>10° Dan Karate Kenshydokan</li>
         <li>7° Dan Ju jitsu</li>
         <li>7° Dan em KickBoxing</li>
         <li>6° Dan Judo Kodokan</li>
         <li>5° Dan em Karate Kyokushin</li>
+        <li>15° Khan Muay Thai</li>
         <li>Faixa Preta Quinto Grau Brasilian Jiu Jitsu</li>
       </ul>
     </div>
@@ -29,13 +30,18 @@
   <div class="row mb-4">
     <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
-        <a href=""><img class="card-img-top" src="../img/sensei-everson.jpg" alt="Everson Jones Batista Leite Faixa Preta 3° Dan do Karate Kenshydokan"></a>
+        <a href="ver_perfil.php?id_usuario=1"><img class="card-img-top" src="../img/sensei_weslley.jpg" alt="Weslley Henrique Vieira Ferraz Faixa Preta 3° Dan do Karate Kenshydokan, Faixa preta 2° Dan em Judo Kodokan e Faixa preta de Jiu Jitsu Brasileiro"></a>
         <div class="card-body">
           <h4 class="card-title">
-            <a href="">Everson Jones Batista Leite</a>
+            <a href="ver_perfil.php?id_usuario=1">Weslley Henrique Vieira Ferraz</a>
           </h4>
           <ul>
             <li>Faixa Preta 3° Dan do Karate Kenshydokan.</li>
+            <li>Faixa preta 2° Dan em Judo Kodokan.</li>
+            <li>1° Dan Karatê Kyokushin</li>
+            <li>Faixa preta de Jiu Jitsu Brasileiro.</li>
+            <li>12° Khan Muay Thai</li>
+            <li>Faixa Roxa Ju Jitsu</li>
           </ul>
         </div>
       </div>
@@ -62,39 +68,6 @@
           </h4>
           <ul>
             <li>Faixa Preta 3° Dan do Karate Kenshydokan.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-sm-6 mb-4">
-      <div class="card h-100">
-        <a href="ver_perfil.php?id_usuario=1"><img class="card-img-top" src="../img/sensei_weslley.jpg" alt="Weslley Henrique Vieira Ferraz Faixa Preta 3° Dan do Karate Kenshydokan, Faixa preta 2° Dan em Judo Kodokan e Faixa preta de Jiu Jitsu Brasileiro"></a>
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="ver_perfil.php?id_usuario=1">Weslley Henrique Vieira Ferraz</a>
-          </h4>
-          <ul>
-            <li>Faixa Preta 3° Dan do Karate Kenshydokan.</li>
-            <li>Faixa preta 2° Dan em Judo Kodokan.</li>
-            <li>1° Dan Karatê Kyokushin</li>
-            <li>Faixa preta de Jiu Jitsu Brasileiro.</li>
-            <li>Faixa Roxa Ju Jitsu</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-sm-6 mb-4">
-      <div class="card h-100">
-        <a href="ver_perfil.php?id_usuario=7"><img class="card-img-top" src="../img/sensei_murilo.jpg" alt="Murilo Cardoso de Resende 2° Dan Karatê Kenshydokan"></a>
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="ver_perfil.php?id_usuario=7">Murilo Cardoso de Resende</a>
-          </h4>
-          <ul>
-            <li>14° Khan Muay Thai</li>
-            <li>3° Dan Kickboxing</li>
-            <li>2° Dan Karatê Kenshydokan</li>
-            <li>Faixa Roxa Jiu Jitsu Brasileiro</li>
           </ul>
         </div>
       </div>
