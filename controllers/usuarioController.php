@@ -157,12 +157,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/editar_perfil.php');
             }
         } elseif ($_POST["tipo"] == "deletar") {
+            $usuarioRepositorio = new UsuarioRepositorio();
             $id_usuario = $_POST["id_usuario"];
 
             if ($usuarioRepositorio->excluirUsuario($id_usuario)) {
-                exibirMensagemEredirecionar("Usuário excluído com sucesso", '../views/login.php');
+                exibirMensagemEredirecionar("Usuário excluído com sucesso", '../views/admin.php?pagina=usuarios');
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/editar_perfil.php');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin.php?pagina=usuarios');
             }
         }
     } else {
