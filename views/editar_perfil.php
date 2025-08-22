@@ -23,7 +23,7 @@ if ($usuario["id_fil"] != 0 || $usuario["id_fil"] != null && $usuario['nivel'] =
 	$estaFiliado = ($filiado["confirmacao"] == "sim") ? "Você está filiado" : "Aguardando Confirmação de Filiação, Não Está Filiado Não";
 
 	$id_graduacao = $filiado["id_graduacao"];
-	$busca_graduacao = "SELECT * FROM graduacao WHERE id_graduacao = '$id_graduacao'";
+	$busca_graduacao = "SELECT * FROM graduacoes WHERE id_graduacao = '$id_graduacao'";
 	$resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
 	$graduacao = mysqli_fetch_array($resultado_graduacao);
 } else {

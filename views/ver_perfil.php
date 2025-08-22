@@ -26,7 +26,7 @@ if ($confirmacao == "sim") {
 }
 
 $id_graduacao = $filiado["id_graduacao"];
-$busca_graduacao = "SELECT * FROM graduacao WHERE id_graduacao = '$id_graduacao'";
+$busca_graduacao = "SELECT * FROM graduacoes WHERE id_graduacao = '$id_graduacao'";
 $resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
 $graduacao = mysqli_fetch_array($resultado_graduacao);
 ?>
