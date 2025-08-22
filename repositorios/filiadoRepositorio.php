@@ -16,7 +16,7 @@ class FiliadoRepositorio
     {
         try {
             $inserir = $this->conexao->prepare("INSERT INTO filiados (id_graduacao, nome, dojo, telefone, rg, email, endereco, cidade, id_estado, confirmacao, dataCriacao, dataMudanca) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $inserir->bind_param("isssssssiss", $filiado->getIdGraduacao(), $filiado->getNome(), $filiado->getDojo(), $filiado->getTelefone(), $filiado->getRg(), $filiado->getEmail(), $filiado->getEndereco(), $filiado->getCidade(), $filiado->getIdEstado(), $filiado->getConfirmacao(), $filiado->getDataCriacao(), $filiado->getDataMudanca());
+            $inserir->bind_param("isssssssisss", $filiado->getIdGraduacao(), $filiado->getNome(), $filiado->getDojo(), $filiado->getTelefone(), $filiado->getRg(), $filiado->getEmail(), $filiado->getEndereco(), $filiado->getCidade(), $filiado->getIdEstado(), $filiado->getConfirmacao(), $filiado->getDataCriacao(), $filiado->getDataMudanca());
             $resultado = $inserir->execute();
             $inserir->close();
 
