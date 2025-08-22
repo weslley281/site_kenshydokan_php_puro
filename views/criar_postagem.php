@@ -22,9 +22,9 @@ $resultado_filiado = mysqli_query($conexao, $busca_filiado);
 $filiado = mysqli_fetch_array($resultado_filiado);
 $confirmacao = $filiado["confirmacao"];
 if ($confirmacao == "sim") {
-    $ativo = "Você está filiado";
+	$ativo = "Você está filiado";
 } else {
-    $ativo = "Aguardando Cofirmação de Filiação, Não Está Filiado Não";
+	$ativo = "Aguardando Cofirmação de Filiação, Não Está Filiado Não";
 }
 
 $id_graduacao = $filiado["id_graduacao"];
@@ -33,7 +33,7 @@ $resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
 $graduacao = mysqli_fetch_array($resultado_graduacao);
 
 if (isset($_SESSION["id_usuario"])) {
-    ?>
+?>
 
 	<body>
 		<div class="container mt-5">
@@ -48,15 +48,15 @@ if (isset($_SESSION["id_usuario"])) {
 						<div class="list-group">
 							<a href="perfil.php" class="list-group-item bg-light text-dark">Perfil</a>
 							<a href="editar_perfil.php" class="list-group-item bg-light text-dark">Editar Perfil</a>
-							<?php if ($usuario["nivel"] == "admin" || $usuario["nivel"] == "sensei") {?>
+							<?php if ($usuario["nivel"] == "admin" || $usuario["nivel"] == "sensei") { ?>
 								<a href="exame_graduacao.php" class="list-group-item bg-light text-dark">Exame de Graduação</a>
 								<a href="criar_postagem.php" class="list-group-item text-dark bg-danger">Criar Postagem</a>
 								<a href="suas_postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
 								<a href="documentos.php" class="list-group-item bg-light text-dark">Arquivos para Baixar</a>
-							<?php }?>
-							<?php if ($usuario["nivel"] == "admin") {?>
+							<?php } ?>
+							<?php if ($usuario["nivel"] == "admin") { ?>
 								<a href="admin.php" class="list-group-item bg-light text-dark">Administrativo</a>
-							<?php }?>
+							<?php } ?>
 							<a href="eventos.php" class="list-group-item bg-light text-dark">Eventos Online</a>
 							<a href="../controllers/sair.php" class="list-group-item bg-light text-dark">Sair</a>
 						</div>
@@ -68,25 +68,27 @@ if (isset($_SESSION["id_usuario"])) {
 						<button class="btn btn-danger mt-3" id="hide">Esconder informações</button>
 						<button class="btn btn-success mt-3" id="show">Mostrar</button>
 						<div id="esconder" class="text-center mt-3 mb-3">
-							<div class="row">
-								<!-- card do perfil -->
-								<div class="col-5 mb-4">
-									<div class="card" style="width: 18rem;">
-										<img class="card-img-top" src="../imagens/<?php echo $imagem["nome"] ?>" alt="<?php echo $usuario["nome"]; ?>">
-										<div class="card-body">
-											<h5 class="card-title"><?php echo $usuario["nome"]; ?></h5>
+							<div id="esconder" class="text-center mt-3 mb-3">
+								<div class="row">
+									<!-- card do perfil -->
+									<div class="col-5 mb-4">
+										<div class="card" style="width: 18rem;">
+											<img class="card-img-top" src="<?php echo $imagem["caminho"] ?>" alt="">
+											<div class="card-body">
+												<h5 class="card-title"><?php echo $usuario["nome"]; ?></h5>
+											</div>
 										</div>
 									</div>
-								</div>
-								<!-- mais informações -->
-								<div class="col mb-4">
-									<div class="card">
-										<h5 class="card-header"><?php echo "$ativo"; ?></h5>
-										<div class="card-body">
-											<h5 class="card-title">Sua graduação é <?php echo $graduacao["graduacao"]; ?></h5>
-											<p class="card-text">Dojo: <?php echo $filiado["dojo"]; ?></p>
-											<p class="card-text">E-mail: <?php echo $usuario["email"]; ?></p>
-											<p class="card-text">Telefone: <?php echo $usuario["telefone"]; ?></p>
+									<!-- mais informações -->
+									<div class="col mb-4">
+										<div class="card">
+											<h5 class="card-header"><?php echo "$ativo"; ?></h5>
+											<div class="card-body">
+												<h5 class="card-title">Sua graduação é <?php echo $graduacao["graduacao"]; ?></h5>
+												<p class="card-text">Dojo: <?php echo $filiado["dojo"]; ?></p>
+												<p class="card-text">E-mail: <?php echo $usuario["email"]; ?></p>
+												<p class="card-text">Telefone: <?php echo $usuario["telefone"]; ?></p>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -129,9 +131,9 @@ if (isset($_SESSION["id_usuario"])) {
 		<!-- /.container -->
 		</div>
 
-<?php
-include "rodape.php";
+	<?php
+	include "rodape.php";
 } else {
-    echo "<script language='javascript'>window.location='login.php'; </script>";
+	echo "<script language='javascript'>window.location='login.php'; </script>";
 }
-?>
+	?>

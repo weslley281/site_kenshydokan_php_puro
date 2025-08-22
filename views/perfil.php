@@ -37,7 +37,7 @@ if ($usuario["id_fil"] != 0 || $usuario["id_fil"] != null && $usuario['nivel'] =
 	);
 }
 if (isset($_SESSION["id_usuario"])) {
-	?>
+?>
 
 	<body>
 
@@ -53,15 +53,15 @@ if (isset($_SESSION["id_usuario"])) {
 						<div class="list-group">
 							<a href="perfil.php" class="list-group-item bg-danger text-dark">Perfil</a>
 							<a href="editar_perfil.php" class="list-group-item bg-light text-dark">Editar Perfil</a>
-							<?php if ($usuario["nivel"] == "admin" || $usuario["nivel"] == "sensei") {?>
+							<?php if ($usuario["nivel"] == "admin" || $usuario["nivel"] == "sensei") { ?>
 								<a href="exame_graduacao.php" class="list-group-item bg-light text-dark">Exame de Graduação</a>
 								<a href="criar_postagem.php" class="list-group-item bg-light text-dark">Criar Postagem</a>
 								<a href="suas_postagens.php" class="list-group-item bg-light text-dark">Suas Postagens</a>
 								<a href="documentos.php" class="list-group-item bg-light text-dark">Arquivos para Baixar</a>
-							<?php }?>
-							<?php if ($usuario["nivel"] == "admin") {?>
+							<?php } ?>
+							<?php if ($usuario["nivel"] == "admin") { ?>
 								<a href="admin.php" class="list-group-item bg-light text-dark">Administrativo</a>
-							<?php }?>
+							<?php } ?>
 							<a href="eventos.php" class="list-group-item bg-light text-dark">Eventos Online</a>
 							<a href="../controllers/sair.php" class="list-group-item bg-light text-dark">Sair</a>
 						</div>
@@ -115,7 +115,7 @@ if (isset($_SESSION["id_usuario"])) {
 								$busca_categoria = "SELECT * FROM categorias WHERE id_categoria = '$id_categoria'";
 								$resultado_categoria = mysqli_query($conexao, $busca_categoria);
 								$categoria = mysqli_fetch_array($resultado_categoria);
-								?>
+							?>
 								<div class="col-lg-4 col-md-6 mb-4">
 									<div class="card h-100">
 										<a href="assistir_aulas.php?id=<?php echo $curso["id_curso"]; ?>"><img class="card-img-top" src="../img/<?php echo $imagem_curso["nome"]; ?>" alt="" width="150px" height="150px"></a>
@@ -133,7 +133,7 @@ if (isset($_SESSION["id_usuario"])) {
 										</div>
 									</div>
 								</div>
-							<?php }?>
+							<?php } ?>
 
 						</div>
 						<!-- /.row -->
@@ -147,8 +147,8 @@ if (isset($_SESSION["id_usuario"])) {
 			</div>
 			<!-- /.container -->
 		</div>
-		<?php
-		include "rodape.php";
-	} else {
-		echo "<script language='javascript'>window.location='login.php'; </script>";
-	}
+	<?php
+	include "rodape.php";
+} else {
+	echo "<script language='javascript'>window.location='login.php'; </script>";
+}
