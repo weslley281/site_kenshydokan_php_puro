@@ -69,28 +69,37 @@ class FiliadoRepositorio
         }
     }
 
-    public static function buscarFiliado($id_filiado)
+    public function buscarFiliadoPorId($id_filiado)
     {
         try {
-            $c = new Conexao();
-            $conexao = $c->conectar();
-
-            $busca = "SELECT * FROM filiados WHERE id_filiado = ?";
-            $procura = $conexao->prepare($busca);
-            $procura->bind_param("i", $id_filiado);
-            $procura->execute();
-            $result = $procura->get_result();
+            $busca = $this->conexao->prepare("SELECT * FROM filiados WHERE id_filiado = ?");
+            $busca->bind_param("i", $id_filiado);
+            $busca->execute();
+            $result = $busca->get_result();
 
             if ($result->num_rows === 0) {
                 return null;
             }
 
-            $filiado = $result->fetch_assoc();
-            $procura->close();
+            $dados = $result->fetch_assoc();
+            $busca->close();
 
-            return $filiado;
+            return new FiliadoModel(
+                $dados['id_filiado'],
+                $dados['id_graduacao'],
+                $dados['nome'],
+                $dados['dojo'],
+                $dados['telefone'],
+                $dados['rg'],
+                $dados['email'],
+                $dados['endereco'],
+                $dados['cidade'],
+                $dados['id_estado'],
+                $dados['confirmacao'],
+                $dados['dataMudanca']
+            );
         } catch (Exception $e) {
-            error_log("Erro ao buscar o filiado: " . $e->getMessage());
+            error_log("Erro ao buscar o filiado por ID: " . $e->getMessage());
             return null;
         }
     }

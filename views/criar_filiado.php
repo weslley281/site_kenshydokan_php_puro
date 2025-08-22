@@ -1,11 +1,14 @@
 <?php
 include_once "menu.php";
 include_once "../db/conexao.php";
+include_once "../repositorios/graduacaoRepositorio.php";
 
 $c = new Conexao();
 $conexao = $c->conectar();
 
 if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
+    $graduacaoRepositorio = new GraduacaoRepositorio();
+    $graduacoes = $graduacaoRepositorio->listarGraduacoes();
 ?>
     <div class="container">
         <div class="row">
@@ -25,14 +28,8 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
                                 <label for="id_graduacao">Graduação: </label>
                                 <select id="id_graduacao" class="form-select form-control js-example-basic-single" name="id_graduacao">
                                     <?php
-                                    $consulta = "SELECT id_graduacao, graduacao FROM graduacao";
-                                    $resultado = mysqli_query($conexao, $consulta);
-                                    if ($resultado) {
-                                        while ($dado = mysqli_fetch_array($resultado)) {
-                                            echo '<option value="' . $dado["id_graduacao"] . '">' . $dado["graduacao"] . '</option>';
-                                        }
-                                    } else {
-                                        echo '<option>Erro ao carregar os dados</option>';
+                                    foreach ($graduacoes as $graduacao) {
+                                        echo '<option value="' . $graduacao["id_graduacao"] . '">' . htmlspecialchars($graduacao["graduacao"]) . '</option>';
                                     }
                                     ?>
                                 </select>
@@ -40,32 +37,32 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
 
                             <div class="form-group">
                                 <label for="dojo">Dojo: </label>
-                                <input id="dojo" type="text" class="form-control" name="dojo" required>
+                                <input id="dojo" type="text" class="form-control" name="dojo" value="Kenshydokan" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="telefone">Telefone: </label>
-                                <input id="telefone" type="text" class="form-control" name="telefone" required>
+                                <input id="telefone" type="text" class="form-control" name="telefone" value="123456" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="rg">RG: </label>
-                                <input id="rg" type="text" class="form-control" name="rg" required>
+                                <input id="rg" type="text" class="form-control" name="rg" value="123456" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="email">E-mail: </label>
-                                <input id="email" type="email" class="form-control" name="email" required>
+                                <input id="email" type="email" class="form-control" name="email" value="naosei@gmail.com" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="endereco">Endereço: </label>
-                                <input id="endereco" type="text" class="form-control" name="endereco">
+                                <input id="endereco" type="text" class="form-control" value="a" name="endereco">
                             </div>
 
                             <div class="form-group">
                                 <label for="cidade">Cidade: </label>
-                                <input id="cidade" type="text" class="form-control" name="cidade">
+                                <input id="cidade" type="text" value="Várzea Grande" class="form-control" name="cidade">
                             </div>
 
                             <div class="form-group">

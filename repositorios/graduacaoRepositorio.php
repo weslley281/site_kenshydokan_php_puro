@@ -75,7 +75,7 @@ class GraduacaoRepositorio
             $c = new Conexao();
             $conexao = $c->conectar();
 
-            $busca = "SELECT * FROM graduacao WHERE id_graduacao = ?";
+            $busca = "SELECT * FROM graduacoes WHERE id_graduacao = ?";
             $procura = $conexao->prepare($busca);
             $procura->bind_param("i", $id_graduacao);
             $procura->execute();
@@ -92,6 +92,21 @@ class GraduacaoRepositorio
         } catch (Exception $e) {
             error_log("Erro ao buscar a graduação: " . $e->getMessage());
             return null;
+        }
+    }
+
+    public function listarGraduacoes()
+    {
+        try {
+            $graduacoes = [];
+            $consulta = $this->conexao->query("SELECT * FROM graduacoes ORDER BY graduacao ASC");
+            while ($row = $consulta->fetch_assoc()) {
+                $graduacoes[] = $row;
+            }
+            return $graduacoes;
+        } catch (Exception $e) {
+            error_log("Erro ao listar graduações: " . $e->getMessage());
+            return [];
         }
     }
 }
