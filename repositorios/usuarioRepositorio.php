@@ -122,6 +122,25 @@ class UsuarioRepositorio
         return $usuario;
     }
 
+    public static function buscarUsuarioPorToken($token)
+    {
+        $c = new Conexao();
+        $conexao = $c->conectar();
+
+        $stmt = $conexao->prepare("SELECT * FROM usuarios WHERE token = ?");
+        $stmt->bind_param("s", $token);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $usuario = null;
+        if ($row = $result->fetch_assoc()) {
+            $usuario = $row;
+        }
+
+        $stmt->close();
+        return $usuario;
+    }
+
     public static function buscarUsuarioExistente($busca)
     {
         $c = new Conexao();
@@ -145,5 +164,38 @@ class UsuarioRepositorio
         $procura->close();
 
         return $usuario;
+    }
+
+    public static function buscarUsuarioPorEmail($email)
+    {
+        $c = new Conexao();
+        $conexao = $c->conectar();
+
+        $stmt = $conexao->prepare("SELECT * FROM usuarios WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $usuario = null;
+        if ($row = $result->fetch_assoc()) {
+            $usuario = $row;
+        }
+
+        $stmt->close();
+        return $usuario;
+    }
+
+    public static function gerarTokenRecuperacao($id_usuario)
+    {
+        $token = bin2hex(random_bytes(32));
+        $c = new Conexao();
+        $conexao = $c->conectar();
+
+        $stmt = $conexao->prepare("UPDATE usuarios SET token = ? WHERE id_usuario = ?");
+        $stmt->bind_param("si", $token, $id_usuario);
+        $stmt->execute();
+        $stmt->close();
+
+        return $token;
     }
 }

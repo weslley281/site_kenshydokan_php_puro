@@ -152,6 +152,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $senhaSegura = password_hash($nova_senha, PASSWORD_DEFAULT);
 
             if ($usuarioRepositorio->editarSenhaUsuario($id_usuario, $senhaSegura)) {
+                UsuarioRepositorio::editarTokenUsuario($id_usuario, "");
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/editar_perfil.php');
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/editar_perfil.php');

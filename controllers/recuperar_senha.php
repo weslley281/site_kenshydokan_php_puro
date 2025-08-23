@@ -1,53 +1,35 @@
 <?php
+session_start();
+include_once "../db/conexao.php";
 include_once "../repositorios/usuarioRepositorio.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtenha o endereço de email fornecido pelo usuário
-    $email = $_POST["email"];
+$c = new Conexao();
+$conexao = $c->conectar();
 
-    // Verifique se o email está associado a uma conta válida (você deve implementar essa verificação)
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'] ?? '';
+    if ($email) {
+        $usuario = UsuarioRepositorio::buscarUsuarioPorEmail($email);
+        if ($usuario) {
+            // Gerar token e salvar no banco
+            $token = UsuarioRepositorio::gerarTokenRecuperacao($usuario['id_usuario']);
 
-    $usuario = UsuarioRepositorio::buscarUsuarioExistente($email);
+            // Montar link de recuperação
+            $link = "http://localhost/site_kenshydokan_php_puro/views/recuperar_senha.php?token=" . urlencode($token);
 
-    if (!$usuario) {
-        echo "<script>alert('Usário não existe');</script>";
-        echo "<script>window.location='../views/login.php';</script>";
-        exit();
-    }
+            // Enviar e-mail (exemplo simples)
+            $to = $usuario['email'];
+            $subject = "Recuperação de senha";
+            $message = "Clique no link para redefinir sua senha: $link";
+            $headers = "From: no-reply@kenshydokan.com\r\n";
 
-    // Gere um token de recuperação de senha (usando uniqid()) e associe-o ao usuário em seu banco de dados
-    $token = uniqid();
+            mail($to, $subject, $message, $headers);
 
-    if (UsuarioRepositorio::editarTokenUsuario($usuario["id_usuario"], $token)) {
-
-        // Agora, construa o link de recuperação com o token
-        $link_recuperacao = "https://kenshydokan.org.br/views/recuperar_senha?id=" . $token;
-
-        // Envie o email de recuperação
-        $assunto = "Recuperação de Senha";
-        $mensagem = "Olá,\n\nVocê solicitou a recuperação de senha. Clique no link a seguir para redefinir sua senha:\n\n";
-        $mensagem .= $link_recuperacao . "\n\n";
-        $mensagem .= "Se você não solicitou essa recuperação, ignore este email.\n";
-
-        $headers = "From: $email\n";
-        $headers .= "Reply-To: $email";
-
-        // Use a função mail() ou uma biblioteca de email para enviar o email
-        if (mail($usuario["email"], $assunto, $mensagem)) {
-            exibirMensagemEredirecionar('Mensagem Enviada com sucesso', "../views/login.php");
+            $_SESSION['recuperar_senha_msg'] = "E-mail de recuperação enviado!";
         } else {
-            exibirMensagemEredirecionar('Erro ao enviar a mensagem', "../views/login.php");
+            $_SESSION['recuperar_senha_msg'] = "E-mail não encontrado!";
         }
-    } else {
-        exibirMensagemEredirecionar('Erro no banco de dados', "../views/login.php");
     }
-} else {
-    exibirMensagemEredirecionar('Você não pode fazer isso', "../views/login.php");
-}
-
-function exibirMensagemEredirecionar($mensagem, $destino)
-{
-    echo "<script language='javascript'>window.alert('$mensagem'); </script>";
-    echo "<script language='javascript'>window.location='$destino'; </script>";
-    exit;
+    header("Location: ../views/recuperar_senha.php");
+    exit();
 }

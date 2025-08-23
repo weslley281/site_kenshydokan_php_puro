@@ -13,13 +13,13 @@ $conexao = $c->conectar();
         <div class="card-body">
           <h5 class="card-title text-center">Recuperar Senha</h5>
           <?php
-          if (isset($_GET["id"])) {
-            $usuario = UsuarioRepositorio::buscarUsuarioExistente($_GET["id"]);
+          if (isset($_GET["token"])) {
+            $usuario = UsuarioRepositorio::buscarUsuarioPorToken($_GET["token"]);
             if (!$usuario) {
               echo "<script language='javascript'>window.location='../views/recuperar_senha.php'; </script>";
               exit();
             }
-            UsuarioRepositorio::editarTokenUsuario($usuario["id_usuario"], "");
+
           ?>
             <form class="form-signin" action="../controllers/usuarioController.php" method="post">
               <div class="form-group">
@@ -55,5 +55,15 @@ $conexao = $c->conectar();
     </div>
   </div>
 </div>
+
+<?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
+<?php if (!empty($_SESSION['recuperar_senha_msg'])): ?>
+  <div class="alert alert-info">
+    <?php
+    echo $_SESSION['recuperar_senha_msg'];
+    unset($_SESSION['recuperar_senha_msg']);
+    ?>
+  </div>
+<?php endif; ?>
 
 <?php include "rodape.php"; ?>
