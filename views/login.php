@@ -1,8 +1,8 @@
 <?php
 include "menu.php";
 if (isset($_SESSION["id_usuario"])) {
-    echo "<script language='javascript'>window.location='../views/perfil.php'; </script>";
-    exit();
+  echo "<script language='javascript'>window.location='../views/perfil.php'; </script>";
+  exit();
 }
 ?>
 <!-- /Navigation -->
@@ -42,4 +42,4 @@ if (isset($_SESSION["id_usuario"])) {
   </div>
 </div>
 
-<?php include "rodape.php";?>
+<?php include "rodape.php"; ?>

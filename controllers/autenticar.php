@@ -40,7 +40,9 @@ if (isset($_POST['usuario'], $_POST['senha'])) {
             $_SESSION['nome'] = $dado['nome'];
             $_SESSION['id_fil'] = $dado['id_fil'];
             $_SESSION['nivel'] = $dado['nivel'];
-
+            // Resetar tentativas e bloqueio
+            unset($_SESSION['tentativas']);
+            unset($_SESSION['bloqueio']);
             echo "<script language='javascript'>window.location='../views/perfil.php'; </script>";
             exit();
         }
