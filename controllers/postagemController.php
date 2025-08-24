@@ -21,9 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $publicacao = new Publicacao($id_usuario, $titulo, $conteudo, $dataMudanca);
 
             if ($publicacaoRepositorio->criarPublicacao($publicacao)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/suas_postagens.php');
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/perfil/suas_postagens.php');
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/criar_postagem.php');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/perfil/criar_postagem.php');
             }
         } elseif ($_POST["tipo"] == "editar") {
             $id_publicacao = $_POST["id_publicacao"];
@@ -33,34 +33,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $publicacao = new Publicacao(null, $titulo, $conteudo, $dataMudanca);
 
             if ($publicacaoRepositorio->editar_publicacao($id_publicacao, $publicacao)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/suas_postagens.php');
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/perfil/suas_postagens.php');
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/editar_postagem.php');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/perfil/editar_postagem.php?id=' . $id_publicacao);
             }
         } elseif ($_POST["tipo"] == "excluir") {
             $id_publicacao = $_POST["id_publicacao"];
 
             if ($publicacaoRepositorio::excluir_publicacao($id_publicacao)) {
-                if (isset($_SESSION["nivel"] && $_SESSION['nivel'] == "admin")) {
+                if (isset($_SESSION["nivel"]) && $_SESSION['nivel'] == "admin") {
                     exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=postagens');
                     exit();
                 }
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/suas_postagens.php');
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/perfil/suas_postagens.php');
             } else {
-                if (isset($_SESSION["nivel"] && $_SESSION['nivel'] == "admin")) {
+                if (isset($_SESSION["nivel"]) && $_SESSION['nivel'] == "admin") {
                     exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=postagens');
                     exit();
                 }
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/suas_postagens.php');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/perfil/suas_postagens.php');
             }
         } else {
-            exibirMensagemEredirecionar("Tipo de operação inválido", '../views/suas_postagens.php');
+            exibirMensagemEredirecionar("Tipo de operação inválido", '../views/perfil/suas_postagens.php');
         }
     } else {
-        exibirMensagemEredirecionar("Preencha todos os dados", '../views/suas_postagens.php');
+        exibirMensagemEredirecionar("Preencha todos os dados", '../views/perfil/suas_postagens.php');
     }
 } else {
-    exibirMensagemEredirecionar("Não é uma requisição post", '../views/suas_postagens.php');
+    exibirMensagemEredirecionar("Não é uma requisição post", '../views/perfil/suas_postagens.php');
 }
 
 function exibirMensagemEredirecionar($mensagem, $destino)

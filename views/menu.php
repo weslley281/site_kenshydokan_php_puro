@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once "../controllers/contador_paginas.php";
+include_once __DIR__ . "/../controllers/contador_paginas.php";
 // Obtém o caminho da URL atual
 $url_atual = $_SERVER['REQUEST_URI'];
 
@@ -11,15 +11,15 @@ $paginas = array(
     '/views/login.php' => 'Sistema',
     '/views/postagens.php' => 'Postagens',
     '/views/ver_perfil.php' => 'Perfil',
-    '/views/perfil.php' => 'Perfil',
+    '/views/perfil/perfil.php' => 'Perfil',
     '/views/galeria.php' => 'Galeria',
     '/views/filiar.php' => 'Filiar-se',
     '/views/filiados.php' => 'Filiados',
-    '/views/exame_graduacao.php' => 'Exame Graduação',
+    '/views/perfil/exame_graduacao.php' => 'Exame Graduação',
     '/views/editar_postagem' => 'Editar Postagem',
-    '/views/editar_perfil.php' => 'Perfil',
-    '/views/documentos.php' => 'Documentos',
-    '/views/criar_postagem.php' => 'Postagem',
+    '/views/perfil/editar_perfil.php' => 'Perfil',
+    '/views/perfil/documentos.php' => 'Documentos',
+    '/views/perfil/criar_postagem.php' => 'Postagem',
     '/views/contato.php' => 'Contato',
     '/views/campeonatos.php' => 'Campeonatos',
     '/views/cadastrar.php' => 'Cadastrar',
@@ -73,6 +73,7 @@ $paginas = array(
     <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet">
 
     <link rel="stylesheet" href="../libs/DataTables/datatables.css" />
+    <link rel="stylesheet" href="../../libs/DataTables/datatables.css" />
     <?php
     // Itera sobre as páginas e adiciona a classe "active" se a URL atual corresponder
     foreach ($paginas as $url => $nome_da_pagina) {
@@ -85,6 +86,7 @@ $paginas = array(
     ?>
 
     <script src="../libs/tinymce/tinymce.min.js"></script>
+    <script src="../../libs/tinymce/tinymce.min.js"></script>
 </head>
 
 <body class="bg-light">
@@ -141,14 +143,14 @@ $paginas = array(
                     <a class="nav-link" href="contato.php">Contato</a>
                 </li>
 
-                <li class="nav-item dropdown <?php echo ($url_atual == "/views/perfil.php" || $url_atual == "/views/login.php") ? 'active' : ''; ?>">
+                <li class="nav-item dropdown <?php echo (strpos($url_atual, "/views/perfil/") !== false || $url_atual == "/views/login.php") ? 'active' : ''; ?>">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Minha Conta
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <?php if (isset($_SESSION['id_usuario'])) { ?>
-                            <a class="dropdown-item <?php echo ($url_atual == "/views/perfil.php") ? 'active' : ''; ?>" href="perfil.php">Perfil</a>
+                            <a class="dropdown-item <?php echo (strpos($url_atual, "/views/perfil/") !== false) ? 'active' : ''; ?>" href="perfil/perfil.php">Perfil</a>
                             <a class="dropdown-item" href="../controllers/sair.php">Sair</a>
 
                         <?php } else { ?>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+var_dump($_FILES);
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     include_once "../models/usuarioModel.php";
@@ -67,9 +68,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $usuarioModel->setNivel($_POST["nivel"]);
 
             if ($usuarioRepositorio->editarUsuario($_POST["id_usuario"], $usuarioModel)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/editar_perfil.php');
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/perfil/editar_perfil.php');
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/editar_perfil.php');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/perfil/editar_perfil.php');
             }
         } elseif ($_POST["tipo"] == "edidar_admin") {
             $nome = $_POST["nome"];
@@ -85,16 +86,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $usuarioModel->setNivel($_POST["nivel"]);
 
             if ($usuarioRepositorio->editarUsuario($_POST["id_usuario"], $usuarioModel)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/editar_perfil.php');
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/perfil/editar_perfil.php');
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/editar_perfil.php');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/perfil/editar_perfil.php');
             }
         } elseif ($_POST["tipo"] == "editar_nivel" && $_SESSION["nivel"] == "admin") {
 
             if ($usuarioRepositorio::editarNivelUsuario($_POST["id_usuario"], $_POST["nivel"], $dataMudanca)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/editar_perfil.php');
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/perfil/editar_perfil.php');
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/editar_perfil.php');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/perfil/editar_perfil.php');
             }
         } elseif ($_POST["tipo"] == "editar_imagem") {
 
@@ -103,11 +104,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $diretorioUpload = "../img/";
             $nomeImagem = uniqid() . $_FILES["imagem"]["name"];
+            var_dump($nomeImagem);
             $caminho = $diretorioUpload . $nomeImagem;
 
             $extensaoImagem = strtolower(pathinfo($caminho, PATHINFO_EXTENSION));
+            var_dump($extensaoImagem);
 
             if (in_array($extensaoImagem, ["jpg", "jpeg", "gif", "png"])) {
+                var_dump($_FILES["imagem"]["tmp_name"], $caminho);
                 if (move_uploaded_file($_FILES["imagem"]["tmp_name"], $caminho)) {
                     $imagemModel = new Imagem($nomeImagem, $caminho, $dataMudanca);
 
@@ -119,24 +123,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         $caminho = $dados_imagem_antiga != null ? file_exists($dados_imagem_antiga["caminho"]) : "";
 
                         if (file_exists($caminho)) {
-                            unlink($caminhoImagemAntiga);
+                            unlink($caminho);
                         }
 
                         $imagemRepositorio->deleta_imagem($_POST["id_imagem"]);
 
                         if ($usuarioRepositorio->editarImagemUsuario($_POST["id_usuario"], $id_imagem, $dataMudanca)) {
-                            exibirMensagemEredirecionar(MSG_SUCESSO, '../views/editar_perfil.php');
+                            exibirMensagemEredirecionar(MSG_SUCESSO, '../views/perfil/editar_perfil.php');
                         } else {
-                            exibirMensagemEredirecionar("Erro ao editar a imagem do usuário", '../views/editar_perfil.php');
+                            exibirMensagemEredirecionar("Erro ao editar a imagem do usuário", '../views/perfil/editar_perfil.php');
                         }
                     } else {
-                        exibirMensagemEredirecionar("Erro: Imagem não salva, tente novamente", '../views/editar_perfil.php');
+                        exibirMensagemEredirecionar("Erro: Imagem não salva, tente novamente", '../views/perfil/editar_perfil.php');
                     }
                 } else {
-                    exibirMensagemEredirecionar("Erro: Imagem não enviada, tente novamente", '../views/editar_perfil.php');
+                    var_dump(error_get_last());
+                    exibirMensagemEredirecionar("Erro: Imagem não enviada, tente novamente", '../views/perfil/editar_perfil.php');
                 }
             } else {
-                exibirMensagemEredirecionar("Formato de imagem inválido", '../views/editar_perfil.php');
+                exibirMensagemEredirecionar("Formato de imagem inválido", '../views/perfil/editar_perfil.php');
             }
         } elseif ($_POST["tipo"] == "editar_senha") {
             $usuarioRepositorio = new UsuarioRepositorio();
@@ -153,9 +158,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             if ($usuarioRepositorio->editarSenhaUsuario($id_usuario, $senhaSegura)) {
                 UsuarioRepositorio::editarTokenUsuario($id_usuario, "");
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/editar_perfil.php');
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/perfil/editar_perfil.php');
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/editar_perfil.php');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/perfil/editar_perfil.php');
             }
         } elseif ($_POST["tipo"] == "deletar") {
             $usuarioRepositorio = new UsuarioRepositorio();
@@ -177,6 +182,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 function exibirMensagemEredirecionar($mensagem, $destino)
 {
     echo "<script language='javascript'>window.alert('$mensagem'); </script>";
-    echo "<script language='javascript'>window.location='$destino'; </script>";
+    //echo "<script language='javascript'>window.location='$destino'; </script>";
     exit;
 }

@@ -11,7 +11,7 @@ if (
    !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)
 ) {
    echo "<script language='javascript'>window.alert('Preencha todos os campos'); </script>";
-   echo "<script language='javascript'>window.location='../filiado/exame_graduacao.php'; </script>";
+   echo "<script language='javascript'>window.location='../views/perfil/exame_graduacao.php'; </script>";
    return false;
 }
 
@@ -31,5 +31,5 @@ $headers = "From: $email_address\n"; // Este é o endereço de email a partir do
 $headers .= "Reply-To: $email_address";
 mail($to, $email_subject, $email_body, $headers);
 echo "<script language='javascript'>window.alert('Mensagem Enviada com sucesso'); </script>";
-echo "<script language='javascript'>window.location='../filiado/perfil.php'; </script>";
+echo "<script language='javascript'>window.location='../views/perfil/perfil.php'; </script>";
 return true;

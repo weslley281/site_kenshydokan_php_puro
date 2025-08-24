@@ -43,7 +43,7 @@ if (isset($_POST['usuario'], $_POST['senha'])) {
             // Resetar tentativas e bloqueio
             unset($_SESSION['tentativas']);
             unset($_SESSION['bloqueio']);
-            echo "<script language='javascript'>window.location='../views/perfil.php'; </script>";
+            echo "<script language='javascript'>window.location='../views/perfil/perfil.php'; </script>";
             exit();
         }
     }
