@@ -1,15 +1,15 @@
 <?php
 session_start();
 
-// Include FPDF library (User needs to download and place it in libs/fpdf/)
-require(__DIR__ . '/../libs/fpdf/fpdf.php');
-
+// Include FPDF library and other necessary files
+//require_once('../libs/fpdf/fpdf.php'); // Assuming fpdf is in libs/fpdf
 include_once __DIR__ . "/../repositorios/AulaRepositorio.php";
 include_once __DIR__ . "/../repositorios/CursoRepositorio.php";
 include_once __DIR__ . "/../repositorios/CertificadoRepositorio.php";
 include_once __DIR__ . "/../models/certificadoModel.php";
-include_once __DIR__ . "/../repositorios/usuarioRepositorio.php"; // To get user name
+include_once __DIR__ . "/../repositorios/usuarioRepositorio.php";
 
+// Helper function for messages and redirection
 function exibirMensagemEredirecionar($mensagem, $destino)
 {
     echo "<script language='javascript'>window.alert('$mensagem'); </script>";
@@ -17,6 +17,7 @@ function exibirMensagemEredirecionar($mensagem, $destino)
     exit;
 }
 
+// Check user session and course ID
 if (!isset($_SESSION["id_usuario"])) {
     exibirMensagemEredirecionar("Você precisa estar logado para gerar certificados.", '../views/login.php');
 }
@@ -28,11 +29,13 @@ if (!isset($_GET["id_curso"])) {
 $id_usuario = $_SESSION["id_usuario"];
 $id_curso = $_GET["id_curso"];
 
+// Instantiate repositories
 $aulaRepositorio = new AulaRepositorio();
 $cursoRepositorio = new CursoRepositorio();
 $certificadoRepositorio = new CertificadoRepositorio();
 $usuarioRepositorio = new UsuarioRepositorio();
 
+// Fetch course and user data
 $curso = $cursoRepositorio->buscarCurso($id_curso);
 $usuario = $usuarioRepositorio->buscarUsuario($id_usuario);
 
@@ -45,27 +48,20 @@ $total_aulas = $aulaRepositorio->getTotalAulasPorCurso($id_curso);
 $aulas_assistidas = $aulaRepositorio->getAulasAssistidasPorUsuario($id_usuario);
 $aulas_assistidas_no_curso = 0;
 foreach ($aulas_assistidas as $aula_id) {
-    // Need to verify if this aula_id belongs to the current course
-    // This requires fetching aula details or modifying getAulasAssistidasPorUsuario
-    // For simplicity, let's assume getAulasAssistidasPorUsuario returns only for the current course
-    // A more robust check would involve joining with the 'aulas' table in the repository method.
-    // For now, we'll count if the aula_id is in the list.
-    $aula_detail = $aulaRepositorio->buscarAula($aula_id); // This is inefficient, optimize later
+    $aula_detail = $aulaRepositorio->buscarAula($aula_id);
     if ($aula_detail && $aula_detail['id_curso'] == $id_curso) {
         $aulas_assistidas_no_curso++;
     }
 }
 
 $percentual_conclusao = ($total_aulas > 0) ? ($aulas_assistidas_no_curso / $total_aulas) * 100 : 0;
-
-// Assuming 'percentual_conclusao_certificado' column exists in 'cursos' table
-$percentual_necessario = $curso['percentual_conclusao_certificado'] ?? 100; 
+$percentual_necessario = $curso['percentual_conclusao_certificado'] ?? 100;
 
 if ($percentual_conclusao < $percentual_necessario) {
     exibirMensagemEredirecionar("Você não completou o percentual necessário de aulas para este curso. Conclusão: " . round($percentual_conclusao, 2) . "%. Necessário: " . $percentual_necessario . "%. ", '../views/perfil/assistir_aulas.php?id=' . $id_curso);
 }
 
-// Check if certificate already exists for this user and course
+// Check if certificate already exists
 $existing_certificates = $certificadoRepositorio->buscarCertificadosPorUsuario($id_usuario);
 foreach ($existing_certificates as $cert) {
     if ($cert['id_curso'] == $id_curso) {
@@ -74,26 +70,62 @@ foreach ($existing_certificates as $cert) {
 }
 
 // Generate unique verification code
-$codigo_verificacao = uniqid('CERT_') . bin2hex(random_bytes(8));
+$codigoVerificacao = uniqid('CERT_') . bin2hex(random_bytes(8));
 
-// --- FPDF Certificate Generation --- 
-$pdf = new FPDF();
+
+// Prepare data for the certificate
+$nome = $usuario['nome'];
+$nome_curso = $curso['nome'];
+$cargaHoraria = $curso['cargaHoraria'];
+$data = date('d \d\e F \d\e Y');
+
+$pdf = new PDF('L', 'mm', 'A4');
 $pdf->AddPage();
-$pdf->SetFont('Arial','B',16);//Font and size
-// Add content to PDF
-$pdf->Cell(0, 10, 'Instituto de Artes Marciais e Defesa Pessoal Kenshydokan', 0, 1, 'C');// Header
-$pdf->Ln(5);
-$pdf->Cell(0,10,'Certificado de Conclusão',0,1,'C');
-$pdf->Ln(10);
-$pdf->SetFont('Arial','',12);
-$pdf->MultiCell(0,10,mb_convert_encoding('Certificamos que ', 'ISO-8859-1', 'UTF-8') . mb_convert_encoding($usuario['nome'], 'ISO-8859-1', 'UTF-8') . mb_convert_encoding(' concluiu com sucesso o curso de ', 'ISO-8859-1', 'UTF-8') . mb_convert_encoding($curso['nome'], 'ISO-8859-1', 'UTF-8') . mb_convert_encoding(" com a carga horária de", 'ISO-8859-1', 'UTF-8') . mb_convert_encoding($curso['cargaHoraria'] . " horas", 'ISO-8859-1', 'UTF-8') . mb_convert_encoding('.', 'ISO-8859-1', 'UTF-8'),0,'C');
-$pdf->Ln(10);
-$pdf->Cell(0,10,mb_convert_encoding('Data de Emissão: ', 'ISO-8859-1', 'UTF-8') . date('d/m/Y'),0,1,'C');
-$pdf->Ln(5);
-$pdf->SetFont('Arial','',10);
-$pdf->Cell(0,10,'Código de Verificação: ' . $codigo_verificacao,0,1,'C');
 
-// Save PDF
+// Border
+$pdf->Rect(10, 10, 277, 190);
+
+// Centered Title
+$pdf->SetFont('Arial', 'B', 20);
+$pdf->Cell(0, 20, mb_convert_encoding('CERTIFICADO DE CONCLUSÃO', 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
+$pdf->Ln(3);
+
+// Centered logo
+$pdf->Image('../arquivos/logo_instituto.png', 120, 40, 50, 50);
+$pdf->Ln(45);
+
+// Main text
+$pdf->SetFont('Arial', '', 12);
+$pdf->MultiCell(0, 10, mb_convert_encoding("Certificamos que o(a) Sr(a).", 'ISO-8859-1', 'UTF-8'), 0, 'C');
+$pdf->Ln(3);
+
+// Highlighted name
+$pdf->SetFont('Arial', 'B', 20);
+$pdf->Cell(0, 15, mb_convert_encoding($nome, 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
+$pdf->Ln(3);
+
+// Course text and workload (justified)
+$pdf->SetFont('Arial', '', 12);
+$texto_curso = "concluiu com sucesso o curso de $nome_curso, com carga horária de $cargaHoraria horas.";
+$pdf->MultiCell(0, 10, mb_convert_encoding($texto_curso, 'ISO-8859-1', 'UTF-8'), 0, 'J');
+$pdf->Ln(10);
+
+// Date on the bottom right
+$pdf->SetFont('Arial', '', 11);
+$pdf->Cell(0, 10, mb_convert_encoding("Cuiabá - MT, $data", 'ISO-8859-1', 'UTF-8'), 0, 1, 'R');
+$pdf->Ln(10);
+
+// Space for signatures
+$pdf->SetFont('Arial', '', 10);
+$pdf->Cell(120, 10, "_________________________", 0, 0, 'C');
+$pdf->Cell(40, 10, '', 0, 0, 'C');
+$pdf->Cell(120, 10, "_________________________", 0, 1, 'C');
+
+$pdf->Cell(120, 10, mb_convert_encoding("Presidente do Instituto", 'ISO-8859-1', 'UTF-8'), 0, 0, 'C');
+$pdf->Cell(40, 10, '', 0, 0, 'C');
+$pdf->Cell(120, 10, mb_convert_encoding("Diretor Técnico", 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
+
+// Save PDF to file
 $cert_dir = '../arquivos/certificados/';
 if (!is_dir($cert_dir)) {
     mkdir($cert_dir, 0777, true);
@@ -102,18 +134,18 @@ $file_name = 'certificado_' . $id_usuario . '_' . $id_curso . '.pdf';
 $file_path = $cert_dir . $file_name;
 $pdf->Output('F', $file_path);
 
-// Record certificate in database
+// Record certificate in the database
 $certificadoModel = new CertificadoModel(
-    null, // ID will be auto-incremented
+    null,
     $id_usuario,
     $id_curso,
-    $codigo_verificacao,
+    $codigoVerificacao,
     date('Y-m-d H:i:s'),
     $file_path
 );
 
 if ($certificadoRepositorio->criarCertificado($certificadoModel)) {
-    // Serve the generated PDF to the user
+    // Serve the generated PDF to the user for download
     header('Content-Type: application/pdf');
     header('Content-Disposition: attachment; filename="' . $file_name . '"');
     readfile($file_path);
@@ -121,4 +153,3 @@ if ($certificadoRepositorio->criarCertificado($certificadoModel)) {
 } else {
     exibirMensagemEredirecionar("Erro ao registrar o certificado no banco de dados.", '../views/perfil/assistir_aulas.php?id=' . $id_curso);
 }
-?>

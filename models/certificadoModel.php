@@ -1,4 +1,6 @@
 <?php
+require(__DIR__ . '/../libs/fpdf/fpdf.php');
+
 class CertificadoModel
 {
     private $id;
@@ -80,4 +82,24 @@ class CertificadoModel
         $this->caminho_arquivo = $caminho_arquivo;
     }
 }
-?>
+
+class PDF extends FPDF
+{
+    function Header()
+    {
+        // Nome da instituição no topo
+        $this->SetFont('Arial','B',14);
+        $this->Cell(0,10,"Instituto de Artes Marciais e Defesa Pessoal Kenshydokan",0,1,'C');
+        $this->Ln(2);
+    }
+
+    function Footer()
+    {
+        global $codigoVerificacao;
+        // Código de verificação no rodapé
+        $this->SetY(-15);
+        $this->SetFont('Arial','I',8);
+        $texto = "Código de Verificação: " . $codigoVerificacao;
+        $this->Cell(0,10,mb_convert_encoding($texto,'ISO-8859-1','UTF-8'),0,0,'C');
+    }
+}
