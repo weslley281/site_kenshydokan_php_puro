@@ -1,6 +1,6 @@
 <?php
 $page_title = "Editar Perfil";
-include __DIR__ . "/../menu.php";
+include __DIR__ . "/menu.php";
 include __DIR__ . "/_perfil_auth.php";
 ?>
 
@@ -18,7 +18,7 @@ include __DIR__ . "/_perfil_auth.php";
 							<!-- card do perfil -->
 							<div class="col d-inline-flex mb-4">
 								<div class="card" style="width: 18rem;">
-									<img id="imagePreview" class="card-img-top" src="<?php echo $imagem["caminho"] ?>" alt="<?php echo $usuario["nome"]; ?>">
+									<img id="imagePreview" class="card-img-top" src="../<?php echo $imagem["caminho"] ?>" alt="<?php echo $usuario["nome"]; ?>">
 									<div class="card-body">
 										<h5 class="card-title"><?php echo $usuario["nome"]; ?></h5>
 									</div>

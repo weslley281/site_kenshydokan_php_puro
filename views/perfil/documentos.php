@@ -1,6 +1,6 @@
 <?php
 $page_title = "Documentos";
-include __DIR__ . "/../menu.php";
+include __DIR__ . "/menu.php";
 include __DIR__ . "/_perfil_auth.php";
 ?>
 

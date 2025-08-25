@@ -1,9 +1,0 @@
-INSERT INTO `campeonatos` (`id_campeonato`, `titulo`, `subtitulo`, `endereco`, `dataCriacao`, `ativo`) VALUES
-(4, 'XXVIII Campeonato Paulista de Karate Do FBKK.', 'Campeonato de Karate', 'No Ginasio Municipal Pintasilgo. IV - Avenida Soldado Policia Militar Gilberto Augustinho 948 - Jardim Hitoshi. Itacepecira da Serra - SP.', '2019-06-22', 'não'),
-(3, '1° Copa Mas Oyama de Karate de Contato', 'Kumite, Kata e Quebramentos.', 'Avenida Iara no Jardin Glória 2 no ginasio ao lado do mercado Gama.', '2018-05-20', 'não'),
-(5, '1° Open de Karate Kyokushinkai', 'Campeonato de Karate', 'Campo Grande - MS Avenida Marinha 725 08:00 h da manhã', '2018-06-17', 'não'),
-(6, 'Torneo Internacional karate Contacto', 'Campeonato de Karate', 'Gimnasio Municipal la Florida Alonso de Ercilla 1276 - Chile VI Campeonato Paulista', '2018-07-02', 'não'),
-(7, 'Seishin Kyokushin Open Karate Full Contact 2018', 'Campeonato de Karate', 'Ginásio de Esportes ', '2018-08-19', 'não'),
-(8, 'VI Campeonato Estadual de Karate de Contato Kenshydokan', 'Campeonato de Karate', 'No Várzea Grande Shopping Endereço: Av. Presidente Artur Bernardes, 43 - Centro Sul, Várzea Grande - MT, 78125-905', '2018-09-15', 'não'),
-(9, 'VII Campeonato Brasileiro Seshin Kyokushin Open Karate Full Contact 2019', 'Campeonato de Karate', 'Ginásio de Esportes Eden Rua Salvador Leite Marques, 1030 - Aden - Sorocaba/SP', '2019-08-04', 'não'),
-(10, 'VII Campeonato Estadual de Karate de Contato Kenshydokan', 'Campeonato de Karate', 'No Várzea Grande Shopping Endereço: Av. Presidente Artur Bernardes, 43 - Centro Sul, Várzea Grande - MT, 78125-905', '2019-09-29', 'não');

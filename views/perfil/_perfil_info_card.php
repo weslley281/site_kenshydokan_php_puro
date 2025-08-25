@@ -1,10 +1,11 @@
-<?php // _perfil_info_card.php ?>
+<?php // _perfil_info_card.php 
+?>
 <div id="esconder" class="text-center mt-3 mb-3">
     <div class="row">
         <!-- card do perfil -->
         <div class="col-5 mb-4">
             <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="<?php echo $imagem["caminho"]; ?>" alt="">
+                <img class="card-img-top" src="../<?php echo "../" . $imagem["caminho"]; ?>" alt="">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $usuario["nome"]; ?></h5>
                 </div>

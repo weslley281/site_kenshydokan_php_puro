@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once __DIR__ . "/../controllers/contador_paginas.php";
+include_once __DIR__ . "/../../controllers/contador_paginas.php";
 // Obtém o caminho da URL atual
 $url_atual = $_SERVER['REQUEST_URI'];
 
@@ -60,7 +60,7 @@ $paginas = array(
     <meta http-equiv="refresh" content="3600">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <link rel="icon" href="../img/wkka.jpg" type="image/jpg">
+    <link rel="icon" href="../../img/wkka.jpg" type="image/jpg">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -72,8 +72,8 @@ $paginas = array(
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="../libs/DataTables/datatables.css" />
     <link rel="stylesheet" href="../../libs/DataTables/datatables.css" />
+    <link rel="stylesheet" href="../../../libs/DataTables/datatables.css" />
     <?php
     // Itera sobre as páginas e adiciona a classe "active" se a URL atual corresponder
     foreach ($paginas as $url => $nome_da_pagina) {
@@ -94,7 +94,7 @@ $paginas = array(
         <strong>Aviso:</strong> O site estará em manutenção entre os dias 24/08/2025 e 30/08/2025, sendo assim poderá haver algumas inconcistencias nas páginas. Pedimos desculpas pelo transtorno.
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand bg-light rounded px-1 py-1 text-dark" href="inicio.php"><img src="../img/wkka.jpg" width="30" height="30" alt="logo da kenshydokan"> Kenshydokan</a>
+        <a class="navbar-brand bg-light rounded px-1 py-1 text-dark" href="../inicio.php"><img src="../../img/wkka.jpg" width="30" height="30" alt="logo da kenshydokan"> Kenshydokan</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -102,26 +102,26 @@ $paginas = array(
         <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item <?php echo ($url_atual == "/views/inicio.php") ? 'active' : ''; ?>">
-                    <a class="nav-link" href="inicio.php">Home <span class="sr-only">(página atual)</span></a>
+                    <a class="nav-link" href="../inicio.php">Home <span class="sr-only">(página atual)</span></a>
                 </li>
 
                 <li class="nav-item <?php echo ($url_atual == "/views/sobre.php") ? 'active' : ''; ?>">
-                    <a class="nav-link" href="sobre.php">Sobre</a>
+                    <a class="nav-link" href="../sobre.php">Sobre</a>
                 </li>
 
                 <li class="nav-item dropdown <?php echo ($url_atual == "/views/filiar.php" || $url_atual == "/views/filiados.php") ? 'active' : ''; ?>">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filiação</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item <?php echo ($url_atual == "/views/filiar.php") ? 'active' : ''; ?>" href="filiar.php">Filiar-se</a>
-                        <a class="dropdown-item <?php echo ($url_atual == "/views/filiados.php") ? 'active' : ''; ?>" href="filiados.php">Filiados</a>
+                        <a class="dropdown-item <?php echo ($url_atual == "/../views/filiar.php") ? 'active' : ''; ?>" href="filiar.php">Filiar-se</a>
+                        <a class="dropdown-item <?php echo ($url_atual == "/../views/filiados.php") ? 'active' : ''; ?>" href="filiados.php">Filiados</a>
                 </li>
 
                 <li class="nav-item <?php echo ($url_atual == "/views/galeria.php") ? 'active' : ''; ?>">
-                    <a class="nav-link" href="galeria.php">Galeria</a>
+                    <a class="nav-link" href="../galeria.php">Galeria</a>
                 </li>
 
-                <li class="nav-item <?php echo ($url_atual == "/views/postagens.php") ? 'active' : ''; ?>">
-                    <a class="nav-link" href="postagens.php">Postagens</a>
+                <li class="nav-item <?php echo ($url_atual == "/../views/postagens.php") ? 'active' : ''; ?>">
+                    <a class="nav-link" href="../postagens.php">Postagens</a>
                 </li>
 
                 <li class="nav-item dropdown <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>">
@@ -143,7 +143,7 @@ $paginas = array(
                 </li>
 
                 <li class="nav-item <?php echo ($url_atual == "/views/contato.php") ? 'active' : ''; ?>">
-                    <a class="nav-link" href="contato.php">Contato</a>
+                    <a class="nav-link" href="../contato.php">Contato</a>
                 </li>
 
                 <li class="nav-item dropdown <?php echo (strpos($url_atual, "/views/perfil/") !== false || $url_atual == "/views/login.php") ? 'active' : ''; ?>">
@@ -154,13 +154,13 @@ $paginas = array(
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <?php if (isset($_SESSION['id_usuario'])) { ?>
                             <a class="dropdown-item <?php echo (strpos($url_atual, "/views/perfil/") !== false) ? 'active' : ''; ?>" href="perfil/perfil.php">Perfil</a>
-                            <a class="dropdown-item" href="../controllers/sair.php">Sair</a>
+                            <a class="dropdown-item" href="../../controllers/sair.php">Sair</a>
 
                         <?php } else { ?>
 
-                            <a class="dropdown-item <?php echo ($url_atual == "/views/login.php") ? 'active' : ''; ?>" href="login.php">Login</a>
+                            <a class="dropdown-item <?php echo ($url_atual == "/../views/login.php") ? 'active' : ''; ?>" href="login.php">Login</a>
 
-                            <a class="dropdown-item <?php echo ($url_atual == "/views/cadastrar.php") ? 'active' : ''; ?>" href="cadastrar.php">Cadastrar-se</a>
+                            <a class="dropdown-item <?php echo ($url_atual == "/../views/cadastrar.php") ? 'active' : ''; ?>" href="cadastrar.php">Cadastrar-se</a>
 
                         <?php } ?>
                     </div>

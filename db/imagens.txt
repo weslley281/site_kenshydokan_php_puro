@@ -1,6 +1,0 @@
-INSERT INTO `imagens` (`id_imagem`, `nome`, `caminho`) VALUES
-(290, 'sensei_weslley.jpg', '../img/sensei_weslley.jpg'),
-(291, 'Kano_Jigoro.jpg', '../img/Kano_Jigoro.jpg'),
-(289, 'Logo Federação kenshydokan.jpg', '../img/Logo Federação kenshydokan.jpg'),
-(286, 'black-belt-894190_640.jpg', '../img/black-belt-894190_640.jpg'),
-(285, 'bow-295101_640.png', '../img/bow-295101_640.png');

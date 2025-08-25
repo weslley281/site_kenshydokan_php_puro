@@ -1,4 +1,0 @@
-INSERT INTO `aulas` (`id_aula`, `id_curso`, `titulo`, `link`) VALUES
-(8, 7, 'Como iniciar a Aula', 'https://drive.google.com/file/d/1cnCuU5vcKzfVa2OPoxRJymiFq9PX_sG-/view'),
-(9, 7, 'Como se portar no tatame', 'Em breve'),
-(10, 12, 'Aula 1', 'https://1drv.ms/u/s!AjCLaHewcp0zjrQQdwBMgcLf745C-w?e=jWmVOR');

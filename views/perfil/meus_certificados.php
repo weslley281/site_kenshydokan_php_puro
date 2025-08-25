@@ -1,6 +1,6 @@
 <?php
 $page_title = "Meus Certificados";
-include __DIR__ . "/../menu.php";
+include __DIR__ . "/menu.php";
 include __DIR__ . "/_perfil_auth.php";
 include_once __DIR__ . "/../../repositorios/CertificadoRepositorio.php";
 include_once __DIR__ . "/../../repositorios/CursoRepositorio.php";
