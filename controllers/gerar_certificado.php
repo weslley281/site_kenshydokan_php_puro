@@ -79,11 +79,14 @@ $codigo_verificacao = uniqid('CERT_') . bin2hex(random_bytes(8));
 // --- FPDF Certificate Generation --- 
 $pdf = new FPDF();
 $pdf->AddPage();
-$pdf->SetFont('Arial','B',16);
+$pdf->SetFont('Arial','B',16);//Font and size
+// Add content to PDF
+$pdf->Cell(0, 10, 'Instituto de Artes Marciais e Defesa Pessoal Kenshydokan', 0, 1, 'C');// Header
+$pdf->Ln(5);
 $pdf->Cell(0,10,'Certificado de Conclusão',0,1,'C');
 $pdf->Ln(10);
 $pdf->SetFont('Arial','',12);
-$pdf->MultiCell(0,10,mb_convert_encoding('Certificamos que ', 'ISO-8859-1', 'UTF-8') . mb_convert_encoding($usuario['nome'], 'ISO-8859-1', 'UTF-8') . mb_convert_encoding(' concluiu com sucesso o curso de ', 'ISO-8859-1', 'UTF-8') . mb_convert_encoding($curso['nome'], 'ISO-8859-1', 'UTF-8') . mb_convert_encoding('.', 'ISO-8859-1', 'UTF-8'),0,'C');
+$pdf->MultiCell(0,10,mb_convert_encoding('Certificamos que ', 'ISO-8859-1', 'UTF-8') . mb_convert_encoding($usuario['nome'], 'ISO-8859-1', 'UTF-8') . mb_convert_encoding(' concluiu com sucesso o curso de ', 'ISO-8859-1', 'UTF-8') . mb_convert_encoding($curso['nome'], 'ISO-8859-1', 'UTF-8') . mb_convert_encoding(" com a carga horária de", 'ISO-8859-1', 'UTF-8') . mb_convert_encoding($curso['cargaHoraria'] . " horas", 'ISO-8859-1', 'UTF-8') . mb_convert_encoding('.', 'ISO-8859-1', 'UTF-8'),0,'C');
 $pdf->Ln(10);
 $pdf->Cell(0,10,mb_convert_encoding('Data de Emissão: ', 'ISO-8859-1', 'UTF-8') . date('d/m/Y'),0,1,'C');
 $pdf->Ln(5);

@@ -37,26 +37,41 @@ if (!$usuario || !$curso) {
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verificar Certificado</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body { background-color: #f8f9fa; }
-        .certificate-container { 
-            background-color: #fff; 
-            border: 1px solid #dee2e6; 
-            border-radius: .25rem; 
-            padding: 2rem; 
-            margin-top: 50px; 
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .certificate-container {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: .25rem;
+            padding: 2rem;
+            margin-top: 50px;
             box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
         }
-        .certificate-title { color: #007bff; }
-        .certificate-info { font-size: 1.1rem; margin-bottom: 1rem; }
-        .certificate-code { font-weight: bold; }
+
+        .certificate-title {
+            color: #007bff;
+        }
+
+        .certificate-info {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .certificate-code {
+            font-weight: bold;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="row justify-content-center">
@@ -69,6 +84,7 @@ if (!$usuario || !$curso) {
                     <h4 class="mb-3"><?php echo htmlspecialchars($curso['nome']); ?></h4>
                     <p class="certificate-info">Emitido em: <?php echo date('d/m/Y', strtotime($certificado['data_emissao'])); ?></p>
                     <p class="certificate-info certificate-code">Código de Verificação: <?php echo htmlspecialchars($certificado['codigo_verificacao']); ?></p>
+                    <?php echo htmlspecialchars($certificado['caminho_arquivo']); ?>
                     <?php if (!empty($certificado['caminho_arquivo'])): ?>
                         <a href="<?php echo htmlspecialchars($certificado['caminho_arquivo']); ?>" class="btn btn-primary mt-3" download>Baixar Certificado</a>
                     <?php endif; ?>
@@ -78,4 +94,5 @@ if (!$usuario || !$curso) {
         </div>
     </div>
 </body>
+
 </html>
