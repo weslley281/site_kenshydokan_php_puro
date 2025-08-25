@@ -109,14 +109,13 @@ class UsuarioRepositorio
         $procura = $conexao->prepare($busca);
         $procura->bind_param("i", $id_usuario);
         $procura->execute();
-        $procura->bind_result($nome);
+        $result = $procura->get_result();
 
-        $usuario = null;
-
-        while ($procura->fetch()) {
-            $usuario = $nome;
+        if ($result->num_rows === 0) {
+            return null;
         }
 
+        $usuario = $result->fetch_assoc();
         $procura->close();
 
         return $usuario;

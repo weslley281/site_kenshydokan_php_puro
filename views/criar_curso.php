@@ -54,6 +54,11 @@ $consulta = "SELECT id_categoria, categoria FROM categorias";
             </div>
 
             <div class="form-group">
+              <label for="percentual_conclusao_certificado">Percentual de Conclusão para Certificado: </label>
+              <input id="percentual_conclusao_certificado" type="number" class="form-control" name="percentual_conclusao_certificado" min="0" max="100" value="100" required>
+            </div>
+
+            <div class="form-group">
               <label for="imagem">Imagem: </label>
                 <input type="file" class="form-control" id="imagem" accept="image/*" required name="imagem">
 

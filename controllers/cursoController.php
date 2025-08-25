@@ -39,10 +39,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         $_POST["nome"],
                         $_POST["descricao"],
                         $_POST["professor"],
-                        $_POST["cargaHoraria"],
                         $id_imagem,
+                        $_POST["cargaHoraria"],
                         "aguardando",
-                        $dataMudanca
+                        $dataMudanca,
+                        $_POST["percentual_conclusao_certificado"]
                     );
 
                     if ($cursoRepositorio->criarCurso($cursoModel)) {
@@ -65,10 +66,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_POST["nome"],
                 $_POST["descricao"],
                 $_POST["professor"],
+                null, // id_imagem is null for editing course details, handled separately
                 $_POST["cargaHoraria"],
-                null,
                 "aguardando",
-                $dataMudanca
+                $dataMudanca,
+                $_POST["percentual_conclusao_certificado"]
             );
 
             $destino = "../views/editar_curso.php?id=" . $id_curso;

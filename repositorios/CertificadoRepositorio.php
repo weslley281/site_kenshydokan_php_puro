@@ -1,6 +1,6 @@
 <?php
 include_once __DIR__ . "/../db/conexao.php";
-include_once "../models/certificadoModel.php";
+include_once __DIR__ . "/../models/certificadoModel.php";
 
 class CertificadoRepositorio
 {
@@ -16,7 +16,7 @@ class CertificadoRepositorio
     {
         try {
             $inserir = $this->conexao->prepare("INSERT INTO certificados (id_usuario, id_curso, codigo_verificacao, data_emissao, caminho_arquivo) VALUES (?, ?, ?, ?, ?)");
-            $inserir->bind_param("iissis", 
+            $inserir->bind_param("iisss", 
                 $certificado->getIdUsuario(),
                 $certificado->getIdCurso(),
                 $certificado->getCodigoVerificacao(),

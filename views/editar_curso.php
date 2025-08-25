@@ -69,7 +69,12 @@ $consulta = "SELECT id_categoria, categoria FROM categorias";
 
           <div class="form-group">
               <label for="cargaHoraria">Carga Horária: </label>
-              <input id="cargaHoraria" type="text" class="form-control" value="<?php echo $curso["cargaHoraria"]; ?> name="cargaHoraria" required>
+              <input id="cargaHoraria" type="text" class="form-control" value="<?php echo $curso["cargaHoraria"]; ?>" name="cargaHoraria" required>
+            </div>
+
+            <div class="form-group">
+              <label for="percentual_conclusao_certificado">Percentual de Conclusão para Certificado: </label>
+              <input id="percentual_conclusao_certificado" type="number" class="form-control" value="<?php echo $curso["percentual_conclusao_certificado"]; ?>" name="percentual_conclusao_certificado" min="0" max="100" required>
             </div>
 
           <input class="btn btn-lg btn-success btn-block text-uppercase" type="submit" value="Salvar">
