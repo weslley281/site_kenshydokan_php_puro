@@ -85,7 +85,7 @@ $paginas = array(
     contar_pagina($url_atual);
     ?>
 
-    <script src="../libs/tinymce/tinymce.min.js"></script>
+    <script src="../../libs/tinymce/tinymce.min.js"></script>
     <script src="../../libs/tinymce/tinymce.min.js"></script>
 </head>
 
