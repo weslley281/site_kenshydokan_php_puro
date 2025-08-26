@@ -149,7 +149,7 @@ if ($certificadoRepositorio->criarCertificado($certificadoModel)) {
     header('Content-Type: application/pdf');
     header('Content-Disposition: attachment; filename="' . $file_name . '"');
     readfile($file_path);
-    exit;
+    exibirMensagemEredirecionar("Certificado Gerado com sucesso.", '../views/perfil/assistir_aulas.php?id=' . $id_curso);
 } else {
     exibirMensagemEredirecionar("Erro ao registrar o certificado no banco de dados.", '../views/perfil/assistir_aulas.php?id=' . $id_curso);
 }

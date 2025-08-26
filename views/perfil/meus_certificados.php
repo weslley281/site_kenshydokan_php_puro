@@ -49,7 +49,7 @@ $cursoRepositorio = new CursoRepositorio();
 											<td><?php echo htmlspecialchars($curso['nome'] ?? 'Curso Desconhecido'); ?></td>
 											<td><?php echo date('d/m/Y', strtotime($certificado['data_emissao'])); ?></td>
 											<td>
-												<a href="<?php echo htmlspecialchars($certificado['caminho_arquivo']); ?>" class="btn btn-sm btn-success" download>Baixar</a>
+												<a href="<?php echo htmlspecialchars("../" . $certificado['caminho_arquivo']); ?>" class="btn btn-sm btn-success" download>Baixar</a>
 												<a href="../../controllers/verificar_certificado.php?codigo=<?php echo htmlspecialchars($certificado['codigo_verificacao']); ?>" class="btn btn-sm btn-info" target="_blank">Verificar</a>
 											</td>
 										</tr>
