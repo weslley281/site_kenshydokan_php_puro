@@ -40,6 +40,20 @@ if (isset($_POST['usuario'], $_POST['senha'])) {
             $_SESSION['nome'] = $dado['nome'];
             $_SESSION['id_fil'] = $dado['id_fil'];
             $_SESSION['nivel'] = $dado['nivel'];
+
+            if(isset($_POST['lembrar'])){
+                $token = bin2hex(random_bytes(32));
+                $token_hash = hash('sha256', $token);
+                $expires = date('Y-m-d H:i:s', time() + (86400 * 30));
+
+                $usuarioRepo = new usuarioRepositorio($conexao);
+                $usuarioRepo->updateRememberToken($dado['id_usuario'], $token_hash, $expires);
+
+                setcookie('remember_token', $token, time() + (86400 * 30), "/");
+            }else{
+                setcookie('remember_token', '', time() - 3600, '/');
+            }
+
             // Resetar tentativas e bloqueio
             unset($_SESSION['tentativas']);
             unset($_SESSION['bloqueio']);

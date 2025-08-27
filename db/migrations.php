@@ -302,4 +302,15 @@ class Migration
             echo "Erro ao criar tabela de certificados: " . $this->conexao->error;
         }
     }
+
+    public function alterarTabelaUsuariosAdicionarToken()
+    {
+        $sql = "ALTER TABLE `usuarios` ADD `remember_token` VARCHAR(255) NULL AFTER `senha`, ADD `remember_token_expires_at` DATETIME NULL AFTER `remember_token`;";
+
+        if ($this->conexao->query($sql) === true) {
+            //echo "Tabela 'usuarios' alterada com sucesso!";
+        } else {
+            echo "Erro ao alterar tabela de usuarios: " . $this->conexao->error;
+        }
+    }
 }
