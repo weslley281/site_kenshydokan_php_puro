@@ -23,7 +23,19 @@ $paginas = array(
     '/views/contato.php' => 'Contato',
     '/views/campeonatos.php' => 'Campeonatos',
     '/views/cadastrar.php' => 'Cadastrar',
+    '/views/katas.php' => 'Katas',
+    '/views/atemi_waza.php' => 'Atemi Waza',
+    '/views/nage_waza.php' => 'Nage Waza',
+    '/views/katame_waza.php' => 'Katame Waza',
 );
+
+// --- Lógica para Meta Tags Dinâmicas ---
+$pageTitle = isset($pageTitle) ? $pageTitle : 'Kenshydokan Karatê';
+$pageDescription = isset($pageDescription) ? $pageDescription : 'Somos uma instituição, criada com o intuito de divulgar o karate kenshydokan e outras artes marciais.';
+$ogImage = isset($ogImage) ? $ogImage : 'https://www.kenshydokan.com/img/logo_instituto.jpg'; // Imagem padrão
+$pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
+// --- Fim da Lógica ---
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -32,6 +44,8 @@ $paginas = array(
     <!-- Meta tags Obrigatórias -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title><?php echo htmlspecialchars($pageTitle); ?></title>
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=TAG_ID
@@ -50,15 +64,20 @@ $paginas = array(
         gtag('config', 'UA-118512913-1');
     </script>
 
-
-
     <meta name="author" content="Weslley Henrique Vieira Ferraz" />
     <meta name="owner" content="World Kenshydokan Karate Association" />
     <meta name="copyright" content="Weslley Henrique Vieira Ferraz" />
     <meta name="keywords" content="kenshydokan, kyokushin, federação, karate, carate, karatê, caratê, de contato, full, contact, luta, aula, aulas, Karatê, kata, kumite, mato grosso, cuiaba, varzea grande, weslley ferraz, weslley, ferraz, judo, judô, kodokan, jiu, jiu jitsu, muay thai, muay boran, kickboxing">
-    <meta name="description" content="Somos uma instituição, criada com o intuito de divulgar o karate kenshydokan e outras artes marciais.">
+    <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     <meta http-equiv="refresh" content="3600">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?>">
+    <meta property="og:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
+    <meta property="og:image" content="<?php echo htmlspecialchars($ogImage); ?>">
+    <meta property="og:url" content="<?php echo htmlspecialchars($pageUrl); ?>">
+    <meta property="og:type" content="website">
 
     <link rel="icon" href="../img/wkka.jpg" type="image/jpg">
 
@@ -76,11 +95,11 @@ $paginas = array(
     <link rel="stylesheet" href="../../libs/DataTables/datatables.css" />
     <?php
     // Itera sobre as páginas e adiciona a classe "active" se a URL atual corresponder
-    foreach ($paginas as $url => $nome_da_pagina) {
-        if ($url_atual === $url) {
-            echo "<title>Kenshydokan | $nome_da_pagina </title>";
-        }
-    }
+    // foreach ($paginas as $url => $nome_da_pagina) {
+    //     if ($url_atual === $url) {
+    //         echo "<title>Kenshydokan | $nome_da_pagina </title>";
+    //     }
+    // }
 
     contar_pagina($url_atual);
     ?>
