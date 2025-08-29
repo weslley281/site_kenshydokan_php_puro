@@ -151,7 +151,7 @@
           <p><u>Diretor de Arbitragem.</u></p>
         </div>
         <ul>
-          <li>3° Dan Karatê Kenshydokan</li>
+          <li>2° Dan Karatê Kenshydokan</li>
         </ul>
       </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->

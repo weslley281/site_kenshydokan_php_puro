@@ -67,7 +67,7 @@
             <a href="">Elyakin Vinicius Mettelo</a>
           </h4>
           <ul>
-            <li>Faixa Preta 3° Dan do Karate Kenshydokan.</li>
+            <li>Faixa Preta 2° Dan do Karate Kenshydokan.</li>
           </ul>
         </div>
       </div>
