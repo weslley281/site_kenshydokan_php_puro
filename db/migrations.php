@@ -304,28 +304,4 @@ class Migration
             echo "Erro ao criar tabela de certificados: " . $this->conexao->error;
         }
     }
-
-    public function criarTabelaExameGraduacao()
-    {
-        $sql = "
-        CREATE TABLE IF NOT EXISTS exame_graduacao (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            nome VARCHAR(255) NOT NULL,
-            documento VARCHAR(255) NOT NULL,
-            id_graduacao_atual INT NOT NULL,
-            id_graduacao_pretendida INT NOT NULL,
-            id_professor INT NOT NULL,
-            email VARCHAR(255) NOT NULL,
-            dataCriacao DATETIME NOT NULL,
-            dataMudanca DATETIME NOT NULL,
-            situacao ENUM('aprovado', 'aguardando', 'reprovado') NOT NULL DEFAULT 'aguardando'
-        );
-        ";
-
-        if ($this->conexao->query($sql) === true) {
-            //echo "Tabela \'exame_graduacao\' criada com sucesso!";
-        } else {
-            echo "Erro ao criar tabela de exame_graduacao: " . $this->conexao->error;
-        }
-    }
 }

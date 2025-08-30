@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once __DIR__ . "/../../controllers/verificar_lembrar_me.php";
 include_once __DIR__ . "/../../controllers/contador_paginas.php";
 // Obtém o caminho da URL atual
 $url_atual = $_SERVER['REQUEST_URI'];

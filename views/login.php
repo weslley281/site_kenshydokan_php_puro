@@ -15,15 +15,15 @@ if (isset($_SESSION["id_usuario"])) {
           <h5 class="card-title text-center">Entrar</h5>
           <form class="form-signin" action="../controllers/autenticar.php" method="post">
             <div class="form-group mb-3">
-              <input type="email" id="inputEmail" class="form-control" placeholder="Endereço de Email" name="usuario" required autofocus>
+              <input type="email" id="inputEmail" class="form-control" placeholder="Endereço de Email" name="usuario" value="" required autofocus>
             </div>
             <div class="form-group mb-3">
               <input type="password" id="inputPassword" class="form-control" placeholder="Senha" name="senha" required>
             </div>
 
             <div class="custom-control custom-checkbox mb-3">
-              <input type="checkbox" class="custom-control-input" id="customCheck1">
-              <label class="custom-control-label" for="customCheck1">Lembrar Senha</label>
+              <input type="checkbox" class="custom-control-input" id="customCheck1" name="lembrar">
+              <label class="custom-control-label" for="customCheck1">Lembrar de mim</label>
             </div>
             <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" name="entrar" value="entrar">
             <hr class="my-4">

@@ -60,7 +60,36 @@ class UsuarioRepositorio
         return $resultado;
     }
 
-    public static function editarTokenUsuario(int $id_usuario, string $token): bool
+    public function updateRememberToken(int $id_usuario, string $token_hash, string $expires): bool
+    {
+        $atualizar = $this->conexao->prepare("UPDATE usuarios SET remember_token = ?, remember_token_expires_at = ? WHERE id_usuario = ?");
+        $atualizar->bind_param("ssi", $token_hash, $expires, $id_usuario);
+        $resultado = $atualizar->execute();
+        $atualizar->close();
+
+        return $resultado;
+    }
+
+    public function findUserByRememberToken(string $token_hash)
+    {
+        $busca = "SELECT * FROM usuarios WHERE remember_token = ?";
+
+        $procura = $this->conexao->prepare($busca);
+        $procura->bind_param("s", $token_hash);
+        $procura->execute();
+        $result = $procura->get_result();
+
+        if ($result->num_rows === 0) {
+            return null;
+        }
+
+        $usuario = $result->fetch_assoc();
+        $procura->close();
+
+        return $usuario;
+    }
+
+    public function editarTokenUsuario(int $id_usuario, string $token): bool
     {
         $c = new Conexao();
         $conexao = $c->conectar();
