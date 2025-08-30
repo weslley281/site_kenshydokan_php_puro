@@ -193,8 +193,9 @@ class Migration
             `descricao` TEXT NOT NULL,
             `professor` VARCHAR(255) NOT NULL,
             `id_imagem` VARCHAR(255) NOT NULL,
-            `cargaHoraria` VARCHAR(255) NOT NULL,
-            `situacao` VARCHAR(255) NOT NULL,
+            `cargaHoraria` INT(11) NOT NULL,
+            `temCertificado` enum('sim','nao') NOT NULL DEFAULT 'nao',
+            `situacao` enum('aprovado','aguardando','removido') NOT NULL DEFAULT 'aguardando',
             `dataCriacao` DATE,
             `dataMudanca` DATE
         );
@@ -288,9 +289,10 @@ class Migration
     {
         $sql = "
         CREATE TABLE IF NOT EXISTS certificados (
-            `id_certificadp` INT AUTO_INCREMENT PRIMARY KEY,
+            `id_certificado` INT AUTO_INCREMENT PRIMARY KEY,
             `id_usuario` INT,
             `id_curso` INT,
+            `percentual_conclusao_certificado` int(11) NOT NULL DEFAULT '100',
             `dataCriacao` DATE,
             `dataMudanca` DATE
         );
@@ -300,6 +302,30 @@ class Migration
             //echo "Tabela 'certificados' criada com sucesso!";
         } else {
             echo "Erro ao criar tabela de certificados: " . $this->conexao->error;
+        }
+    }
+
+    public function criarTabelaExameGraduacao()
+    {
+        $sql = "
+        CREATE TABLE IF NOT EXISTS exame_graduacao (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nome VARCHAR(255) NOT NULL,
+            documento VARCHAR(255) NOT NULL,
+            id_graduacao_atual INT NOT NULL,
+            id_graduacao_pretendida INT NOT NULL,
+            id_professor INT NOT NULL,
+            email VARCHAR(255) NOT NULL,
+            dataCriacao DATETIME NOT NULL,
+            dataMudanca DATETIME NOT NULL,
+            situacao ENUM('aprovado', 'aguardando', 'reprovado') NOT NULL DEFAULT 'aguardando'
+        );
+        ";
+
+        if ($this->conexao->query($sql) === true) {
+            //echo "Tabela \'exame_graduacao\' criada com sucesso!";
+        } else {
+            echo "Erro ao criar tabela de exame_graduacao: " . $this->conexao->error;
         }
     }
 }

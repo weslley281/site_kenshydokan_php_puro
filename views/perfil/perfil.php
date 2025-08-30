@@ -20,7 +20,7 @@ include __DIR__ . "/_perfil_auth.php";
 					</div>
 					<div class="row">
 						<?php
-						$busca = "SELECT * FROM cursos";
+						$busca = "SELECT * FROM cursos WHERE situacao = 'aprovado'";
 						$resultado = mysqli_query($conexao, $busca);
 						while ($curso = mysqli_fetch_array($resultado)) {
 							$id_imagem_curso = $curso["id_imagem"];

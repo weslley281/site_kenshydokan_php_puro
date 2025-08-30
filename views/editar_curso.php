@@ -77,6 +77,23 @@ $consulta = "SELECT id_categoria, categoria FROM categorias";
               <input id="percentual_conclusao_certificado" type="number" class="form-control" value="<?php echo $curso["percentual_conclusao_certificado"]; ?>" name="percentual_conclusao_certificado" min="0" max="100" required>
             </div>
 
+            <div class="form-group">
+              <label for="temCertificado">Tem Certificado: </label>
+                <select id="temCertificado" class="form-select form-control" name="temCertificado">
+                    <option value="nao" <?php echo ($curso["temCertificado"] == 'nao') ? 'selected' : ''; ?>>Não</option>
+                    <option value="sim" <?php echo ($curso["temCertificado"] == 'sim') ? 'selected' : ''; ?>>Sim</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+              <label for="situacao">Situação: </label>
+                <select id="situacao" class="form-select form-control" name="situacao">
+                    <option value="aguardando" <?php echo ($curso["situacao"] == 'aguardando') ? 'selected' : ''; ?>>Aguardando</option>
+                    <option value="aprovado" <?php echo ($curso["situacao"] == 'aprovado') ? 'selected' : ''; ?>>Aprovado</option>
+                    <option value="removido" <?php echo ($curso["situacao"] == 'removido') ? 'selected' : ''; ?>>Removido</option>
+                </select>
+            </div>
+
           <input class="btn btn-lg btn-success btn-block text-uppercase" type="submit" value="Salvar">
       </form>
 

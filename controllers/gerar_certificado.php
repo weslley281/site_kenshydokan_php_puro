@@ -43,6 +43,10 @@ if (!$curso || !$usuario) {
     exibirMensagemEredirecionar("Curso ou usuário não encontrado.", '../views/perfil/assistir_aulas.php');
 }
 
+if ($curso['temCertificado'] !== 'sim') {
+    exibirMensagemEredirecionar("Este curso não oferece certificado.", '../views/perfil/assistir_aulas.php?id=' . $id_curso);
+}
+
 // Check eligibility
 $total_aulas = $aulaRepositorio->getTotalAulasPorCurso($id_curso);
 $aulas_assistidas = $aulaRepositorio->getAulasAssistidasPorUsuario($id_usuario);

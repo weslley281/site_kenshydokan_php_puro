@@ -50,7 +50,7 @@ if (isset($_SESSION['id_usuario'])) {
 				<div class="text-center">
 					<h1>
 						<strong>Curso de <?php echo $curso["nome"] ?></strong>
-						<?php if ($pode_emitir_certificado) : ?>
+						<?php if ($pode_emitir_certificado && $curso['temCertificado'] == 'sim') : ?>
 							<a href="../../controllers/gerar_certificado.php?id_curso=<?php echo $id_curso; ?>" class="btn btn-primary ml-3">Emitir Certificado</a>
 						<?php endif; ?>
 					</h1>
