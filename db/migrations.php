@@ -193,8 +193,9 @@ class Migration
             `descricao` TEXT NOT NULL,
             `professor` VARCHAR(255) NOT NULL,
             `id_imagem` VARCHAR(255) NOT NULL,
-            `cargaHoraria` VARCHAR(255) NOT NULL,
-            `situacao` VARCHAR(255) NOT NULL,
+            `cargaHoraria` INT(11) NOT NULL,
+            `temCertificado` enum('sim','nao') NOT NULL DEFAULT 'nao',
+            `situacao` enum('aprovado','aguardando','removido') NOT NULL DEFAULT 'aguardando',
             `dataCriacao` DATE,
             `dataMudanca` DATE
         );
@@ -288,9 +289,10 @@ class Migration
     {
         $sql = "
         CREATE TABLE IF NOT EXISTS certificados (
-            `id_certificadp` INT AUTO_INCREMENT PRIMARY KEY,
+            `id_certificado` INT AUTO_INCREMENT PRIMARY KEY,
             `id_usuario` INT,
             `id_curso` INT,
+            `percentual_conclusao_certificado` int(11) NOT NULL DEFAULT '100',
             `dataCriacao` DATE,
             `dataMudanca` DATE
         );
@@ -300,17 +302,6 @@ class Migration
             //echo "Tabela 'certificados' criada com sucesso!";
         } else {
             echo "Erro ao criar tabela de certificados: " . $this->conexao->error;
-        }
-    }
-
-    public function alterarTabelaUsuariosAdicionarToken()
-    {
-        $sql = "ALTER TABLE `usuarios` ADD `remember_token` VARCHAR(255) NULL AFTER `senha`, ADD `remember_token_expires_at` DATETIME NULL AFTER `remember_token`;";
-
-        if ($this->conexao->query($sql) === true) {
-            //echo "Tabela 'usuarios' alterada com sucesso!";
-        } else {
-            echo "Erro ao alterar tabela de usuarios: " . $this->conexao->error;
         }
     }
 }

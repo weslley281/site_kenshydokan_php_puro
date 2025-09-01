@@ -26,24 +26,42 @@ include __DIR__ . "/_perfil_auth.php";
               <input id="nome" class="form-control mb-2" type="text" placeholder="nome" name="nome">
             </div>
             <div class="form-group">
-              <label for="nome">RG do atleta que fará o exame:</label>
-              <input class="form-control mb-2" type="text" placeholder="rg" name="rg">
+              <label for="documento">CPF ou RG do atleta que fará o exame:</label>
+              <input id="documento" class="form-control mb-2" type="text" placeholder="CPF ou RG" name="documento">
             </div>
             <div class="form-group">
-              <label for="nome">Graduação atual do atleta que fará o exame:</label>
-              <input class="form-control mb-2" type="text" placeholder="graduacao atual" name="graduacao_atual">
+              <label for="graduacao_atual">Graduação atual do atleta que fará o exame:</label>
+              <select id="graduacao_atual" class="form-control mb-2" name="graduacao_atual">
+                <?php
+                include_once __DIR__ . "/../../db/conexao.php";
+                $c = new Conexao();
+                $conexao = $c->conectar();
+                $consulta = "SELECT * FROM graduacoes ORDER BY id_graduacao ASC";
+                $resultado = mysqli_query($conexao, $consulta);
+                while ($dado = mysqli_fetch_array($resultado)) {
+                    echo '<option value="' . $dado["id_graduacao"] . '">' . $dado["graduacao"] . '</option>';
+                }
+                ?>
+              </select>
             </div>
             <div class="form-group">
-              <label for="nome">Graduação pretendida do atleta que fará o exame:</label>
-              <input class="form-control mb-2" type="text" placeholder="graduacao pretendida" name="graduacao_pretendida">
+              <label for="graduacao_pretendida">Graduação pretendida do atleta que fará o exame:</label>
+              <select id="graduacao_pretendida" class="form-control mb-2" name="graduacao_pretendida">
+                <?php
+                mysqli_data_seek($resultado, 0);
+                while ($dado = mysqli_fetch_array($resultado)) {
+                    echo '<option value="' . $dado["id_graduacao"] . '">' . $dado["graduacao"] . '</option>';
+                }
+                ?>
+              </select>
             </div>
             <div class="form-group">
               <label for="professor">Nome do seu Professor:</label>
               <input class="form-control mb-2" type="text" value="<?php echo $usuario["nome"]; ?>" name="professor" readonly>
             </div>
             <div class="form-group">
-              <label for="nome">Email do atleta que fará o exame:</label>
-              <input class="form-control mb-2" type="email" placeholder="Email" name="email">
+              <label for="email">Email do Professor:</label>
+              <input class="form-control mb-2" type="email" value="<?php echo $usuario["email"]; ?>" name="email" readonly>
             </div>
             <div class="form-group">
               <input class="btn btn-success" type="submit" value="enviar" name="enviar">

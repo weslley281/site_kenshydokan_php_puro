@@ -12,8 +12,9 @@ class CursoModel
     private $dataCriacao;
     private $dataMudanca;
     private $percentual_conclusao_certificado;
+    private $temCertificado;
 
-    public function __construct($id_curso, $id_categoria, $nome, $descricao, $professor, $id_imagem, $cargaHoraria, $situacao, $dataMudanca, $percentual_conclusao_certificado)
+    public function __construct($id_curso, $id_categoria, $nome, $descricao, $professor, $id_imagem, $cargaHoraria, $situacao, $dataMudanca, $percentual_conclusao_certificado, $temCertificado)
     {
         $this->id_curso = $id_curso;
         $this->id_categoria = $id_categoria;
@@ -26,6 +27,7 @@ class CursoModel
         $this->dataCriacao = date("Y-m-d");
         $this->dataMudanca = $dataMudanca;
         $this->percentual_conclusao_certificado = $percentual_conclusao_certificado;
+        $this->temCertificado = $temCertificado;
     }
 
     public function getIdCurso()
@@ -136,5 +138,15 @@ class CursoModel
     public function setPercentualConclusaoCertificado($percentual_conclusao_certificado)
     {
         $this->percentual_conclusao_certificado = $percentual_conclusao_certificado;
+    }
+
+    public function getTemCertificado()
+    {
+        return $this->temCertificado;
+    }
+
+    public function setTemCertificado($temCertificado)
+    {
+        $this->temCertificado = $temCertificado;
     }
 }

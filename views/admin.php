@@ -31,6 +31,9 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
   <li class="nav-item">
   <a class="nav-link" href="admin.php?pagina=filiados">Filiados</a>
   </li>
+  <li class="nav-item">
+  <a class="nav-link" href="admin.php?pagina=exames">Exames de Graduação</a>
+  </li>
 </ul>
 <div class="tab-content" id="myTabContent">
   <?php if (isset($_GET["pagina"]) && $_GET["pagina"] == "visualizacoes") {include_once "admin/visualizacoes.php";}?>
@@ -38,6 +41,7 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
   <?php if (isset($_GET["pagina"]) && $_GET["pagina"] == "postagens") {include_once "admin/postagens.php";}?>
   <?php if (isset($_GET["pagina"]) && $_GET["pagina"] == "cursos") {include_once "admin/cursos.php";}?>
   <?php if (isset($_GET["pagina"]) && $_GET["pagina"] == "filiados") {include_once "admin/filiados.php";}?>
+  <?php if (isset($_GET["pagina"]) && $_GET["pagina"] == "exames") {include_once "admin/gerenciar_exames.php";}?>
   <?php if (!isset($_GET["pagina"])) {?>
     <br />
     <br />

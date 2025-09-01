@@ -59,6 +59,23 @@ $consulta = "SELECT id_categoria, categoria FROM categorias";
             </div>
 
             <div class="form-group">
+              <label for="temCertificado">Tem Certificado: </label>
+                <select id="temCertificado" class="form-select form-control" name="temCertificado">
+                    <option value="nao" selected>Não</option>
+                    <option value="sim">Sim</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+              <label for="situacao">Situação: </label>
+                <select id="situacao" class="form-select form-control" name="situacao">
+                    <option value="aguardando" selected>Aguardando</option>
+                    <option value="aprovado">Aprovado</option>
+                    <option value="removido">Removido</option>
+                </select>
+            </div>
+
+            <div class="form-group">
               <label for="imagem">Imagem: </label>
                 <input type="file" class="form-control" id="imagem" accept="image/*" required name="imagem">
 

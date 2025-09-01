@@ -15,8 +15,8 @@ class CursoRepositorio
     public function criarCurso(CursoModel $curso): bool
     {
         try {
-            $inserir = $this->conexao->prepare("INSERT INTO cursos (id_categoria, nome, descricao, professor, id_imagem, cargaHoraria, situacao, dataMudanca, dataCriacao, percentual_conclusao_certificado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $inserir->bind_param("isssiisssi", $curso->getIdCategoria(), $curso->getNome(), $curso->getDescricao(), $curso->getProfessor(), $curso->getIdImagem(), $curso->getCargaHoraria(), $curso->getSituacao(), $curso->getDataMudanca(), $curso->getDataCriacao(), $curso->getPercentualConclusaoCertificado());
+            $inserir = $this->conexao->prepare("INSERT INTO cursos (id_categoria, nome, descricao, professor, id_imagem, cargaHoraria, situacao, dataMudanca, dataCriacao, percentual_conclusao_certificado, temCertificado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $inserir->bind_param("isssiisssis", $curso->getIdCategoria(), $curso->getNome(), $curso->getDescricao(), $curso->getProfessor(), $curso->getIdImagem(), $curso->getCargaHoraria(), $curso->getSituacao(), $curso->getDataMudanca(), $curso->getDataCriacao(), $curso->getPercentualConclusaoCertificado(), $curso->getTemCertificado());
             $resultado = $inserir->execute();
             $inserir->close();
 
@@ -34,8 +34,8 @@ class CursoRepositorio
     public function editarCurso($id_curso, CursoModel $curso): bool
     {
         try {
-            $editar = $this->conexao->prepare("UPDATE cursos SET id_categoria = ?, nome = ?, descricao = ?, professor = ?, cargaHoraria = ?, situacao = ?, dataMudanca = ?, percentual_conclusao_certificado = ? WHERE id_curso = ?");
-            $editar->bind_param("isssissii", $curso->getIdCategoria(), $curso->getNome(), $curso->getDescricao(), $curso->getProfessor(), $curso->getCargaHoraria(), $curso->getSituacao(), $curso->getDataMudanca(), $curso->getPercentualConclusaoCertificado(), $id_curso);
+            $editar = $this->conexao->prepare("UPDATE cursos SET id_categoria = ?, nome = ?, descricao = ?, professor = ?, cargaHoraria = ?, situacao = ?, dataMudanca = ?, percentual_conclusao_certificado = ?, temCertificado = ? WHERE id_curso = ?");
+            $editar->bind_param("isssissisi", $curso->getIdCategoria(), $curso->getNome(), $curso->getDescricao(), $curso->getProfessor(), $curso->getCargaHoraria(), $curso->getSituacao(), $curso->getDataMudanca(), $curso->getPercentualConclusaoCertificado(), $curso->getTemCertificado(), $id_curso);
             $resultado = $editar->execute();
             $editar->close();
 

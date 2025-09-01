@@ -1,6 +1,6 @@
 <?php
-include_once "../models/usuarioModel.php";
-include_once "../db/conexao.php";
+include_once __DIR__ . "/../models/usuarioModel.php";
+include_once __DIR__ . "/../db/conexao.php";
 
 class UsuarioRepositorio
 {

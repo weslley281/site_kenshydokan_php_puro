@@ -122,25 +122,26 @@ INSERT INTO `categorias` (`id_categoria`, `categoria`) VALUES
 -- Estrutura da tabela `curso`
 --
 
-CREATE TABLE `curso` (
+CREATE TABLE `cursos` (
   `id_curso` int(11) NOT NULL,
-  `id_categoria` int(11) NOT NULL,
-  `nome` varchar(200) NOT NULL,
+  `nome` varchar(255) NOT NULL,
   `descricao` text NOT NULL,
-  `professor` varchar(200) NOT NULL,
-  `id_imagem` int(11) NOT NULL,
-  `situacao` int(11) NOT NULL,
-  `data` date NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `cargaHoraria` int(11) NOT NULL,
+  `id_categoria` int(11) DEFAULT NULL,
+  `situacao` enum('aprovado','aguardando','removido') NOT NULL DEFAULT 'aguardando',
+  `dataMudanca` date DEFAULT NULL,
+  `dataCriacao` date DEFAULT NULL,
+  `temCertificado` enum('sim','nao') NOT NULL DEFAULT 'nao',
+  `percentual_conclusao_certificado` int(11) NOT NULL DEFAULT 100,
+  `professor` varchar(255) NOT NULL,
+  `id_imagem` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `curso`
 --
 
-INSERT INTO `curso` (`id_curso`, `id_categoria`, `nome`, `descricao`, `professor`, `id_imagem`, `situacao`, `data`) VALUES
-(7, 2, 'Atualizações do Karate Kenshydokan', 'Fique atualizado sobre todas as novas tÃ©cnicas', 'Weslley Henrique Vieira Ferraz', 286, 2, '2020-12-27'),
-(11, 3, 'Nage Waza', 'TÃ©cnicas de ProjeÃ§Ã£o', 'Weslley Henrique Vieira Ferraz', 285, 2, '2021-01-18'),
-(12, 3, 'Parte Teórica do Judô', 'Aulas detalhadas sobrea história e partes mais teórica de judô', 'Weslley Henrique Vieira Ferraz', 291, 2, '2021-02-21');
+
 
 -- --------------------------------------------------------
 
@@ -719,7 +720,7 @@ ALTER TABLE `categorias`
 --
 -- Índices para tabela `curso`
 --
-ALTER TABLE `curso`
+ALTER TABLE `cursos`
   ADD PRIMARY KEY (`id_curso`);
 
 --
@@ -811,9 +812,9 @@ ALTER TABLE `categorias`
   MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT de tabela `curso`
+-- AUTO_INCREMENT de tabela `cursos`
 --
-ALTER TABLE `curso`
+ALTER TABLE `cursos`
   MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
