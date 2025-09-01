@@ -40,7 +40,7 @@ $consulta = "SELECT id_categoria, categoria FROM categorias";
 
             <div class="form-group">
               <label for="descricao">Descrição: </label>
-              <input id="descricao" type="text" class="form-control" name="descricao" required>
+              <textarea name="descricao" id="descricao"></textarea>
             </div>
 
             <div class="form-group">
