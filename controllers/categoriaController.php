@@ -21,9 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             );
 
             if ($categoriaRepositorio->criarCategoria($categoriaModel)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=cursos');
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=cursos');
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin.php?pagina=cursos');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=cursos');
             }
         } elseif ($_POST["tipo"] == "editar") {
             $id_categoria = $_POST["id_categoria"];
@@ -35,24 +35,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             );
 
             if ($categoriaRepositorio->editarCategoria($id_categoria, $categoriaModel)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=cursos');
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=cursos');
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin.php?pagina=cursos');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=cursos');
             }
         } elseif ($_POST["tipo"] == "excluir") {
             $id_categoria = $_POST["id_categoria"];
 
             if ($categoriaRepositorio->excluirCategoria($id_categoria)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=cursos');
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=cursos');
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin.php?pagina=cursos');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=cursos');
             }
         }
     } else {
-        exibirMensagemEredirecionar("Preencha todos os dados", '../views/admin.php?pagina=cursos');
+        exibirMensagemEredirecionar("Preencha todos os dados", '../views/admin/index.php?pagina=cursos');
     }
 } else {
-    exibirMensagemEredirecionar("A requisição não é POST", '../views/admin.php?pagina=cursos');
+    exibirMensagemEredirecionar("A requisição não é POST", '../views/admin/index.php?pagina=cursos');
 }
 
 function exibirMensagemEredirecionar($mensagem, $destino)

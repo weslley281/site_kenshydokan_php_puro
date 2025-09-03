@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $extensaoImagem = strtolower(pathinfo($caminho, PATHINFO_EXTENSION));
 
             if (!in_array($extensaoImagem, ["jpg", "jpeg", "gif", "png"])) {
-                exibirMensagemEredirecionar("Formato de imagem inválido", '../views/admin.php?pagina=cursos');
+                exibirMensagemEredirecionar("Formato de imagem inválido", '../views/admin/index.php?pagina=cursos');
                 exit();
             }
 
@@ -48,15 +48,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     );
 
                     if ($cursoRepositorio->criarCurso($cursoModel)) {
-                        exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=cursos');
+                        exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=cursos');
                     } else {
-                        exibirMensagemEredirecionar(MSG_ERRO, '../views/admin.php?pagina=cursos');
+                        exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=cursos');
                     }
                 } else {
-                    exibirMensagemEredirecionar(MSG_ERRO, '../views/admin.php?pagina=cursos');
+                    exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=cursos');
                 }
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin.php?pagina=cursos');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=cursos');
             }
         } elseif ($_POST["tipo"] == "editar") {
             $id_curso = $_POST["id_curso"];
@@ -109,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         }
 
                         $imagemRepositorio->deleta_imagem($_POST["id_imagem"]);
-                        $destino = "../views/editar_curso.php?id=" . $_POST["id_curso"];
+                        $destino = "../views/admin/editar_curso.php?id=" . $_POST["id_curso"];
 
                         if ($cursoRepositorio->editarImagemCurso($_POST["id_curso"], $id_imagem, $dataMudanca)) {
                             exibirMensagemEredirecionar(MSG_SUCESSO, $destino);
@@ -129,16 +129,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $id_curso = $_POST["id_curso"];
 
             if ($cursoRepositorio->excluirCurso($id_curso)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=cursos');
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=cursos');
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin.php?pagina=cursos');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=cursos');
             }
         }
     } else {
-        exibirMensagemEredirecionar("Preencha todos os dados", '../views/admin.php?pagina=cursos');
+        exibirMensagemEredirecionar("Preencha todos os dados", '../views/admin/index.php?pagina=cursos');
     }
 } else {
-    exibirMensagemEredirecionar("A requisição não é POST", '../views/admin.php?pagina=cursos');
+    exibirMensagemEredirecionar("A requisição não é POST", '../views/admin/index.php?pagina=cursos');
 }
 
 function exibirMensagemEredirecionar($mensagem, $destino)

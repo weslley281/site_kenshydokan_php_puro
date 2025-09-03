@@ -42,13 +42,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             if ($publicacaoRepositorio::excluir_publicacao($id_publicacao)) {
                 if (isset($_SESSION["nivel"]) && $_SESSION['nivel'] == "admin") {
-                    exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=postagens');
+                    exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=postagens');
                     exit();
                 }
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/perfil/suas_postagens.php');
             } else {
                 if (isset($_SESSION["nivel"]) && $_SESSION['nivel'] == "admin") {
-                    exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=postagens');
+                    exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=postagens');
                     exit();
                 }
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/perfil/suas_postagens.php');

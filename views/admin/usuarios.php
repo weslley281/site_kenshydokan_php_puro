@@ -40,7 +40,7 @@
               <td class="text-capitalize"><?php echo date_format(date_create($dataMudanca), "d/m/Y"); ?></td>
               <td class="text-capitalize">
                 <div class="form-group">
-                  <a title="Editar" class="btn btn-info" href="editar_usuario_admin.php?id=<?php echo $id_usuario; ?>"><i class="fas fa-edit"></i></a>
+                  <a title="Editar" class="btn btn-info" href="editar_usuario.php?id=<?php echo $id_usuario; ?>"><i class="fas fa-edit"></i></a>
                 </div>
 
                 <div class="form-group">

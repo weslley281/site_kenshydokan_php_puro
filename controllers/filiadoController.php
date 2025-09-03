@@ -30,9 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             );
 
             if ($filiadoRepositorio->criarFiliado($filiadoModel)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=filiados');
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=filiados');
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin.php?pagina=filiados');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=filiados');
             }
         } elseif ($_POST["tipo"] == "editar") {
             $id_filiado = $_POST["id_filiado"];
@@ -53,17 +53,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             );
 
             if ($filiadoRepositorio->editarFiliado($id_filiado, $filiadoModel)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=filiados');
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=filiados');
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin.php?pagina=filiados');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=filiados');
             }
         } elseif ($_POST["tipo"] == "excluir") {
             $id_filiado = $_POST["id_filiado"];
 
             if ($filiadoRepositorio->excluirFiliado($id_filiado)) {
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=filiados');
+                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=filiados');
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin.php?pagina=filiados');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=filiados');
             }
         } elseif ($_POST["tipo"] == "desconfirmar") {
             $id_filiado = $_POST["id_filiado"];
@@ -71,19 +71,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($filiado) {
                 $filiado->setConfirmacao("nao");
                 if ($filiadoRepositorio->editarFiliado($id_filiado, $filiado)) {
-                    exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin.php?pagina=filiados');
+                    exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=filiados');
                 } else {
-                    exibirMensagemEredirecionar(MSG_ERRO, '../views/admin.php?pagina=filiados');
+                    exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=filiados');
                 }
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin.php?pagina=filiados');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=filiados');
             }
         }
     } else {
-        exibirMensagemEredirecionar("Preencha todos os dados", '../views/admin.php?pagina=filiados');
+        exibirMensagemEredirecionar("Preencha todos os dados", '../views/admin/index.php?pagina=filiados');
     }
 } else {
-    exibirMensagemEredirecionar("A requisição não é POST", '../views/admin.php?pagina=filiados');
+    exibirMensagemEredirecionar("A requisição não é POST", '../views/admin/index.php?pagina=filiados');
 }
 
 function exibirMensagemEredirecionar($mensagem, $destino)

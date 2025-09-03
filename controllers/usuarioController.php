@@ -167,9 +167,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $id_usuario = $_POST["id_usuario"];
 
             if ($usuarioRepositorio->excluirUsuario($id_usuario)) {
-                exibirMensagemEredirecionar("Usuário excluído com sucesso", '../views/admin.php?pagina=usuarios');
+                exibirMensagemEredirecionar("Usuário excluído com sucesso", '../views/admin/index.php?pagina=usuarios');
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin.php?pagina=usuarios');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=usuarios');
             }
         }
     } else {

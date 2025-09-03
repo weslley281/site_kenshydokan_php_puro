@@ -64,7 +64,7 @@
 							<td class="text-capitalize"><?php echo date_format(date_create($dataMudanca), "d/m/Y"); ?></td>
 							<td class="text-capitalize">
 								<div class="form-group">
-									<a class="btn btn-primary" href="../views/editar_filiado.php?id=<?php echo $id_filiado; ?>" title="Editar Filiado"><i class="fa-solid fa-pen-to-square"></i></a>
+									<a class="btn btn-primary" href="editar_filiado.php?id=<?php echo $id_filiado; ?>" title="Editar Filiado"><i class="fa-solid fa-pen-to-square"></i></a>
 								</div>
 								<div class="form-group">
 									<button class="btn btn-danger" data-toggle="modal" data-target="#modalExcluirFiliado<?php echo $id_filiado; ?>" title="Excluir filiado"><i class="fa-regular fa-calendar-xmark"></i></button>

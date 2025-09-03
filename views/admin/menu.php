@@ -161,7 +161,7 @@ $paginas = array(
 
                             <a class="dropdown-item <?php echo ($url_atual == "/../views/login.php") ? 'active' : ''; ?>" href="login.php">Login</a>
 
-                            <a class="dropdown-item <?php echo ($url_atual == "/../views/cadastrar.php") ? 'active' : ''; ?>" href="cadastrar.php">Cadastrar-se</a>
+                            <a class="dropdown-item <?php echo ($url_atual == "/../views/cadastrar.php") ? 'active' : ''; ?>" href="../cadastrar.php">Cadastrar-se</a>
 
                         <?php } ?>
                     </div>

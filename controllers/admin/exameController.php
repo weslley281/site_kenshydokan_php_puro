@@ -26,12 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     );
 
     if ($exameRepositorio->editar($exameModel)) {
-        exibirMensagemEredirecionar(MSG_SUCESSO, '../../views/admin.php?pagina=exames');
+        exibirMensagemEredirecionar(MSG_SUCESSO, '../../views/admin/index.php?pagina=exames');
     } else {
-        exibirMensagemEredirecionar(MSG_ERRO, '../../views/admin.php?pagina=exames');
+        exibirMensagemEredirecionar(MSG_ERRO, '../../views/admin/index.php?pagina=exames');
     }
 } else {
-    exibirMensagemEredirecionar("A requisição não é POST", '../../views/admin.php?pagina=exames');
+    exibirMensagemEredirecionar("A requisição não é POST", '../../views/admin/index.php?pagina=exames');
 }
 
 function exibirMensagemEredirecionar($mensagem, $destino)

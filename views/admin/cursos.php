@@ -6,7 +6,7 @@
         <a href="../views/criar_categoria.php" class="btn btn-outline-success btn-lg btn-block">Criar Categoria de curso</a>
       </div>
       <div class="col mx-1 my-1">
-        <a href="../views/criar_curso.php" class="btn btn-outline-success btn-lg btn-block">Criar Curso</a>
+        <a href="criar_curso.php" class="btn btn-outline-success btn-lg btn-block">Criar Curso</a>
       </div>
     </div>
     <table id="minhaTabela3" class="table table-bordered" width="100%" cellspacing="0">

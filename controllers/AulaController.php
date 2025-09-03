@@ -3,7 +3,7 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     include_once "../models/aulaModel.php";
-    include_once "../repositorios/aulaRepositorio.php";
+    include_once "../repositorios/AulaRepositorio.php";
 
     define("MSG_ERRO", "Erro: Ocorreu um erro. Tente novamente.");
     define("MSG_SUCESSO", "Operação realizada com sucesso.");
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $dataMudanca
             );
 
-            $destino = "../views/editar_curso.php?id=$id_curso";
+            $destino = "'../views/admin/index.php?pagina=cursos'";
             if ($aulaRepositorio->criarAula($aulaModel)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, $destino);
             } else {
@@ -60,15 +60,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
     } else {
-        exibirMensagemEredirecionar("Preencha todos os dados", '../views/admin.php?pagina=aulas');
+        exibirMensagemEredirecionar("Preencha todos os dados", '../views/admin/index.php?pagina=aulas');
     }
 } else {
-    exibirMensagemEredirecionar("A requisição não é POST", '../views/admin.php?pagina=aulas');
+    exibirMensagemEredirecionar("A requisição não é POST", '../views/admin/index.php?pagina=aulas');
 }
 
 function exibirMensagemEredirecionar($mensagem, $destino)
 {
     echo "<script language='javascript'>window.alert('$mensagem'); </script>";
     echo "<script language='javascript'>window.location='$destino'; </script>";
-    exit;
+    //exit;
 }
