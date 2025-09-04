@@ -14,7 +14,7 @@ $active_page = basename($_SERVER['PHP_SELF']);
             <a href="documentos.php" class="list-group-item <?php echo ($active_page == 'documentos.php') ? 'bg-danger text-dark' : 'bg-light text-dark'; ?>">Arquivos para Baixar</a>
         <?php } ?>
         <?php if ($usuario["nivel"] == "admin") { ?>
-            <a href="../admin.php" class="list-group-item <?php echo ($active_page == 'admin.php') ? 'bg-danger text-dark' : 'bg-light text-dark'; ?>">Administrativo</a>
+            <a href="../admin" class="list-group-item <?php echo ($active_page == 'admin.php') ? 'bg-danger text-dark' : 'bg-light text-dark'; ?>">Administrativo</a>
         <?php } ?>
         <a href="eventos.php" class="list-group-item <?php echo ($active_page == 'eventos.php') ? 'bg-danger text-dark' : 'bg-light text-dark'; ?>">Eventos Online</a>
         <a href="/site_kenshydokan_php_puro/views/perfil/meus_certificados.php" class="list-group-item <?php echo ($active_page == 'meus_certificados.php') ? 'bg-danger text-dark' : 'bg-light text-dark'; ?>">Meus Certificados</a>

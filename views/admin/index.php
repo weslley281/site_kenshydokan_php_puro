@@ -1,8 +1,9 @@
 <?php
 include "menu.php";
-include_once "../db/conexao.php";
-include_once "../repositorios/imagemRepositorio.php";
-include_once "../repositorios/graduacaoRepositorio.php";
+echo __DIR__ . "/../../db/conexao.php";
+include_once __DIR__ . "/../../db/conexao.php";
+include_once "../../repositorios/imagemRepositorio.php";
+include_once "../../repositorios/graduacaoRepositorio.php";
 
 $c = new Conexao();
 $conexao = $c->conectar();
