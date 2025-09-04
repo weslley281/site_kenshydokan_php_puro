@@ -154,7 +154,7 @@ $paginas = array(
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <?php if (isset($_SESSION['id_usuario'])) { ?>
-                            <a class="dropdown-item <?php echo (strpos($url_atual, "/views/perfil/") !== false) ? 'active' : ''; ?>" href="perfil/perfil.php">Perfil</a>
+                            <a class="dropdown-item <?php echo (strpos($url_atual, "/views/perfil/") !== false) ? 'active' : ''; ?>" href="../perfil/perfil.php">Perfil</a>
                             <a class="dropdown-item" href="../../controllers/sair.php">Sair</a>
 
                         <?php } else { ?>

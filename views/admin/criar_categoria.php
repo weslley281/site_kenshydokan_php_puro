@@ -1,6 +1,6 @@
 <?php
 include_once "menu.php";
-include_once "../db/conexao.php";
+include_once __DIR__ . "/../../db/conexao.php";
 
 if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
     ?>
@@ -29,7 +29,7 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
 </div>
 
 <?php
-include "rodape.php";
+include "../rodape.php";
 } else {
     echo "<script language='javascript'>window.location='login.php'; </script>";
 }

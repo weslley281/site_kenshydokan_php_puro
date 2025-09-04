@@ -3,7 +3,7 @@
     <h2>Todos os Cursos</h2>
     <div class="row my-4">
       <div class="col mx-1 my-1">
-        <a href="../views/criar_categoria.php" class="btn btn-outline-success btn-lg btn-block">Criar Categoria de curso</a>
+        <a href="criar_categoria.php" class="btn btn-outline-success btn-lg btn-block">Criar Categoria de curso</a>
       </div>
       <div class="col mx-1 my-1">
         <a href="criar_curso.php" class="btn btn-outline-success btn-lg btn-block">Criar Curso</a>
@@ -54,10 +54,10 @@
                   <a class="btn btn-success" href="" title="Emitir Certificado"><i class="fa-solid fa-graduation-cap"></i></a>
                 </div>
                 <div class="form-group">
-                  <a class="btn btn-success" href="../views/criar_aula.php?id=<?php echo $id_curso; ?>" title="Adcionar Aulas"><i class="fa-solid fa-person-chalkboard"></i></a>
+                  <a class="btn btn-success" href="criar_aula.php?id=<?php echo $id_curso; ?>" title="Adcionar Aulas"><i class="fa-solid fa-person-chalkboard"></i></a>
                 </div>
                 <div class="form-group">
-                  <a class="btn btn-primary" href="../views/editar_curso.php?id=<?php echo $id_curso; ?>" title="Editar Curso"><i class="fa-solid fa-pen-to-square"></i></a>
+                  <a class="btn btn-primary" href="editar_curso.php?id=<?php echo $id_curso; ?>" title="Editar Curso"><i class="fa-solid fa-pen-to-square"></i></a>
                 </div>
                 <div class="form-group">
                   <button class="btn btn-danger" data-toggle="modal" data-target="#modalExcluirCurso<?php echo $id_curso; ?>" title="Excluir curso"><i class="fa-regular fa-calendar-xmark"></i></button>
