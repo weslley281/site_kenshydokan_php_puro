@@ -1,6 +1,6 @@
 <?php
 include_once "menu.php";
-include_once "../db/conexao.php";
+include_once "../../db/conexao.php";
 
 $c = new Conexao();
 $conexao = $c->conectar();
@@ -13,7 +13,7 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
       <div class="card card-signin my-5">
         <div class="card-body">
           <h5 class="card-title text-center">Criar Curso</h5>
-          <form class="form-signin" enctype="multipart/form-data" action="../controllers/cursoController.php" method="post">
+          <form class="form-signin" enctype="multipart/form-data" action="../../controllers/cursoController.php" method="post">
             <input type="hidden" name="tipo" value="inserir">
 
             <div class="form-group">
@@ -93,7 +93,7 @@ $consulta = "SELECT id_categoria, categoria FROM categorias";
 </div>
 
 <?php
-include "rodape.php";
+include "../rodape.php";
 } else {
     echo "<script language='javascript'>window.location='login.php'; </script>";
 }

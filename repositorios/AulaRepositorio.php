@@ -35,7 +35,7 @@ class AulaRepositorio
     {
         try {
             $editar = $this->conexao->prepare("UPDATE aulas SET id_curso = ?, titulo = ?, link = ?, dataMudanca = ? WHERE id_aula = ?");
-            $editar->bind_param("ssssi", $aula->getIdCurso(), $aula->getTitulo(), $aula->getLink(), $aula->getDataMudanca(), $id_aula);
+            $editar->bind_param("isssi", $aula->getIdCurso(), $aula->getTitulo(), $aula->getLink(), $aula->getDataMudanca(), $id_aula);
             $resultado = $editar->execute();
             $editar->close();
 

@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $dataMudanca
             );
 
-            $destino = "'../views/admin/index.php?pagina=cursos'";
+            $destino = "../views/admin/index.php?pagina=cursos";
             if ($aulaRepositorio->criarAula($aulaModel)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, $destino);
             } else {
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $dataMudanca
             );
             
-            $destino = "../views/editar_aula.php?id=$id_aula&id_curso=$id_curso";
+            $destino = "../views/admin/editar_aula.php?id=$id_aula&id_curso=$id_curso";
             if ($aulaRepositorio->editarAula($id_aula, $aulaModel)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, $destino);
             } else {
@@ -52,10 +52,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $id_curso = $_POST["id_curso"];
 
             if ($aulaRepositorio->excluirAula($id_aula)) {
-                $destino = "../views/editar_curso.php?id=$id_curso";
+                $destino = "../views/admin/editar_curso.php?id=$id_curso";
                 exibirMensagemEredirecionar(MSG_SUCESSO, $destino);
             } else {
-                $destino = "../views/editar_curso.php?id=$id_curso";
+                $destino = "../views/admin/editar_curso.php?id=$id_curso";
                 exibirMensagemEredirecionar(MSG_ERRO, $destino);
             }
         }
@@ -70,5 +70,5 @@ function exibirMensagemEredirecionar($mensagem, $destino)
 {
     echo "<script language='javascript'>window.alert('$mensagem'); </script>";
     echo "<script language='javascript'>window.location='$destino'; </script>";
-    //exit;
+    exit;
 }

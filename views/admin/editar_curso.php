@@ -1,24 +1,33 @@
 <?php
 include_once "menu.php";
-include_once "../db/conexao.php";
+include_once "../../db/conexao.php";
 
 $c = new Conexao();
 $conexao = $c->conectar();
 
 $id_curso = $_GET["id"];
 
-$busca = "SELECT * FROM cursos WHERE id_curso = '$id_curso'";
-$resultado = mysqli_query($conexao, $busca);
+$busca = "SELECT * FROM cursos WHERE id_curso = ?";
+$stmt = mysqli_prepare($conexao, $busca);
+mysqli_stmt_bind_param($stmt, "i", $id_curso);
+mysqli_stmt_execute($stmt);
+$resultado = mysqli_stmt_get_result($stmt);
 $curso = mysqli_fetch_array($resultado);
 
 $id_categoria = $curso["id_categoria"];
-$busca = "SELECT * FROM categorias WHERE id_categoria = '$id_categoria'";
-$resultado = mysqli_query($conexao, $busca);
+$busca = "SELECT * FROM categorias WHERE id_categoria = ?";
+$stmt = mysqli_prepare($conexao, $busca);
+mysqli_stmt_bind_param($stmt, "i", $id_categoria);
+mysqli_stmt_execute($stmt);
+$resultado = mysqli_stmt_get_result($stmt);
 $categoria = mysqli_fetch_array($resultado);
 
 $id_imagem = $curso["id_imagem"];
-$busca = "SELECT * FROM imagens WHERE id_imagem = '$id_imagem'";
-$resultado = mysqli_query($conexao, $busca);
+$busca = "SELECT * FROM imagens WHERE id_imagem = ?";
+$stmt = mysqli_prepare($conexao, $busca);
+mysqli_stmt_bind_param($stmt, "i", $id_imagem);
+mysqli_stmt_execute($stmt);
+$resultado = mysqli_stmt_get_result($stmt);
 $imagem = mysqli_fetch_array($resultado);
 
 if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] == "admin") {
@@ -30,7 +39,7 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
           <div class="card card-signin my-5">
             <div class="card-body">
               <h5 class="card-title text-center">Editar Curso</h5>
-              <form class="form-signin" enctype="multipart/form-data" action="../controllers/cursoController.php" method="post">
+              <form class="form-signin" enctype="multipart/form-data" action="../../controllers/cursoController.php" method="post">
                 <input type="hidden" name="tipo" value="editar">
                 <input type="hidden" name="id_curso" value="<?php echo $id_curso; ?>">
 
@@ -99,7 +108,7 @@ $consulta = "SELECT id_categoria, categoria FROM categorias";
 
       <h5 class="mt-5">Editar Imagem</h5>
 
-      <form class="form-signin" enctype="multipart/form-data" action="../controllers/cursoController.php" method="post">
+      <form class="form-signin" enctype="multipart/form-data" action="../../controllers/cursoController.php" method="post">
         <input type="hidden" name="tipo" value="editar_imagem">
         <input type="hidden" name="id_curso" value="<?php echo $id_curso; ?>">
         <div class="form-group">
@@ -133,8 +142,11 @@ $consulta = "SELECT id_categoria, categoria FROM categorias";
         </thead>
         <tbody>
             <?php
-$busca = "SELECT * FROM aulas WHERE id_curso = '$id_curso'";
-    $resultado = mysqli_query($conexao, $busca);
+$busca = "SELECT * FROM aulas WHERE id_curso = ?";
+    $stmt = mysqli_prepare($conexao, $busca);
+    mysqli_stmt_bind_param($stmt, "i", $id_curso);
+    mysqli_stmt_execute($stmt);
+    $resultado = mysqli_stmt_get_result($stmt);
     $linha = mysqli_num_rows($resultado);
     if ($linha == '') {
         echo "<h3> Não foram encontrados dados Cadastrados no Banco!! </h3>";
@@ -170,7 +182,7 @@ $busca = "SELECT * FROM aulas WHERE id_curso = '$id_curso'";
                         <p><?php echo $aula["titulo"]; ?></p>
                     </div>
                     <div class="modal-footer">
-                        <form action="../controllers/aulaController" method="post">
+                        <form action="../../controllers/AulaController.php" method="post">
                           <input type="hidden" name="tipo" value="excluir">
                           <input type="hidden" name="id_curso" value="<?php echo $id_curso; ?>">
                           <input type="hidden" name="id_aula" value="<?php echo $aula["id_aula"]; ?>">
@@ -192,7 +204,7 @@ $busca = "SELECT * FROM aulas WHERE id_curso = '$id_curso'";
 </div>
 
 <?php
-include "rodape.php";
+include "../rodape.php";
 } else {
     echo "<script language='javascript'>window.location='login.php'; </script>";
 }

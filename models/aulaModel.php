@@ -18,12 +18,12 @@ class AulaModel
         $this->dataMudanca = $dataMudanca;
     }
 
-    public function getIdCategoria()
+    public function getIdAula()
     {
         return $this->id_aula;
     }
 
-    public function setIdCategoria($id_aula)
+    public function setIdAula($id_aula)
     {
         $this->id_aula = $id_aula;
     }

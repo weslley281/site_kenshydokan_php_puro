@@ -1,22 +1,23 @@
 <?php
 include_once "menu.php";
-include_once "../db/conexao.php";
-include_once "../repositorios/cursoRepositorio.php";
+include_once "../../db/conexao.php";
+include_once "../../repositorios/cursoRepositorio.php";
 
 $c = new Conexao();
 $conexao = $c->conectar();
 
 if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] == "admin") {
     $id_curso = $_GET["id"];
-    $curso = CursoRepositorio::buscarCurso($id_curso);
+    $cursoRepo = new CursoRepositorio();
+    $curso = $cursoRepo->buscarCurso($id_curso);
     ?>
 <div class="container">
   <div class="row">
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
       <div class="card card-signin my-5">
         <div class="card-body">
-          <h5 class="card-title text-center">Criar Aula para o curso <?php echo $curso['nome']; ?></h5>
-          <form class="form-signin" enctype="multipart/form-data" action="../controllers/aulaController.php" method="post">
+          <h5 class="card-title text-center">Criar Aula para o curso <?php echo htmlspecialchars($curso['nome'], ENT_QUOTES, 'UTF-8'); ?></h5>
+          <form class="form-signin" enctype="multipart/form-data" action="../../controllers/aulaController.php" method="post">
             <input type="hidden" name="tipo" value="inserir">
             <input type="hidden" name="id_curso" value="<?php echo $id_curso; ?>">
 
@@ -39,7 +40,7 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
 </div>
 
 <?php
-include "rodape.php";
+include "../rodape.php";
 } else {
     echo "<script language='javascript'>window.location='login.php'; </script>";
 }
