@@ -128,10 +128,11 @@ $paginas = array(
                 <li class="nav-item dropdown <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-journal-text"></i> Artes Marciais</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>" href="katas.php">Kata</a>
-                        <a class="dropdown-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>" href="atemi_waza.php">Atemi Waza</a>
-                        <a class="dropdown-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>" href="nage_waza.php">Nage Waza</a>
-                        <a class="dropdown-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>" href="katame_waza.php">Katame Waza</a>
+                        <a class="dropdown-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>" href="../katas.php">Katas da Kenshydokan</a>
+                        <a class="dropdown-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>" href="../katas.php">Katas da Kyokushin</a>
+                        <a class="dropdown-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>" href="../atemi_waza.php">Atemi Waza</a>
+                        <a class="dropdown-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>" href="../nage_waza.php">Nage Waza</a>
+                        <a class="dropdown-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>" href="../katame_waza.php">Katame Waza</a>
                     </div>
                 </li>
 
@@ -154,7 +155,7 @@ $paginas = array(
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <?php if (isset($_SESSION['id_usuario'])) { ?>
-                            <a class="dropdown-item <?php echo (strpos($url_atual, "/views/perfil/") !== false) ? 'active' : ''; ?>" href="perfil/perfil.php">Perfil</a>
+                            <a class="dropdown-item <?php echo (strpos($url_atual, "/views/perfil/") !== false) ? 'active' : ''; ?>" href="perfil.php">Perfil</a>
                             <a class="dropdown-item" href="../../controllers/sair.php">Sair</a>
 
                         <?php } else { ?>
