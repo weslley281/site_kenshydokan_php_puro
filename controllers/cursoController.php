@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_POST["temCertificado"]
             );
 
-            $destino = "../views/editar_curso.php?id=" . $id_curso;
+            $destino = "../views/admin/editar_curso.php?id=" . $id_curso;
 
             if ($cursoRepositorio->editarCurso($id_curso, $cursoModel)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, $destino);

@@ -160,7 +160,7 @@ $busca = "SELECT * FROM aulas WHERE id_curso = ?";
                         <td>
                             <div class="form-group">
 
-                                <a class="btn btn-primary" href="<?php echo "../views/editar_aula.php?id=" . $aula["id_aula"] . "&id_curso=" . $id_curso ?>" title="Editar Aula"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a class="btn btn-primary" href="<?php echo "editar_aula.php?id=" . $aula["id_aula"] . "&id_curso=" . $id_curso ?>" title="Editar Aula"><i class="fa-solid fa-pen-to-square"></i></a>
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-danger" data-toggle="modal" data-target="#modalExcluirAula<?php echo $aula["id_aula"]; ?>" title="Excluir"><i class="fa-regular fa-calendar-xmark"></i></button>
@@ -182,7 +182,7 @@ $busca = "SELECT * FROM aulas WHERE id_curso = ?";
                         <p><?php echo $aula["titulo"]; ?></p>
                     </div>
                     <div class="modal-footer">
-                        <form action="../../controllers/AulaController.php" method="post">
+                        <form action="../../controllers/aulaController.php" method="post">
                           <input type="hidden" name="tipo" value="excluir">
                           <input type="hidden" name="id_curso" value="<?php echo $id_curso; ?>">
                           <input type="hidden" name="id_aula" value="<?php echo $aula["id_aula"]; ?>">

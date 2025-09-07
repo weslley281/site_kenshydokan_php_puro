@@ -22,7 +22,7 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
         <div class="card card-signin my-5">
           <div class="card-body">
             <h5 class="card-title text-center">Editar Aula</h5>
-            <form class="form-signin" enctype="multipart/form-data" action="../../controllers/AulaController.php" method="post">
+            <form class="form-signin" enctype="multipart/form-data" action="../../controllers/aulaController.php" method="post">
               <input type="hidden" name="tipo" value="editar">
               <input type="hidden" name="id_aula" value="<?php echo $_GET["id"]; ?>">
               <input type="hidden" name="id_curso" value="<?php echo $_GET["id_curso"]; ?>">
