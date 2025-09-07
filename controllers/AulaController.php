@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 null,
                 $id_curso,
                 $_POST["titulo"],
-                $_POST["link"],
+                $_POST["aula"],
                 $dataMudanca
             );
 
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $id_aula,
                 $_POST["id_curso"],
                 $_POST["titulo"],
-                $_POST["link"],
+                $_POST["aula"],
                 $dataMudanca
             );
             

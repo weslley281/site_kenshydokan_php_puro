@@ -89,7 +89,7 @@ class Migration
     public function criarTabelaGraduacoes()
     {
         $sql = "
-        CREATE TABLE IF NOT EXISTS graduacao (
+        CREATE TABLE IF NOT EXISTS graduacoes (
             `id_graduacao` INT AUTO_INCREMENT PRIMARY KEY,
             `graduacao` VARCHAR(255) NOT NULL,
             `dataCriacao` DATE,
@@ -236,7 +236,7 @@ class Migration
             `id_aula` INT AUTO_INCREMENT PRIMARY KEY,
             `id_curso` INT,
             `titulo` VARCHAR(255) NOT NULL,
-            `link` VARCHAR(255) NOT NULL,
+            `aula` TEXT NOT NULL,
             `dataCriacao` DATE,
             `dataMudanca` DATE
         );

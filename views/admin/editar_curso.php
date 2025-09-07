@@ -136,7 +136,7 @@ $consulta = "SELECT id_categoria, categoria FROM categorias";
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Aula</th>
-                <th scope="col">Link</th>
+                <th scope="col">Aula</th>
                 <th scope="col">Ações</th>
             </tr>
         </thead>
@@ -156,7 +156,7 @@ $busca = "SELECT * FROM aulas WHERE id_curso = ?";
                     <tr>
                         <th scope="row"><?php echo $aula["id_aula"]; ?></th>
                         <td><?php echo $aula["titulo"]; ?></td>
-                        <td><a href="<?php echo $aula["link"]; ?>">ver</a></td>
+                        <td><a href="<?php echo $aula["aula"]; ?>">ver</a></td>
                         <td>
                             <div class="form-group">
 

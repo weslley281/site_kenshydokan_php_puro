@@ -15,8 +15,8 @@ class AulaRepositorio
     public function criarAula(AulaModel $aula): bool
     {
         try {
-            $inserir = $this->conexao->prepare("INSERT INTO aulas (id_curso, titulo, link, dataMudanca, dataCriacao) VALUES (?, ?, ?, ?, ?)");
-            $inserir->bind_param("issss", $aula->getIdCurso(), $aula->getTitulo(), $aula->getLink(), $aula->getDataMudanca(), $aula->getDataCriacao());
+            $inserir = $this->conexao->prepare("INSERT INTO aulas (id_curso, titulo, aula, dataMudanca, dataCriacao) VALUES (?, ?, ?, ?, ?)");
+            $inserir->bind_param("issss", $aula->getIdCurso(), $aula->getTitulo(), $aula->getAula(), $aula->getDataMudanca(), $aula->getDataCriacao());
             $resultado = $inserir->execute();
             $inserir->close();
 
@@ -34,8 +34,8 @@ class AulaRepositorio
     public function editarAula($id_aula, AulaModel $aula): bool
     {
         try {
-            $editar = $this->conexao->prepare("UPDATE aulas SET id_curso = ?, titulo = ?, link = ?, dataMudanca = ? WHERE id_aula = ?");
-            $editar->bind_param("isssi", $aula->getIdCurso(), $aula->getTitulo(), $aula->getLink(), $aula->getDataMudanca(), $id_aula);
+            $editar = $this->conexao->prepare("UPDATE aulas SET id_curso = ?, titulo = ?, aula = ?, dataMudanca = ? WHERE id_aula = ?");
+            $editar->bind_param("isssi", $aula->getIdCurso(), $aula->getTitulo(), $aula->getAula(), $aula->getDataMudanca(), $id_aula);
             $resultado = $editar->execute();
             $editar->close();
 

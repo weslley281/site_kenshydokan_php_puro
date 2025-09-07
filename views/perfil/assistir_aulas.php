@@ -120,7 +120,7 @@ if (isset($_SESSION['id_usuario'])) {
 							</button>
 						</div>
 						<div class="modal-body">
-							<iframe src="<?php echo $aula["link"]; ?>" width="100%" height="500" frameborder="0"></iframe>
+							<iframe src="<?php echo $aula["aula"]; ?>" width="100%" height="500" frameborder="0"></iframe>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>

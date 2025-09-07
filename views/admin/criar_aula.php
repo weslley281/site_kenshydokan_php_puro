@@ -27,8 +27,8 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
             </div>
 
             <div class="form-group">
-              <label for="link">link da Aula: </label>
-              <input id="link" type="text" class="form-control" name="link" required autofocus>
+              <label for="aula">Aula: </label>
+              <textarea id="aula" class="form-control" name="aula" rows="30" required></textarea>
             </div>
 
             <input class="btn btn-lg btn-success btn-block text-uppercase" type="submit" value="Salvar">
