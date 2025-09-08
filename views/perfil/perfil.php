@@ -20,6 +20,28 @@ include __DIR__ . "/_perfil_auth.php";
 					</div>
 					<div class="row">
 						<?php
+
+						if ($usuario["nivel"] == "aluno") {
+							echo "<h3 class='text-center'>Você é um usuário do tipo 'aluno'. Para acessar os cursos, por favor, entre em contato com o administrador para alterar seu nível de acesso.</h3>";
+							echo "<hr>";
+							echo "<h4 class='text-center'>Se você já é filiado, mas seu nível ainda está como 'aluno', por favor, contate o administrador para corrigir essa situação.</h4>";
+							echo "<hr>";
+							echo "<h5 class='text-center'>Lembre-se de que apenas usuários com níveis superiores a 'aluno' podem acessar os cursos disponíveis na plataforma.</h5>";
+							echo "<hr>";
+							echo "<h6 class='text-center'>Obrigado por sua compreensão!</h6>";
+							echo "<hr>";
+							return;
+						}elseif ($filiado["confirmacao"] == "nao") {
+							echo "<h3 class='text-center'>Seu status de filiação ainda está pendente. Para acessar os cursos, por favor, aguarde a confirmação da sua filiação ou entre em contato com o administrador para mais informações.</h3>";
+							echo "<hr>";
+							echo "<h4 class='text-center'>Se você já enviou sua filiação, por favor, aguarde a confirmação. Caso contrário, entre em contato com o administrador para iniciar o processo de filiação.</h4>";
+							echo "<hr>";
+							echo "<h5 class='text-center'>Lembre-se de que apenas usuários com filiação confirmada podem acessar os cursos disponíveis na plataforma.</h5>";
+							echo "<hr>";
+							echo "<h6 class='text-center'>Obrigado por sua compreensão!</h6>";
+							echo "<hr>";
+							return;
+						}else{
 						$busca = "SELECT * FROM cursos WHERE situacao = 'aprovado'";
 						$resultado = mysqli_query($conexao, $busca);
 						while ($curso = mysqli_fetch_array($resultado)) {
@@ -51,7 +73,7 @@ include __DIR__ . "/_perfil_auth.php";
 									</div>
 								</div>
 							</div>
-						<?php } ?>
+						<?php }} ?>
 					</div>
 				</div>
 			</div>

@@ -36,15 +36,32 @@ if (!empty($usuario["id_fil"])) {
 
     if ($filiado_data) {
         $filiado = $filiado_data;
-        $estaFiliado = ($filiado["confirmacao"] == "sim") ? "Você está filiado" : "Aguardando Confirmação de Filiação, Não Está Filiado Não";
+        $estaFiliado = ($filiado["confirmacao"] == "sim" && ($usuario["nivel"] !== "aluno")) ? "Você está filiado" : "Aguardando Confirmação de Filiação, Não Está Filiado Não";
 
-        $id_graduacao = $filiado["id_graduacao"];
-        $busca_graduacao = "SELECT * FROM graduacoes WHERE id_graduacao = '$id_graduacao'";
-        $resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
-        $graduacao_data = mysqli_fetch_array($resultado_graduacao);
-        if($graduacao_data) {
-            $graduacao = $graduacao_data;
+        if ($filiado["confirmacao"] == "sim" && ($usuario["nivel"] === "aluno")) {
+            $estaFiliado = "Você não está filiado, e seu nível é 'aluno'. Contate o administrador.";
+            $filiado["dojo"] = "A definir";
+           
+        } elseif ($filiado["confirmacao"] == "sim" && ($usuario["nivel"] === "aluno") && ($filiado["id_graduacao"] != 0)) {
+            $estaFiliado = "Você está filiado, mas seu nível é 'aluno'. Contate o administrador.";
+
+            $id_graduacao = $filiado["id_graduacao"];
+            $busca_graduacao = "SELECT * FROM graduacoes WHERE id_graduacao = '$id_graduacao'";
+            $resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
+            $graduacao_data = mysqli_fetch_array($resultado_graduacao);
+            if ($graduacao_data) {
+                $graduacao = $graduacao_data;
+            }
+        }else{
+            $id_graduacao = $filiado["id_graduacao"];
+            $busca_graduacao = "SELECT * FROM graduacoes WHERE id_graduacao = '$id_graduacao'";
+            $resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
+            $graduacao_data = mysqli_fetch_array($resultado_graduacao);
+            if ($graduacao_data) {
+                $graduacao = $graduacao_data;
+            }
         }
+        
     }
 }
 ?>

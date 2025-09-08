@@ -45,7 +45,7 @@ if (isset($_SESSION["id_usuario"])) {
 
             <div class="form-group">
               <label for="imagem">Imagem de Perfil</label>
-              <input type="file" class="form-control" id="imagem" accept="image/*" required name="imagem">
+              <input type="file" class="form-control" id="imagem" accept="image/*" name="imagem">
 
               <div class="text-center mt-2">
                 <img src="#" class="img-thumbnail" alt="Prévia da Imagem" id="imagePreview" style="max-width: 100%; display: none;">
@@ -92,4 +92,4 @@ if (isset($_SESSION["id_usuario"])) {
   </div>
 </div>
 
-<?php include "rodape.php";?>
+<?php include "rodape.php"; ?>

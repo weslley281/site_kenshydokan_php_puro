@@ -1,6 +1,6 @@
 <?php
 session_start();
-var_dump($_FILES);
+
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     include_once "../models/usuarioModel.php";
@@ -24,35 +24,38 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             } else {
 
                 $senhaSegura = password_hash($_POST["senha"], PASSWORD_DEFAULT);
+                $id_imagem = null;
 
-                $diretorioUpload = "../img/";
-                $nomeImagem = uniqid() . $_FILES["imagem"]["name"];
-                $caminho = $diretorioUpload . $nomeImagem;
+                if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] == UPLOAD_ERR_OK && $_FILES['imagem']['size'] > 0) {
+                    $diretorioUpload = "../img/";
+                    $nomeImagem = uniqid() . $_FILES["imagem"]["name"];
+                    $caminho = $diretorioUpload . $nomeImagem;
 
-                $extensaoImagem = strtolower(pathinfo($caminho, PATHINFO_EXTENSION));
+                    $extensaoImagem = strtolower(pathinfo($caminho, PATHINFO_EXTENSION));
 
-                if (in_array($extensaoImagem, ["jpg", "jpeg", "gif", "png"])) {
-                    if (move_uploaded_file($_FILES["imagem"]["tmp_name"], $caminho)) {
-                        $imagemModel = new Imagem($nomeImagem, $caminho, $dataMudanca);
+                    if (in_array($extensaoImagem, ["jpg", "jpeg", "gif", "png"])) {
+                        if (move_uploaded_file($_FILES["imagem"]["tmp_name"], $caminho)) {
+                            $imagemModel = new Imagem($nomeImagem, $caminho, $dataMudanca);
 
-                        if ($imagemRepositorio->registrar_imagem($imagemModel)) {
-                            $id_imagem = $imagemRepositorio::procura_id_imagem($nomeImagem);
-
-                            $usuarioModel = new Usuario($_POST["nome"], $_POST["id_fil"], $id_imagem, $_POST["email"], $_POST["telefone"], $dataMudanca, $senhaSegura);
-
-                            if ($usuarioRepositorio->criarUsuario($usuarioModel)) {
-                                exibirMensagemEredirecionar("Usuário criado com sucesso", '../views/login.php');
+                            if ($imagemRepositorio->registrar_imagem($imagemModel)) {
+                                $id_imagem = $imagemRepositorio::procura_id_imagem($nomeImagem);
                             } else {
-                                exibirMensagemEredirecionar("Erro: Usuário não cadastrado, tente novamente", '../views/cadastrar.php');
+                                exibirMensagemEredirecionar("Erro: Imagem não salva, tente novamente 1", '../views/cadastrar.php');
                             }
                         } else {
-                            exibirMensagemEredirecionar("Erro: Imagem não salva, tente novamente", '../views/cadastrar.php');
+                            exibirMensagemEredirecionar("Erro: Imagem não salva, tente novamente 2", '../views/cadastrar.php');
                         }
                     } else {
-                        exibirMensagemEredirecionar("Erro: Imagem não salva, tente novamente", '../views/cadastrar.php');
+                        exibirMensagemEredirecionar("Erro: Imagem não salva, tente novamente 3", '../views/cadastrar.php');
                     }
+                }
+
+                $usuarioModel = new Usuario($_POST["nome"], $_POST["id_fil"], $id_imagem, $_POST["email"], $_POST["telefone"], $dataMudanca, $senhaSegura);
+
+                if ($usuarioRepositorio->criarUsuario($usuarioModel)) {
+                    exibirMensagemEredirecionar("Usuário criado com sucesso", '../views/login.php');
                 } else {
-                    exibirMensagemEredirecionar("Erro: Imagem não salva, tente novamente", '../views/cadastrar.php');
+                    exibirMensagemEredirecionar("Erro: Usuário não cadastrado, tente novamente", '../views/cadastrar.php');
                 }
             }
         } elseif ($_POST["tipo"] == "edidar") {
@@ -182,6 +185,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 function exibirMensagemEredirecionar($mensagem, $destino)
 {
     echo "<script language='javascript'>window.alert('$mensagem'); </script>";
-    //echo "<script language='javascript'>window.location='$destino'; </script>";
+    echo "<script language='javascript'>window.location='$destino'; </script>";
     exit;
 }

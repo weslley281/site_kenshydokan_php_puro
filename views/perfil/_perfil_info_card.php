@@ -5,7 +5,7 @@
         <!-- card do perfil -->
         <div class="col-5 mb-4">
             <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="../<?php echo "../" . $imagem["caminho"]; ?>" alt="">
+                <img class="card-img-top" src="<?php echo (!empty($imagem) && isset($imagem['nome'])) ? '../../img/' . $imagem['nome'] : '../../arquivos/sem_imagem.png'; ?>" alt="">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $usuario["nome"]; ?></h5>
                 </div>
