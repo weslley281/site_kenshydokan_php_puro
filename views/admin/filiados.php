@@ -45,7 +45,7 @@
 						$dataMudanca = $res_filiado["dataMudanca"];
 
 						$res_graduacao = GraduacaoRepositorio::buscarGraduacao($id_graduacao);
-						$graduacao = $res_graduacao["graduacao"];
+						$graduacao = $res_graduacao ? $res_graduacao["graduacao"] : "Sem graduação";
 
 						$busca_estado = "SELECT * FROM estados WHERE id_estado = '$id_estado'";
 						$resultado_estado = mysqli_query($conexao, $busca_estado);

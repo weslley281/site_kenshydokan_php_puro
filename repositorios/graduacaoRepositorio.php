@@ -1,6 +1,6 @@
 <?php
 include_once __DIR__ . "/../db/conexao.php";
-include_once __DIR__ . "/../models/graduacaoModel.php";
+include_once __DIR__ .  "/../models/graduacaoModel.php";
 
 class GraduacaoRepositorio
 {
@@ -12,11 +12,11 @@ class GraduacaoRepositorio
         $this->conexao = $c->conectar();
     }
 
-    public function criarGraduacao(GraduacaoModel $graduacao): bool
+    public function criarGraduacao(Graduacao $graduacao): bool
     {
         try {
-            $inserir = $this->conexao->prepare("INSERT INTO graduacoes (graduacao, dataMudanca, dataCriacao) VALUES (?, ?, ?)");
-            $inserir->bind_param("sss", $graduacao->getGraduacao(), $graduacao->getDataMudanca(), $graduacao->getDataCriacao());
+            $inserir = $this->conexao->prepare("INSERT INTO graduacoes (graduacao) VALUES (?)");
+            $inserir->bind_param("s", $graduacao->getGraduacao());
             $resultado = $inserir->execute();
             $inserir->close();
 
@@ -31,11 +31,11 @@ class GraduacaoRepositorio
         }
     }
 
-    public function editarGraduacao($id_graduacao, GraduacaoModel $graduacao): bool
+    public function editarGraduacao($id_graduacao, $graduacao): bool
     {
         try {
-            $editar = $this->conexao->prepare("UPDATE graduacoes SET graduacao = ?, dataMudanca = ? WHERE id_graduacao = ?");
-            $editar->bind_param("ssi", $graduacao->getGraduacao(), $graduacao->getDataMudanca(), $id_graduacao);
+            $editar = $this->conexao->prepare("UPDATE graduacoes SET graduacao = ? WHERE id_graduacao = ?");
+            $editar->bind_param("si", $graduacao, $id_graduacao);
             $resultado = $editar->execute();
             $editar->close();
 
@@ -94,19 +94,5 @@ class GraduacaoRepositorio
             return null;
         }
     }
-
-    public function listarGraduacoes()
-    {
-        try {
-            $graduacoes = [];
-            $consulta = $this->conexao->query("SELECT * FROM graduacoes ORDER BY graduacao ASC");
-            while ($row = $consulta->fetch_assoc()) {
-                $graduacoes[] = $row;
-            }
-            return $graduacoes;
-        } catch (Exception $e) {
-            error_log("Erro ao listar graduações: " . $e->getMessage());
-            return [];
-        }
-    }
 }
+?>

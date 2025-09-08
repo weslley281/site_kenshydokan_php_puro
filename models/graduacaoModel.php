@@ -1,29 +1,23 @@
 <?php
-class GraduacaoModel
+class Graduacao
 {
+    private $id_graduacao;
     private $graduacao;
-    private string $dataMudanca;
-    private string $dataCriacao;
 
-    public function __construct($graduacao, $dataMudanca)
+    public function __construct($id_graduacao, $graduacao)
     {
+        $this->id_graduacao = $id_graduacao;
         $this->graduacao = $graduacao;
-        $this->dataMudanca = $dataMudanca;
-        $this->dataCriacao = date("Y-m-d");
+    }
+
+    public function getIdGraduacao()
+    {
+        return $this->id_graduacao;
     }
 
     public function getGraduacao()
     {
         return $this->graduacao;
     }
-
-    public function getDataMudanca()
-    {
-        return $this->dataMudanca;
-    }
-
-    public function getDataCriacao()
-    {
-        return $this->dataCriacao;
-    }
 }
+?>

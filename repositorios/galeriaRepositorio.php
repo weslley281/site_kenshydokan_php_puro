@@ -1,6 +1,6 @@
 <?php
-include_once "../db/conexao.php";
-include_once "../models/galeriaModel.php";
+include_once __DIR__ . "/../db/conexao.php";
+include_once __DIR__ .  "/../models/galeriaModel.php";
 
 class GaleriaRepositorio
 {
@@ -12,11 +12,11 @@ class GaleriaRepositorio
         $this->conexao = $c->conectar();
     }
 
-    public function criarGaleria(GaleriaModel $galeria): bool
+    public function criarGaleria(Galeria $galeria): bool
     {
         try {
-            $inserir = $this->conexao->prepare("INSERT INTO galeria (nome, dataCriacao, dataMudanca) VALUES (?, ?, ?)");
-            $inserir->bind_param("sss", $galeria->getNome(), $galeria->getDataCriacao(), $galeria->getDataMudanca());
+            $inserir = $this->conexao->prepare("INSERT INTO galeria (nome) VALUES (?)");
+            $inserir->bind_param("s", $galeria->getNome());
             $resultado = $inserir->execute();
             $inserir->close();
 
@@ -31,11 +31,11 @@ class GaleriaRepositorio
         }
     }
 
-    public function editarGaleria($id_galeria, GaleriaModel $galeria): bool
+    public function editarGaleria($id_galeria, $nome): bool
     {
         try {
-            $editar = $this->conexao->prepare("UPDATE galeria SET nome = ?, dataMudanca = ? WHERE id_galeria = ?");
-            $editar->bind_param("ssi", $galeria->getNome(), $galeria->getDataMudanca(), $id_galeria);
+            $editar = $this->conexao->prepare("UPDATE galeria SET nome = ? WHERE id_galeria = ?");
+            $editar->bind_param("si", $nome, $id_galeria);
             $resultado = $editar->execute();
             $editar->close();
 
@@ -53,6 +53,13 @@ class GaleriaRepositorio
     public function excluirGaleria($id_galeria): bool
     {
         try {
+            // First, delete photos associated with the gallery
+            $deletar_fotos = $this->conexao->prepare("DELETE FROM fotos WHERE id_galeria = ?");
+            $deletar_fotos->bind_param("i", $id_galeria);
+            $deletar_fotos->execute();
+            $deletar_fotos->close();
+
+            // Then, delete the gallery itself
             $deletar = $this->conexao->prepare("DELETE FROM galeria WHERE id_galeria = ?");
             $deletar->bind_param("i", $id_galeria);
             $resultado = $deletar->execute();
@@ -68,30 +75,5 @@ class GaleriaRepositorio
             return false;
         }
     }
-
-    public static function buscarGaleria($id_galeria)
-    {
-        try {
-            $c = new Conexao();
-            $conexao = $c->conectar();
-
-            $busca = "SELECT * FROM galeria WHERE id_galeria = ?";
-            $procura = $conexao->prepare($busca);
-            $procura->bind_param("i", $id_galeria);
-            $procura->execute();
-            $result = $procura->get_result();
-
-            if ($result->num_rows === 0) {
-                return null;
-            }
-
-            $galeria = $result->fetch_assoc();
-            $procura->close();
-
-            return $galeria;
-        } catch (Exception $e) {
-            error_log("Erro ao buscar a galeria: " . $e->getMessage());
-            return null;
-        }
-    }
 }
+?>
