@@ -1,6 +1,6 @@
 <div class="tab-pane fade show active">
 	<div class="container text-center">
-		<h2>Todas as  Postagens</h2>
+		<h2>Todas as Postagens</h2>
 		<table id="minhaTabela2" class="table table-bordered" width="100%" cellspacing="0">
 			<thead>
 				<tr>
@@ -25,7 +25,7 @@
 						$status = $res_postagem["status"];
 						$dataCriacao = $res_postagem["dataCriacao"];
 						$dataMudanca = $res_postagem["dataMudanca"];
-						?>
+				?>
 						<tr>
 							<th class="font-weight-bold" scope="row"><?php echo $id_publicacao; ?></th>
 							<td class="text-capitalize"><?php echo $titulo; ?></td>
@@ -37,7 +37,7 @@
 								</div>
 
 								<div class="form-group">
-									<a title="Alterar Status" class="btn btn-info" href="../controllers/mudar_status_postagem.php?id=<?php echo $id_publicacao; ?>"><?php echo $status == "aguardando" ? '<i class="fa-regular fa-thumbs-down"></i>' : '<i class="fa-regular fa-thumbs-up"></i>' ?></a>
+									<a title="Alterar Status" class="btn btn-info" href="../../controllers/mudar_status_postagem.php?id=<?php echo $id_publicacao; ?>"><?php echo $status == "aguardando" ? '<i class="fa-regular fa-thumbs-down"></i>' : '<i class="fa-regular fa-thumbs-up"></i>' ?></a>
 								</div>
 
 								<div class="form-group">
@@ -71,8 +71,8 @@
 								</div>
 							</div>
 						</div>
-					<?php }
-				}?>
+				<?php }
+				} ?>
 			</tbody>
 		</table>
 	</div>

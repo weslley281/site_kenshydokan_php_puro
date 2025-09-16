@@ -2,12 +2,12 @@
 class Foto
 {
     private $id_foto;
-    private $id_galeria;
-    private $nome;
-    private $foto;
-    private $dataUpload;
+    private int $id_galeria;
+    private string $nome;
+    private string $foto;
+    private string $dataUpload;
 
-    public function __construct($id_foto, $id_galeria, $nome, $foto, $dataUpload)
+    public function __construct($id_foto, int $id_galeria, string $nome, string $foto, string $dataUpload)
     {
         $this->id_foto = $id_foto;
         $this->id_galeria = $id_galeria;
@@ -16,29 +16,28 @@ class Foto
         $this->dataUpload = $dataUpload;
     }
 
-    public function getIdFoto()
+    public function getIdFoto(): int
     {
         return $this->id_foto;
     }
 
-    public function getIdGaleria()
+    public function getIdGaleria(): int
     {
         return $this->id_galeria;
     }
 
-    public function getNome()
+    public function getNome(): string
     {
         return $this->nome;
     }
 
-    public function getFoto()
+    public function getFoto(): string
     {
         return $this->foto;
     }
 
-    public function getDataUpload()
+    public function getDataUpload(): string
     {
         return $this->dataUpload;
     }
 }
-?>

@@ -66,7 +66,7 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
                   while ($foto = mysqli_fetch_array($resultado)) {
                 ?>
                     <tr>
-                      <th scope="row"><img src="../../img/<?php echo $foto["foto"]; ?>" width="50" height="50"></th>
+                      <th scope="row"><img src="../../slides/<?php echo $foto["foto"]; ?>" width="50" height="50"></th>
                       <td><?php echo $foto["nome"]; ?></td>
                       <td>
                         <div class="form-group">

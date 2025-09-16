@@ -16,7 +16,7 @@ class FotoRepositorio
     {
         try {
             $inserir = $this->conexao->prepare("INSERT INTO fotos (id_galeria, nome, foto, dataUpload) VALUES (?, ?, ?, ?)");
-            $inserir->bind_param("isss", $foto->getIdGaleria(), $foto->getNome(), $foto->getFoto(), $foto->getDataUpload());
+            $inserir->bind_param("ssss", $foto->getIdGaleria(), $foto->getNome(), $foto->getFoto(), $foto->getDataUpload());
             $resultado = $inserir->execute();
             $inserir->close();
 
@@ -43,7 +43,7 @@ class FotoRepositorio
             $procura->close();
 
             if ($foto) {
-                $caminho_foto = __DIR__ . "/../../img/" . $foto['foto'];
+                $caminho_foto = __DIR__ . "/../../slides/" . $foto['foto'];
                 if (file_exists($caminho_foto)) {
                     unlink($caminho_foto);
                 }
@@ -65,4 +65,3 @@ class FotoRepositorio
         }
     }
 }
-?>

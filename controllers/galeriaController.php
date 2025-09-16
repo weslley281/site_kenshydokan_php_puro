@@ -45,10 +45,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $nome = $_POST["nome"];
             $dataUpload = date("Y-m-d");
 
-            $diretorioUpload = "../img/";
+            $diretorioUpload = "../slides/";
             $nomeFoto = uniqid() . $_FILES["foto"]["name"];
+            var_dump($nomeFoto);
             $caminho = $diretorioUpload . $nomeFoto;
+            var_dump($caminho);
             $extensaoFoto = strtolower(pathinfo($caminho, PATHINFO_EXTENSION));
+            var_dump($extensaoFoto);
 
             if (!in_array($extensaoFoto, ["jpg", "jpeg", "gif", "png"])) {
                 exibirMensagemEredirecionar("Formato de imagem inválido", '../views/admin/editar_galeria.php?id=' . $id_galeria);
@@ -61,10 +64,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 if ($fotoRepositorio->adicionarFoto($fotoModel)) {
                     exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/editar_galeria.php?id=' . $id_galeria);
                 } else {
-                    exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/editar_galeria.php?id=' . $id_galeria);
+                    echo "Erro ao salvar no banco de dados.<br>";
+                    var_dump($fotoRepositorio->adicionarFoto($fotoModel));
+                    var_dump($fotoModel);
+                    //exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/editar_galeria.php?id=' . $id_galeria);
                 }
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/editar_galeria.php?id=' . $id_galeria);
+                exibirMensagemEredirecionar(
+                    "A imagem excede o limite de tamanho permitido (2MB). Por favor, envie uma imagem menor.",
+                    '../views/admin/adicionar_foto.php?id=' . $id_galeria
+                );
+                exit();
+                //exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/editar_galeria.php?id=' . $id_galeria);
             }
         } elseif ($_POST["tipo"] == "excluir_foto") {
             $id_foto = $_POST["id_foto"];
