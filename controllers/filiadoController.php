@@ -14,13 +14,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $filiadoRepositorio = new FiliadoRepositorio();
 
         if ($_POST["tipo"] == "inserir") {
+            $codigo = substr(md5(time()), 0, 6);
             $filiadoModel = new FiliadoModel(
                 null,
+                $codigo,
                 $_POST["id_graduacao"],
                 $_POST["nome"],
                 $_POST["dojo"],
                 $_POST["telefone"],
-                $_POST["rg"],
+                $_POST["data_nascimento"],
                 $_POST["email"],
                 $_POST["endereco"],
                 $_POST["cidade"],
@@ -32,18 +34,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($filiadoRepositorio->criarFiliado($filiadoModel)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=filiados');
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=filiados');
+                var_dump($filiadoModel);
+                
+                //exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/criar_filiado.php');
             }
         } elseif ($_POST["tipo"] == "editar") {
             $id_filiado = $_POST["id_filiado"];
+            $filiado_existente = $filiadoRepositorio->buscarFiliadoPorId($id_filiado);
 
             $filiadoModel = new FiliadoModel(
                 $id_filiado,
+                $_POST["codigo"],
                 $_POST["id_graduacao"],
                 $_POST["nome"],
                 $_POST["dojo"],
                 $_POST["telefone"],
-                $_POST["rg"],
+                $_POST["data_nascimento"],
                 $_POST["email"],
                 $_POST["endereco"],
                 $_POST["cidade"],

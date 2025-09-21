@@ -68,7 +68,6 @@ class Migration
         `nome` VARCHAR(255) NOT NULL,
         `dojo` VARCHAR(255) NOT NULL,
         `telefone` VARCHAR(255) NOT NULL,
-        `rg` VARCHAR(255) NOT NULL,
         `email` VARCHAR(255) NOT NULL,
         `endereco` VARCHAR(255),
         `cidade` VARCHAR(255),
@@ -288,6 +287,7 @@ class Migration
     public function criarTabelaCertificados()
     {
         $sql = "
+
         CREATE TABLE IF NOT EXISTS certificados (
             `id_certificado` INT AUTO_INCREMENT PRIMARY KEY,
             `id_usuario` INT,

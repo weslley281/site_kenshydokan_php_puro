@@ -4,7 +4,7 @@
 
 		<div class="row my-4">
 			<div class="col mx-1 my-1">
-				<a href="../views/criar_filiado.php" class="btn btn-outline-success btn-lg btn-block">Criar Filiado</a>
+				<a href="criar_filiado.php" class="btn btn-outline-success btn-lg btn-block">Criar Filiado</a>
 			</div>
 		</div>
 
@@ -15,8 +15,6 @@
 					<th scope="col">Nome</th>
 					<th scope="col">Graduação</th>
 					<th scope="col">Dojo</th>
-					<th scope="col">Email</th>
-					<th scope="col">Telefone</th>
 					<th scope="col">Cidade</th>
 					<th scope="col">Estado</th>
 					<th scope="col">Criação</th>
@@ -56,8 +54,6 @@
 							<td class="text-capitalize"><?php echo $nome; ?></td>
 							<td class="text-capitalize"><?php echo $graduacao; ?></td>
 							<td class="text-capitalize"><?php echo $dojo; ?></td>
-							<td class="text-capitalize"><?php echo $email; ?></td>
-							<td class="text-capitalize"><?php echo $telefone; ?></td>
 							<td class="text-capitalize"><?php echo $cidade; ?></td>
 							<td class="text-capitalize"><?php echo $estado["estado"] != null ? $estado["estado"] : "" ?></td>
 							<td class="text-capitalize"><?php echo date_format(date_create($dataCriacao), "d/m/Y"); ?></td>

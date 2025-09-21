@@ -1,8 +1,8 @@
 <?php
 include_once "menu.php";
-include_once "../db/conexao.php";
-include_once "../repositorios/filiadoRepositorio.php";
-include_once "../repositorios/graduacaoRepositorio.php";
+include_once __DIR__ . "/../../db/conexao.php";
+include_once __DIR__ . "/../../repositorios/filiadoRepositorio.php";
+include_once __DIR__ . "/../../repositorios/graduacaoRepositorio.php";
 
 $c = new Conexao();
 $conexao = $c->conectar();
@@ -26,7 +26,7 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
 				<div class="card card-signin my-5">
 					<div class="card-body">
 						<h5 class="card-title text-center">Editar Filiado</h5>
-						<form class="form-signin" action="../controllers/filiadoController.php" method="post">
+						<form class="form-signin" action="../../controllers/filiadoController.php" method="post">
 							<input type="hidden" name="tipo" value="editar">
 							<input type="hidden" name="id_filiado" value="<?php echo $filiado->getIdFiliado(); ?>">
 
@@ -59,9 +59,11 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
 								<input id="telefone" type="text" class="form-control" name="telefone" required value="<?php echo htmlspecialchars($filiado->getTelefone()); ?>">
 							</div>
 
+							
+
 							<div class="form-group">
-								<label for="rg">RG: </label>
-								<input id="rg" type="text" class="form-control" name="rg" required value="<?php echo htmlspecialchars($filiado->getRg()); ?>">
+								<label for="data_nascimento">Data de Nascimento: </label>
+								<input id="data_nascimento" type="date" class="form-control" name="data_nascimento" value="<?php echo htmlspecialchars($filiado->getDataNascimento()); ?>" required>
 							</div>
 
 							<div class="form-group">

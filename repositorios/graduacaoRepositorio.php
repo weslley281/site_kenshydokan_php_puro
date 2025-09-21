@@ -94,5 +94,34 @@ class GraduacaoRepositorio
             return null;
         }
     }
+
+    public function listarGraduacoes()
+    {
+        $sql = "SELECT * FROM graduacoes ORDER BY id_graduacao ASC";
+        $result = $this->conexao->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function buscarGraduacaoPorId($id_graduacao)
+    {
+        try {
+            $busca = $this->conexao->prepare("SELECT * FROM graduacoes WHERE id_graduacao = ?");
+            $busca->bind_param("i", $id_graduacao);
+            $busca->execute();
+            $result = $busca->get_result();
+
+            if ($result->num_rows === 0) {
+                return null;
+            }
+
+            $dados = $result->fetch_assoc();
+            $busca->close();
+
+            return new Graduacao($dados['id_graduacao'], $dados['graduacao']);
+        } catch (Exception $e) {
+            error_log("Erro ao buscar a graduação por ID: " . $e->getMessage());
+            return null;
+        }
+    }
 }
 ?>

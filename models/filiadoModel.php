@@ -2,11 +2,13 @@
 class FiliadoModel
 {
     private $id_filiado;
+    private $codigo;
     private $id_graduacao;
     private $nome;
     private $dojo;
     private $telefone;
-    private $rg;
+    
+    private $dataNascimento;
     private $email;
     private $endereco;
     private $cidade;
@@ -15,14 +17,15 @@ class FiliadoModel
     private $dataCriacao;
     private $dataMudanca;
 
-    public function __construct($id_filiado, $id_graduacao, $nome, $dojo, $telefone, $rg, $email, $endereco, $cidade, $id_estado, $confirmacao, $dataMudanca)
+    public function __construct($id_filiado, $codigo, $id_graduacao, $nome, $dojo, $telefone, $dataNascimento, $email, $endereco, $cidade, $id_estado, $confirmacao, $dataMudanca)
     {
         $this->id_filiado = $id_filiado;
+        $this->codigo = $codigo;
         $this->id_graduacao = $id_graduacao;
         $this->nome = $nome;
         $this->dojo = $dojo;
         $this->telefone = $telefone;
-        $this->rg = $rg;
+        $this->dataNascimento = $dataNascimento;
         $this->email = $email;
         $this->endereco = $endereco;
         $this->cidade = $cidade;
@@ -40,6 +43,16 @@ class FiliadoModel
     public function setIdFiliado($id_filiado)
     {
         $this->id_filiado = $id_filiado;
+    }
+
+    public function getCodigo()
+    {
+        return $this->codigo;
+    }
+
+    public function setCodigo($codigo)
+    {
+        $this->codigo = $codigo;
     }
 
     public function getIdGraduacao()
@@ -82,14 +95,16 @@ class FiliadoModel
         $this->telefone = $telefone;
     }
 
-    public function getRg()
+    
+
+    public function getDataNascimento()
     {
-        return $this->rg;
+        return $this->dataNascimento;
     }
 
-    public function setRg($rg)
+    public function setDataNascimento($data_nascimento)
     {
-        $this->rg = $rg;
+        $this->dataNascimento = $data_nascimento;
     }
 
     public function getEmail()

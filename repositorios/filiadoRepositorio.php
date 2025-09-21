@@ -1,6 +1,6 @@
 <?php
-include_once "../db/conexao.php";
-include_once "../models/filiadoModel.php";
+include_once __DIR__ . "/../db/conexao.php";
+include_once __DIR__ . "/../models/filiadoModel.php";
 
 class FiliadoRepositorio
 {
@@ -15,8 +15,8 @@ class FiliadoRepositorio
     public function criarFiliado(FiliadoModel $filiado): bool
     {
         try {
-            $inserir = $this->conexao->prepare("INSERT INTO filiados (id_graduacao, nome, dojo, telefone, rg, email, endereco, cidade, id_estado, confirmacao, dataCriacao, dataMudanca) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $inserir->bind_param("isssssssisss", $filiado->getIdGraduacao(), $filiado->getNome(), $filiado->getDojo(), $filiado->getTelefone(), $filiado->getRg(), $filiado->getEmail(), $filiado->getEndereco(), $filiado->getCidade(), $filiado->getIdEstado(), $filiado->getConfirmacao(), $filiado->getDataCriacao(), $filiado->getDataMudanca());
+            $inserir = $this->conexao->prepare("INSERT INTO filiados (codigo, id_graduacao, nome, dojo, telefone, dataNascimento, email, endereco, cidade, id_estado, confirmacao, dataCriacao, dataMudanca) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $inserir->bind_param("sisssssssisss", $filiado->getCodigo(), $filiado->getIdGraduacao(), $filiado->getNome(), $filiado->getDojo(), $filiado->getTelefone(), $filiado->getDataNascimento(), $filiado->getEmail(), $filiado->getEndereco(), $filiado->getCidade(), $filiado->getIdEstado(), $filiado->getConfirmacao(), $filiado->getDataCriacao(), $filiado->getDataMudanca());
             $resultado = $inserir->execute();
             $inserir->close();
 
@@ -26,7 +26,7 @@ class FiliadoRepositorio
 
             return true;
         } catch (Exception $e) {
-            error_log("Erro ao criar o filiado: " . $e->getMessage());
+            error_log("Erro ao criar o filiado: " . $e->getMessage() . " - " . $this->conexao->error);
             return false;
         }
     }
@@ -34,8 +34,8 @@ class FiliadoRepositorio
     public function editarFiliado($id_filiado, FiliadoModel $filiado): bool
     {
         try {
-            $editar = $this->conexao->prepare("UPDATE filiados SET id_graduacao = ?, nome = ?, dojo = ?, telefone = ?, rg = ?, email = ?, endereco = ?, cidade = ?, id_estado = ?, confirmacao = ?, dataMudanca = ? WHERE id_filiado = ?");
-            $editar->bind_param("isssssssissi", $filiado->getIdGraduacao(), $filiado->getNome(), $filiado->getDojo(), $filiado->getTelefone(), $filiado->getRg(), $filiado->getEmail(), $filiado->getEndereco(), $filiado->getCidade(), $filiado->getIdEstado(), $filiado->getConfirmacao(), $filiado->getDataMudanca(), $id_filiado);
+            $editar = $this->conexao->prepare("UPDATE filiados SET codigo = ?, id_graduacao = ?, nome = ?, dojo = ?, telefone = ?, dataNascimento = ?, email = ?, endereco = ?, cidade = ?, id_estado = ?, confirmacao = ?, dataMudanca = ? WHERE id_filiado = ?");
+            $editar->bind_param("sisssssssissi", $filiado->getCodigo(), $filiado->getIdGraduacao(), $filiado->getNome(), $filiado->getDojo(), $filiado->getTelefone(), $filiado->getDataNascimento(), $filiado->getEmail(), $filiado->getEndereco(), $filiado->getCidade(), $filiado->getIdEstado(), $filiado->getConfirmacao(), $filiado->getDataMudanca(), $id_filiado);
             $resultado = $editar->execute();
             $editar->close();
 
@@ -45,7 +45,7 @@ class FiliadoRepositorio
 
             return true;
         } catch (Exception $e) {
-            error_log("Erro ao editar o filiado: " . $e->getMessage());
+            error_log("Erro ao editar o filiado: " . $e->getMessage() . " - " . $this->conexao->error);
             return false;
         }
     }
@@ -72,7 +72,7 @@ class FiliadoRepositorio
     public function buscarFiliadoPorId($id_filiado)
     {
         try {
-            $busca = $this->conexao->prepare("SELECT * FROM filiados WHERE id_filiado = ?");
+            $busca = $this->conexao->prepare("SELECT codigo, id_filiado, id_graduacao, nome, dojo, telefone, dataNascimento, email, endereco, cidade, id_estado, confirmacao, dataMudanca FROM filiados WHERE id_filiado = ?");
             $busca->bind_param("i", $id_filiado);
             $busca->execute();
             $result = $busca->get_result();
@@ -86,11 +86,12 @@ class FiliadoRepositorio
 
             return new FiliadoModel(
                 $dados['id_filiado'],
+                $dados['codigo'],
                 $dados['id_graduacao'],
                 $dados['nome'],
                 $dados['dojo'],
                 $dados['telefone'],
-                $dados['rg'],
+                $dados['dataNascimento'],
                 $dados['email'],
                 $dados['endereco'],
                 $dados['cidade'],

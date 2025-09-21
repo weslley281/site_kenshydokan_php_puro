@@ -1,0 +1,8 @@
+.jumbotron {
+  background-image: url('../images/brazilian-jiu-jitsu.jpg'); /* Substitua 'caminho/para/sua/imagem.jpg' pelo caminho correto para sua imagem */
+  background-size: cover;
+  background-position: center;
+  color: #fff; /* Cor do texto para garantir contraste */
+  text-align: center; /* Alinhamento do texto */
+  padding: 100px 0; /* Espaçamento interno superior e inferior */
+}

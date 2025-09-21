@@ -31,7 +31,15 @@ include __DIR__ . "/_perfil_auth.php";
 							echo "<h6 class='text-center'>Obrigado por sua compreensão!</h6>";
 							echo "<hr>";
 							return;
-						}elseif ($filiado["confirmacao"] == "nao") {
+						}
+
+						if ($filiado["confirmacao"] == "sim") {
+							echo '<div class="text-center mb-3">';
+							echo '<a href="../../controllers/gerar_carteirinha.php" target="_blank" class="btn btn-primary">Gerar Carteirinha de Filiado</a>';
+							echo '</div>';
+						}
+						
+						if ($filiado["confirmacao"] == "nao") {
 							echo "<h3 class='text-center'>Seu status de filiação ainda está pendente. Para acessar os cursos, por favor, aguarde a confirmação da sua filiação ou entre em contato com o administrador para mais informações.</h3>";
 							echo "<hr>";
 							echo "<h4 class='text-center'>Se você já enviou sua filiação, por favor, aguarde a confirmação. Caso contrário, entre em contato com o administrador para iniciar o processo de filiação.</h4>";

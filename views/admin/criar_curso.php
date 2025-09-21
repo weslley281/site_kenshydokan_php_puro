@@ -1,6 +1,6 @@
 <?php
 include_once "menu.php";
-include_once "../../db/conexao.php";
+include_once __DIR__ . "/../../db/conexao.php";
 
 $c = new Conexao();
 $conexao = $c->conectar();

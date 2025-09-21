@@ -49,7 +49,7 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
       <div class="card card-signin my-5">
         <div class="card-body">
           <h5 class="card-title text-center">Editar</h5>
-          <form class="form-signin" enctype="multipart/form-data" action="../controllers/usuarioController.php" method="post">
+          <form class="form-signin" enctype="multipart/form-data" action="../../controllers/usuarioController.php" method="post">
             <input type="hidden" name="tipo" value="edidar_admin">
             <input type="hidden" name="id_imagem" value="<?php echo $id_imagem; ?>">
             <input type="hidden" name="id_usuario" value="<?php echo $id_usuario; ?>">

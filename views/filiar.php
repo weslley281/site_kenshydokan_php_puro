@@ -132,13 +132,7 @@
             <input type="text" class="form-control" aria-label="Exemplo do tamanho do input" aria-describedby="inputGroup-sizing-default" name="telefone">
           </div>
 
-          <!-- rg -->
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroup-sizing-default">RG</span>
-            </div>
-            <input type="text" class="form-control" aria-label="Exemplo do tamanho do input" aria-describedby="inputGroup-sizing-default" name="rg">
-          </div>
+          
 
           <!-- email -->
           <div class="input-group mb-3">

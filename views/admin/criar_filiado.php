@@ -1,7 +1,7 @@
 <?php
 include_once "menu.php";
-include_once "../db/conexao.php";
-include_once "../repositorios/graduacaoRepositorio.php";
+include_once __DIR__ . "/../../db/conexao.php";
+include_once __DIR__ . "/../../repositorios/graduacaoRepositorio.php";
 
 $c = new Conexao();
 $conexao = $c->conectar();
@@ -16,12 +16,17 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <h5 class="card-title text-center">Cadastrar Filiado</h5>
-                        <form class="form-signin" enctype="multipart/form-data" action="../controllers/filiadoController.php" method="post">
+                        <form class="form-signin" enctype="multipart/form-data" action="../../controllers/filiadoController.php" method="post">
                             <input type="hidden" name="tipo" value="inserir">
 
                             <div class="form-group">
                                 <label for="nome">Nome: </label>
                                 <input id="nome" type="text" class="form-control" name="nome" required autofocus>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="codigo">Código: </label>
+                                <input id="codigo" type="text" class="form-control" name="codigo" required value="12345">
                             </div>
 
                             <div class="form-group">
@@ -45,9 +50,11 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
                                 <input id="telefone" type="text" class="form-control" name="telefone" value="123456" required>
                             </div>
 
+
+
                             <div class="form-group">
-                                <label for="rg">RG: </label>
-                                <input id="rg" type="text" class="form-control" name="rg" value="123456" required>
+                                <label for="data_nascimento">Data de Nascimento: </label>
+                                <input id="data_nascimento" type="date" class="form-control" name="data_nascimento" required>
                             </div>
 
                             <div class="form-group">
