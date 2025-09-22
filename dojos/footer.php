@@ -8,14 +8,14 @@
 
     <p class="my-2 text-center text-white mt-2 mb-2">Copyright &copy; Weslley Henrique Vieira Ferraz <?php echo date("Y"); ?></p>
 </footer>
-<script src="./libs/bootstrap/jquery.js"></script>
-<script src="./libs/bootstrap/popper.js"></script>
-<script src="./libs/bootstrap/bootstrap.js"></script>
+<script src="../libs/bootstrap/jquery.js"></script>
+<script src="../libs/bootstrap/popper.js"></script>
+<script src="../libs/bootstrap/bootstrap.js"></script>
 <script src="./utils/maskCPF.js"></script>
-<script src="./libs/DataTables/datatables.js"></script>
-<script src="./libs/tinymce/tinymce.min.js"></script>
-<script src="./libs/select2/js/select2.js"></script>
-<script src="./libs/alertifyjs/alertify.js"></script>
+<script src="../libs/DataTables/datatables.js"></script>
+<script src="../libs/tinymce/tinymce.min.js"></script>
+<script src="../libs/select2/js/select2.js"></script>
+<script src="../libs/alertifyjs/alertify.js"></script>
 
 <script>
     $(document).ready(function() {
