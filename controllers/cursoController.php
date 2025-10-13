@@ -3,7 +3,7 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     include_once "../models/cursoModel.php";
-    include_once "../repositorios/cursoRepositorio.php";
+    include_once "../repositorios/CursoRepositorio.php";
     include_once "../repositorios/imagemRepositorio.php";
 
     define("MSG_ERRO", "Erro: Ocorreu um erro. Tente novamente.");

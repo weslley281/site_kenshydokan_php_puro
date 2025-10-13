@@ -16,7 +16,7 @@ class FiliadoRepositorio
     {
         try {
             $inserir = $this->conexao->prepare("INSERT INTO filiados (codigo, id_graduacao, nome, dojo, telefone, dataNascimento, email, endereco, cidade, id_estado, confirmacao, dataCriacao, dataMudanca) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $inserir->bind_param("sisssssssisss", $filiado->getCodigo(), $filiado->getIdGraduacao(), $filiado->getNome(), $filiado->getDojo(), $filiado->getTelefone(), $filiado->getDataNascimento(), $filiado->getEmail(), $filiado->getEndereco(), $filiado->getCidade(), $filiado->getIdEstado(), $filiado->getConfirmacao(), $filiado->getDataCriacao(), $filiado->getDataMudanca());
+            $inserir->bind_param("iisssssssisss", $filiado->getCodigo(), $filiado->getIdGraduacao(), $filiado->getNome(), $filiado->getDojo(), $filiado->getTelefone(), $filiado->getDataNascimento(), $filiado->getEmail(), $filiado->getEndereco(), $filiado->getCidade(), $filiado->getIdEstado(), $filiado->getConfirmacao(), $filiado->getDataCriacao(), $filiado->getDataMudanca());
             $resultado = $inserir->execute();
             $inserir->close();
 
@@ -35,7 +35,7 @@ class FiliadoRepositorio
     {
         try {
             $editar = $this->conexao->prepare("UPDATE filiados SET codigo = ?, id_graduacao = ?, nome = ?, dojo = ?, telefone = ?, dataNascimento = ?, email = ?, endereco = ?, cidade = ?, id_estado = ?, confirmacao = ?, dataMudanca = ? WHERE id_filiado = ?");
-            $editar->bind_param("sisssssssissi", $filiado->getCodigo(), $filiado->getIdGraduacao(), $filiado->getNome(), $filiado->getDojo(), $filiado->getTelefone(), $filiado->getDataNascimento(), $filiado->getEmail(), $filiado->getEndereco(), $filiado->getCidade(), $filiado->getIdEstado(), $filiado->getConfirmacao(), $filiado->getDataMudanca(), $id_filiado);
+            $editar->bind_param("iisssssssissi", $filiado->getCodigo(), $filiado->getIdGraduacao(), $filiado->getNome(), $filiado->getDojo(), $filiado->getTelefone(), $filiado->getDataNascimento(), $filiado->getEmail(), $filiado->getEndereco(), $filiado->getCidade(), $filiado->getIdEstado(), $filiado->getConfirmacao(), $filiado->getDataMudanca(), $id_filiado);
             $resultado = $editar->execute();
             $editar->close();
 

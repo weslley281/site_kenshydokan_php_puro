@@ -7,7 +7,7 @@ class FiliadoModel
     private $nome;
     private $dojo;
     private $telefone;
-    
+
     private $dataNascimento;
     private $email;
     private $endereco;
@@ -95,7 +95,7 @@ class FiliadoModel
         $this->telefone = $telefone;
     }
 
-    
+
 
     public function getDataNascimento()
     {
