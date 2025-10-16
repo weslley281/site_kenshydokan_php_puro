@@ -77,7 +77,7 @@ if (isset($_SESSION['id_usuario'])) {
 									<tr>
 										<th scope="col">
 											<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#aulaModal<?php echo $aula["id_aula"]; ?>">
-												<?php echo $aula["titulo"]; ?>
+												<?php echo mb_strimwidth($aula["titulo"], 0, 40, "..."); ?>
 												<?php if (in_array($aula['id_aula'], $aulas_assistidas_ids)) : ?>
 													<span class="text-success ml-2" title="Aula Assistida">&#10003;</span> <!-- Unicode checkmark -->
 												<?php endif; ?>

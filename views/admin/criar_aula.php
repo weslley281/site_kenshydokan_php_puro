@@ -13,7 +13,7 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
 ?>
   <div class="container">
     <div class="row">
-      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="col-sm-12 mx-auto">
         <div class="card card-signin my-5">
           <div class="card-body">
             <h5 class="card-title text-center">Criar Aula para o curso <?php echo htmlspecialchars($curso['nome'], ENT_QUOTES, 'UTF-8'); ?></h5>
