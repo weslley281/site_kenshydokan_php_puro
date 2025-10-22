@@ -136,7 +136,6 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Aula</th>
-                  <th scope="col">Aula</th>
                   <th scope="col">Ações</th>
                 </tr>
               </thead>
@@ -155,12 +154,7 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
                 ?>
                     <tr>
                       <th scope="row"><?php echo $aula["id_aula"]; ?></th>
-                      <td><?php echo $aula["titulo"]; ?></td>
-                      <td>
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#aulaModal<?php echo $aula["id_aula"]; ?>">
-                          <?php echo $aula["titulo"]; ?>
-                        </button>
-                      </td>
+                      <td><?php echo $aula["titulo"]; ?> </td>
                       <td>
                         <div class="form-group">
 

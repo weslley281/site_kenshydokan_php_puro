@@ -26,7 +26,7 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
 				<div class="card card-signin my-5">
 					<div class="card-body">
 						<h5 class="card-title text-center">Editar Filiado</h5>
-						<form class="form-signin" action="../../controllers/filiadoController.php" method="post">
+						<form class="form-signin" action="/controllers/filiadoController.php" method="post">
 							<input type="hidden" name="tipo" value="editar">
 							<input type="hidden" name="id_filiado" value="<?php echo $filiado->getIdFiliado(); ?>">
 

@@ -14,10 +14,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $filiadoRepositorio = new FiliadoRepositorio();
 
         if ($_POST["tipo"] == "inserir") {
-            $codigo = substr(md5(time()), 0, 6);
             $filiadoModel = new FiliadoModel(
                 null,
-                $codigo,
+                $_POST["codigo"],
                 $_POST["id_graduacao"],
                 $_POST["nome"],
                 $_POST["dojo"],
@@ -35,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=filiados');
             } else {
                 var_dump($filiadoModel);
-                
+
                 //exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/criar_filiado.php');
             }
         } elseif ($_POST["tipo"] == "editar") {
