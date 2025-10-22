@@ -18,6 +18,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Sua graduação é <?php echo $graduacao["graduacao"]; ?></h5>
                     <p class="card-text">Dojo: <?php echo $filiado["dojo"]; ?></p>
+                    <p class="card-text">Filiação: <?php echo $filiado["codigo"]; ?></p>
                     <p class="card-text">E-mail: <?php echo $usuario["email"]; ?></p>
                     <p class="card-text">Telefone: <?php echo $usuario["telefone"]; ?></p>
                 </div>

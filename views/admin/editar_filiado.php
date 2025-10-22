@@ -36,6 +36,11 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
 							</div>
 
 							<div class="form-group">
+								<label for="codigo">Código: </label>
+								<input id="codigo" type="text" class="form-control" name="codigo" required value="<?= htmlspecialchars($filiado->getCodigo()); ?>">
+							</div>
+
+							<div class="form-group">
 								<label for="id_graduacao">Graduação: </label>
 								<select id="id_graduacao" class="form-select form-control" name="id_graduacao" required>
 									<?php
@@ -59,7 +64,7 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
 								<input id="telefone" type="text" class="form-control" name="telefone" required value="<?php echo htmlspecialchars($filiado->getTelefone()); ?>">
 							</div>
 
-							
+
 
 							<div class="form-group">
 								<label for="data_nascimento">Data de Nascimento: </label>
