@@ -146,8 +146,8 @@
       </div>
       <div class="col-lg-4">
         <div class="text-center">
-          <img class="rounded-circle" src="../img/sensei_elyakin.jpg" alt="Elyakin Vinicius Mettelo" width="200" height="200">
-          <h2>Elyakin Vinicius Mettelo</h2>
+          <img class="rounded-circle" src="../img/sensei_elyakin.jpg" alt="Elyakin Vinicius C de M Metello" width="200" height="200">
+          <h2>Elyakin Vinicius C de M Metello</h2>
           <p><u>Diretor de Arbitragem.</u></p>
         </div>
         <ul>

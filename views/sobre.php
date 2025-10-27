@@ -61,10 +61,10 @@
     </div>
     <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
-        <a href=""><img class="card-img-top" src="../img/sensei_elyakin.jpg" alt="Elyakin Vinicius Mettelo Faixa Preta 1° Dan do Karate Kenshydokan"></a>
+        <a href=""><img class="card-img-top" src="../img/sensei_elyakin.jpg" alt="Elyakin Vinicius Mettelo Faixa Preta 2° Dan do Karate Kenshydokan"></a>
         <div class="card-body">
           <h4 class="card-title">
-            <a href="">Elyakin Vinicius Mettelo</a>
+            <a href="">Elyakin Vinicius C de M Metello</a>
           </h4>
           <ul>
             <li>Faixa Preta 2° Dan do Karate Kenshydokan.</li>
