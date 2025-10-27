@@ -1,69 +1,167 @@
 <?php
 include "menu.php";
 include_once "../db/conexao.php";
+
+// --- 1. PHP agora apenas prepara os dados ---
 $c = new Conexao();
 $conexao = $c->conectar();
 
+$galleries_data = [];
+$busca_galleries = "SELECT * FROM galeria ORDER BY id_galeria ASC";
+$resultado_galleries = mysqli_query($conexao, $busca_galleries);
+
+while ($gallery = mysqli_fetch_assoc($resultado_galleries)) {
+    $id_galeria = $gallery["id_galeria"];
+    $photos_data = [];
+    
+    $busca_photos = "SELECT * FROM fotos WHERE id_galeria = '$id_galeria' ORDER BY id_foto ASC";
+    $resultado_photos = mysqli_query($conexao, $busca_photos);
+    
+    while ($photo = mysqli_fetch_assoc($resultado_photos)) {
+        $photos_data[] = $photo;
+    }
+    
+    $gallery['photos'] = $photos_data;
+    $galleries_data[] = $gallery;
+}
 ?>
 
-<br>
-<?php
-$busca = "SELECT * FROM galeria";
-$resultado = mysqli_query($conexao, $busca);
-while ($galeria = mysqli_fetch_array($resultado)) {
-    $id_galeria = $galeria["id_galeria"];
-    ?>
-	<div class="container mt-5">
-		<div class="text-center">
-			<h2><strong><?php echo $galeria["nome"]; ?></strong></h2>
-		</div>
-		<div class="row mt-5">
-<?php
-$busca2 = "SELECT * FROM fotos WHERE id_galeria = '$id_galeria'";
-    $resultado2 = mysqli_query($conexao, $busca2);
-    while ($foto = mysqli_fetch_array($resultado2)) {
-        ?>
-		<div class="col-md-4 mb-3">
-			<img src="../slides/<?php echo $foto["foto"] ?>" class="img-thumbnail gallery-image" alt="<?php echo $foto["foto"] ?>">
-		</div>
-<?php }?>
-		</div>
-	</div>
-<?php }?>
+<style>
+    .gallery-image {
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
 
-<!-- Modal para visualização de imagens -->
-<div class="modal" id="imageModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Imagem</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <img class="img-fluid" id="modalImage" src="" alt="">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+    .gallery-image:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+    /* Estilos para os botões de navegação do modal */
+    .modal-body {
+        position: relative;
+        padding: 0;
+    }
+    .modal-nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0,0,0,0.4);
+        color: white;
+        border: none;
+        font-size: 2rem;
+        font-weight: bold;
+        cursor: pointer;
+        height: 100%;
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s ease;
+    }
+    .modal-nav-btn:hover {
+        background-color: rgba(0,0,0,0.7);
+    }
+    .modal-nav-btn.prev {
+        left: 0;
+    }
+    .modal-nav-btn.next {
+        right: 0;
+    }
+</style>
+
+<br>
+
+<!-- --- 2. O HTML agora é um template Vue --- -->
+<div id="galleryApp" class="container-fluid">
+
+    <div v-for="(gallery, galleryIndex) in galleries" :key="gallery.id_galeria" class="container mt-5">
+        <div class="text-center">
+            <h2><strong>{{ gallery.nome }}</strong></h2>
+        </div>
+        <div class="row mt-5">
+            <div v-for="(photo, photoIndex) in gallery.photos" :key="photo.id_foto" class="col-md-4 mb-3">
+                <!-- Passamos os índices para o método showImage -->
+                <img :src="'../slides/' + photo.foto" class="img-thumbnail gallery-image" :alt="photo.foto" @click="showImage(galleryIndex, photoIndex)">
             </div>
         </div>
     </div>
+
+    <!-- Modal para visualização de imagens (controlado pelo Vue) -->
+    <div class="modal" id="imageModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <!-- Botão Anterior -->
+                    <button class="modal-nav-btn prev" @click.stop="previousImage">&#10094;</button>
+                    
+                    <img class="img-fluid" :src="modalImageUrl" alt="Imagem em destaque">
+                    
+                    <!-- Botão Próximo -->
+                    <button class="modal-nav-btn next" @click.stop="nextImage">&#10095;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<!-- JavaScript para abrir o modal e atualizar a imagem -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const galleryImages = document.querySelectorAll(".gallery-image");
-        const modalImage = document.getElementById("modalImage");
-
-        galleryImages.forEach(function(image) {
-            image.addEventListener("click", function() {
-                modalImage.src = this.src;
-                $("#imageModal").modal("show"); // Use jQuery para mostrar o modal
-            });
-        });
-    });
-</script>
-
 <?php include "rodape.php";?>
+
+<!-- --- 3. O JavaScript/Vue que controla tudo --- -->
+<script>
+    const galleriesData = <?php echo json_encode($galleries_data); ?>;
+
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            return {
+                galleries: galleriesData,
+                allPhotos: [],
+                currentIndex: null
+            }
+        },
+        computed: {
+            modalImageUrl() {
+                if (this.currentIndex === null || !this.allPhotos[this.currentIndex]) {
+                    return '';
+                }
+                return '../slides/' + this.allPhotos[this.currentIndex].foto;
+            }
+        },
+        methods: {
+            showImage(galleryIndex, photoIndex) {
+                // Calcula o índice absoluto na lista de todas as fotos
+                let flatIndex = 0;
+                for (let i = 0; i < galleryIndex; i++) {
+                    flatIndex += this.galleries[i].photos.length;
+                }
+                flatIndex += photoIndex;
+
+                this.currentIndex = flatIndex;
+                $('#imageModal').modal('show');
+            },
+            nextImage() {
+                if (this.currentIndex === null) return;
+                this.currentIndex = (this.currentIndex + 1) % this.allPhotos.length;
+            },
+            previousImage() {
+                if (this.currentIndex === null) return;
+                this.currentIndex = (this.currentIndex - 1 + this.allPhotos.length) % this.allPhotos.length;
+            },
+            createFlatPhotoList() {
+                this.allPhotos = this.galleries.reduce((acc, gallery) => acc.concat(gallery.photos), []);
+            }
+        },
+        created() {
+            // Cria a lista única de fotos quando o app é iniciado
+            this.createFlatPhotoList();
+        }
+    }).mount('#galleryApp');
+</script>

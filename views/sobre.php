@@ -37,7 +37,7 @@
           </h4>
           <ul>
             <li>Faixa Preta 3° Dan do Karate Kenshydokan.</li>
-            <li>Faixa preta 2° Dan em Judo Kodokan.</li>
+            <li>Faixa preta 1° Dan em Judo Kodokan.</li>
             <li>1° Dan Karatê Kyokushin</li>
             <li>Faixa preta de Jiu Jitsu Brasileiro.</li>
             <li>12° Khan Muay Thai</li>

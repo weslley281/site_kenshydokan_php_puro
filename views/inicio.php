@@ -137,7 +137,7 @@
         </div>
         <ul>
           <li>3° Dan Karatê Kenshydokan</li>
-          <li>2° Dan Judo Kodokan</li>
+          <li>1° Dan Judo Kodokan</li>
           <li>1° Dan Karatê Kyokushin</li>
           <li>12° Khan Muay Thai</li>
           <li>Faixa Preta Brasilian Jiu Jitsu</li>

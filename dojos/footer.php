@@ -8,6 +8,7 @@
 
     <p class="my-2 text-center text-white mt-2 mb-2">Copyright &copy; Weslley Henrique Vieira Ferraz <?php echo date("Y"); ?></p>
 </footer>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="../libs/bootstrap/jquery.js"></script>
 <script src="../libs/bootstrap/popper.js"></script>
 <script src="../libs/bootstrap/bootstrap.js"></script>

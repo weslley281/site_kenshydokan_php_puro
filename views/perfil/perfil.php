@@ -32,12 +32,6 @@ include __DIR__ . "/_perfil_auth.php";
 							echo "<hr>";
 							return;
 						}
-
-						if ($filiado["confirmacao"] == "sim") {
-							echo '<div class="text-center mb-3">';
-							echo '<a href="../../controllers/gerar_carteirinha.php" target="_blank" class="btn btn-primary">Gerar Carteirinha de Filiado</a>';
-							echo '</div>';
-						}
 						
 						if ($filiado["confirmacao"] == "nao") {
 							echo "<h3 class='text-center'>Seu status de filiação ainda está pendente. Para acessar os cursos, por favor, aguarde a confirmação da sua filiação ou entre em contato com o administrador para mais informações.</h3>";

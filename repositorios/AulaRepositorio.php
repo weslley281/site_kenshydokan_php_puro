@@ -173,4 +173,25 @@ class AulaRepositorio
             return 0;
         }
     }
+    
+    public function buscarAulasPorCurso($id_curso){
+        try {
+            $aulas = [];
+            $busca = "SELECT * FROM aulas WHERE id_curso = ?";
+            $procura = $this->conexao->prepare($busca);
+            $procura->bind_param("i", $id_curso);
+            $procura->execute();
+            $result = $procura->get_result();
+
+            while ($row = $result->fetch_assoc()) {
+                $aulas[] = $row;
+            }
+            $procura->close();
+
+            return $aulas;
+        } catch (Exception $e) {
+            error_log("Erro ao buscar aulas por curso: " . $e->getMessage());
+            return [];
+        }
+    }
 }
