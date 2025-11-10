@@ -65,6 +65,40 @@ $pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
         gtag('config', 'UA-118512913-1');
     </script>
 
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SportsOrganization",
+            "name": "Instituto de Artes Marciais e Defesa Pessoal Kenshydokan",
+            "alternateName": "Kenshydokan Karate Institute",
+            "url": "https://kenshydokan.com/",
+            "description": "Organização dedicada ao ensino do Karatê Kenshydokan.",
+            "founder": {
+                "@type": "Person",
+                "name": "Shihan Jonas Teixeira de Andrade",
+                "jobTitle": "Criador e Presidente"
+            },
+            "member": {
+                "@type": "Person",
+                "name": "Weslley Henrique Vieira Ferraz",
+                "jobTitle": "Discípulo Direto do Fundador e Instrutor Kenshydokan de nivel mais elevado"
+            },
+            "location": {
+                "@type": "Place",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "Rua 24 de Outubro, 154",
+                    "addressLocality": "Várzea Grande",
+                    "addressRegion": "MT",
+                    "postalCode": "78110-350",
+                    "addressCountry": "BR"
+                }
+            }
+        }
+    </script>
+
+
+
     <meta name="author" content="Weslley Henrique Vieira Ferraz" />
     <meta name="owner" content="World Kenshydokan Karate Association" />
     <meta name="copyright" content="Weslley Henrique Vieira Ferraz" />

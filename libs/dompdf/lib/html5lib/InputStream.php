@@ -203,8 +203,6 @@ class HTML5_InputStream {
             return iconv_strlen($findLengthOf, 'utf-8');
         } elseif (extension_loaded('mbstring')) {
             return mb_strlen($findLengthOf, 'utf-8');
-        } elseif (extension_loaded('xml')) {
-            return strlen(utf8_decode($findLengthOf));
         } else {
             $count = count_chars($findLengthOf);
             // 0x80 = 0x7F - 0 + 1 (one added to get inclusive range)
