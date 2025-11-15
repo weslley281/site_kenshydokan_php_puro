@@ -85,6 +85,7 @@ class AulaRepositorio
             $aula = $result->fetch_assoc();
             $procura->close();
 
+            var_dump($aula);
             return $aula;
         } catch (Exception $e) {
             error_log("Erro ao buscar a aula: " . $e->getMessage());

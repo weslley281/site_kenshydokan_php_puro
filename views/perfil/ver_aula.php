@@ -45,8 +45,8 @@ $aula_ja_assistida = in_array($id_aula, $aulas_assistidas_ids);
                 </div>
                 <div class="card-body">
                     <div>
-                        <?= $aula['aula']; //var_dump($aula['aula']); ?>
-
+                        <?= $aula['aula']; ?>
+                        
                     </div>
                 </div>
                 <form action="../../controllers/gerar_pdf_aula.php" method="post" target="_blank">

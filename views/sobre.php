@@ -10,7 +10,8 @@
     </div>
     <div class="col-md-5">
       <h3><a href="ver_perfil.php?id_usuario=5">Jonas Teixeira de Andrade</a></h3>
-      <p>Presidente da WKKA.</p>
+      <p>Presidente do Instituto e Fundador do Estilo Karatê Kenshydokan.</p>
+      <h4>Suas Graduações: </h4>
       <ul>
         <li>10° Dan Karate Kenshydokan</li>
         <li>7° Dan Ju jitsu</li>
@@ -39,6 +40,7 @@
             <h4 class="card-title">
               <a href="ver_perfil.php?id_usuario=1">Weslley Henrique Vieira Ferraz</a>
             </h4>
+            <h5>Suas Graduações: </h5>
             <ul>
               <li>Faixa Preta 3° Dan do Karate Kenshydokan.</li>
               <li>Faixa preta 1° Dan em Judo Kodokan.</li>
@@ -57,6 +59,7 @@
             <h4 class="card-title">
               <a href="">Elyakin Vinicius C de M Metello</a>
             </h4>
+            <h5>Suas Graduações: </h5>
             <ul>
               <li>Faixa Preta 2° Dan do Karate Kenshydokan.</li>
             </ul>
@@ -70,6 +73,7 @@
             <h4 class="card-title">
               <a href="">Rafael Carlos de Almeida Faria</a>
             </h4>
+            <h5>Suas Graduações: </h5>
             <ul>
               <li>Faixa Preta 1° Dan do Karate Kenshydokan.</li>
             </ul>

@@ -54,7 +54,7 @@ $paginas = array(
 
 
     <meta name="author" content="Weslley Henrique Vieira Ferraz" />
-    <meta name="owner" content="World Kenshydokan Karate Association" />
+    <meta name="owner" content="Instituto de Artes Marciais e Defesa Pessoal Kenshydokan" />
     <meta name="copyright" content="Weslley Henrique Vieira Ferraz" />
     <meta name="keywords" content="kenshydokan, kyokushin, federação, karate, carate, karatê, caratê, de contato, full, contact, luta, aula, aulas, Karatê, kata, kumite, mato grosso, cuiaba, varzea grande, weslley ferraz, weslley, ferraz, judo, judô, kodokan, jiu, jiu jitsu, muay thai, muay boran, kickboxing">
     <meta name="description" content="Somos uma instituição, criada com o intuito de divulgar o karate kenshydokan e outras artes marciais.">
