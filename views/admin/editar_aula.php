@@ -33,6 +33,11 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
               </div>
 
               <div class="form-group">
+                <label for="num_ordenacao">Ordem: </label>
+                <input id="num_ordenacao" type="number" class="form-control" value="<?php echo $aula["num_ordenacao"]; ?>" name="num_ordenacao" required>
+              </div>
+
+              <div class="form-group">
                 <label for="aula">Aula: </label>
                 <textarea id="aula" class="form-control" name="aula" rows="30" required><?php echo $aula["aula"]; ?></textarea>
               </div>

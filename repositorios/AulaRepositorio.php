@@ -12,11 +12,38 @@ class AulaRepositorio
         $this->conexao = $c->conectar();
     }
 
+    public function verificarOrdemExistente(int $id_curso, int $num_ordenacao, ?int $id_aula_excluir = null): bool
+    {
+        try {
+            $busca = "SELECT COUNT(*) FROM aulas WHERE id_curso = ? AND num_ordenacao = ?";
+            if ($id_aula_excluir !== null) {
+                $busca .= " AND id_aula != ?";
+            }
+            $procura = $this->conexao->prepare($busca);
+
+            if ($id_aula_excluir !== null) {
+                $procura->bind_param("iii", $id_curso, $num_ordenacao, $id_aula_excluir);
+            } else {
+                $procura->bind_param("ii", $id_curso, $num_ordenacao);
+            }
+
+            $procura->execute();
+            $procura->bind_result($count);
+            $procura->fetch();
+            $procura->close();
+
+            return $count > 0;
+        } catch (Exception $e) {
+            error_log("Erro ao verificar ordem da aula: " . $e->getMessage());
+            return true; // Assume it exists to prevent errors
+        }
+    }
+
     public function criarAula(AulaModel $aula): bool
     {
         try {
-            $inserir = $this->conexao->prepare("INSERT INTO aulas (id_curso, titulo, aula, dataMudanca, dataCriacao) VALUES (?, ?, ?, ?, ?)");
-            $inserir->bind_param("issss", $aula->getIdCurso(), $aula->getTitulo(), $aula->getAula(), $aula->getDataMudanca(), $aula->getDataCriacao());
+            $inserir = $this->conexao->prepare("INSERT INTO aulas (id_curso, titulo, aula, num_ordenacao, dataMudanca, dataCriacao) VALUES (?, ?, ?, ?, ?, ?)");
+            $inserir->bind_param("ississ", $aula->getIdCurso(), $aula->getTitulo(), $aula->getAula(), $aula->getNumOrdenacao(), $aula->getDataMudanca(), $aula->getDataCriacao());
             $resultado = $inserir->execute();
             $inserir->close();
 
@@ -34,8 +61,8 @@ class AulaRepositorio
     public function editarAula($id_aula, AulaModel $aula): bool
     {
         try {
-            $editar = $this->conexao->prepare("UPDATE aulas SET id_curso = ?, titulo = ?, aula = ?, dataMudanca = ? WHERE id_aula = ?");
-            $editar->bind_param("isssi", $aula->getIdCurso(), $aula->getTitulo(), $aula->getAula(), $aula->getDataMudanca(), $id_aula);
+            $editar = $this->conexao->prepare("UPDATE aulas SET id_curso = ?, titulo = ?, aula = ?, num_ordenacao = ?, dataMudanca = ? WHERE id_aula = ?");
+            $editar->bind_param("issisi", $aula->getIdCurso(), $aula->getTitulo(), $aula->getAula(), $aula->getNumOrdenacao(), $aula->getDataMudanca(), $id_aula);
             $resultado = $editar->execute();
             $editar->close();
 
@@ -85,7 +112,6 @@ class AulaRepositorio
             $aula = $result->fetch_assoc();
             $procura->close();
 
-            var_dump($aula);
             return $aula;
         } catch (Exception $e) {
             error_log("Erro ao buscar a aula: " . $e->getMessage());
@@ -178,7 +204,7 @@ class AulaRepositorio
     public function buscarAulasPorCurso($id_curso){
         try {
             $aulas = [];
-            $busca = "SELECT * FROM aulas WHERE id_curso = ?";
+            $busca = "SELECT * FROM aulas WHERE id_curso = ? ORDER BY num_ordenacao ASC";
             $procura = $this->conexao->prepare($busca);
             $procura->bind_param("i", $id_curso);
             $procura->execute();

@@ -128,40 +128,70 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
 
       <!-- Direita -->
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+
+        <!-- Adicionar Nova Aula -->
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Adicionar Nova Aula</h5>
+            <form class="form-signin" enctype="multipart/form-data" action="/controllers/aulaController.php" method="post">
+              <input type="hidden" name="tipo" value="inserir">
+              <input type="hidden" name="id_curso" value="<?php echo $id_curso; ?>">
+
+              <div class="form-group">
+                <label for="titulo_aula">Título:</label>
+                <input id="titulo_aula" type="text" class="form-control" name="titulo" required>
+              </div>
+
+              <div class="form-group">
+                <label for="num_ordenacao_aula">Ordem:</label>
+                <input id="num_ordenacao_aula" type="number" class="form-control" name="num_ordenacao" required>
+              </div>
+
+              <div class="form-group">
+                <label for="aula_conteudo">Conteúdo da Aula:</label>
+                <textarea id="aula_conteudo" class="form-control" name="aula" rows="10"></textarea>
+              </div>
+
+              <input class="btn btn-lg btn-success btn-block text-uppercase" type="submit" value="Adicionar Aula">
+            </form>
+          </div>
+        </div>
+
+
+        <!-- Lista de Aulas -->
         <div class="card card-signin my-5">
           <div class="card-body">
             <h5 class="card-title text-center">Aulas</h5>
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
+                  <th scope="col">Ordem</th>
                   <th scope="col">Aula</th>
                   <th scope="col">Ações</th>
                 </tr>
               </thead>
               <tbody>
                 <?php
-                $busca = "SELECT * FROM aulas WHERE id_curso = ?";
+                $busca = "SELECT * FROM aulas WHERE id_curso = ? ORDER BY num_ordenacao ASC";
                 $stmt = mysqli_prepare($conexao, $busca);
                 mysqli_stmt_bind_param($stmt, "i", $id_curso);
                 mysqli_stmt_execute($stmt);
                 $resultado = mysqli_stmt_get_result($stmt);
                 $linha = mysqli_num_rows($resultado);
-                if ($linha == '') {
-                  echo "<h3> Não foram encontrados dados Cadastrados no Banco!! </h3>";
+                if ($linha == 0) {
+                  echo "<tr><td colspan='3' class='text-center'>Nenhuma aula cadastrada.</td></tr>";
                 } else {
                   while ($aula = mysqli_fetch_array($resultado)) {
                 ?>
                     <tr>
-                      <th scope="row"><?php echo $aula["id_aula"]; ?></th>
+                      <th scope="row"><?php echo $aula["num_ordenacao"]; ?></th>
                       <td><?php echo $aula["titulo"]; ?> </td>
                       <td>
-                        <div class="form-group">
-
-                          <a class="btn btn-primary" href="<?php echo "editar_aula.php?id=" . $aula["id_aula"] . "&id_curso=" . $id_curso ?>" title="Editar Aula"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <div class="form-group d-inline-block">
+                          <a class="btn btn-primary" href="<?php echo "editar_aula.php?id=" . $aula["id_aula"] . "&id_curso=" . $id_curso ?>" title="Editar Aula" target="_blank"><i class="fa-solid fa-pen-to-square"></i></a>
                         </div>
-                        <div class="form-group">
-                          <button class="btn btn-danger" data-toggle="modal" data-target="#modalExcluirAula<?php echo $aula["id_aula"]; ?>" title="Excluir"><i class="fa-regular fa-calendar-xmark"></i></button>
+                        <div class="form-group d-inline-block">
+                          <button class="btn btn-danger" data-toggle="modal" data-target="#modalExcluirAula<?php echo $aula["id_aula"]; ?>" title="Excluir"><i class="fa-solid fa-trash"></i></button>
                         </div>
                       </td>
                     </tr>

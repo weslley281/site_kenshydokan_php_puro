@@ -7,23 +7,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     define("MSG_ERRO", "Erro: Ocorreu um erro. Tente novamente.");
     define("MSG_SUCESSO", "Operação realizada com sucesso.");
+    define("MSG_ORDEM_DUPLICADA", "Erro: O número de ordenação já está em uso neste curso.");
 
     if (isset($_POST["tipo"])) {
         $dataMudanca = date("Y-m-d");
         $id_curso = $_POST['id_curso'];
+        $num_ordenacao = isset($_POST['num_ordenacao']) ? (int)$_POST['num_ordenacao'] : 0;
 
         $aulaRepositorio = new AulaRepositorio();
 
         if ($_POST["tipo"] == "inserir") {
+            if ($aulaRepositorio->verificarOrdemExistente($id_curso, $num_ordenacao)) {
+                $destino = "../views/admin/editar_curso.php?id=$id_curso";
+                exibirMensagemEredirecionar(MSG_ORDEM_DUPLICADA, $destino);
+            }
+
             $aulaModel = new AulaModel(
                 null,
                 $id_curso,
                 $_POST["titulo"],
                 $_POST["aula"],
+                $num_ordenacao,
                 $dataMudanca
             );
 
-            $destino = "../views/admin/index.php?pagina=cursos";
+            $destino = "../views/admin/editar_curso.php?id=$id_curso";
             if ($aulaRepositorio->criarAula($aulaModel)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, $destino);
             } else {
@@ -33,11 +41,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $id_aula = $_POST["id_aula"];
             $id_curso = $_POST["id_curso"];
 
+            if ($aulaRepositorio->verificarOrdemExistente($id_curso, $num_ordenacao, $id_aula)) {
+                $destino = "../views/admin/editar_aula.php?id=$id_aula&id_curso=$id_curso";
+                exibirMensagemEredirecionar(MSG_ORDEM_DUPLICADA, $destino);
+            }
+
             $aulaModel = new AulaModel(
                 $id_aula,
                 $_POST["id_curso"],
                 $_POST["titulo"],
                 $_POST["aula"],
+                $num_ordenacao,
                 $dataMudanca
             );
             

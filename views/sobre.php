@@ -68,7 +68,7 @@
       </div>
       <div class="col-lg-4 col-sm-6 mb-4">
         <div class="card h-100">
-          <a href=""><img class="card-img-top" src="" alt="Rafael Carlos de Almeida Faria Faixa Preta 1° Dan do Karate Kenshydokan"></a>
+          <a href=""><img class="card-img-top" src="../img/sensei_rafael.jpg" alt="Rafael Carlos de Almeida Faria Faixa Preta 1° Dan do Karate Kenshydokan"></a>
           <div class="card-body">
             <h4 class="card-title">
               <a href="">Rafael Carlos de Almeida Faria</a>
@@ -80,9 +80,25 @@
           </div>
         </div>
       </div>
-      <hr>
-      </ul>
+
     </div>
+    <div class="row">
+      <div class="col-lg-4 col-sm-6 mb-4">
+        <div class="card h-100">
+          <a href=""><img class="card-img-top" src="../img/sensei_rose.jpg" alt="Roset Almeida Lobo Faixa Preta 1° Dan do Karate Kenshydokan"></a>
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="">Roset Almeida Lobo</a>
+            </h4>
+            <h5>Suas Graduações: </h5>
+            <ul>
+              <li>Faixa Preta 1° Dan do Karate Kenshydokan.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
   </div>
 
   <br>

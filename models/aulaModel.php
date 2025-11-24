@@ -5,15 +5,17 @@ class AulaModel
     private $id_curso;
     private $titulo;
     private $aula;
+    private $num_ordenacao;
     private $dataCriacao;
     private $dataMudanca;
 
-    public function __construct($id_aula, $id_curso, $titulo, $aula, $dataMudanca)
+    public function __construct($id_aula, $id_curso, $titulo, $aula, $num_ordenacao, $dataMudanca)
     {
         $this->id_aula = $id_aula;
         $this->id_curso = $id_curso;
         $this->titulo = $titulo;
         $this->aula = $aula;
+        $this->num_ordenacao = $num_ordenacao;
         $this->dataCriacao = date("Y-m-d");
         $this->dataMudanca = $dataMudanca;
     }
@@ -56,6 +58,16 @@ class AulaModel
     public function setAula($aula)
     {
         $this->aula = $aula;
+    }
+
+    public function getNumOrdenacao()
+    {
+        return $this->num_ordenacao;
+    }
+
+    public function setNumOrdenacao($num_ordenacao)
+    {
+        $this->num_ordenacao = $num_ordenacao;
     }
 
     public function getDataCriacao()
