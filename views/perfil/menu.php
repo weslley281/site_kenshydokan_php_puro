@@ -91,6 +91,17 @@ $paginas = array(
 </head>
 
 <body class="bg-light">
+    <!-- Google Translate Element -->
+    <div id="google_translate_element" style="text-align: right; padding: 10px; background-color: #f8f9fa;"></div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'pt',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <!-- <div class="alert alert-warning text-center mb-0" role="alert">
         <strong>Aviso:</strong> O site estará em manutenção entre os dias 24/08/2025 e 30/08/2025, sendo assim poderá haver algumas inconcistencias nas páginas. Pedimos desculpas pelo transtorno.
     </div> -->
