@@ -40,6 +40,9 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
     <li class="nav-item">
       <a class="nav-link" href="index.php?pagina=graduacoes">Graduações</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="index.php?pagina=dojos">Dojos</a>
+    </li>
   </ul>
   <div class="tab-content" id="myTabContent">
     <?php if (isset($_GET["pagina"]) && $_GET["pagina"] == "visualizacoes") {
@@ -65,6 +68,9 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
     } ?>
     <?php if (isset($_GET["pagina"]) && $_GET["pagina"] == "graduacoes") {
       include_once "graduacoes.php";
+    } ?>
+    <?php if (isset($_GET["pagina"]) && $_GET["pagina"] == "dojos") {
+      include_once "dojos.php";
     } ?>
     <?php if (!isset($_GET["pagina"])) { ?>
       <br />

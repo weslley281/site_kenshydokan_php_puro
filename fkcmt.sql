@@ -624,10 +624,374 @@ CREATE TABLE `paginas` (
 --
 
 INSERT INTO `paginas` (`id_pag`, `titulo`, `conteudo`, `dataCriacao`) VALUES
-(2, 'Ju Jitsu', '<div class=\"container\">\r\n<div class=\"dmBody u_dmStyle_template_jiu-jitsu\" id=\"dmFirstContainer\">\r\n<div class=\"allWrapper\" id=\"allWrapper\">\r\n<div class=\"dmContent\" id=\"dm_content\">\r\n<div class=\"dmDefaultRespTmpl\" id=\"1994795488\">\r\n<div class=\"dmDefaultPage dmRespRowsWrapper dmRespRowsWrapperSize1 innerPageTmplBox\" id=\"1538663754\">\r\n<div class=\"dmDefaultListContentRow dmRespRow\" id=\"1493656194\">\r\n<div class=\"dmRespColsWrapper\" id=\"1668211504\">\r\n<div class=\"dmRespCol large-12 medium-12 small-12\" id=\"1150745240\">\r\n<h1 style=\"text-align:center\"><u><strong><span style=\"color:#c0392b\">kansetsu waza (T&eacute;cnicas no Solo)</span></strong></u></h1>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2 style=\"text-align:center\"><span style=\"font-size:36px\">Shime Waza - T&eacute;cnicas de Estrangulamento</span></h2>\r\n\r\n<p style=\"text-align:center\">&nbsp;<span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><strong>Gyaku Juji Jime</strong></span></span></p>\r\n\r\n<div style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\">estrangulamento cruzado invertido</span></span></div>\r\n\r\n<div class=\"separator\" style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><a href=\"https://3.bp.blogspot.com/-1MEHwoz8OYo/Wi2VC87Y4RI/AAAAAAAABfE/T0rpoFZ70Ash3dASmTa4KWinZQ7t-5PAQCEwYBhgL/s1600/Gyaku%2BJuji%2BJime.png\"><img height=\"190\" src=\"https://3.bp.blogspot.com/-1MEHwoz8OYo/Wi2VC87Y4RI/AAAAAAAABfE/T0rpoFZ70Ash3dASmTa4KWinZQ7t-5PAQCEwYBhgL/s320/Gyaku%2BJuji%2BJime.png\" width=\"561\" /></a></span></span></div>\r\n\r\n<div class=\"separator\" style=\"text-align:center\">&nbsp;</div>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><strong>Hadaka Jime</strong></span></span></p>\r\n</div>\r\n\r\n<div class=\"dmRespCol large-12 medium-12 small-12\">\r\n<p style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\">estrangulamento sem roupa</span></span></p>\r\n\r\n<div class=\"separator\" style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><a href=\"https://3.bp.blogspot.com/-4EmXH0_zhls/WjbTtSv7T6I/AAAAAAAABiU/r5g8eUs9lfAPj6VWKJIUWX8TnWTYPI1NgCLcBGAs/s1600/hadakajime-judo-technique.gif\"><img height=\"186\" src=\"https://3.bp.blogspot.com/-4EmXH0_zhls/WjbTtSv7T6I/AAAAAAAABiU/r5g8eUs9lfAPj6VWKJIUWX8TnWTYPI1NgCLcBGAs/s320/hadakajime-judo-technique.gif\" width=\"483\" /></a></span></span></div>\r\n\r\n<div class=\"separator\" style=\"text-align:center\">&nbsp;</div>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><strong>Kata Ha Jime</strong></span></span></p>\r\n</div>\r\n\r\n<div class=\"dmRespCol large-12 medium-12 small-12\">\r\n<p style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\">estrangulamento com um ombro</span></span></p>\r\n\r\n<div class=\"separator\" style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><a href=\"https://4.bp.blogspot.com/-fzSaohiyZ_8/WjbU2gHRcLI/AAAAAAAABig/Ew0p9scg9fYuXQsXXB-c1Nq5K3vlFFEhQCLcBGAs/s1600/Kata-ha-jime.jpg\"><img height=\"219\" src=\"https://4.bp.blogspot.com/-fzSaohiyZ_8/WjbU2gHRcLI/AAAAAAAABig/Ew0p9scg9fYuXQsXXB-c1Nq5K3vlFFEhQCLcBGAs/s320/Kata-ha-jime.jpg\" width=\"463\" /></a></span></span></div>\r\n\r\n<div style=\"text-align:center\">&nbsp;</div>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><strong>Kata Juji Jime</strong></span></span></p>\r\n\r\n<div>\r\n<p style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\">estrangulamento cruzado pelo ombro</span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><a href=\"https://4.bp.blogspot.com/-O5J4LiFHFFs/WjbZEyqfwPI/AAAAAAAABiw/nk4rPVtKCjAvtueuAf50K8YlO1QH6x3RgCLcBGAs/s1600/kata-juji-jime.jpg\"><img height=\"320\" src=\"https://4.bp.blogspot.com/-O5J4LiFHFFs/WjbZEyqfwPI/AAAAAAAABiw/nk4rPVtKCjAvtueuAf50K8YlO1QH6x3RgCLcBGAs/s320/kata-juji-jime.jpg\" width=\"463\" /></a></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\">&nbsp;</span></span></p>\r\n</div>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><strong>Kata Te Jime</strong> estrangulamento de gola</span></span></p>\r\n\r\n<div class=\"separator\" style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><a href=\"https://3.bp.blogspot.com/-MpLhwd9t-kc/Wjba4Hot4GI/AAAAAAAABi8/5QJQrvc0shMvoVQ8_iG4C0n_fJdUTiy6gCLcBGAs/s1600/Katate-Jime.jpg\"><img height=\"158\" src=\"https://3.bp.blogspot.com/-MpLhwd9t-kc/Wjba4Hot4GI/AAAAAAAABi8/5QJQrvc0shMvoVQ8_iG4C0n_fJdUTiy6gCLcBGAs/s320/Katate-Jime.jpg\" width=\"534\" /></a></span></span></div>\r\n\r\n<div style=\"text-align:center\">&nbsp;</div>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><strong>Nami Juji Jime</strong> estrangulamento cruzado comum</span></span></p>\r\n\r\n<div class=\"separator\" style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><a href=\"https://3.bp.blogspot.com/-zlLHDclfqR8/Wjbcb5CSRAI/AAAAAAAABjI/Cwg6Eur2Q6sIxDMvmO18QDWf1jGiGsnQwCLcBGAs/s1600/Nami-Juji-Jime.jpg\"><img height=\"358\" src=\"https://3.bp.blogspot.com/-zlLHDclfqR8/Wjbcb5CSRAI/AAAAAAAABjI/Cwg6Eur2Q6sIxDMvmO18QDWf1jGiGsnQwCLcBGAs/s320/Nami-Juji-Jime.jpg\" width=\"508\" /></a></span></span></div>\r\n\r\n<div style=\"text-align:center\">&nbsp;</div>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><strong>Okuri Eri Jime</strong></span></span></p>\r\n\r\n<div style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\">estrangulamento deslizando pelo pesco&ccedil;o/gola</span></span></div>\r\n\r\n<div class=\"separator\" style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><a href=\"https://4.bp.blogspot.com/-rjYv1MozIoU/WjbdWji5_vI/AAAAAAAABjQ/IahO53A2EQs5twuIVZHoQ95kxJIydxSJACLcBGAs/s1600/okuri%2Beri%2Bjime.jpeg\"><img height=\"145\" src=\"https://4.bp.blogspot.com/-rjYv1MozIoU/WjbdWji5_vI/AAAAAAAABjQ/IahO53A2EQs5twuIVZHoQ95kxJIydxSJACLcBGAs/s320/okuri%2Beri%2Bjime.jpeg\" width=\"458\" /></a></span></span></div>\r\n\r\n<div style=\"text-align:center\">&nbsp;</div>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><strong>Ryo Te Jime</strong></span></span></p>\r\n\r\n<div style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\">estrangulamento com as duas m&atilde;os</span></span></div>\r\n\r\n<div class=\"separator\" style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><a href=\"https://1.bp.blogspot.com/-23HC34oEcWE/WjbgFXRI_1I/AAAAAAAABjc/P9-St0vrPrQQAKMKQz5s_tnn6cC79wBUACLcBGAs/s1600/ryote_jime.gif\"><img height=\"324\" src=\"https://1.bp.blogspot.com/-23HC34oEcWE/WjbgFXRI_1I/AAAAAAAABjc/P9-St0vrPrQQAKMKQz5s_tnn6cC79wBUACLcBGAs/s1600/ryote_jime.gif\" width=\"351\" /></a></span></span></div>\r\n\r\n<div style=\"text-align:center\">&nbsp;</div>\r\n\r\n<div>\r\n<p style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><strong>Sankaku Jime</strong> estrangulamento triangular</span></span></p>\r\n\r\n<div class=\"separator\" style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><a href=\"https://1.bp.blogspot.com/-nEOSiiELI6A/WjbhfZsaHEI/AAAAAAAABjo/7c7ksm0S1mwCo_ZNU5XXKQgAMXBOJZwowCLcBGAs/s1600/sankaku_jime.gif\"><img height=\"327\" src=\"https://1.bp.blogspot.com/-nEOSiiELI6A/WjbhfZsaHEI/AAAAAAAABjo/7c7ksm0S1mwCo_ZNU5XXKQgAMXBOJZwowCLcBGAs/s320/sankaku_jime.gif\" width=\"364\" /></a></span></span></div>\r\n\r\n<div style=\"text-align:center\">&nbsp;</div>\r\n</div>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><strong>Sode Guruma Jime</strong> estrangulamento com giro da manga</span></span></p>\r\n\r\n<div class=\"separator\" style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><a href=\"https://2.bp.blogspot.com/-GZSJEbykqoU/Wjbi6Ln8nYI/AAAAAAAABj0/IVdYNWm4P9ctyTq1GeMT7cLUTAma0Em7QCLcBGAs/s1600/shime-waza-sodegurumajime.png\"><img height=\"250\" src=\"https://2.bp.blogspot.com/-GZSJEbykqoU/Wjbi6Ln8nYI/AAAAAAAABj0/IVdYNWm4P9ctyTq1GeMT7cLUTAma0Em7QCLcBGAs/s1600/shime-waza-sodegurumajime.png\" width=\"682\" /></a></span></span></div>\r\n\r\n<div class=\"separator\" style=\"text-align:center\">&nbsp;</div>\r\n\r\n<div style=\"text-align:center\">&nbsp;</div>\r\n\r\n<div class=\"dmCustomHtml u_1212167956\" id=\"1212167956\">\r\n<h2 style=\"text-align:center\"><span style=\"font-size:36px\"><span style=\"font-family:Verdana,Geneva,sans-serif\">Kansetsu Waza - T&eacute;cnicas de Deslocamento</span></span></h2>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\">&nbsp; <strong>Ude-garami</strong></span></span></p>\r\n\r\n<div style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\">chaves de bra&ccedil;o</span></span></div>\r\n\r\n<div class=\"separator\" style=\"text-align:center\"><span style=\"font-size:18px\"><span style=\"font-family:Verdana,Geneva,sans-serif\"><a href=\"https://2.bp.blogspot.com/-L2kux1cDvjA/WvB3UzoBn9I/AAAAAAAADCM/J1a55dV8-gkMoO4RG1p41cGVy4FOunP1ACLcBGAs/s1600/ude_garami.gif\"><img height=\"273\" src=\"https://2.bp.blogspot.com/-L2kux1cDvjA/WvB3UzoBn9I/AAAAAAAADCM/J1a55dV8-gkMoO4RG1p41cGVy4FOunP1ACLcBGAs/s1600/ude_garami.gif\" width=\"4', '2020-08-16'),
-(4, 'Muay Thai', '<div class=\"container\">\r\n<div class=\"dmNewParagraph u_1440505187\" id=\"1440505187\">\r\n<h3 style=\"text-align:center\"><strong>CHUTES - TEIs</strong></h3>\r\n\r\n<div>Chute Frontal: <strong>Tei-trong</strong></div>\r\n\r\n<div>Chute Circular ao Tronco: <strong>Tei-chiyang</strong></div>\r\n\r\n<div>Chute Circular Alto: <strong>Tei-kan-kro</strong></div>\r\n\r\n<div>Chute Circular Baixo: <strong>Tei-tat</strong></div>\r\n\r\n<div>Chute Semi-Circular: <strong>Tei-rid</strong></div>\r\n\r\n<div>Chute Circular Cima e em Baixo: <strong>Tei-kot</strong></div>\r\n\r\n<div>Chute Circular em Escada: <strong>Yiep-tei</strong></div>\r\n\r\n<div>Chute Circular com Salto: <strong>Kra-tote-teii</strong></div>\r\n\r\n<div>Chute de Lateral: <strong>Tip-kang</strong></div>\r\n\r\n<div>Chute Rotativo de Calcanhar: <strong>Tip klap lang</strong></div>\r\n\r\n<div>Chute Rotativo de Calcanhar em Gancho: <strong>Tei klap lang</strong></div>\r\n\r\n<div>&nbsp;</div>\r\n\r\n<h3 style=\"text-align:center\"><strong>JOELHADA - KHAOs</strong></h3>\r\n\r\n<div>Joelhada Frontal: <strong>Khao trong</strong></div>\r\n\r\n<div>Joelhada Lateral: <strong>Khao Tat</strong></div>\r\n\r\n<div>Joelhada Circular: <strong>Khao chiyang</strong></div>\r\n\r\n<div>Joelhada com Salto: <strong>Khao loy</strong></div>\r\n\r\n<div>Joelhada Frontal Penetrante: <strong>Khao-youn</strong></div>\r\n\r\n<div>Joelhada em Escada: <strong>Yiep-khao</strong></div>\r\n\r\n<div>&nbsp;</div>\r\n\r\n<h3 style=\"text-align:center\"><strong>SOCOS - MATs</strong></h3>\r\n\r\n<div>Jab: <strong>Mat nueng</strong></div>\r\n\r\n<div>Direto: <strong>Mat trong</strong></div>\r\n\r\n<div>Gancho: <strong>Mat wiang san</strong></div>\r\n\r\n<div>Cruzado:<strong>Mat trong</strong></div>\r\n\r\n<div>Soco em Salto: <strong>Kradot chok</strong></div>\r\n\r\n<div>Punho Rotativo: <strong>Mat wiang soi</strong></div>\r\n\r\n<div>&nbsp;</div>\r\n\r\n<h3 style=\"text-align:center\"><strong>COTOVELADAS - SOKs</strong></h3>\r\n\r\n<div>Cotovelo Horizontal: <strong>Sok tat</strong></div>\r\n\r\n<div>Cotovelo Obl&iacute;quo: <strong>Khao chiang</strong></div>\r\n\r\n<div>Cotovelo Circular ao Tronco: <strong>Sok ti</strong></div>\r\n\r\n<div>Cotovelo de cima para baixo: <strong>Sok ti</strong></div>\r\n\r\n<div>Cotovelo de baixo para cima: <strong>Sok Ngat</strong></div>\r\n\r\n<div>Cotovelo Frontal: <strong>Sok phung</strong></div>\r\n\r\n<div>Reverso de Cotovelo Horizontal: <strong>Sok wiang klap</strong></div>\r\n\r\n<div>Cotovelo Rotativo: <strong>Mat wiang klap</strong></div>\r\n\r\n<div>Cotovelo Rotativo com Retorno: <strong>Sok klap</strong></div>\r\n\r\n<div>Dupla Cotovelada: <strong>Sok klap khu</strong></div>\r\n\r\n<div>Cotovelo em salto descendo: <strong>Kradot sok</strong></div>\r\n</div>\r\n</div>\r\n', '2020-08-17'),
-(5, 'Karate', '<div class=\"container text-center\">\r\n<h1 style=\"text-align:center\"><u><strong><span style=\"color:#c0392b\">T&eacute;cnicas do karate Kenshydokan</span></strong></u></h1>\r\n</div>\r\n\r\n<div class=\"container\">\r\n<h2 style=\"text-align:center\"><strong>Tsuki Waza - T&eacute;cnicas de Soco</strong></h2>\r\n\r\n<p style=\"text-align:center\">&nbsp;</p>\r\n\r\n<h3 style=\"text-align:center\"><u><strong>Seiken Oi Tsuki:</strong></u></h3>\r\n\r\n<h2 style=\"text-align:center\"><strong><a href=\"https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/78a5261.jpg\" target=\"_blank\"><img alt=\"\" src=\"https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/78a5261.jpg\" style=\"height:250px; width:333px\" /></a></strong></h2>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:11pt\"><span style=\"font-size:12.0pt\">&Eacute; um soco reto que parte da cintura com a palma da m&atilde;o para cima que ao percorrer o trajeto o punho rotaciona at&eacute; a palma da m&atilde;o ficar virada para baixo, atingindo seu oponente.</span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:11pt\"><span style=\"font-size:12.0pt\">Existem tr&ecirc;s maneiras principais de executar esse soco. S&atilde;o elas:</span></span></p>\r\n\r\n<ol>\r\n	<li style=\"text-align:center\"><span style=\"font-size:11pt\"><strong><span style=\"font-size:12.0pt\">Jodan Seiken Oi Tsuki:</span></strong><span style=\"font-size:12.0pt\"> Soco reto avan&ccedil;ando do pesco&ccedil;o pra cima.</span></span></li>\r\n	<li style=\"text-align:center\"><span style=\"font-size:11pt\"><strong><span style=\"font-size:12.0pt\">Chudan Seiken Oi Tsuki:</span></strong><span style=\"font-size:12.0pt\"> Soco reto avan&ccedil;ando na altura do t&oacute;rax.</span></span></li>\r\n	<li style=\"text-align:center\"><span style=\"font-size:11pt\"><strong><span style=\"font-size:12.0pt\">Guedan Seiken Oi Tsuki:</span></strong><span style=\"font-size:12.0pt\"> Soco reto avan&ccedil;ando da cintura pra baixo.</span></span></li>\r\n</ol>\r\n\r\n<p style=\"text-align:center\">&nbsp;</p>\r\n\r\n<h3 style=\"text-align:center\"><u><strong>Seiken Gyaku Oi Tsuki:</strong></u></h3>\r\n\r\n<p style=\"text-align:center\"><a href=\"https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/8b20fbf.jpg\" target=\"_blank\"><img alt=\"\" src=\"https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/8b20fbf.jpg\" style=\"height:250px; width:333px\" /></a></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:11pt\"><span style=\"font-size:12.0pt\">&Eacute; um outro soco reto que parte da cintura com a palma da m&atilde;o para cima que ao percorrer o trajeto o punho rotaciona at&eacute; a palma da m&atilde;o ficar virada para baixo, atingindo seu oponente, s&oacute; que dessa vez com a m&atilde;o inversa a da perna que est&aacute; avan&ccedil;ada.</span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:11pt\"><span style=\"font-size:12.0pt\">Tamb&eacute;m existem tr&ecirc;s maneiras principais de executar esse soco. S&atilde;o elas:</span></span></p>\r\n\r\n<ol>\r\n	<li style=\"text-align:center\"><span style=\"font-size:11pt\"><strong><span style=\"font-size:12.0pt\">Jodan Seiken Gyaku Oi Tsuki:</span></strong><span style=\"font-size:12.0pt\"> Soco reto avan&ccedil;ando do pesco&ccedil;o pra cima.</span></span></li>\r\n	<li style=\"text-align:center\"><span style=\"font-size:11pt\"><strong><span style=\"font-size:12.0pt\">Chudan Seiken Gyaku Oi Tsuki:</span></strong><span style=\"font-size:12.0pt\"> Soco reto avan&ccedil;ando na altura do t&oacute;rax.</span></span></li>\r\n	<li style=\"text-align:center\"><span style=\"font-size:11pt\"><strong><span style=\"font-size:12.0pt\">Guedan Seiken&nbsp;Gyaku Oi Tsuki:</span></strong><span style=\"font-size:12.0pt\"> Soco reto avan&ccedil;ando da cintura pra baixo.</span></span></li>\r\n</ol>\r\n\r\n<p style=\"text-align:center\">&nbsp;</p>\r\n\r\n<h3 style=\"text-align:center\"><u><strong>Tate Tsuki</strong></u></h3>\r\n\r\n<p style=\"text-align:center\"><a href=\"https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/9a56495.jpg\" target=\"_blank\"><img alt=\"\" src=\"https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/9a56495.jpg\" style=\"height:250px; width:333px\" /></a></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:11pt\"><span style=\"font-size:12.0pt\">&Eacute; um soco semi-rotacionado que parte da cintura com a palma da m&atilde;o para cima que ao percorrer o trajeto o punho e ele semi-rotaciona at&eacute; a palma da m&atilde;o ficar virada para o lado, atingindo seu oponente com o punho em p&eacute;.</span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:11pt\"><span style=\"font-size:12.0pt\">Existem tr&ecirc;s maneiras principais de executar esse soco. S&atilde;o elas:</span></span></p>\r\n\r\n<ol>\r\n	<li style=\"text-align:center\"><span style=\"font-size:11pt\"><strong><span style=\"font-size:12.0pt\">Jodan Seiken Tate Tsuki:</span></strong><span style=\"font-size:12.0pt\"> Soco semi-rotacionado avan&ccedil;ando do pesco&ccedil;o pra cima.</span></span></li>\r\n	<li style=\"text-align:center\"><span style=\"font-size:11pt\"><strong><span style=\"font-size:12.0pt\">Chudan Seiken Tate Tsuki:</span></strong><span style=\"font-size:12.0pt\"> Soco semi-rotacionado avan&ccedil;ando na altura do t&oacute;rax.</span></span></li>\r\n	<li style=\"text-align:center\"><span style=\"font-size:11pt\"><strong><span style=\"font-size:12.0pt\">Guedan Seiken&nbsp;Tate Tsuki:</span></strong><span style=\"font-size:12.0pt\"> Soco semi-rotacionado avan&ccedil;ando da cintura pra baixo.</span></span></li>\r\n</ol>\r\n\r\n<p style=\"text-align:center\">&nbsp;</p>\r\n\r\n<h3 style=\"text-align:center\"><u><strong><span style=\"font-size:11pt\"><span style=\"font-size:12.0pt\">Gyaku Tate Tsuki</span></span></strong></u></h3>\r\n\r\n<p style=\"text-align:center\"><a href=\"https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/6b34e82.jpg\" target=\"_blank\"><img alt=\"\" src=\"https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/6b34e82.jpg\" style=\"height:250px; width:333px\" /></a></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:11pt\"><span style=\"font-size:12.0pt\">&Eacute; um soco semi-rotacionado que parte da cintura com a palma da m&atilde;o para cima que ao percorrer o trajeto o punho e ele semi-rotaciona at&eacute; a palma da m&atilde;o ficar virada para o lado, atingindo seu oponente com o punho em p&eacute;, s&oacute; que dessa vez com a m&atilde;o inversa a da perna que est&aacute; avan&ccedil;ada.</span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:11pt\"><span style=\"font-size:12.0pt\">Existem tr&ecirc;s maneiras principais de executar esse soco. S&atilde;o elas:</span></span></p>\r\n\r\n<ol>\r\n	<li style=\"text-align:center\"><span style=\"font-size:11pt\"><strong><span style=\"font-size:12.0pt\">Jodan Seiken Gyaku Tate Tsuki:</span></strong><span style=\"font-size:12.0pt\"> Soco semi-rotacionado avan&ccedil;ando do pesco&ccedil;o pra cima.</span></span></li>\r\n	<li style=\"text-align:center\"><span style=\"font-size:11pt\"><strong><span style=\"font-size:12.0pt\">Chudan Seiken&nbsp;Gyaku Tate Tsuki:</span></strong><span style=\"font-size:12.0pt\"> Soco semi-rotacionado avan&ccedil;ando na altura do t&oacute;rax.</span></span></li>\r\n	<li style=\"text-align:center\"><span style=\"font-size:11pt\"><strong><span style=\"font-size:12.0pt\">Guedan Seiken&nbsp;Gyaku Tate Tsuki:</span></strong><span style=\"font-size:12.0pt\"> Soco semi-rotacionado avan&ccedil;ando da cintura pra baixo.</span></span></li>\r\n</ol>\r\n\r\n<p style=\"text-align:center\">&nbsp;</p>\r\n\r\n<h3 style=\"text-align:center\"><u><strong>Seiken Mawashi Tsuki</strong></u></h3>\r\n\r\n<p style=\"text-align:center\"><a href=\"https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/10f20e90.jpg\"><img alt=\"\" src=\"https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/10f20e90.jpg\" style=\"height:250px; width:333px\" /></a></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:11pt\"><span style=\"font-size:12.0pt\">&Eacute; um soco com curva que parte do kamae(guarda de lutas em p&eacute;) que ao percorrer o trajeto o punho rotaciona at&eacute; a palma da m&atilde;o ficar virada para baixo, atingindo seu oponente na lateral.</span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:11pt\"><span style=\"font-size:12.0pt\">Existem duas maneiras principais de executar esse soco pois abaixo da cintura esse soco n&atilde;o tem efeito. S&atilde;o elas:</span></span></p>\r\n\r\n<ol>\r\n	<li style=\"text-align:center\"><span style=\"font-size:11pt\"><strong><span style=\"font-size:12.0pt\">Jodan Seiken Mawashi Tsuki:</span></strong><span style=\"font-size:12.0pt\"> Soco com curva do pesco&ccedil;o pra cima.</span></span></li>\r\n	<li style=\"text-align:center\"><span style=\"font-size:11pt\"><strong><span style=\"font-size:12.0pt\">Chudan Seiken Mawashi Tsuki:</span></strong><span style=\"font-size:12.0pt\"> Soco com curva na altura do t&oacute;rax.</span></span></li>\r\n</ol>\r\n\r\n<p style=\"text-align:center\">&nbsp;</p>\r\n\r\n<h3 style=\"text-align:center\"><u><strong><span style=\"font-size:11pt\"><span style=\"font-size:12.0pt\">Shita Tsuki</span></span></strong></u></h3>\r\n\r\n<p style=\"text-align:center\"><a href=\"https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/11584795.jpg\" target=\"_blank\"><img alt=\"\" src=\"https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/11584795.jpg\" style=\"height:250px; width:333px\" /></a></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:11pt\"><span style=\"font-size:12.0pt\">&Eacute; um soco n&atilde;o rotacionado que parte da cintura com a palma da m&atilde;o para cima que ao percorrer o trajeto o punho n&atilde;o </span></span><span style=\"font-size:11pt\"><span style=\"font-size:12.0pt\">rotaciona mantendo se na mesma posi&ccedil;&atilde;o, atingindo seu oponente com o punho na posi&ccedil;&atilde;o inicial.</span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:11pt\"><span style=\"font-size:12.0pt\">Existem tr&ecirc;s maneiras principais de executar esse soco. S&atilde;o elas:</span></span></p>\r\n\r\n<ol>\r\n	<li style=\"text-align:center\"><span style=\"font-size:11pt\"><strong><span style=\"font-size:12.0pt\">Jodan Seiken Shita Tsuki:</span></strong><span style=\"font-size:12.0pt\"> Soco sem rotacionar o punho avan&ccedil;ando do pesco&ccedil;o pra cima.</span></span></li>\r\n	<li style=\"text-align:center\"><span style=\"font-size:11pt\"><strong><span style=\"font-size:12.0pt\">Chudan Seiken&nbsp;ShitaTsuki:</span></strong><span style=\"font-size:12.0pt\"> Soco sem rotacionar o punho avan&ccedil;ando na altura do t&oacute;rax.</span></span></li>\r\n	<li style=\"text-align:center\"><span style=\"font-size:11pt\"><strong><span style=\"font-size:12.0pt\">Guedan Seiken&nbsp;Shita Tsuki:</span></strong><span style=\"font-size:12.0pt\"> Socosem rotacionar o punho avan&ccedil;ando da cintura pra baixo.</span></span></li>\r\n</ol>\r\n\r\n<p style=\"text-align:center\">&nbsp;</p>\r\n\r\n<h2 style=\"text-align:center\"><strong>Uke Waza - T&eacute;cnicas de Defesa</strong></h2>\r\n\r\n<h3 style=\"text-align:center\"><u><strong>Guedan Barai</strong></u></h3>\r\n\r\n<p style=\"text-align:center\"><a href=\"https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/12334168.jpg\" target=\"_blank\"><img alt=\"\" src=\"https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/12334168.jpg\" style=\"height:250px; width:333px\" /></a></p>\r\n\r\n<p style=\"text-align:center\">Normalmente essa &eacute; a primeira t&eacute;cnica ou primeira defesa que aprendemos no karate, ao executar voc&ecirc; sobe o bra&ccedil;o na autura do ombro, e logo em seguida desse como uma varrida defendendo de dentro para fora.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n</div>\r\n', '2020-08-18'),
-(6, 'Kickboxing', '<div class=\"container\">\r\n<h1 style=\"text-align:center\"><strong><u><span style=\"color:#c0392b\">Kickboxing</span></u></strong></h1>\r\n\r\n<p><strong>Full contact - Contato total</strong> Regras de contato total, ou kickboxing americano, &eacute; essencialmente uma mistura de boxe ocidental e karat&ecirc; tradicional. Os kickboxers masculinos s&atilde;o de peito nu vestindo cal&ccedil;as de kickboxing e equipamentos de prote&ccedil;&atilde;o, incluindo: protetor de boca, m&atilde;o-wraps, 10 oz (280 g). luvas de boxe, guarda-costas, caneleiras e chuteiras e capacete de prote&ccedil;&atilde;o (para amadores e menores de 16 anos). Os kickboxers femininos usar&atilde;o um suti&atilde; esportivo e prote&ccedil;&atilde;o para o peito, al&eacute;m do vestu&aacute;rio masculino / equipamento de prote&ccedil;&atilde;o.<br />\r\nLutadores not&aacute;veis â€‹â€‹sob regras de contato total incluem Marek Piotrowski, Dennis Alexio, Joe Lewis, Rick Roufus, Jean-Yves Theriault, Benny Urquidez, Bill Wallace e Don &quot;The Dragon&quot; Wilson.<br />\r\nRegras:<br />\r\nOs oponentes podem bater uns nos outros com socos e chutes, golpeando acima da cintura.<br />\r\nCotovelos e joelhos s&atilde;o proibidos e o uso das canelas raramente &eacute; permitido.<br />\r\nLuta de clinch e luta s&atilde;o proibidos, mas as varreduras s&atilde;o legais, mas variam dependendo do &aacute;rbitro.<br />\r\nAs lutas s&atilde;o geralmente de 3 a 12 rodadas (com dura&ccedil;&atilde;o de 2 a 3 minutos cada), com um descanso de 1 minuto entre as rodadas.<br />\r\n<strong>Semi-Contact - Semi-Contato</strong> Regras de semi-contato ou Pontos de Combate, &eacute; a variante do kickboxing americano mais parecido com o karat&ecirc;, pois consiste em lutar com o objetivo de marcar pontos com &ecirc;nfase na entrega, velocidade e t&eacute;cnica. Sob tais regras, as lutas s&atilde;o realizadas no tatami, apresentando os cintos para classificar os lutadores em ordem de experi&ecirc;ncia e habilidade. Os kickboxers masculinos usam camisas e cal&ccedil;as de kickboxing, bem como equipamentos de prote&ccedil;&atilde;o, incluindo: protetor de boca, envolt&oacute;rios de m&atilde;o, 10 oz (280 g). luvas de boxe, guarda-costas, caneleiras, chuteiras e arn&ecirc;s. Os kickboxers femininos usar&atilde;o um suti&atilde; esportivo e prote&ccedil;&atilde;o para o peito, al&eacute;m do vestu&aacute;rio masculino / equipamento de prote&ccedil;&atilde;o.<br />\r\nLutadores not&aacute;veis â€‹â€‹sob regras de semi-contato incluem Raymond Daniels, Michael Page e Gregorio Di Leo.<br />\r\nRegras:<br />\r\nOs lutadores podem marcar atrav&eacute;s de socos ou chutes, golpeando acima da cintura e varreduras de p&eacute;, executado abaixo do tornozelo.<br />\r\nSocos, pontap&eacute;s e varreduras de p&eacute; recebem 1 ponto. Pontap&eacute;s na cabe&ccedil;a ou chutes no corpo recebem 2 pontos. Chutes saltantes na cabe&ccedil;a recebem 3 pontos.<br />\r\nPontap&eacute;s e machadadas s&atilde;o permitidos, mas devem ser executados com a sola do p&eacute;.<br />\r\nO uso das canelas raramente &eacute; permitido, exceto para t&eacute;cnicas de salto e fia&ccedil;&atilde;o.<br />\r\nCotovelos, joelhos e backfists girat&oacute;rios s&atilde;o proibidos.<br />\r\nLuta de clinch, lances e varreduras (com exce&ccedil;&atilde;o de varreduras de p&eacute;) s&atilde;o proibidos.<br />\r\nAs lutas geralmente duram 3 rodadas (com dura&ccedil;&atilde;o de 2 a 3 minutos cada) com um descanso de 1 minuto entre as rodadas.<br />\r\n<strong>Shoot boxing</strong>Shoot boxing &eacute; um estilo &uacute;nico de kickboxing popular no Jap&atilde;o que utiliza submiss&otilde;es em p&eacute;, como estrangulamentos, armlock e pulseiras, al&eacute;m de chutes, socos, joelhos e arremessos. Os lutadores masculinos t&ecirc;m o peito nu usando cal&ccedil;as apertadas e equipamento de prote&ccedil;&atilde;o, incluindo: protetores bucais, protetores de m&atilde;o, 280 g (10 oz). luvas de boxe e guarda-costas. Os kickboxers femininos usar&atilde;o um suti&atilde; esportivo e prote&ccedil;&atilde;o para o peito, al&eacute;m do vestu&aacute;rio masculino / equipamento de prote&ccedil;&atilde;o.<br />\r\nLutadores not&aacute;veis sob as regras do boxe incluem Rena Kubota, Kenichi Ogata, Hiroki Shishido, Andy Souwer e Ai Takahashi.<br />\r\nRegras:<br />\r\nOs opositores podem atacar um ao outro com socos, chutes, incluindo chutes abaixo da cintura, exceto na virilha e nos joelhos.<br />\r\nCotovelos s&atilde;o proibidos.<br />\r\nLuta de clinch, lances e varreduras s&atilde;o permitidos.<br />\r\nSubmiss&otilde;es permanentes s&atilde;o permitidas.<br />\r\nAs lutas s&atilde;o de 3 rodadas (dura&ccedil;&atilde;o de 3 minutos cada) com um descanso de 1 minuto entre as rodadas.</p>\r\n\r\n<h3><strong>T&eacute;cnicas</strong></h3>\r\n\r\n<p><strong>T&eacute;cnicas de Soco</strong></p>\r\n\r\n<p>Obs.: No Ingl&ecirc;s as palavras s&atilde;o normalmente pronunciadas de forma diferente do portugu&ecirc;s.</p>\r\n\r\n<p><br />\r\n<strong>Jab</strong> - soco direto da m&atilde;o da frente<br />\r\n<strong>Cross</strong> - soco direto da m&atilde;o de tr&aacute;s<br />\r\n<strong>hook</strong> - gancho<br />\r\n<strong>Uppercut</strong> - soco ascendente atingindo o queixo<br />\r\n<strong>Cross counter</strong> - soco cruzado<br />\r\n<strong>Flying punch</strong> - soco voador<br />\r\n<strong>Over hand</strong> - soco semi-circular<br />\r\n<strong>T&eacute;cnicas de ChuteAxe kick</strong> - chute de pis&atilde;o (sola do p&eacute;)<br />\r\n<strong>Back kick</strong> - chute para tr&aacute;s<br />\r\n<strong>Front kick</strong> - Chute frontal<br />\r\n<strong>Hook kick</strong> - chute estendendo a perna para desser o calcanhar<br />\r\n<strong>Roundhouse kick</strong> or <strong>circle kick</strong> - chute circular<br />\r\n<strong>Semi-circular kick</strong> - Chute semi-circular<br />\r\n<strong>Sweeping</strong> - varredura (dar rastera)<br />\r\n<strong>Side kick</strong> - chute lateral (yoko geri)<br />\r\n<strong>T&eacute;cnicas de JoelhadaFlying knee</strong> - joelhada voadora<br />\r\n<strong>Side knee</strong> - Joelhada lateral<br />\r\n<strong>Straight Knee</strong> - joelhada frontal<br />\r\n<strong>T&eacute;cnicas de CotoveladaDownward Elbow</strong> - Cotovelada para baixo<br />\r\n<strong>Side Elbow</strong> - Cotovelada lateral<br />\r\n<strong>Upward elbow</strong> - Cotovelada para cima</p>\r\n</div>\r\n', '2020-08-18');
+(2, 'Ju Jitsu', '<div class="container">
+<div class="dmBody u_dmStyle_template_jiu-jitsu" id="dmFirstContainer">
+<div class="allWrapper" id="allWrapper">
+<div class="dmContent" id="dm_content">
+<div class="dmDefaultRespTmpl" id="1994795488">
+<div class="dmDefaultPage dmRespRowsWrapper dmRespRowsWrapperSize1 innerPageTmplBox" id="1538663754">
+<div class="dmDefaultListContentRow dmRespRow" id="1493656194">
+<div class="dmRespColsWrapper" id="1668211504">
+<div class="dmRespCol large-12 medium-12 small-12" id="1150745240">
+<h1 style="text-align:center"><u><strong><span style="color:#c0392b">kansetsu waza (T&eacute;cnicas no Solo)</span></strong></u></h1>
+
+<p>&nbsp;</p>
+
+<h2 style="text-align:center"><span style="font-size:36px">Shime Waza - T&eacute;cnicas de Estrangulamento</span></h2>
+
+<p style="text-align:center">&nbsp;<span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><strong>Gyaku Juji Jime</strong></span></span></p>
+
+<div style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif">estrangulamento cruzado invertido</span></span></div>
+
+<div class="separator" style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><a href="https://3.bp.blogspot.com/-1MEHwoz8OYo/Wi2VC87Y4RI/AAAAAAAABfE/T0rpoFZ70Ash3dASmTa4KWinZQ7t-5PAQCEwYBhgL/s1600/Gyaku%2BJuji%2BJime.png"><img height="190" src="https://3.bp.blogspot.com/-1MEHwoz8OYo/Wi2VC87Y4RI/AAAAAAAABfE/T0rpoFZ70Ash3dASmTa4KWinZQ7t-5PAQCEwYBhgL/s320/Gyaku%2BJuji%2BJime.png" width="561" /></a></span></span></div>
+
+<div class="separator" style="text-align:center">&nbsp;</div>
+
+<p style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><strong>Hadaka Jime</strong></span></span></p>
+</div>
+
+<div class="dmRespCol large-12 medium-12 small-12">
+<p style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif">estrangulamento sem roupa</span></span></p>
+
+<div class="separator" style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><a href="https://3.bp.blogspot.com/-4EmXH0_zhls/WjbTtSv7T6I/AAAAAAAABiU/r5g8eUs9lfAPj6VWKJIUWX8TnWTYPI1NgCLcBGAs/s320/hadakajime-judo-technique.gif"><img height="186" src="https://3.bp.blogspot.com/-4EmXH0_zhls/WjbTtSv7T6I/AAAAAAAABiU/r5g8eUs9lfAPj6VWKJIUWX8TnWTYPI1NgCLcBGAs/s320/hadakajime-judo-technique.gif" width="483" /></a></span></span></div>
+
+<div class="separator" style="text-align:center">&nbsp;</div>
+
+<p style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><strong>Kata Ha Jime</strong></span></span></p>
+</div>
+
+<div class="dmRespCol large-12 medium-12 small-12">
+<p style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif">estrangulamento com um ombro</span></span></p>
+
+<div class="separator" style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><a href="https://4.bp.blogspot.com/-fzSaohiyZ_8/WjbU2gHRcLI/AAAAAAAABig/Ew0p9scg9fYuXQsXXB-c1Nq5K3vlFFEhQCLcBGAs/s1600/Kata-ha-jime.jpg"><img height="219" src="https://4.bp.blogspot.com/-fzSaohiyZ_8/WjbU2gHRcLI/AAAAAAAABig/Ew0p9scg9fYuXQsXXB-c1Nq5K3vlFFEhQCLcBGAs/s320/Kata-ha-jime.jpg" width="463" /></a></span></span></div>
+
+<div style="text-align:center">&nbsp;</div>
+
+<p style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><strong>Kata Juji Jime</strong></span></span></p>
+</div>
+
+<div class="dmRespCol large-12 medium-12 small-12">
+<p style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif">estrangulamento cruzado pelo ombro</span></span></p>
+
+<p style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><a href="https://4.bp.blogspot.com/-O5J4LiFHFFs/WjbZEyqfwPI/AAAAAAAABiw/nk4rPVtKCjAvtueuAf50K8YlO1QH6x3RgCLcBGAs/s1600/kata-juji-jime.jpg"><img height="320" src="https://4.bp.blogspot.com/-O5J4LiFHFFs/WjbZEyqfwPI/AAAAAAAABiw/nk4rPVtKCjAvtueuAf50K8YlO1QH6x3RgCLcBGAs/s320/kata-juji-jime.jpg" width="463" /></a></span></span></p>
+
+<p style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif">&nbsp;</span></span></p>
+</div>
+
+<p style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><strong>Kata Te Jime</strong> estrangulamento de gola</span></span></p>
+
+<div class="separator" style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><a href="https://3.bp.blogspot.com/-MpLhwd9t-kc/Wjba4Hot4GI/AAAAAAAABi8/5QJQrvc0shMvoVQ8_iG4C0n_fJdUTiy6gCLcBGAs/s1600/Katate-Jime.jpg"><img height="158" src="https://3.bp.blogspot.com/-MpLhwd9t-kc/Wjba4Hot4GI/AAAAAAAABi8/5QJQrvc0shMvoVQ8_iG4C0n_fJdUTiy6gCLcBGAs/s320/Katate-Jime.jpg" width="534" /></a></span></span></div>
+
+<div style="text-align:center">&nbsp;</div>
+
+<p style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><strong>Nami Juji Jime</strong> estrangulamento cruzado comum</span></span></p>
+
+<div class="separator" style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><a href="https://3.bp.blogspot.com/-zlLHDclfqR8/Wjbcb5CSRAI/AAAAAAAABjI/Cwg6Eur2Q6sIxDMvmO18QDWf1jGiGsnQwCLcBGAs/s320/Nami-Juji-Jime.jpg"><img height="358" src="https://3.bp.blogspot.com/-zlLHDclfqR8/Wjbcb5CSRAI/AAAAAAAABjI/Cwg6Eur2Q6sIxDMvmO18QDWf1jGiGsnQwCLcBGAs/s320/Nami-Juji-Jime.jpg" width="508" /></a></span></span></div>
+
+<div style="text-align:center">&nbsp;</div>
+
+<p style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><strong>Okuri Eri Jime</strong></span></span></p>
+
+<div style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif">estrangulamento deslizando pelo pesco&ccedil;o/gola</span></span></div>
+
+<div class="separator" style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><a href="https://4.bp.blogspot.com/-rjYv1MozIoU/WjbdWji5_vI/AAAAAAAABjQ/IahO53A2EQs5twuIVZHoQ95kxJIydxSJACLcBGAs/s320/okuri%2Beri%2Bjime.jpeg"><img height="145" src="https://4.bp.blogspot.com/-rjYv1MozIoU/WjbdWji5_vI/AAAAAAAABjQ/IahO53A2EQs5twuIVZHoQ95kxJIydxSJACLcBGAs/s320/okuri%2Beri%2Bjime.jpeg" width="458" /></a></span></span></div>
+
+<div style="text-align:center">&nbsp;</div>
+
+<p style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><strong>Ryo Te Jime</strong></span></span></p>
+
+<div style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif">estrangulamento com as duas m&atilde;os</span></span></div>
+
+<div class="separator" style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><a href="https://1.bp.blogspot.com/-23HC34oEcWE/WjbgFXRI_1I/AAAAAAAABjc/P9-St0vrPrQQAKMKQz5s_tnn6cC79wBUACLcBGAs/s1600/ryote_jime.gif"><img height="324" src="https://1.bp.blogspot.com/-23HC34oEcWE/WjbgFXRI_1I/AAAAAAAABjc/P9-St0vrPrQQAKMKQz5s_tnn6cC79wBUACLcBGAs/s1600/ryote_jime.gif" width="351" /></a></span></span></div>
+
+<div style="text-align:center">&nbsp;</div>
+
+<div>
+<p style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><strong>Sankaku Jime</strong> estrangulamento triangular</span></span></p>
+
+<div class="separator" style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><a href="https://1.bp.blogspot.com/-nEOSiiELI6A/WjbhfZsaHEI/AAAAAAAABjo/7c7ksm0S1mwCo_ZNU5XXKQgAMXBOJZwowCLcBGAs/s320/sankaku_jime.gif"><img height="327" src="https://1.bp.blogspot.com/-nEOSiiELI6A/WjbhfZsaHEI/AAAAAAAABjo/7c7ksm0S1mwCo_ZNU5XXKQgAMXBOJZwowCLcBGAs/s320/sankaku_jime.gif" width="364" /></a></span></span></div>
+
+<div style="text-align:center">&nbsp;</div>
+</div>
+
+<p style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><strong>Sode Guruma Jime</strong> estrangulamento com giro da manga</span></span></p>
+
+<div class="separator" style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><a href="https://2.bp.blogspot.com/-GZSJEbykqoU/Wjbi6Ln8nYI/AAAAAAAABj0/IVdYNWm4P9ctyTq1GeMT7cLUTAma0Em7QCLcBGAs/s1600/shime-waza-sodegurumajime.png"><img height="250" src="https://2.bp.blogspot.com/-GZSJEbykqoU/Wjbi6Ln8nYI/AAAAAAAABj0/IVdYNWm4P9ctyTq1GeMT7cLUTAma0Em7QCLcBGAs/s1600/shime-waza-sodegurumajime.png" width="682" /></a></span></span></div>
+
+<div class="separator" style="text-align:center">&nbsp;</div>
+
+<div style="text-align:center">&nbsp;</div>
+
+<div class="dmCustomHtml u_1212167956" id="1212167956">
+<h2 style="text-align:center"><span style="font-size:36px"><span style="font-family:Verdana,Geneva,sans-serif">Kansetsu Waza - T&eacute;cnicas de Deslocamento</span></span></h2>
+
+<p style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif">&nbsp; <strong>Ude-garami</strong></span></span></p>
+
+<div style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif">chaves de bra&ccedil;o</span></span></div>
+
+<div class="separator" style="text-align:center"><span style="font-size:18px"><span style="font-family:Verdana,Geneva,sans-serif"><a href="https://2.bp.blogspot.com/-L2kux1cDvjA/WvB3UzoBn9I/AAAAAAAADCM/J1a55dV8-gkMoO4RG1p41cGVy4FOunP1ACLcBGAs/s1600/ude_garami.gif"><img height="273" src="https://2.bp.blogspot.com/-L2kux1cDvjA/WvB3UzoBn9I/AAAAAAAADCM/J1a55dV8-gkMoO4RG1p41cGVy4FOunP1ACLcBGAs/s1600/ude_garami.gif" width="4', '2020-08-16'),
+(4, 'Muay Thai', '<div class="container">
+<div class="dmNewParagraph u_1440505187" id="1440505187">
+<h3 style="text-align:center"><strong>CHUTES - TEIs</strong></h3>
+
+<div>Chute Frontal: <strong>Tei-trong</strong></div>
+
+<div>Chute Circular ao Tronco: <strong>Tei-chiyang</strong></div>
+
+<div>Chute Circular Alto: <strong>Tei-kan-kro</strong></div>
+
+<div>Chute Circular Baixo: <strong>Tei-tat</strong></div>
+
+<div>Chute Semi-Circular: <strong>Tei-rid</strong></div>
+
+<div>Chute Circular Cima e em Baixo: <strong>Tei-kot</strong></div>
+
+<div>Chute Circular em Escada: <strong>Yiep-tei</strong></div>
+
+<div>Chute Circular com Salto: <strong>Kra-tote-teii</strong></div>
+
+<div>Chute de Lateral: <strong>Tip-kang</strong></div>
+
+<div>Chute Rotativo de Calcanhar: <strong>Tip klap lang</strong></div>
+
+<div>Chute Rotativo de Calcanhar em Gancho: <strong>Tei klap lang</strong></div>
+
+<div>&nbsp;</div>
+
+<h3 style="text-align:center"><strong>JOELHADA - KHAOs</strong></h3>
+
+<div>Joelhada Frontal: <strong>Khao trong</strong></div>
+
+<div>Joelhada Lateral: <strong>Khao Tat</strong></div>
+
+<div>Joelhada Circular: <strong>Khao chiyang</strong></div>
+
+<div>Joelhada com Salto: <strong>Khao loy</strong></div>
+
+<div>Joelhada Frontal Penetrante: <strong>Khao-youn</strong></div>
+
+<div>Joelhada em Escada: <strong>Yiep-khao</strong></div>
+
+<div>&nbsp;</div>
+
+<h3 style="text-align:center"><strong>SOCOS - MATs</strong></h3>
+
+<div>Jab: <strong>Mat nueng</strong></div>
+
+<div>Direto: <strong>Mat trong</strong></div>
+
+<div>Gancho: <strong>Mat wiang san</strong></div>
+
+<div>Cruzado:<strong>Mat trong</strong></div>
+
+<div>Soco em Salto: <strong>Kradot chok</strong></div>
+
+<div>Punho Rotativo: <strong>Mat wiang soi</strong></div>
+
+<div>&nbsp;</div>
+
+<h3 style="text-align:center"><strong>COTOVELADAS - SOKs</strong></h3>
+
+<div>Cotovelo Horizontal: <strong>Sok tat</strong></div>
+
+<div>Cotovelo Obl&iacute;quo: <strong>Khao chiang</strong></div>
+
+<div>Cotovelo Circular ao Tronco: <strong>Sok ti</strong></div>
+
+<div>Cotovelo de cima para baixo: <strong>Sok ti</strong></div>
+
+<div>Cotovelo de baixo para cima: <strong>Sok Ngat</strong></div>
+
+<div>Cotovelo Frontal: <strong>Sok phung</strong></div>
+
+<div>Reverso de Cotovelo Horizontal: <strong>Sok wiang klap</strong></div>
+
+<div>Cotovelo Rotativo: <strong>Mat wiang klap</strong></div>
+
+<div>Cotovelo Rotativo com Retorno: <strong>Sok klap</strong></div>
+
+<div>Dupla Cotovelada: <strong>Sok klap khu</strong></div>
+
+<div>Cotovelo em salto descendo: <strong>Kradot sok</strong></div>
+</div>
+</div>
+', '2020-08-17'),
+(5, 'Karate', '<div class="container text-center">
+<h1 style="text-align:center"><u><strong><span style="color:#c0392b">T&eacute;cnicas do karate Kenshydokan</span></strong></u></h1>
+</div>
+
+<div class="container">
+<h2 style="text-align:center"><strong>Tsuki Waza - T&eacute;cnicas de Soco</strong></h2>
+
+<p style="text-align:center">&nbsp;</p>
+
+<h3 style="text-align:center"><u><strong>Seiken Oi Tsuki:</strong></u></h3>
+
+<h2 style="text-align:center"><strong><a href="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/78a5261.jpg" target="_blank"><img alt="" src="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/78a5261.jpg" style="height:250px; width:333px" /></a></strong></h2>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">&Eacute; um soco reto que parte da cintura com a palma da m&atilde;o para cima que ao percorrer o trajeto o punho rotaciona at&eacute; a palma da m&atilde;o ficar virada para baixo, atingindo seu oponente.</span></span></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">Existem tr&ecirc;s maneiras principais de executar esse soco. S&atilde;o elas:</span></span></p>
+
+<ol>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Jodan Seiken Oi Tsuki:</span></strong><span style="font-size:12.0pt"> Soco reto avan&ccedil;ando do pesco&ccedil;o pra cima.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Chudan Seiken Oi Tsuki:</span></strong><span style="font-size:12.0pt"> Soco reto avan&ccedil;ando na altura do t&oacute;rax.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Guedan Seiken Oi Tsuki:</span></strong><span style="font-size:12.0pt"> Soco reto avan&ccedil;ando da cintura pra baixo.</span></span></li>
+</ol>
+
+<p style="text-align:center">&nbsp;</p>
+
+<h3 style="text-align:center"><u><strong>Seiken Gyaku Oi Tsuki:</strong></u></h3>
+
+<p style="text-align:center"><a href="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/8b20fbf.jpg" target="_blank"><img alt="" src="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/8b20fbf.jpg" style="height:250px; width:333px" /></a></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">&Eacute; um outro soco reto que parte da cintura com a palma da m&atilde;o para cima que ao percorrer o trajeto o punho rotaciona at&eacute; a palma da m&atilde;o ficar virada para baixo, atingindo seu oponente, s&oacute; que dessa vez com a m&atilde;o inversa a da perna que est&aacute; avan&ccedil;ada.</span></span></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">Tamb&eacute;m existem tr&ecirc;s maneiras principais de executar esse soco. S&atilde;o elas:</span></span></p>
+
+<ol>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Jodan Seiken Gyaku Oi Tsuki:</span></strong><span style="font-size:12.0pt"> Soco reto avan&ccedil;ando do pesco&ccedil;o pra cima.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Chudan Seiken Gyaku Oi Tsuki:</span></strong><span style="font-size:12.0pt"> Soco reto avan&ccedil;ando na altura do t&oacute;rax.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Guedan Seiken&nbsp;Gyaku Oi Tsuki:</span></strong><span style="font-size:12.0pt"> Soco reto avan&ccedil;ando da cintura pra baixo.</span></span></li>
+</ol>
+
+<p style="text-align:center">&nbsp;</p>
+
+<h3 style="text-align:center"><u><strong>Tate Tsuki</strong></u></h3>
+
+<p style="text-align:center"><a href="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/9a56495.jpg" target="_blank"><img alt="" src="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/9a56495.jpg" style="height:250px; width:333px" /></a></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">&Eacute; um soco semi-rotacionado que parte da cintura com a palma da m&atilde;o para cima que ao percorrer o trajeto o punho e ele semi-rotaciona at&eacute; a palma da m&atilde;o ficar virada para o lado, atingindo seu oponente com o punho em p&eacute;.</span></span></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">Existem tr&ecirc;s maneiras principais de executar esse soco. S&atilde;o elas:</span></span></p>
+
+<ol>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Jodan Seiken Tate Tsuki:</span></strong><span style="font-size:12.0pt"> Soco semi-rotacionado avan&ccedil;ando do pesco&ccedil;o pra cima.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Chudan Seiken Tate Tsuki:</span></strong><span style="font-size:12.0pt"> Soco semi-rotacionado avan&ccedil;ando na altura do t&oacute;rax.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Guedan Seiken&nbsp;Tate Tsuki:</span></strong><span style="font-size:12.0pt"> Soco semi-rotacionado avan&ccedil;ando da cintura pra baixo.</span></span></li>
+</ol>
+
+<p style="text-align:center">&nbsp;</p>
+
+<h3 style="text-align:center"><u><strong><span style="font-size:11pt"><span style="font-size:12.0pt">Gyaku Tate Tsuki</span></span></strong></u></h3>
+
+<p style="text-align:center"><a href="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/6b34e82.jpg" target="_blank"><img alt="" src="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/6b34e82.jpg" style="height:250px; width:333px" /></a></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">&Eacute; um soco semi-rotacionado que parte da cintura com a palma da m&atilde;o para cima que ao percorrer o trajeto o punho e ele semi-rotaciona at&eacute; a palma da m&atilde;o ficar virada para o lado, atingindo seu oponente com o punho em p&eacute;, s&oacute; que dessa vez com a m&atilde;o inversa a da perna que est&aacute; avan&ccedil;ada.</span></span></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">Existem tr&ecirc;s maneiras principais de executar esse soco. S&atilde;o elas:</span></span></p>
+
+<ol>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Jodan Seiken Gyaku Tate Tsuki:</span></strong><span style="font-size:12.0pt"> Soco semi-rotacionado avan&ccedil;ando do pesco&ccedil;o pra cima.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Chudan Seiken&nbsp;Gyaku Tate Tsuki:</span></strong><span style="font-size:12.0pt"> Soco semi-rotacionado avan&ccedil;ando na altura do t&oacute;rax.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Guedan Seiken&nbsp;Gyaku Tate Tsuki:</span></strong><span style="font-size:12.0pt"> Soco semi-rotacionado avan&ccedil;ando da cintura pra baixo.</span></span></li>
+</ol>
+
+<p style="text-align:center">&nbsp;</p>
+
+<h3 style="text-align:center"><u><strong>Seiken Mawashi Tsuki</strong></u></h3>
+
+<p style="text-align:center"><a href="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/10f20e90.jpg"><img alt="" src="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/10f20e90.jpg" style="height:250px; width:333px" /></a></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">&Eacute; um soco com curva que parte do kamae(guarda de lutas em p&eacute;) que ao percorrer o trajeto o punho rotaciona at&eacute; a palma da m&atilde;o ficar virada para baixo, atingindo seu oponente na lateral.</span></span></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">Existem duas maneiras principais de executar esse soco pois abaixo da cintura esse soco n&atilde;o tem efeito. S&atilde;o elas:</span></span></p>
+
+<ol>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Jodan Seiken Mawashi Tsuki:</span></strong><span style="font-size:12.0pt"> Soco com curva do pesco&ccedil;o pra cima.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Chudan Seiken Mawashi Tsuki:</span></strong><span style="font-size:12.0pt"> Soco com curva na altura do t&oacute;rax.</span></span></li>
+</ol>
+
+<p style="text-align:center">&nbsp;</p>
+
+<h3 style="text-align:center"><u><strong><span style="font-size:11pt"><span style="font-size:12.0pt">Shita Tsuki</span></span></strong></u></h3>
+
+<p style="text-align:center"><a href="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/11584795.jpg" target="_blank"><img alt="" src="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/11584795.jpg" style="height:250px; width:333px" /></a></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">&Eacute; um soco n&atilde;o rotacionado que parte da cintura com a palma da m&atilde;o para cima que ao percorrer o trajeto o punho n&atilde;o </span></span><span style="font-size:11pt"><span style="font-size:12.0pt">rotaciona mantendo se na mesma posi&ccedil;&atilde;o, atingindo seu oponente com o punho na posi&ccedil;&atilde;o inicial.</span></span></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">Existem tr&ecirc;s maneiras principais de executar esse soco. S&atilde;o elas:</span></span></p>
+
+<ol>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Jodan Seiken Shita Tsuki:</span></strong><span style="font-size:12.0pt"> Soco sem rotacionar o punho avan&ccedil;ando do pesco&ccedil;o pra cima.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Chudan Seiken&nbsp;ShitaTsuki:</span></strong><span style="font-size:12.0pt"> Soco sem rotacionar o punho avan&ccedil;ando na altura do t&oacute;rax.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Guedan Seiken&nbsp;Shita Tsuki:</span></strong><span style="font-size:12.0pt"> Socosem rotacionar o punho avan&ccedil;ando da cintura pra baixo.</span></span></li>
+</ol>
+
+<p style="text-align:center">&nbsp;</p>
+
+<h2 style="text-align:center"><strong>Uke Waza - T&eacute;cnicas de Defesa</strong></h2>
+
+<h3 style="text-align:center"><u><strong>Guedan Barai</strong></u></h3>
+
+<p style="text-align:center"><a href="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/12334168.jpg" target="_blank"><img alt="" src="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/12334168.jpg" style="height:250px; width:333px" /></a></p>
+
+<p style="text-align:center">Normalmente essa &eacute; a primeira t&eacute;cnica ou primeira defesa que aprendemos no karate, ao executar voc&ecirc; sobe o bra&ccedil;o na autura do ombro, e logo em seguida desse como uma varrida defendendo de dentro para fora.</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+</div>
+', '2020-08-18'),
+(6, 'Kickboxing', '<div class="container">
+<h1 style="text-align:center"><strong><u><span style="color:#c0392b">Kickboxing</span></u></strong></h1>
+
+<p><strong>Full contact - Contato total</strong> Regras de contato total, ou kickboxing americano, &eacute; essencialmente uma mistura de boxe ocidental e karat&ecirc; tradicional. Os kickboxers masculinos s&atilde;o de peito nu vestindo cal&ccedil;as de kickboxing e equipamentos de prote&ccedil;&atilde;o, incluindo: protetor de boca, m&atilde;o-wraps, 10 oz (280 g). luvas de boxe, guarda-costas, caneleiras e chuteiras e capacete de prote&ccedil;&atilde;o (para amadores e menores de 16 anos). Os kickboxers femininos usar&atilde;o um suti&atilde; esportivo e prote&ccedil;&atilde;o para o peito, al&eacute;m do vestu&aacute;rio masculino / equipamento de prote&ccedil;&atilde;o.<br />
+Lutadores not&aacute;veis â€‹â€‹sob regras de contato total incluem Marek Piotrowski, Dennis Alexio, Joe Lewis, Rick Roufus, Jean-Yves Theriault, Benny Urquidez, Bill Wallace e Don &quot;The Dragon&quot; Wilson.<br />
+Regras:<br />
+Os oponentes podem bater uns nos outros com socos e chutes, golpeando acima da cintura.<br />
+Cotovelos e joelhos s&atilde;o proibidos e o uso das canelas raramente &eacute; permitido.<br />
+Luta de clinch e luta s&atilde;o proibidos, mas as varreduras s&atilde;o legais, mas variam dependendo do &aacute;rbitro.<br />
+As lutas s&atilde;o geralmente de 3 a 12 rodadas (com dura&ccedil;&atilde;o de 2 a 3 minutos cada), com um descanso de 1 minuto entre as rodadas.<br />
+<strong>Semi-Contact - Semi-Contato</strong> Regras de semi-contato ou Pontos de Combate, &eacute; a variante do kickboxing americano mais parecido com o karat&ecirc;, pois consiste em lutar com o objetivo de marcar pontos com &ecirc;nfase na entrega, velocidade e t&eacute;cnica. Sob tais regras, as lutas s&atilde;o realizadas no tatami, apresentando os cintos para classificar os lutadores em ordem de experi&ecirc;ncia e habilidade. Os kickboxers masculinos usam camisas e cal&ccedil;as de kickboxing, bem como equipamentos de prote&ccedil;&atilde;o, incluindo: protetor de boca, envolt&oacute;rios de m&atilde;o, 10 oz (280 g). luvas de boxe, guarda-costas, caneleiras, chuteiras e arn&ecirc;s. Os kickboxers femininos usar&atilde;o um suti&atilde; esportivo e prote&ccedil;&atilde;o para o peito, al&eacute;m do vestu&aacute;rio masculino / equipamento de prote&ccedil;&atilde;o.<br />
+Lutadores not&aacute;veis â€‹â€‹sob regras de semi-contato incluem Raymond Daniels, Michael Page e Gregorio Di Leo.<br />
+Regras:<br />
+Os lutadores podem marcar atrav&eacute;s de socos ou chutes, golpeando acima da cintura e varreduras de p&eacute;, executado abaixo do tornozelo.<br />
+Socos, pontap&eacute;s e varreduras de p&eacute; recebem 1 ponto. Pontap&eacute;s na cabe&ccedil;a ou chutes no corpo recebem 2 pontos. Chutes saltantes na cabe&ccedil;a recebem 3 pontos.<br />
+Pontap&eacute;s e machadadas s&atilde;o permitidos, mas devem ser executados com a sola do p&eacute;.<br />
+O uso das canelas raramente &eacute; permitido, exceto para t&eacute;cnicas de salto e fia&ccedil;&atilde;o.<br />
+Cotovelos, joelhos e backfists girat&oacute;rios s&atilde;o proibidos.<br />
+Luta de clinch, lances e varreduras (com exce&ccedil;&atilde;o de varreduras de p&eacute;) s&atilde;o proibidos.<br />
+As lutas geralmente duram 3 rodadas (com dura&ccedil;&atilde;o de 2 a 3 minutos cada) com um descanso de 1 minuto entre as rodadas.<br />
+<strong>Shoot boxing</strong>Shoot boxing &eacute; um estilo &uacute;nico de kickboxing popular no Jap&atilde;o que utiliza submiss&otilde;es em p&eacute;, como estrangulamentos, armlock e pulseiras, al&eacute;m de chutes, socos, joelhos e arremessos. Os lutadores masculinos t&ecirc;m o peito nu usando cal&ccedil;as apertadas e equipamento de prote&ccedil;&atilde;o, incluindo: protetores bucais, protetores de m&atilde;o, 280 g (10 oz). luvas de boxe e guarda-costas. Os kickboxers femininos usar&atilde;o um suti&atilde; esportivo e prote&ccedil;&atilde;o para o peito, al&eacute;m do vestu&aacute;rio masculino / equipamento de prote&ccedil;&atilde;o.<br />
+Lutadores not&aacute;veis sob as regras do boxe incluem Rena Kubota, Kenichi Ogata, Hiroki Shishido, Andy Souwer e Ai Takahashi.<br />
+Regras:<br />
+Os opositores podem atacar um ao outro com socos, chutes, incluindo chutes abaixo da cintura, exceto na virilha e nos joelhos.<br />
+Cotovelos s&atilde;o proibidos.<br />
+Luta de clinch, lances e varreduras s&atilde;o permitidos.<br />
+Submiss&otilde;es permanentes s&atilde;o permitidas.<br />
+As lutas s&atilde;o de 3 rodadas (dura&ccedil;&atilde;o de 3 minutos cada) com um descanso de 1 minuto entre as rodadas.</p>
+
+<h3><strong>T&eacute;cnicas</strong></h3>
+
+<p><strong>T&eacute;cnicas de Soco</strong></p>
+
+<p>Obs.: No Ingl&ecirc;s as palavras s&atilde;o normalmente pronunciadas de forma diferente do portugu&ecirc;s.</p>
+
+<p><br />
+<strong>Jab</strong> - soco direto da m&atilde;o da frente<br />
+<strong>Cross</strong> - soco direto da m&atilde;o de tr&aacute;s<br />
+<strong>hook</strong> - gancho<br />
+<strong>Uppercut</strong> - soco ascendente atingindo o queixo<br />
+<strong>Cross counter</strong> - soco cruzado<br />
+<strong>Flying punch</strong> - soco voador<br />
+<strong>Over hand</strong> - soco semi-circular<br />
+<strong>T&eacute;cnicas de ChuteAxe kick</strong> - chute de pis&atilde;o (sola do p&eacute;)<br />
+<strong>Back kick</strong> - chute para tr&aacute;s<br />
+<strong>Front kick</strong> - Chute frontal<br />
+<strong>Hook kick</strong> - chute estendendo a perna para desser o calcanhar<br />
+<strong>Roundhouse kick</strong> or <strong>circle kick</strong> - chute circular<br />
+<strong>Semi-circular kick</strong> - Chute semi-circular<br />
+<strong>Sweeping</strong> - varredura (dar rastera)<br />
+<strong>Side kick</strong> - chute lateral (yoko geri)<br />
+<strong>T&eacute;cnicas de JoelhadaFlying knee</strong> - joelhada voadora<br />
+<strong>Side knee</strong> - Joelhada lateral<br />
+<strong>Straight Knee</strong> - joelhada frontal<br />
+<strong>T&eacute;cnicas de CotoveladaDownward Elbow</strong> - Cotovelada para baixo<br />
+<strong>Side Elbow</strong> - Cotovelada lateral<br />
+<strong>Upward elbow</strong> - Cotovelada para cima</p>
+</div>
+', '2020-08-18');
 
 -- --------------------------------------------------------
 
@@ -649,45 +1013,418 @@ CREATE TABLE `postagens` (
 --
 
 INSERT INTO `postagens` (`id_postagem`, `id_usuario`, `titulo`, `conteudo`, `situacao`, `data`) VALUES
-(4, 1, 'O Kiai', '<div class=\"border container mt-5\">\r\n<h1 style=\"text-align:center\"><u><strong><span style=\"color:#c0392b\">O Kiai</span></strong></u></h1>\r\n\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; O kiai consiste em um Mantra ou Vibra&ccedil;&atilde;o sonora que ajuda a liberar a mente dos seus condicionamentos que vibra e auxilia na concentra&ccedil;&atilde;o do Hara, com o sentido de desenvolver a sua for&ccedil;a e assim direcionar o fluxo do ki. O lutador, ao efetuar seu golpe, <strong>grita Kiai,</strong> o som vigoroso que se origina no baixo abd&ocirc;men e concentra a energia nos movimentos, liberando um poder de ordem f&iacute;sica e espiritual. Miyamoto Musashi , ensinava que o grito emitido durante uma luta e uma express&atilde;o de for&ccedil;a e demonstra a energia do lutador . Ele classificou tr&ecirc;s tipo de gritos de acordo com o seu objetivo. O grito inicial em tom grave, para assustar o adversaria, o grito no meio da luta, que deve sair do ventre, do Hara, com toda a sua for&ccedil;a,e o ultimo grito e de vitoria.</p>\r\n</div>\r\n', 'sim', '2020-08-16'),
-(5, 1, 'O Bushi-Do', '<div class=\"border container mt-5\">\r\n<h1 style=\"text-align:center\"><u><span style=\"color:#c0392b\">O Bushi-D&ocirc;</span></u></h1>\r\n\r\n<p style=\"text-align:center\"><u><span style=\"color:#c0392b\"><a href=\"https://kenshydokan.org.br/ckeditor/plugins/imageuploader/uploads/8f1727f.jpg\" target=\"_blank\"><img alt=\"\" class=\"img-fluid\" src=\"https://kenshydokan.org.br/ckeditor/plugins/imageuploader/uploads/8f1727f.jpg\" style=\"height:285px; width:229px\" /></a></span></u></p>\r\n\r\n<p>Aos samurais &eacute; atribu&iacute;do o C&oacute;digo de Honra (Bushi-D&ocirc;), que pode ser traduzido da seguinte forma:<br />\r\n<strong><em>&ldquo;N&atilde;o tenho pais, fa&ccedil;o do c&eacute;u e da terra os meus pais. </em> </strong><br />\r\n<em><strong>N&atilde;o tenho lar, fa&ccedil;o do Tandem sede do meu esp&iacute;rito, o meu lar. </strong> </em><br />\r\n<strong><em>N&atilde;o tenho poder divino, fa&ccedil;o da honestidade o meu poder. </em> </strong><br />\r\n<em><strong>N&atilde;o tenho meios, fa&ccedil;o da docilidade os meus meios. </strong> </em><br />\r\n<strong><em>N&atilde;o tenho poder m&aacute;gico, fa&ccedil;o da minha for&ccedil;a interior a minha magia. </em> </strong><br />\r\n<strong><em>N&atilde;o tenho vida nem morte, fa&ccedil;o do eterno a minha exist&ecirc;ncia, minha vida e minha morte. </em> </strong><br />\r\n<strong><em>N&atilde;o tenho corpo, fa&ccedil;o da coragem o meu corpo. </em> </strong><br />\r\n<strong><em>N&atilde;o tenho olhos, onde est&aacute; a luz est&atilde;o os meus olhos. </em> </strong><br />\r\n<strong><em>N&atilde;o tenho ouvidos, fa&ccedil;o da sensibilidade a minha audi&ccedil;&atilde;o. </em> </strong><br />\r\n<strong><em>N&atilde;o tenho membros, os fa&ccedil;o da prontid&atilde;o dos meus movimentos espont&acirc;neos. N&atilde;o tenho leis, fa&ccedil;o da autoprote&ccedil;&atilde;o a minha lei. </em> </strong><br />\r\n<strong><em>N&atilde;o tenho estrat&eacute;gias, fa&ccedil;o do acaso os meus prop&oacute;sitos. </em> </strong><br />\r\n<strong><em>N&atilde;o tenho forma, fa&ccedil;o da ast&uacute;cia a minha forma. </em> </strong><br />\r\n<em><strong>N&atilde;o tenho princ&iacute;pios, fa&ccedil;o da adaptabilidade os meus princ&iacute;pios. </strong> </em><br />\r\n<strong><em>N&atilde;o tenho milagres, fa&ccedil;o da justi&ccedil;a os meus milagres. </em> </strong><br />\r\n<strong><em>N&atilde;o tenho t&aacute;ticas, fa&ccedil;o da rapidez a minha t&aacute;tica. </em> </strong><br />\r\n<strong><em>N&atilde;o tenho amigos, fa&ccedil;o da minha mente os meus amigos. </em> </strong><br />\r\n<strong><em>N&atilde;o tenho inimigos, fa&ccedil;o da imprud&ecirc;ncia o meu inimigo. </em> </strong><br />\r\n<strong><em>N&atilde;o tenho armaduras, fa&ccedil;o da benevol&ecirc;ncia e retid&atilde;o a minha armadura. </em> </strong><br />\r\n<strong><em>N&atilde;o tenho castelo, fa&ccedil;o da mente im&oacute;vel, o Grande Esp&iacute;rito, o meu castelo. </em> </strong><br />\r\n<strong><em>N&atilde;o tenho arma, fa&ccedil;o do sonho onde fica o al&eacute;m dos pensamentos a minha espada&rdquo;.</em> </strong><br />\r\nDe um modo geral, o Bushi-D&ocirc;, encerra toda a hist&oacute;ria das artes marciais. A palavra Bushi-D&ocirc;, quer dizer: &ldquo;Caminho do Guerreiro&rdquo; ou &ldquo;Caminho das Artes Marciais&rdquo;.<br />\r\n<strong>OS SETE PRINC&Iacute;PIOS DO BUSHI-D&Ocirc;</strong><br />\r\n(O Caminho do Guerreiro) O &ldquo;Caminho do Samurai&rdquo; ou o &ldquo;Caminho do Guerreiro&rdquo; &eacute; influenciado pela fus&atilde;o Budo-Xinto&iacute;sta, pode ser resumida em sete princ&iacute;pios essenciais, sendo eles:<br />\r\n<strong>1. GI</strong> - A verdade. A atitude justa. Quando devemos dormir, devemos dormir, quando devemos lutar, devemos lutar;<br />\r\n<strong>2. YU</strong> - Bravura;<br />\r\n<strong>3. JIN</strong> - Amor universal ou Amor incondicional;<br />\r\n<strong>4. REI</strong> - O comportamento justo, a cortesia (ocupar harmoniosamente o espa&ccedil;o onde voc&ecirc; est&aacute;);<br />\r\n<strong>5. MAKOTO</strong> - Sinceridade;<br />\r\n<strong>6. MELYO</strong> - Honra (consci&ecirc;ncia real do que se possui);<br />\r\n<strong>7. CHUGI</strong> - Devo&ccedil;&atilde;o e lealdade.</p>\r\n</div>\r\n', 'sim', '2020-08-16'),
-(6, 1, 'Shihan, Sensei, Sempai e Kohai.', '<h1 style=\"text-align:center\"><span style=\"color:#c0392b\"><u><strong>Shihan, Sensei, Sempai e Kohai.</strong></u></span></h1>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" class=\"img-fluid\" src=\"https://kenshydokan.org.br/ckeditor/plugins/imageuploader/uploads/7dcdd1f.jpg\" style=\"height:311px; width:416px\" /></p>\r\n\r\n<div>\r\n<p>Hoje em dia algumas pessoas ficam perdidas sobre como se referir a um mestre ou companheiro de treino, hoje tentarei dar uma esclarecida sobre isso.</p>\r\n\r\n<ul>\r\n	<li><strong>Kohai :</strong> Esse &eacute; um aluno em fase de aprendizagem, um praticamente iniciante, estes alunos recebem esse titulo assim que decidem treinar karat&ecirc;, &eacute; um exemplo a ser seguido, pois saiu de sua zona de conforto para praticar algo que s&oacute; trar&aacute; benef&iacute;cios para sua vida mental e f&iacute;sica.</li>\r\n	<li><strong>Sempai:</strong> Esse &eacute; o aluno exemplar, &eacute; aquele aluno mais graduado e mais antigo no dojo, esse tipo de aluno &eacute; o mais respeitado, n&atilde;o s&oacute; por sua gradua&ccedil;&atilde;o mas sim pelo seu car&aacute;ter e dedica&ccedil;&atilde;o, e com isso vem responsabilidades tais como auxiliar os outros alunos e etc.</li>\r\n	<li><strong>Sensei</strong><strong> :</strong> Esse aluno que agora tamb&eacute;m &eacute; um professor se formou e agora &eacute; um graduado que pode dar aulas completas e independente para os seus alunos, mas n&atilde;o acaba por a&iacute;, agora que esse aluno &eacute; faixa preta as responsabilidades aumentaram e agora come&ccedil;a um novo ciclo de aprendizagem para ele inclusive na pratica.</li>\r\n	<li><strong>Shihan</strong><strong>:</strong> Esse &eacute; um titulo conseguido por poucos, s&oacute; aqueles que perseveraram no karat&ecirc; consegue chegar aqui, o Shihan significa &quot;Mestre Exemplar&quot;, ou seja voc&ecirc; que &eacute; aluno deve ser a sombra desse professor pois assim que voc&ecirc; conseguir&aacute; vencer no karat&ecirc;.</li>\r\n</ul>\r\n</div>\r\n', 'sim', '2020-08-16'),
-(7, 1, 'O Zen no Karatê', '<div class=\"border container mt-5\">\r\n<h1 style=\"text-align:center\"><u><strong><span style=\"color:#c0392b\">O Zen no Karat&ecirc;</span></strong></u></h1>\r\n\r\n<p>Os tribunais guerreiros do jap&atilde;o do per&iacute;odo Kamakura ao per&iacute;odo Muromachi incentivaram o estudo austero do Zen pelos Samurais, e o Zen andava de bra&ccedil;os dados com a arte de combate. No Zen n&atilde;o ha elabora&ccedil;&atilde;o nem misticismo, ele vai direto &aacute; natureza das coisas. N&atilde;o h&aacute; cerimonias nem prega&ccedil;&otilde;es. A promessa do Zen a de car&aacute;ter exclusivamente pessoal.</p>\r\n\r\n<p>A ilumina&ccedil;&atilde;o do Zen n&atilde;o implica em modifica&ccedil;&otilde;es de comportamento, mas sim, na compreens&atilde;o da natureza na vida comum. O seu objetivo, o seu ponto final &eacute; inicio, e a grande virtude da simplicidade. Devemos Aplica o golpe no oponente tal como ele nos aplica. Isso implica no equil&iacute;brio absoluto, na aus&ecirc;ncia da raiva. O inimigo deve ser tratado como um convidado de honra. A vida deve ser abandonada e o medo deve ser descartado.</p>\r\n\r\n<p>A primeira t&eacute;cnica &eacute; a ultima, o disc&iacute;pulo e o mestre se comportam da mesma maneira. O conhecimento &eacute; um ciclo completo. Os ensinamentos do karat&ecirc; s&atilde;o muitas vezes semelhante as viol&ecirc;ncias e agress&otilde;es verbais a que os aprendizes do zen se sujeitam. Assolada por duvidas e infelicidade sua mente e seu espirito se desorientam e os aprendizes s&atilde;o levados paulatinamente a percep&ccedil;&atilde;o e a compreens&atilde;o por seu mestre.</p>\r\n</div>\r\n', 'sim', '2020-08-16'),
-(14, 1, 'Kihon Geiko', '<h1 style=\"text-align:center\"><span style=\"font-size:11pt\"><span style=\"font-size:36px\"><u><span style=\"color:#c0392b\"><strong>Kihon Geiko</strong></span></u></span> </span></h1>\r\n\r\n<p><span style=\"font-size:11pt\">O <strong>Kihon Geiko</strong> s&atilde;o t&eacute;cnicas repetitivas executadas sem avan&ccedil;ar, na base <em>Sanchin Dachi</em>. Essas t&eacute;cnicas s&atilde;o fundamentais para aprimoramento de novas t&eacute;cnicas aprendidas, para treina-las antes de usa-las em um treino com parceiro. &Eacute; essencial que o aluno j&aacute; vai aprendendo as nomenclaturas das t&eacute;cnicas falada em japon&ecirc;s pelo seu professor. Normalmente cada T&eacute;cnica &eacute; executada de 20 &aacute; 30 vezes.</span></p>\r\n', 'sim', '2020-09-26'),
-(15, 1, 'UchiKomi', '<h1 style=\"text-align:center\"><u><span style=\"color:#c0392b\"><span style=\"font-size:36px\">UchiKomi</span></span></u></h1>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-size:12.0pt\">O Uchikomi &eacute; uma das varias maneiras de se treinar proje&ccedil;&atilde;o(Nage Waza), e existem v&aacute;ria maneiras de se treinar uchikomi tamb&eacute;m. Ao treinar voc&ecirc; executa a t&eacute;cnica de proje&ccedil;&atilde;o v&aacute;rias vezes sozinho ou com um parceiro antes de completa-la totalmente, isso &eacute; feito varias vezes, normalmente acima de 30 vezes.</span></span></p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-size:12.0pt\">Ao executar o uchikomi de modo est&aacute;tico, voc&ecirc; executas as t&eacute;cnicas de proje&ccedil;&otilde;es sem avan&ccedil;ar ou recuar, &eacute; sempre feito naquele mesmo ponto; Ao executar de modo em movimento e que voc&ecirc; vai se movimentando circularmente. Ao executar de modo em sombra voc&ecirc; executa sozinho avan&ccedil;ando e recuando.</span></span></p>\r\n', 'sim', '2020-09-26'),
-(16, 1, 'Randori', '<h1 style=\"text-align:center\"><span style=\"color:#c0392b\"><u><span style=\"font-size:36px\">Randori</span></u></span></h1>\r\n\r\n<p><span style=\"font-size:12pt\">Randori &eacute; um modo de treinar que evolui tanto a mente quanto o f&iacute;sico, nesse tipo de treinamento voc&ecirc; usa toda a sua habilidade e conhecimento em um treino de luta a onde n&atilde;o existe pontua&ccedil;&atilde;o e nem juiz, mesmo que voc&ecirc; ou seu parceiro execute um ippon a luta continuara com voc&ecirc;s treinando. &Eacute; uma &oacute;tima hora para voc&ecirc; colocar as suas t&eacute;cnicas em pr&aacute;tica. Esse tipo de treinamento &eacute; usada muito no Jud&ocirc; e Ju Jitsu.</span></p>\r\n', 'sim', '2020-09-26'),
-(17, 1, 'Renraku Renka Waza', '<h1 style=\"text-align:center\"><span style=\"color:#c0392b\"><span style=\"font-size:36px\">Renraku Renka Waza</span></span></h1>\r\n\r\n<p><span style=\"font-size:12pt\">Nesse tipo de treinamento usamos tanto t&eacute;cnicas de proje&ccedil;&atilde;o(Nage Waza) quanto t&eacute;cnicas de Imobiliza&ccedil;&atilde;o(OssaeKomi Waza), nesse treinamento usamos uma variedade grande de t&eacute;cnicas come&ccedil;ando com uma proje&ccedil;&atilde;o que supostamente n&atilde;o funcionou passando para outra proje&ccedil;&atilde;o que resulta numa queda, partindo para uma imobiliza&ccedil;&atilde;o.</span></p>\r\n', 'sim', '2020-09-26'),
-(18, 1, 'Kihon', '<h1 style=\"text-align:center\"><span style=\"color:#c0392b\"><span style=\"font-size:36px\">Kihon</span></span></h1>\r\n\r\n<p style=\"text-align:center\"><span style=\"color:#c0392b\"><span style=\"font-size:36px\"><a href=\"https://kenshydokan.org.br/ckeditor/plugins/imageuploader/uploads/5413095.png\" target=\"_blank\"><img alt=\"\" class=\"img-fluid\" src=\"https://kenshydokan.org.br/ckeditor/plugins/imageuploader/uploads/5413095.png\" style=\"height:320px; width:640px\" /></a></span></span></p>\r\n\r\n<p>No treino de Kihon, aprimoramos as nossas t&eacute;cnicas que ser&atilde;o usadas no Kata. Kihon significa fundamento, ou seja, &eacute; aquilo que &eacute; essencial no karat&ecirc;. Nesse tipo de treinamento o professor diz os nomes de cada uma das t&eacute;cnicas que ser&atilde;o executadas a cada passo, e o nome dessas t&eacute;cnicas ser&aacute; dita em japon&ecirc;s, j&aacute; &eacute; bom o aluno ir aprendendo as nomenclaturas dessas t&eacute;cnicas. As t&eacute;cnicas do Kihon s&atilde;o executadas avan&ccedil;ando ou recuando.</p>\r\n', 'sim', '2020-09-26'),
-(25, 1, 'Tameshiwari', '<h1 style=\"text-align:center\"><span style=\"color:#c0392b\"><strong>Tameshiwari</strong></span></h1>\r\n\r\n<p style=\"text-align:center\"><span style=\"color:#c0392b\"><strong><img alt=\"\" class=\"img-fluid\" src=\"https://kenshydokan.org.br/ckeditor/plugins/imageuploader/uploads/62c4441.jpg\" style=\"height:162px; width:253px\" /></strong></span></p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:&quot;Calibri&quot;,sans-serif\">Para executarmos esse tipo de treinamento, temos que estar com o corpo e mente preparado. Esse &eacute; o tipo de treinamento que te prepara para conseguir fazer quebramentos, por exemplo de tabua, telha, gelo e etc. para isso voc&ecirc; tem que estar com a sua mente preparada, para n&atilde;o ter medo e executar a t&eacute;cnica errado e acabar se lesionando ou nem executa-la. Tamb&eacute;m precisa estar com o corpo preparado, com resist&ecirc;ncia o suficiente para aguentar o impacto e for&ccedil;a para poder quebrar.</span></span></p>\r\n', 'sim', '2020-10-03');
+(4, 1, 'O Kiai', '<div class="border container mt-5">
+<h1 style="text-align:center"><u><strong><span style="color:#c0392b">O Kiai</span></strong></u></h1>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; O kiai consiste em um Mantra ou Vibra&ccedil;&atilde;o sonora que ajuda a liberar a mente dos seus condicionamentos que vibra e auxilia na concentra&ccedil;&atilde;o do Hara, com o sentido de desenvolver a sua for&ccedil;a e assim direcionar o fluxo do ki. O lutador, ao efetuar seu golpe, <strong>grita Kiai,</strong> o som vigoroso que se origina no baixo abd&ocirc;men e concentra a energia nos movimentos, liberando um poder de ordem f&iacute;sica e espiritual. Miyamoto Musashi , ensinava que o grito emitido durante uma luta e uma express&atilde;o de for&ccedil;a e demonstra a energia do lutador . Ele classificou tr&ecirc;s tipo de gritos de acordo com o seu objetivo. O grito inicial em tom grave, para assustar o adversaria, o grito no meio da luta, que deve sair do ventre, do Hara, com toda a sua for&ccedil;a,e o ultimo grito e de vitoria.</p>
+</div>
+', 'sim', '2020-08-16'),
+(5, 1, 'O Bushi-Do', '<div class="border container mt-5">
+<h1 style="text-align:center"><u><span style="color:#c0392b">O Bushi-D&ocirc;</span></u></h1>
+
+<p style="text-align:center"><u><span style="color:#c0392b"><a href="https://kenshydokan.org.br/ckeditor/plugins/imageuploader/uploads/8f1727f.jpg" target="_blank"><img alt="" class="img-fluid" src="https://kenshydokan.org.br/ckeditor/plugins/imageuploader/uploads/8f1727f.jpg" style="height:285px; width:229px" /></a></span></u></p>
+
+<p>Aos samurais &eacute; atribu&iacute;do o C&oacute;digo de Honra (Bushi-D&ocirc;), que pode ser traduzido da seguinte forma:<br />
+<strong><em>&ldquo;N&atilde;o tenho pais, fa&ccedil;o do c&eacute;u e da terra os meus pais. </em> </strong><br />
+<em><strong>N&atilde;o tenho lar, fa&ccedil;o do Tandem sede do meu esp&iacute;rito, o meu lar. </strong> </em><br />
+<strong><em>N&atilde;o tenho poder divino, fa&ccedil;o da honestidade o meu poder. </em> </strong><br />
+<em><strong>N&atilde;o tenho meios, fa&ccedil;o da docilidade os meus meios. </strong> </em><br />
+<strong><em>N&atilde;o tenho poder m&aacute;gico, fa&ccedil;o da minha for&ccedil;a interior a minha magia. </em> </strong><br />
+<strong><em>N&atilde;o tenho vida nem morte, fa&ccedil;o do eterno a minha exist&ecirc;ncia, minha vida e minha morte. </em> </strong><br />
+<strong><em>N&atilde;o tenho corpo, fa&ccedil;o da coragem o meu corpo. </em> </strong><br />
+<strong><em>N&atilde;o tenho olhos, onde est&aacute; a luz est&atilde;o os meus olhos. </em> </strong><br />
+<strong><em>N&atilde;o tenho ouvidos, fa&ccedil;o da sensibilidade a minha audi&ccedil;&atilde;o. </em> </strong><br />
+<strong><em>N&atilde;o tenho membros, os fa&ccedil;o da prontid&atilde;o dos meus movimentos espont&acirc;neos. N&atilde;o tenho leis, fa&ccedil;o da autoprote&ccedil;&atilde;o a minha lei. </em> </strong><br />
+<strong><em>N&atilde;o tenho estrat&eacute;gias, fa&ccedil;o do acaso os meus prop&oacute;sitos. </em> </strong><br />
+<strong><em>N&atilde;o tenho forma, fa&ccedil;o da ast&uacute;cia a minha forma. </em> </strong><br />
+<em><strong>N&atilde;o tenho princ&iacute;pios, fa&ccedil;o da adaptabilidade os meus princ&iacute;pios. </strong> </em><br />
+<strong><em>N&atilde;o tenho milagres, fa&ccedil;o da justi&ccedil;a os meus milagres. </em> </strong><br />
+<strong><em>N&atilde;o tenho t&aacute;ticas, fa&ccedil;o da rapidez a minha t&aacute;tica. </em> </strong><br />
+<strong><em>N&atilde;o tenho amigos, fa&ccedil;o da minha mente os meus amigos. </em> </strong><br />
+<strong><em>N&atilde;o tenho inimigos, fa&ccedil;o da imprud&ecirc;ncia o meu inimigo. </em> </strong><br />
+<strong><em>N&atilde;o tenho armaduras, fa&ccedil;o da benevol&ecirc;ncia e retid&atilde;o a minha armadura. </em> </strong><br />
+<strong><em>N&atilde;o tenho castelo, fa&ccedil;o da mente im&oacute;vel, o Grande Esp&iacute;rito, o meu castelo. </em> </strong><br />
+<strong><em>N&atilde;o tenho arma, fa&ccedil;o do sonho onde fica o al&eacute;m dos pensamentos a minha espada&rdquo;.</em> </strong><br />
+De um modo geral, o Bushi-D&ocirc;, encerra toda a hist&oacute;ria das artes marciais. A palavra Bushi-D&ocirc;, quer dizer: &ldquo;Caminho do Guerreiro&rdquo; ou &ldquo;Caminho das Artes Marciais&rdquo;.<br />
+<strong>OS SETE PRINC&Iacute;PIOS DO BUSHI-D&Ocirc;</strong><br />
+(O Caminho do Guerreiro) O &ldquo;Caminho do Samurai&rdquo; ou o &ldquo;Caminho do Guerreiro&rdquo; &eacute; influenciado pela fus&atilde;o Budo-Xinto&iacute;sta, pode ser resumida em sete princ&iacute;pios essenciais, sendo eles:<br />
+<strong>1. GI</strong> - A verdade. A atitude justa. Quando devemos dormir, devemos dormir, quando devemos lutar, devemos lutar;<br />
+<strong>2. YU</strong> - Bravura;
+(4, 'Muay Thai', '<div class="container">
+<div class="dmNewParagraph u_1440505187" id="1440505187">
+<h3 style="text-align:center"><strong>CHUTES - TEIs</strong></h3>
+
+<div>Chute Frontal: <strong>Tei-trong</strong></div>
+
+<div>Chute Circular ao Tronco: <strong>Tei-chiyang</strong></div>
+
+<div>Chute Circular Alto: <strong>Tei-kan-kro</strong></div>
+
+<div>Chute Circular Baixo: <strong>Tei-tat</strong></div>
+
+<div>Chute Semi-Circular: <strong>Tei-rid</strong></div>
+
+<div>Chute Circular Cima e em Baixo: <strong>Tei-kot</strong></div>
+
+<div>Chute Circular em Escada: <strong>Yiep-tei</strong></div>
+
+<div>Chute Circular com Salto: <strong>Kra-tote-teii</strong></div>
+
+<div>Chute de Lateral: <strong>Tip-kang</strong></div>
+
+<div>Chute Rotativo de Calcanhar: <strong>Tip klap lang</strong></div>
+
+<div>Chute Rotativo de Calcanhar em Gancho: <strong>Tei klap lang</strong></div>
+
+<div>&nbsp;</div>
+
+<h3 style="text-align:center"><strong>JOELHADA - KHAOs</strong></h3>
+
+<div>Joelhada Frontal: <strong>Khao trong</strong></div>
+
+<div>Joelhada Lateral: <strong>Khao Tat</strong></div>
+
+<div>Joelhada Circular: <strong>Khao chiyang</strong></div>
+
+<div>Joelhada com Salto: <strong>Khao loy</strong></div>
+
+<div>Joelhada Frontal Penetrante: <strong>Khao-youn</strong></div>
+
+<div>Joelhada em Escada: <strong>Yiep-khao</strong></div>
+
+<div>&nbsp;</div>
+
+<h3 style="text-align:center"><strong>SOCOS - MATs</strong></h3>
+
+<div>Jab: <strong>Mat nueng</strong></div>
+
+<div>Direto: <strong>Mat trong</strong></div>
+
+<div>Gancho: <strong>Mat wiang san</strong></div>
+
+<div>Cruzado:<strong>Mat trong</strong></div>
+
+<div>Soco em Salto: <strong>Kradot chok</strong></div>
+
+<div>Punho Rotativo: <strong>Mat wiang soi</strong></div>
+
+<div>&nbsp;</div>
+
+<h3 style="text-align:center"><strong>COTOVELADAS - SOKs</strong></h3>
+
+<div>Cotovelo Horizontal: <strong>Sok tat</strong></div>
+
+<div>Cotovelo Obl&iacute;quo: <strong>Khao chiang</strong></div>
+
+<div>Cotovelo Circular ao Tronco: <strong>Sok ti</strong></div>
+
+<div>Cotovelo de cima para baixo: <strong>Sok ti</strong></div>
+
+<div>Cotovelo de baixo para cima: <strong>Sok Ngat</strong></div>
+
+<div>Cotovelo Frontal: <strong>Sok phung</strong></div>
+
+<div>Reverso de Cotovelo Horizontal: <strong>Sok wiang klap</strong></div>
+
+<div>Cotovelo Rotativo: <strong>Mat wiang klap</strong></div>
+
+<div>Cotovelo Rotativo com Retorno: <strong>Sok klap</strong></div>
+
+<div>Dupla Cotovelada: <strong>Sok klap khu</strong></div>
+
+<div>Cotovelo em salto descendo: <strong>Kradot sok</strong></div>
+</div>
+</div>
+', '2020-08-17'),
+(5, 'Karate', '<div class="container text-center">
+<h1 style="text-align:center"><u><strong><span style="color:#c0392b">T&eacute;cnicas do karate Kenshydokan</span></strong></u></h1>
+</div>
+
+<div class="container">
+<h2 style="text-align:center"><strong>Tsuki Waza - T&eacute;cnicas de Soco</strong></h2>
+
+<p style="text-align:center">&nbsp;</p>
+
+<h3 style="text-align:center"><u><strong>Seiken Oi Tsuki:</strong></u></h3>
+
+<h2 style="text-align:center"><strong><a href="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/78a5261.jpg" target="_blank"><img alt="" src="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/78a5261.jpg" style="height:250px; width:333px" /></a></strong></h2>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">&Eacute; um soco reto que parte da cintura com a palma da m&atilde;o para cima que ao percorrer o trajeto o punho rotaciona at&eacute; a palma da m&atilde;o ficar virada para baixo, atingindo seu oponente.</span></span></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">Existem tr&ecirc;s maneiras principais de executar esse soco. S&atilde;o elas:</span></span></p>
+
+<ol>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Jodan Seiken Oi Tsuki:</span></strong><span style="font-size:12.0pt"> Soco reto avan&ccedil;ando do pesco&ccedil;o pra cima.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Chudan Seiken Oi Tsuki:</span></strong><span style="font-size:12.0pt"> Soco reto avan&ccedil;ando na altura do t&oacute;rax.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Guedan Seiken Oi Tsuki:</span></strong><span style="font-size:12.0pt"> Soco reto avan&ccedil;ando da cintura pra baixo.</span></span></li>
+</ol>
+
+<p style="text-align:center">&nbsp;</p>
+
+<h3 style="text-align:center"><u><strong>Seiken Gyaku Oi Tsuki:</strong></u></h3>
+
+<p style="text-align:center"><a href="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/8b20fbf.jpg" target="_blank"><img alt="" src="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/8b20fbf.jpg" style="height:250px; width:333px" /></a></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">&Eacute; um outro soco reto que parte da cintura com a palma da m&atilde;o para cima que ao percorrer o trajeto o punho rotaciona at&eacute; a palma da m&atilde;o ficar virada para baixo, atingindo seu oponente, s&oacute; que dessa vez com a m&atilde;o inversa a da perna que est&aacute; avan&ccedil;ada.</span></span></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">Tamb&eacute;m existem tr&ecirc;s maneiras principais de executar esse soco. S&atilde;o elas:</span></span></p>
+
+<ol>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Jodan Seiken Gyaku Oi Tsuki:</span></strong><span style="font-size:12.0pt"> Soco reto avan&ccedil;ando do pesco&ccedil;o pra cima.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Chudan Seiken Gyaku Oi Tsuki:</span></strong><span style="font-size:12.0pt"> Soco reto avan&ccedil;ando na altura do t&oacute;rax.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Guedan Seiken&nbsp;Gyaku Oi Tsuki:</span></strong><span style="font-size:12.0pt"> Soco reto avan&ccedil;ando da cintura pra baixo.</span></span></li>
+</ol>
+
+<p style="text-align:center">&nbsp;</p>
+
+<h3 style="text-align:center"><u><strong>Tate Tsuki</strong></u></h3>
+
+<p style="text-align:center"><a href="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/9a56495.jpg" target="_blank"><img alt="" src="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/9a56495.jpg" style="height:250px; width:333px" /></a></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">&Eacute; um soco semi-rotacionado que parte da cintura com a palma da m&atilde;o para cima que ao percorrer o trajeto o punho e ele semi-rotaciona at&eacute; a palma da m&atilde;o ficar virada para o lado, atingindo seu oponente com o punho em p&eacute;.</span></span></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">Existem tr&ecirc;s maneiras principais de executar esse soco. S&atilde;o elas:</span></span></p>
+
+<ol>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Jodan Seiken Tate Tsuki:</span></strong><span style="font-size:12.0pt"> Soco semi-rotacionado avan&ccedil;ando do pesco&ccedil;o pra cima.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Chudan Seiken Tate Tsuki:</span></strong><span style="font-size:12.0pt"> Soco semi-rotacionado avan&ccedil;ando na altura do t&oacute;rax.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Guedan Seiken&nbsp;Tate Tsuki:</span></strong><span style="font-size:12.0pt"> Soco semi-rotacionado avan&ccedil;ando da cintura pra baixo.</span></span></li>
+</ol>
+
+<p style="text-align:center">&nbsp;</p>
+
+<h3 style="text-align:center"><u><strong><span style="font-size:11pt"><span style="font-size:12.0pt">Gyaku Tate Tsuki</span></span></strong></u></h3>
+
+<p style="text-align:center"><a href="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/6b34e82.jpg" target="_blank"><img alt="" src="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/6b34e82.jpg" style="height:250px; width:333px" /></a></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">&Eacute; um soco semi-rotacionado que parte da cintura com a palma da m&atilde;o para cima que ao percorrer o trajeto o punho e ele semi-rotaciona at&eacute; a palma da m&atilde;o ficar virada para o lado, atingindo seu oponente com o punho em p&eacute;, s&oacute; que dessa vez com a m&atilde;o inversa a da perna que est&aacute; avan&ccedil;ada.</span></span></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">Existem tr&ecirc;s maneiras principais de executar esse soco. S&atilde;o elas:</span></span></p>
+
+<ol>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Jodan Seiken Gyaku Tate Tsuki:</span></strong><span style="font-size:12.0pt"> Soco semi-rotacionado avan&ccedil;ando do pesco&ccedil;o pra cima.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Chudan Seiken&nbsp;Gyaku Tate Tsuki:</span></strong><span style="font-size:12.0pt"> Soco semi-rotacionado avan&ccedil;ando na altura do t&oacute;rax.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Guedan Seiken&nbsp;Gyaku Tate Tsuki:</span></strong><span style="font-size:12.0pt"> Soco semi-rotacionado avan&ccedil;ando da cintura pra baixo.</span></span></li>
+</ol>
+
+<p style="text-align:center">&nbsp;</p>
+
+<h3 style="text-align:center"><u><strong>Seiken Mawashi Tsuki</strong></u></h3>
+
+<p style="text-align:center"><a href="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/10f20e90.jpg"><img alt="" src="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/10f20e90.jpg" style="height:250px; width:333px" /></a></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">&Eacute; um soco com curva que parte do kamae(guarda de lutas em p&eacute;) que ao percorrer o trajeto o punho rotaciona at&eacute; a palma da m&atilde;o ficar virada para baixo, atingindo seu oponente na lateral.</span></span></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">Existem duas maneiras principais de executar esse soco pois abaixo da cintura esse soco n&atilde;o tem efeito. S&atilde;o elas:</span></span></p>
+
+<ol>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Jodan Seiken Mawashi Tsuki:</span></strong><span style="font-size:12.0pt"> Soco com curva do pesco&ccedil;o pra cima.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Chudan Seiken Mawashi Tsuki:</span></strong><span style="font-size:12.0pt"> Soco com curva na altura do t&oacute;rax.</span></span></li>
+</ol>
+
+<p style="text-align:center">&nbsp;</p>
+
+<h3 style="text-align:center"><u><strong><span style="font-size:11pt"><span style="font-size:12.0pt">Shita Tsuki</span></span></strong></u></h3>
+
+<p style="text-align:center"><a href="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/11584795.jpg" target="_blank"><img alt="" src="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/11584795.jpg" style="height:250px; width:333px" /></a></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">&Eacute; um soco n&atilde;o rotacionado que parte da cintura com a palma da m&atilde;o para cima que ao percorrer o trajeto o punho n&atilde;o </span></span><span style="font-size:11pt"><span style="font-size:12.0pt">rotaciona mantendo se na mesma posi&ccedil;&atilde;o, atingindo seu oponente com o punho na posi&ccedil;&atilde;o inicial.</span></span></p>
+
+<p style="text-align:center"><span style="font-size:11pt"><span style="font-size:12.0pt">Existem tr&ecirc;s maneiras principais de executar esse soco. S&atilde;o elas:</span></span></p>
+
+<ol>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Jodan Seiken Shita Tsuki:</span></strong><span style="font-size:12.0pt"> Soco sem rotacionar o punho avan&ccedil;ando do pesco&ccedil;o pra cima.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Chudan Seiken&nbsp;ShitaTsuki:</span></strong><span style="font-size:12.0pt"> Soco sem rotacionar o punho avan&ccedil;ando na altura do t&oacute;rax.</span></span></li>
+	<li style="text-align:center"><span style="font-size:11pt"><strong><span style="font-size:12.0pt">Guedan Seiken&nbsp;Shita Tsuki:</span></strong><span style="font-size:12.0pt"> Socosem rotacionar o punho avan&ccedil;ando da cintura pra baixo.</span></span></li>
+</ol>
+
+<p style="text-align:center">&nbsp;</p>
+
+<h2 style="text-align:center"><strong>Uke Waza - T&eacute;cnicas de Defesa</strong></h2>
+
+<h3 style="text-align:center"><u><strong>Guedan Barai</strong></u></h3>
+
+<p style="text-align:center"><a href="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/12334168.jpg" target="_blank"><img alt="" src="https://kenshydokan.org.br/admin/ckeditor/plugins/imageuploader/uploads/12334168.jpg" style="height:250px; width:333px" /></a></p>
+
+<p style="text-align:center">Normalmente essa &eacute; a primeira t&eacute;cnica ou primeira defesa que aprendemos no karate, ao executar voc&ecirc; sobe o bra&ccedil;o na autura do ombro, e logo em seguida desse como uma varrida defendendo de dentro para fora.</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+</div>
+', '2020-08-18'),
+(6, 'Kickboxing', '<div class="container">
+<h1 style="text-align:center"><strong><u><span style="color:#c0392b">Kickboxing</span></u></strong></h1>
+
+<p><strong>Full contact - Contato total</strong> Regras de contato total, ou kickboxing americano, &eacute; essencialmente uma mistura de boxe ocidental e karat&ecirc; tradicional. Os kickboxers masculinos s&atilde;o de peito nu vestindo cal&ccedil;as de kickboxing e equipamentos de prote&ccedil;&atilde;o, incluindo: protetor de boca, m&atilde;o-wraps, 10 oz (280 g). luvas de boxe, guarda-costas, caneleiras e chuteiras e capacete de prote&ccedil;&atilde;o (para amadores e menores de 16 anos). Os kickboxers femininos usar&atilde;o um suti&atilde; esportivo e prote&ccedil;&atilde;o para o peito, al&eacute;m do vestu&aacute;rio masculino / equipamento de prote&ccedil;&atilde;o.<br />
+Lutadores not&aacute;veis â€‹â€‹sob regras de contato total incluem Marek Piotrowski, Dennis Alexio, Joe Lewis, Rick Roufus, Jean-Yves Theriault, Benny Urquidez, Bill Wallace e Don &quot;The Dragon&quot; Wilson.<br />
+Regras:<br />
+Os oponentes podem bater uns nos outros com socos e chutes, golpeando acima da cintura.<br />
+Cotovelos e joelhos s&atilde;o proibidos e o uso das canelas raramente &eacute; permitido.<br />
+Luta de clinch e luta s&atilde;o proibidos, mas as varreduras s&atilde;o legais, mas variam dependendo do &aacute;rbitro.<br />
+As lutas s&atilde;o geralmente de 3 a 12 rodadas (com dura&ccedil;&atilde;o de 2 a 3 minutos cada), com um descanso de 1 minuto entre as rodadas.<br />
+<strong>Semi-Contact - Semi-Contato</strong> Regras de semi-contato ou Pontos de Combate, &eacute; a variante do kickboxing americano mais parecido com o karat&ecirc;, pois consiste em lutar com o objetivo de marcar pontos com &ecirc;nfase na entrega, velocidade e t&eacute;cnica. Sob tais regras, as lutas s&atilde;o realizadas no tatami, apresentando os cintos para classificar os lutadores em ordem de experi&ecirc;ncia e habilidade. Os kickboxers masculinos usam camisas e cal&ccedil;as de kickboxing, bem como equipamentos de prote&ccedil;&atilde;o, incluindo: protetor de boca, envolt&oacute;rios de m&atilde;o, 10 oz (280 g). luvas de boxe, guarda-costas, caneleiras, chuteiras e arn&ecirc;s. Os kickboxers femininos usar&atilde;o um suti&atilde; esportivo e prote&ccedil;&atilde;o para o peito, al&eacute;m do vestu&aacute;rio masculino / equipamento de prote&ccedil;&atilde;o.<br />
+Lutadores not&aacute;veis â€‹â€‹sob regras de semi-contato incluem Raymond Daniels, Michael Page e Gregorio Di Leo.<br />
+Regras:<br />
+Os lutadores podem marcar atrav&eacute;s de socos ou chutes, golpeando acima da cintura e varreduras de p&eacute;, executado abaixo do tornozelo.<br />
+Socos, pontap&eacute;s e varreduras de p&eacute; recebem 1 ponto. Pontap&eacute;s na cabe&ccedil;a ou chutes no corpo recebem 2 pontos. Chutes saltantes na cabe&ccedil;a recebem 3 pontos.<br />
+Pontap&eacute;s e machadadas s&atilde;o permitidos, mas devem ser executados com a sola do p&eacute;.<br />
+O uso das canelas raramente &eacute; permitido, exceto para t&eacute;cnicas de salto e fia&ccedil;&atilde;o.<br />
+Cotovelos, joelhos e backfists girat&oacute;rios s&atilde;o proibidos.<br />
+Luta de clinch, lances e varreduras (com exce&ccedil;&atilde;o de varreduras de p&eacute;) s&atilde;o proibidos.<br />
+As lutas geralmente duram 3 rodadas (com dura&ccedil;&atilde;o de 2 a 3 minutos cada) com um descanso de 1 minuto entre as rodadas.<br />
+<strong>Shoot boxing</strong>Shoot boxing &eacute; um estilo &uacute;nico de kickboxing popular no Jap&atilde;o que utiliza submiss&otilde;es em p&eacute;, como estrangulamentos, armlock e pulseiras, al&eacute;m de chutes, socos, joelhos e arremessos. Os lutadores masculinos t&ecirc;m o peito nu usando cal&ccedil;as apertadas e equipamento de prote&ccedil;&atilde;o, incluindo: protetores bucais, protetores de m&atilde;o, 280 g (10 oz). luvas de boxe e guarda-costas. Os kickboxers femininos usar&atilde;o um suti&atilde; esportivo e prote&ccedil;&atilde;o para o peito, al&eacute;m do vestu&aacute;rio masculino / equipamento de prote&ccedil;&atilde;o.<br />
+Lutadores not&aacute;veis sob as regras do boxe incluem Rena Kubota, Kenichi Ogata, Hiroki Shishido, Andy Souwer e Ai Takahashi.<br />
+Regras:<br />
+Os opositores podem atacar um ao outro com socos, chutes, incluindo chutes abaixo da cintura, exceto na virilha e nos joelhos.<br />
+Cotovelos s&atilde;o proibidos.<br />
+Luta de clinch, lances e varreduras s&atilde;o permitidos.<br />
+Submiss&otilde;es permanentes s&atilde;o permitidas.<br />
+As lutas s&atilde;o de 3 rodadas (dura&ccedil;&atilde;o de 3 minutos cada) com um descanso de 1 minuto entre as rodadas.</p>
+
+<h3><strong>T&eacute;cnicas</strong></h3>
+
+<p><strong>T&eacute;cnicas de Soco</strong></p>
+
+<p>Obs.: No Ingl&ecirc;s as palavras s&atilde;o normalmente pronunciadas de forma diferente do portugu&ecirc;s.</p>
+
+<p><br />
+<strong>Jab</strong> - soco direto da m&atilde;o da frente<br />
+<strong>Cross</strong> - soco direto da m&atilde;o de tr&aacute;s<br />
+<strong>hook</strong> - gancho<br />
+<strong>Uppercut</strong> - soco ascendente atingindo o queixo<br />
+<strong>Cross counter</strong> - soco cruzado<br />
+<strong>Flying punch</strong> - soco voador<br />
+<strong>Over hand</strong> - soco semi-circular<br />
+<strong>T&eacute;cnicas de ChuteAxe kick</strong> - chute de pis&atilde;o (sola do p&eacute;)<br />
+<strong>Back kick</strong> - chute para tr&aacute;s<br />
+<strong>Front kick</strong> - Chute frontal<br />
+<strong>Hook kick</strong> - chute estendendo a perna para desser o calcanhar<br />
+<strong>Roundhouse kick</strong> or <strong>circle kick</strong> - chute circular<br />
+<strong>Semi-circular kick</strong> - Chute semi-circular<br />
+<strong>Sweeping</strong> - varredura (dar rastera)<br />
+<strong>Side kick</strong> - chute lateral (yoko geri)<br />
+<strong>T&eacute;cnicas de JoelhadaFlying knee</strong> - joelhada voadora<br />
+<strong>Side knee</strong> - Joelhada lateral<br />
+<strong>Straight Knee</strong> - joelhada frontal<br />
+<strong>T&eacute;cnicas de CotoveladaDownward Elbow</strong> - Cotovelada para baixo<br />
+<strong>Side Elbow</strong> - Cotovelada lateral<br />
+<strong>Upward elbow</strong> - Cotovelada para cima</p>
+</div>
+', '2020-08-18');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `usuarios`
+-- Estrutura da tabela `postagens`
 --
 
-CREATE TABLE `usuarios` (
-  `id_usuario` int(11) NOT NULL,
-  `id_fil` int(11) DEFAULT NULL,
-  `id_imagem` int(11) DEFAULT NULL,
-  `nome` varchar(300) NOT NULL,
-  `email` varchar(300) NOT NULL,
-  `tipo` int(11) DEFAULT NULL,
-  `telefone` varchar(100) DEFAULT NULL,
-  `senha` varchar(300) DEFAULT NULL
+CREATE TABLE `postagens` (
+  `id_postagem` int(11) NOT NULL,
+  `id_usuario` int(11) DEFAULT NULL,
+  `titulo` varchar(200) NOT NULL,
+  `conteudo` text NOT NULL,
+  `situacao` varchar(4) NOT NULL,
+  `data` date NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `usuarios`
+-- Extraindo dados da tabela `postagens`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `id_fil`, `id_imagem`, `nome`, `email`, `tipo`, `telefone`, `senha`) VALUES
-(1, 23, 290, 'Weslley Henrique Vieira Ferraz', 'weslleyhenrique800@gmail.com', 1, '65981233996', '$2y$10$QHnkoUa3PyqR/UvzLVP9HOlyFjPhE.DxgwgJdoflu5B69z7cIMAVa'),
-(7, 14, NULL, 'Jonas Teixeira de Andrade', 'kenshydokan@gmail.com', 1, '(65) 9293-2986', '$2y$10$P6RQdVvXuNfe1usafC4mXOmSLK12VcrOttROySCehrgel/AJzZts2'),
-(3, 22, 287, 'Elyakin Vinicius Mettelo', 'kin.vinicius@hotmail.com', 1, '(65) 9903-1993', '$2y$10$UskqCMTVTn9mBuTX3tH5xu3g4PDADnd3nQ9PTfPyZRNxwldP7Taqi'),
-(4, 28, NULL, 'Douglas Giovani de Campos', 'douglasgeovani15@gmail.com', 2, NULL, '$2y$10$3ECFDbo385vuucKKiThZpuUeqibqyY3/7NM.o6z4EvFkUPzAXSc4K'),
-(5, 21, 288, 'Everson Jones Batista Leite', 'eversonjbl@hotmail.com', 1, '(65) 9936-6510', '$2y$10$BCgcSdPmTugcJnvjp8g8NOd3WVqq3DTScmk.mWWosgqLgsU4v4maq'),
-(8, 79, NULL, 'Murilo Cardoso de Resende', 'ninja98muriloc@gmail.com', 2, '(66) 99630-9974', '$2y$10$56iGJwc9ug.FoXgPLox.oO4xXejF6pcmcWPParLXbzsgTQAVoPURm');
+INSERT INTO `postagens` (`id_postagem`, `id_usuario`, `titulo`, `conteudo`, `situacao`, `data`) VALUES
+(4, 1, 'O Kiai', '<div class="border container mt-5">
+<h1 style="text-align:center"><u><strong><span style="color:#c0392b">O Kiai</span></strong></u></h1>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; O kiai consiste em um Mantra ou Vibra&ccedil;&atilde;o sonora que ajuda a liberar a mente dos seus condicionamentos que vibra e auxilia na concentra&ccedil;&atilde;o do Hara, com o sentido de desenvolver a sua for&ccedil;a e assim direcionar o fluxo do ki. O lutador, ao efetuar seu golpe, <strong>grita Kiai,</strong> o som vigoroso que se origina no baixo abd&ocirc;men e concentra a energia nos movimentos, liberando um poder de ordem f&iacute;sica e espiritual. Miyamoto Musashi , ensinava que o grito emitido durante uma luta e uma express&atilde;o de for&ccedil;a e demonstra a energia do lutador . Ele classificou tr&ecirc;s tipo de gritos de acordo com o seu objetivo. O grito inicial em tom grave, para assustar o adversaria, o grito no meio da luta, que deve sair do ventre, do Hara, com toda a sua for&ccedil;a,e o ultimo grito e de vitoria.</p>
+</div>
+', 'sim', '2020-08-16'),
+(5, 1, 'O Bushi-Do', '<div class="border container mt-5">
+<h1 style="text-align:center"><u><span style="color:#c0392b">O Bushi-D&ocirc;</span></u></h1>
+
+<p style="text-align:center"><u><span style="color:#c0392b"><a href="https://kenshydokan.org.br/ckeditor/plugins/imageuploader/uploads/8f1727f.jpg" target="_blank"><img alt="" class="img-fluid" src="https://kenshydokan.org.br/ckeditor/plugins/imageuploader/uploads/8f1727f.jpg" style="height:285px; width:229px" /></a></span></u></p>
+
+<p>Aos samurais &eacute; atribu&iacute;do o C&oacute;digo de Honra (Bushi-D&ocirc;), que pode ser traduzido da seguinte forma:<br />
+<strong><em>&ldquo;N&atilde;o tenho pais, fa&ccedil;o do c&eacute;u e da terra os meus pais. </em> </strong><br />
+<em><strong>N&atilde;o tenho lar, fa&ccedil;o do Tandem sede do meu esp&iacute;rito, o meu lar. </strong> </em><br />
+<strong><em>N&atilde;o tenho poder divino, fa&ccedil;o da honestidade o meu poder. </em> </strong><br />
+<em><strong>N&atilde;o tenho meios, fa&ccedil;o da docilidade os meus meios. </strong> </em><br />
+<strong><em>N&atilde;o tenho poder m&aacute;gico, fa&ccedil;o da minha for&ccedil;a interior a minha magia. </em> </strong><br />
+<strong><em>N&atilde;o tenho vida nem morte, fa&ccedil;o do eterno a minha exist&ecirc;ncia, minha vida e minha morte. </em> </strong><br />
+<strong><em>N&atilde;o tenho corpo, fa&ccedil;o da coragem o meu corpo. </em> </strong><br />
+<strong><em>N&atilde;o tenho olhos, onde est&aacute; a luz est&atilde;o os meus olhos. </em> </strong><br />
+<strong><em>N&atilde;o tenho ouvidos, fa&ccedil;o da sensibilidade a minha audi&ccedil;&atilde;o. </em> </strong><br />
+<strong><em>N&atilde;o tenho membros, os fa&ccedil;o da prontid&atilde;o dos meus movimentos espont&acirc;neos. N&atilde;o tenho leis, fa&ccedil;o da autoprote&ccedil;&atilde;o a minha lei. </em> </strong><br />
+<strong><em>N&atilde;o tenho estrat&eacute;gias, fa&ccedil;o do acaso os meus prop&oacute;sitos. </em> </strong><br />
+<strong><em>N&atilde;o tenho forma, fa&ccedil;o da ast&uacute;cia a minha forma. </em> </strong><br />
+<em><strong>N&atilde;o tenho princ&iacute;pios, fa&ccedil;o da adaptabilidade os meus princ&iacute;pios. </strong> </em><br />
+<strong><em>N&atilde;o tenho milagres, fa&ccedil;o da justi&ccedil;a os meus milagres. </em> </strong><br />
+<strong><em>N&atilde;o tenho t&aacute;ticas, fa&ccedil;o da rapidez a minha t&aacute;tica. </em> </strong><br />
+<strong><em>N&atilde;o tenho amigos, fa&ccedil;o da minha mente os meus amigos. </em> </strong><br />
+<strong><em>N&atilde;o tenho inimigos, fa&ccedil;o da imprud&ecirc;ncia o meu inimigo. </em> </strong><br />
+<strong><em>N&atilde;o tenho armaduras, fa&ccedil;o da benevol&ecirc;ncia e retid&atilde;o a minha armadura. </em> </strong><br />
+<strong><em>N&atilde;o tenho castelo, fa&ccedil;o da mente im&oacute;vel, o Grande Esp&iacute;rito, o meu castelo. </em> </strong><br />
+<strong><em>N&atilde;o tenho arma, fa&ccedil;o do sonho onde fica o al&eacute;m dos pensamentos a minha espada&rdquo;.</em> </strong><br />
+De um modo geral, o Bushi-D&ocirc;, encerra toda a hist&oacute;ria das artes marciais. A palavra Bushi-D&ocirc;, quer dizer: &ldquo;Caminho do Guerreiro&rdquo; ou &ldquo;Caminho das Artes Marciais&rdquo;.<br />
+<strong>OS SETE PRINC&Iacute;PIOS DO BUSHI-D&Ocirc;</strong><br />
+(O Caminho do Guerreiro) O &ldquo;Caminho do Samurai&rdquo; ou o &ldquo;Caminho do Guerreiro&rdquo; &eacute; influenciado pela fus&atilde;o Budo-Xinto&iacute;sta, pode ser resumida em sete princ&iacute;pios essenciais, sendo eles:<br />
+<strong>1. GI</strong> - A verdade. A atitude justa. Quando devemos dormir, devemos dormir, quando devemos lutar, devemos lutar;<br />
+<strong>2. YU</strong> - Bravura;
+(6, 1, 'Shihan, Sensei, Sempai e Kohai.', '<h1 style="text-align:center"><span style="color:#c0392b"><u><strong>Shihan, Sensei, Sempai e Kohai.</strong></u></span></h1>
+
+<p style="text-align:center"><img alt="" class="img-fluid" src="https://kenshydokan.org.br/ckeditor/plugins/imageuploader/uploads/7dcdd1f.jpg" style="height:311px; width:416px" /></p>
+
+<div>
+<p>Hoje em dia algumas pessoas ficam perdidas sobre como se referir a um mestre ou companheiro de treino, hoje tentarei dar uma esclarecida sobre isso.</p>
+
+<ul>
+	<li><strong>Kohai :</strong> Esse &eacute; um aluno em fase de aprendizagem, um praticamente iniciante, estes alunos recebem esse titulo assim que decidem treinar karat&ecirc;, &eacute; um exemplo a ser seguido, pois saiu de sua zona de conforto para praticar algo que s&oacute; trar&aacute; benef&iacute;cios para sua vida mental e f&iacute;sica.</li>
+	<li><strong>Sempai:</strong> Esse &eacute; o aluno exemplar, &eacute; aquele aluno mais graduado e mais antigo no dojo, esse tipo de aluno &eacute; o mais respeitado, n&atilde;o s&oacute; por sua gradua&ccedil;&atilde;o mas sim pelo seu car&aacute;ter e dedica&ccedil;&atilde;o, e com isso vem responsabilidades tais como auxiliar os outros alunos e etc.</li>
+	<li><strong>Sensei</strong><strong> :</strong> Esse aluno que agora tamb&eacute;m &eacute; um professor se formou e agora &eacute; um graduado que pode dar aulas completas e independente para os seus alunos, mas n&atilde;o acaba por a&iacute;, agora que esse aluno &eacute; faixa preta as responsabilidades aumentaram e agora come&ccedil;a um novo ciclo de aprendizagem para ele inclusive na pratica.</li>
+	<li><strong>Shihan</strong><strong>:</strong> Esse &eacute; um titulo conseguido por poucos, s&oacute; aqueles que perseveraram no karat&ecirc; consegue chegar aqui, o Shihan significa &quot;Mestre Exemplar&quot;, ou seja voc&ecirc; que &eacute; aluno deve ser a sombra desse professor pois assim que voc&ecirc; conseguir&aacute; vencer no karat&ecirc;.</li>
+</ul>
+</div>
+', 'sim', '2020-08-16'),
+(7, 1, 'O Zen no Karatê', '<div class="border container mt-5">
+<h1 style="text-align:center"><u><strong><span style="color:#c0392b">O Zen no Karat&ecirc;</span></strong></u></h1>
+
+<p>Os tribunais guerreiros do jap&atilde;o do per&iacute;odo Kamakura ao per&iacute;odo Muromachi incentivaram o estudo austero do Zen pelos Samurais, e o Zen andava de bra&ccedil;os dados com a arte de combate. No Zen n&atilde;o ha elabora&ccedil;&atilde;o nem misticismo, ele vai direto &aacute; natureza das coisas. N&atilde;o h&aacute; cerimonias nem prega&ccedil;&otilde;es. A promessa do Zen a de car&aacute;ter exclusivamente pessoal.</p>
+
+<p>A ilumina&ccedil;&atilde;o do Zen n&atilde;o implica em modifica&ccedil;&otilde;es de comportamento, mas sim, na compreens&atilde;o da natureza na vida comum. O seu objetivo, o seu ponto final &eacute; inicio, e a grande virtude da simplicidade. Devemos Aplica o golpe no oponente tal como ele nos aplica. Isso implica no equil&iacute;brio absoluto, na aus&ecirc;ncia da raiva. O inimigo deve ser tratado como um convidado de honra. A vida deve ser abandonada e o medo deve ser descartado.</p>
+
+<p>A primeira t&eacute;cnica &eacute; a ultima, o disc&iacute;pulo e o mestre se comportam da mesma maneira. O conhecimento &eacute; um ciclo completo. Os ensinamentos do karat&ecirc; s&atilde;o muitas vezes semelhante as viol&ecirc;ncias e agress&otilde;es verbais a que os aprendizes do zen se sujeitam. Assolada por duvidas e infelicidade sua mente e seu espirito se desorientam e os aprendizes s&atilde;o levados paulatinamente a percep&ccedil;&atilde;o e a compreens&atilde;o por seu mestre.</p>
+</div>
+', 'sim', '2020-08-16'),
+(14, 1, 'Kihon Geiko', '<h1 style="text-align:center"><span style="font-size:11pt"><span style="font-size:36px"><u><span style="color:#c0392b"><strong>Kihon Geiko</strong></span></u></span> </span></h1>
+
+<p><span style="font-size:11pt">O <strong>Kihon Geiko</strong> s&atilde;o t&eacute;cnicas repetitivas executadas sem avan&ccedil;ar, na base <em>Sanchin Dachi</em>. Essas t&eacute;cnicas s&atilde;o fundamentais para aprimoramento de novas t&eacute;cnicas aprendidas, para treina-las antes de usa-las em um treino com parceiro. &Eacute; essencial que o aluno j&aacute; vai aprendendo as nomenclaturas das t&eacute;cnicas falada em japon&ecirc;s pelo seu professor. Normalmente cada T&eacute;cnica &eacute; executada de 20 &aacute; 30 vezes.</span></p>
+', 'sim', '2020-09-26'),
+(15, 1, 'UchiKomi', '<h1 style="text-align:center"><u><span style="color:#c0392b"><span style="font-size:36px">UchiKomi</span></span></u></h1>
+
+<p><span style="font-size:11pt"><span style="font-size:12.0pt">O Uchikomi &eacute; uma das varias maneiras de se treinar proje&ccedil;&atilde;o(Nage Waza), e existem v&aacute;ria maneiras de se treinar uchikomi tamb&eacute;m. Ao treinar voc&ecirc; executa a t&eacute;cnica de proje&ccedil;&atilde;o v&aacute;rias vezes sozinho ou com um parceiro antes de completa-la totalmente, isso &eacute; feito varias vezes, normalmente acima de 30 vezes.</span></span></p>
+
+<p><span style="font-size:11pt"><span style="font-size:12.0pt">Ao executar o uchikomi de modo est&aacute;tico, voc&ecirc; executas as t&eacute;cnicas de proje&ccedil;&otilde;es sem avan&ccedil;ar ou recuar, &eacute; sempre feito naquele mesmo ponto; Ao executar de modo em movimento e que voc&ecirc; vai se movimentando circularmente. Ao executar de modo em sombra voc&ecirc; executa sozinho avan&ccedil;ando e recuando.</span></span></p>
+', 'sim', '2020-09-26'),
+(16, 1, 'Randori', '<h1 style="text-align:center"><span style="color:#c0392b"><u><span style="font-size:36px">Randori</span></u></span></h1>
+
+<p><span style="font-size:12pt">Randori &eacute; um modo de treinar que evolui tanto a mente quanto o f&iacute;sico, nesse tipo de treinamento voc&ecirc; usa toda a sua habilidade e conhecimento em um treino de luta a onde n&atilde;o existe pontua&ccedil;&atilde;o e nem juiz, mesmo que voc&ecirc; ou seu parceiro execute um ippon a luta continuara com voc&ecirc;s treinando. &Eacute; uma &oacute;tima hora para voc&ecirc; colocar as suas t&eacute;cnicas em pr&aacute;tica. Esse tipo de treinamento &eacute; usada muito no Jud&ocirc; e Ju Jitsu.</span></p>
+', 'sim', '2020-09-26'),
+(17, 1, 'Renraku Renka Waza', '<h1 style="text-align:center"><span style="color:#c0392b"><span style="font-size:36px">Renraku Renka Waza</span></span></h1>
+
+<p><span style="font-size:12pt">Nesse tipo de treinamento usamos tanto t&eacute;cnicas de proje&ccedil;&atilde;o(Nage Waza) quanto t&eacute;cnicas de Imobiliza&ccedil;&atilde;o(OssaeKomi Waza), nesse treinamento usamos uma variedade grande de t&eacute;cnicas come&ccedil;ando com uma proje&ccedil;&atilde;o que supostamente n&atilde;o funcionou passando para outra proje&ccedil;&atilde;o que resulta numa queda, partindo para uma imobiliza&ccedil;&atilde;o.</span></p>
+', 'sim', '2020-09-26'),
+(18, 1, 'Kihon', '<h1 style="text-align:center"><span style="color:#c0392b"><span style="font-size:36px">Kihon</span></span></h1>
+
+<p style="text-align:center"><span style="color:#c0392b"><span style="font-size:36px"><a href="https://kenshydokan.org.br/ckeditor/plugins/imageuploader/uploads/5413095.png" target="_blank"><img alt="" class="img-fluid" src="https://kenshydokan.org.br/ckeditor/plugins/imageuploader/uploads/5413095.png" style="height:320px; width:640px" /></a></span></span></p>
+
+<p>No treino de Kihon, aprimoramos as nossas t&eacute;cnicas que ser&atilde;o usadas no Kata. Kihon significa fundamento, ou seja, &eacute; aquilo que &eacute; essencial no karat&ecirc;. Nesse tipo de treinamento o professor diz os nomes de cada uma das t&eacute;cnicas que ser&atilde;o executadas a cada passo, e o nome dessas t&eacute;cnicas ser&aacute; dita em japon&ecirc;s, j&aacute; &eacute; bom o aluno ir aprendendo as nomenclaturas dessas t&eacute;cnicas. As t&eacute;cnicas do Kihon s&atilde;o executadas avan&ccedil;ando ou recuando.</p>
+', 'sim', '2020-09-26'),
+(25, 1, 'Tameshiwari', '<h1 style="text-align:center"><span style="color:#c0392b"><strong>Tameshiwari</strong></span></h1>
+
+<p style="text-align:center"><span style="color:#c0392b"><strong><img alt="" class="img-fluid" src="https://kenshydokan.org.br/ckeditor/plugins/imageuploader/uploads/62c4441.jpg" style="height:162px; width:253px" /></strong></span></p>
+
+<p><span style="font-size:11pt"><span style="font-family:&quot;Calibri&quot;,sans-serif">Para executarmos esse tipo de treinamento, temos que estar com o corpo e mente preparado. Esse &eacute; o tipo de treinamento que te prepara para conseguir fazer quebramentos, por exemplo de tabua, telha, gelo e etc. para isso voc&ecirc; tem que estar com a sua mente preparada, para n&atilde;o ter medo e executar a t&eacute;cnica errado e acabar se lesionando ou nem executa-la. Tamb&eacute;m precisa estar com o corpo preparado, com resist&ecirc;ncia o suficiente para aguentar o impacto e for&ccedil;a para poder quebrar.</span></span></p>
+', 'sim', '2020-10-03');
 
 --
 -- Índices para tabelas despejadas
@@ -881,3 +1618,28 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+--
+-- Estrutura da tabela `dojos`
+--
+
+CREATE TABLE `dojos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `razao_social` varchar(255) DEFAULT NULL,
+  `nome_fantasia` varchar(255) DEFAULT NULL,
+  `cnpj` varchar(20) DEFAULT NULL,
+  `id_filiado_responsavel` int(11) DEFAULT NULL,
+  `telefone` varchar(20) DEFAULT NULL,
+  `celular` varchar(20) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `cep` varchar(10) DEFAULT NULL,
+  `endereco` varchar(255) DEFAULT NULL,
+  `cidade` varchar(100) DEFAULT NULL,
+  `estado` varchar(50) DEFAULT NULL,
+  `data_filiacao` date DEFAULT NULL,
+  `status` varchar(50) DEFAULT 'ativo',
+  `imagem` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_dojo_filiado_responsavel` (`id_filiado_responsavel`),
+  CONSTRAINT `fk_dojo_filiado_responsavel` FOREIGN KEY (`id_filiado_responsavel`) REFERENCES `filiados` (`id_filiado`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

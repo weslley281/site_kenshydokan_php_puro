@@ -104,4 +104,11 @@ class FiliadoRepositorio
             return null;
         }
     }
+
+    public function listarFiliados()
+    {
+        $query = "SELECT id_filiado, nome FROM filiados ORDER BY nome ASC";
+        $resultado = $this->conexao->query($query);
+        return $resultado->fetch_all(MYSQLI_ASSOC);
+    }
 }

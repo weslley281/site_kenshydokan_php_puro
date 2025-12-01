@@ -91,6 +91,27 @@
   <!--Fim das Filiações-->
 
   <div class="container mt-3 mb-3">
+    <div class="text-center">
+      <h2><b>Dojôs Filiados</b></h2>
+      <?php
+      require_once __DIR__ . '/../repositorios/dojoRepositorio.php';
+      $dojoRepositorio = new DojoRepositorio();
+      $dojosAfiliados = $dojoRepositorio->listarDojos();
+
+      if (!empty($dojosAfiliados)) {
+        echo '<ul class="list-group mt-3 mb-3">';
+        foreach ($dojosAfiliados as $dojo) {
+          echo '<li class="list-group-item">' . htmlspecialchars($dojo['nome_fantasia']) . '</li>';
+        }
+        echo '</ul>';
+      } else {
+        echo '<p>...</p>';
+      }
+      ?>
+    </div>
+  </div>
+
+  <div class="container mt-3 mb-3">
     <h2><b>Dojo kum do estilo kenshydokan.</b></h2>
     <ul class="list-group mt-3 mb-3">
       <li class="list-group-item">Eu juro cultivar o espírito de benevolência, e conter o espírito de violência.</li>
