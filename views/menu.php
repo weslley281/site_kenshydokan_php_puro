@@ -144,20 +144,10 @@ $pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
 </head>
 
 <body class="bg-light">
-    <!-- Google Translate Element -->
-    <div id="google_translate_element" style="text-align: right; padding: 10px; background-color: #f8f9fa; min-height: 40px; border-bottom: 1px solid #ddd;"></div>
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'pt'
-            }, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
     <!-- <div class="alert alert-warning text-center mb-0" role="alert">
         <strong>Aviso:</strong> O site estará em manutenção entre os dias 24/08/2025 e 30/08/2025, sendo assim poderá haver algumas inconcistencias nas páginas. Pedimos desculpas pelo transtorno.
     </div> -->
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand bg-light rounded px-1 py-1 text-dark" href="inicio.php"><img src="../img/wkka.jpg" width="30" height="30" alt="logo da kenshydokan"> Kenshydokan</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
@@ -237,3 +227,14 @@ $pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
             </form> -->
         </div>
     </nav>
+    
+    <!-- Google Translate Element -->
+    <div id="google_translate_element" style="text-align: right; padding: 10px; background-color: #f8f9fa; min-height: 40px; border-bottom: 1px solid #ddd;"></div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'pt'
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
