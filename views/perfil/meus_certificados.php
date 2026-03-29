@@ -63,4 +63,4 @@ $cursoRepositorio = new CursoRepositorio();
 		</div>
 	</div>
 
-<?php include __DIR__ . "/../rodape.php"; ?>
+<?php include __DIR__ . "/rodape.php"; ?>

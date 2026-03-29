@@ -42,7 +42,7 @@ if (isset($_POST['accept_cookie'])) {
     </div>
 </footer>
 <!-- Vue.js -->
-<script src="/libs/vue.js"></script>
+<script src="./../libs/vue.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

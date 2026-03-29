@@ -81,5 +81,5 @@ include __DIR__ . "/_perfil_auth.php";
   </div>
 
 <?php
-include __DIR__ . "/../rodape.php";
+include __DIR__ . "/rodape.php";
 ?>

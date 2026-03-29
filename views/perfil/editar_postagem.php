@@ -64,4 +64,4 @@ if (!$postagem || $postagem["id_usuario"] != $_SESSION["id_usuario"]) {
         </div>
     </div>
 
-<?php include __DIR__ . "/../rodape.php"; ?>
+<?php include __DIR__ . "/rodape.php"; ?>
