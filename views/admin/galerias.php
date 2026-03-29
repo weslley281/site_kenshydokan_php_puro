@@ -65,7 +65,7 @@
                 </div>
               </div>
             </div>
-        <?php } 
+        <?php }
         } ?>
       </tbody>
     </table>

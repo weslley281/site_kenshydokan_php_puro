@@ -1,11 +1,10 @@
 <?php
-// session_start(); // A sessão já é iniciada pelo index.php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/site_kenshydokan/config.php';
-// Adicione a verificação de autenticação se necessário
-// if (!isset($_SESSION['id_usuario'])) {
-//     header("Location: login.php");
-//     exit();
-// }
+include_once "../../config/conexao.php";
+include_once "../../Classes/Dojo.php";
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: login.php");
+    exit();
+}
 ?>
 
 <div class="container-fluid">
