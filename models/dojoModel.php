@@ -1,7 +1,7 @@
 <?php
 
 class DojoModel {
-    private $id;
+    private $id_dojo;
     private $razao_social;
     private $nome_fantasia;
     private $cnpj;
@@ -22,8 +22,8 @@ class DojoModel {
     }
 
     // Getters
-    public function getId() {
-        return $this->id;
+    public function getIdDojo() {
+        return $this->id_dojo;
     }
 
     public function getRazaoSocial() {
@@ -83,8 +83,8 @@ class DojoModel {
     }
 
     // Setters
-    public function setId($id) {
-        $this->id = $id;
+    public function setIdDojo($id_dojo) {
+        $this->id_dojo = $id_dojo;
     }
 
     public function setRazaoSocial($razao_social) {

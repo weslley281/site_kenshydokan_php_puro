@@ -1,162 +1,213 @@
 <?php
-
-require_once __DIR__ . '/../config.php';
+include_once __DIR__ .  "/../conexao.php";
 include_once __DIR__ .  "/../models/dojoModel.php";
 
-class DojoRepositorio {
+class DojoRepositorio
+{
     private $conexao;
 
-    public function __construct() {
-        require_once __DIR__ . "/../db/conexao.php";
+    public function __construct()
+    {
         $c = new Conexao();
         $this->conexao = $c->conectar();
     }
 
-    public function listarDojos() {
-        $query = "SELECT d.*, f.nome as nome_responsavel 
-                  FROM dojos d 
-                  LEFT JOIN filiados f ON d.id_filiado_responsavel = f.id_filiado";
-        $resultado = $this->conexao->query($query);
-        return $resultado->fetch_all(MYSQLI_ASSOC);
-    }
+    public function criarDojo(DojoModel $dojo): bool
+    {
+        try {
+            $inserir = $this->conexao->prepare("INSERT INTO dojos (id_dojo, razao_social, nome_fantasia, cnpj, id_filiado_responsavel, telefone, celular, email, cep, endereco, cidade, estado, data_filiacao, status, imagem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $inserir->bind_param("sssssssssssssssss", $dojo->getIdDojo(), $dojo->getRazaoSocial(), $dojo->getNomeFantasia(), $dojo->getCnpj(), $dojo->getIdFiliadoResponsavel(), $dojo->getTelefone(), $dojo->getCelular(), $dojo->getEmail(), $dojo->getCep(), $dojo->getEndereco(), $dojo->getCidade(), $dojo->getEstado(), $dojo->getDataFiliacao(), $dojo->getStatus(), $dojo->getImagem());
+            $resultado = $inserir->execute();
+            $inserir->close();
 
-    public function criarDojo(DojoModel $dojo) {
-        $query = "INSERT INTO dojos (razao_social, nome_fantasia, cnpj, id_filiado_responsavel, telefone, celular, email, cep, endereco, cidade, estado, data_filiacao, status, imagem) 
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
-        $stmt = $this->conexao->prepare($query);
-        $razao_social = $dojo->getRazaoSocial();
-        $nome_fantasia = $dojo->getNomeFantasia();
-        $cnpj = $dojo->getCnpj();
-        $id_filiado_responsavel = $dojo->getIdFiliadoResponsavel();
-        $telefone = $dojo->getTelefone();
-        $celular = $dojo->getCelular();
-        $email = $dojo->getEmail();
-        $cep = $dojo->getCep();
-        $endereco = $dojo->getEndereco();
-        $cidade = $dojo->getCidade();
-        $estado = $dojo->getEstado();
-        $data_filiacao = $dojo->getDataFiliacao();
-        $status = $dojo->getStatus();
-        $imagem = $dojo->getImagem();
+            if (!$resultado) {
+                throw new Exception("Erro ao criar o dojo.");
+            }
 
-        $stmt->bind_param(
-            "sssissssssssss",
-            $razao_social,
-            $nome_fantasia,
-            $cnpj,
-            $id_filiado_responsavel,
-            $telefone,
-            $celular,
-            $email,
-            $cep,
-            $endereco,
-            $cidade,
-            $estado,
-            $data_filiacao,
-            $status,
-            $imagem
-        );
-
-        if ($stmt->execute()) {
             return true;
-        } else {
-            // Em um ambiente de produção, seria bom logar o erro: error_log($stmt->error);
+        } catch (Exception $e) {
+            error_log("Erro ao criar o dojo: " . $e->getMessage());
             return false;
         }
     }
 
-    public function editarDojo(DojoModel $dojo) {
-        $query = "UPDATE dojos SET 
-                    razao_social = ?, 
-                    nome_fantasia = ?, 
-                    cnpj = ?, 
-                    id_filiado_responsavel = ?, 
-                    telefone = ?, 
-                    celular = ?, 
-                    email = ?, 
-                    cep = ?, 
-                    endereco = ?, 
-                    cidade = ?, 
-                    estado = ?, 
-                    data_filiacao = ?, 
-                    status = ?, 
-                    imagem = ? 
-                  WHERE id = ?";
-                  
-        $stmt = $this->conexao->prepare($query);
-        $razao_social = $dojo->getRazaoSocial();
-        $nome_fantasia = $dojo->getNomeFantasia();
-        $cnpj = $dojo->getCnpj();
-        $id_filiado_responsavel = $dojo->getIdFiliadoResponsavel();
-        $telefone = $dojo->getTelefone();
-        $celular = $dojo->getCelular();
-        $email = $dojo->getEmail();
-        $cep = $dojo->getCep();
-        $endereco = $dojo->getEndereco();
-        $cidade = $dojo->getCidade();
-        $estado = $dojo->getEstado();
-        $data_filiacao = $dojo->getDataFiliacao();
-        $status = $dojo->getStatus();
-        $imagem = $dojo->getImagem();
-        $id = $dojo->getId();
+    public function editarDojo(DojoModel $dojo): bool
+    {
+        try {
+            $atualizar = $this->conexao->prepare("UPDATE dojos SET razao_social = ?, nome_fantasia = ?, cnpj = ?, id_filiado_responsavel = ?, telefone = ?, celular = ?, email = ?, cep = ?, endereco = ?, cidade = ?, estado = ?, data_filiacao = ?, status = ?, imagem = ? WHERE id_dojo = ?");
+            $atualizar->bind_param("sssssssssssssssss", $dojo->getRazaoSocial(), $dojo->getNomeFantasia(), $dojo->getCnpj(), $dojo->getIdFiliadoResponsavel(), $dojo->getTelefone(), $dojo->getCelular(), $dojo->getEmail(), $dojo->getCep(), $dojo->getEndereco(), $dojo->getCidade(), $dojo->getEstado(), $dojo->getDataFiliacao(), $dojo->getStatus(), $dojo->getImagem(), $dojo->getIdDojo());
+            $resultado = $atualizar->execute();
+            $atualizar->close();
 
-        $stmt->bind_param(
-            "sssissssssssssi",
-            $razao_social,
-            $nome_fantasia,
-            $cnpj,
-            $id_filiado_responsavel,
-            $telefone,
-            $celular,
-            $email,
-            $cep,
-            $endereco,
-            $cidade,
-            $estado,
-            $data_filiacao,
-            $status,
-            $imagem,
-            $id
-        );
+            if (!$resultado) {
+                throw new Exception("Erro ao editar o dojo.");
+            }
 
-        return $stmt->execute();
+            return true;
+        } catch (Exception $e) {
+            error_log("Erro ao editar o dojo: " . $e->getMessage());
+            return false;
+        }
     }
 
-    public function excluirDojo($id) {
-        $query = "DELETE FROM dojos WHERE id = ?";
-        $stmt = $this->conexao->prepare($query);
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
+    public function excluirDojo($id_dojo): bool
+    {
+        try {
+            $excluir = $this->conexao->prepare("DELETE FROM dojos WHERE id_dojo = ?");
+            $excluir->bind_param("s", $id_dojo);
+            $resultado = $excluir->execute();
+            $excluir->close();
+
+            if (!$resultado) {
+                throw new Exception("Erro ao excluir o dojo.");
+            }
+
+            return true;
+        } catch (Exception $e) {
+            error_log("Erro ao excluir o dojo: " . $e->getMessage());
+            return false;
+        }
     }
 
-    public function buscarDojoPorId($id) {
-        $query = "SELECT * FROM dojos WHERE id = ?";
-        $stmt = $this->conexao->prepare($query);
-        $stmt->bind_param("i", $id);
+    public function listarDojos(): array
+    {
+        $dojos = [];
+        $resultado = $this->conexao->query("SELECT * FROM dojos");
+
+        if ($resultado) {
+            while ($row = $resultado->fetch_assoc()) {
+                $dojo = new DojoModel(
+                    $row['id_dojo'],
+                    $row['razao_social'],
+                    $row['nome_fantasia'],
+                    $row['cnpj'],
+                    $row['id_filiado_responsavel'],
+                    $row['telefone'],
+                    $row['celular'],
+                    $row['email'],
+                    $row['cep'],
+                    $row['endereco'],
+                    $row['cidade'],
+                    $row['estado'],
+                    $row['data_filiacao'],
+                    $row['status'],
+                    $row['imagem']
+                );
+                $dojos[] = $dojo;
+            }
+            $resultado->free();
+        } else {
+            error_log("Erro ao listar dojos: " . $this->conexao->error);
+        }
+
+        return $dojos;
+    }
+
+    public static function getDojoById($id_dojo): ?DojoModel
+    {
+        $c = new Conexao();
+        $conexao = $c->conectar();
+        $stmt = $conexao->prepare("SELECT * FROM dojos WHERE id_dojo = ?");
+        $stmt->bind_param("s", $id_dojo);
         $stmt->execute();
         $resultado = $stmt->get_result();
 
-        if ($resultado->num_rows > 0) {
+        if ($resultado && $resultado->num_rows > 0) {
             $row = $resultado->fetch_assoc();
-            $dojo = new DojoModel();
-            $dojo->setId($row['id']);
-            $dojo->setRazaoSocial($row['razao_social']);
-            $dojo->setNomeFantasia($row['nome_fantasia']);
-            $dojo->setCnpj($row['cnpj']);
-            $dojo->setIdFiliadoResponsavel($row['id_filiado_responsavel']);
-            $dojo->setTelefone($row['telefone']);
-            $dojo->setCelular($row['celular']);
-            $dojo->setEmail($row['email']);
-            $dojo->setCep($row['cep']);
-            $dojo->setEndereco($row['endereco']);
-            $dojo->setCidade($row['cidade']);
-            $dojo->setEstado($row['estado']);
-            $dojo->setDataFiliacao($row['data_filiacao']);
-            $dojo->setStatus($row['status']);
-            $dojo->setImagem($row['imagem']);
-            return $dojo;
+            return new DojoModel(
+                $row['id_dojo'],
+                $row['razao_social'],
+                $row['nome_fantasia'],
+                $row['cnpj'],
+                $row['id_filiado_responsavel'],
+                $row['telefone'],
+                $row['celular'],
+                $row['email'],
+                $row['cep'],
+                $row['endereco'],
+                $row['cidade'],
+                $row['estado'],
+                $row['data_filiacao'],
+                $row['status'],
+                $row['imagem']
+            );
         }
+
         return null;
+    }
+
+    public static function getDojoByCnpj($cnpj): ?DojoModel
+    {
+        $c = new Conexao();
+        $conexao = $c->conectar();
+        $stmt = $conexao->prepare("SELECT * FROM dojos WHERE cnpj = ?");
+        $stmt->bind_param("s", $cnpj);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+
+        if ($resultado && $resultado->num_rows > 0) {
+            $row = $resultado->fetch_assoc();
+            return new DojoModel(
+                $row['id_dojo'],
+                $row['razao_social'],
+                $row['nome_fantasia'],
+                $row['cnpj'],
+                $row['id_filiado_responsavel'],
+                $row['telefone'],
+                $row['celular'],
+                $row['email'],
+                $row['cep'],
+                $row['endereco'],
+                $row['cidade'],
+                $row['estado'],
+                $row['data_filiacao'],
+                $row['status'],
+                $row['imagem']
+            );
+        }
+
+        return null;
+    }
+    
+    public static function editarStatusDojo($id_dojo, $novo_status): bool
+    {
+        try {
+            $c = new Conexao();
+            $conexao = $c->conectar();
+            $stmt = $conexao->prepare("UPDATE dojos SET status = ? WHERE id_dojo = ?");
+            $stmt->bind_param("ss", $novo_status, $id_dojo);
+            $resultado = $stmt->execute();
+            $stmt->close();
+
+            if (!$resultado) {
+                throw new Exception("Erro ao atualizar o status do dojo.");
+            }
+
+            return true;
+        } catch (Exception $e) {
+            error_log("Erro ao atualizar o status do dojo: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public static function editarImagemDojo($id_dojo, $nova_imagem): bool
+    {
+        try {
+            $c = new Conexao();
+            $conexao = $c->conectar();
+            $stmt = $conexao->prepare("UPDATE dojos SET imagem = ? WHERE id_dojo = ?");
+            $stmt->bind_param("ss", $nova_imagem, $id_dojo);
+            $resultado = $stmt->execute();
+            $stmt->close();
+
+            if (!$resultado) {
+                throw new Exception("Erro ao atualizar a imagem do dojo.");
+            }
+
+            return true;
+        } catch (Exception $e) {
+            error_log("Erro ao atualizar a imagem do dojo: " . $e->getMessage());
+            return false;
+        }
     }
 }
