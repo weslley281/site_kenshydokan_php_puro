@@ -1,10 +1,6 @@
 <?php
 include_once "menu.php";
-include_once "../db/conexao.php";
 include_once "../models/publicacaoModel.php";
-
-$c = new Conexao();
-$conexao = $c->conectar();
 
 // 1. Pega o ID da postagem da URL de forma segura
 $id_postagem = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
@@ -15,20 +11,15 @@ if (empty($id_postagem)) {
     exit;
 }
 
-// 2. Busca a postagem específica no banco de dados usando prepared statements para segurança
-$busca_postagen = "SELECT * FROM postagens WHERE id_publicacao = ? AND status = 'aprovado'";
-$stmt = mysqli_prepare($conexao, $busca_postagen);
-mysqli_stmt_bind_param($stmt, "i", $id_postagem);
-mysqli_stmt_execute($stmt);
-$resultado_postagen = mysqli_stmt_get_result($stmt);
-$postagem = mysqli_fetch_assoc($resultado_postagen);
+// 2. Busca a postagem específica usando o Model
+$postagem = Publicacao::buscarPostagemPorId($id_postagem);
 
 ?>
 <!-- /Navigation -->
 
 <section class="container mt-5 mb-5">
   <?php
-  if ($postagem) {
+  if ($postagem && $postagem['status'] === 'aprovado') {
       $autor = Publicacao::buscar_nome_autor($postagem["id_usuario"]);
       ?>
       <div class="card shadow-lg">

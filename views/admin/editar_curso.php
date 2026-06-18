@@ -1,34 +1,20 @@
 <?php
 include_once "menu.php";
-include_once "../../db/conexao.php";
-
-$c = new Conexao();
-$conexao = $c->conectar();
+include_once "../../models/cursoModel.php";
+include_once "../../models/categoriaModel.php";
+include_once "../../models/imagemModel.php";
+include_once "../../models/aulaModel.php";
 
 $id_curso = $_GET["id"];
 
-$busca = "SELECT * FROM cursos WHERE id_curso = ?";
-$stmt = mysqli_prepare($conexao, $busca);
-mysqli_stmt_bind_param($stmt, "i", $id_curso);
-mysqli_stmt_execute($stmt);
-$resultado = mysqli_stmt_get_result($stmt);
-$curso = mysqli_fetch_array($resultado);
+$cursoRepo = new CursoModel();
+$curso = $cursoRepo->buscarCurso($id_curso);
 
 $id_categoria = $curso["id_categoria"];
-$busca = "SELECT * FROM categorias WHERE id_categoria = ?";
-$stmt = mysqli_prepare($conexao, $busca);
-mysqli_stmt_bind_param($stmt, "i", $id_categoria);
-mysqli_stmt_execute($stmt);
-$resultado = mysqli_stmt_get_result($stmt);
-$categoria = mysqli_fetch_array($resultado);
+$categoria = CategoriaModel::buscarCategoria($id_categoria);
 
 $id_imagem = $curso["id_imagem"];
-$busca = "SELECT * FROM imagens WHERE id_imagem = ?";
-$stmt = mysqli_prepare($conexao, $busca);
-mysqli_stmt_bind_param($stmt, "i", $id_imagem);
-mysqli_stmt_execute($stmt);
-$resultado = mysqli_stmt_get_result($stmt);
-$imagem = mysqli_fetch_array($resultado);
+$imagem = Imagem::procura_imagem($id_imagem);
 
 if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] == "admin") {
 ?>
@@ -53,11 +39,10 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
                 <select id="id_categoria" class="form-select form-control js-example-basic-single" aria-label="Default select example" name="id_categoria">
                   <option value="<?php echo $curso["id_categoria"]; ?>"><?php echo $categoria["categoria"]; ?></option>
                   <?php
-                  $consulta = "SELECT id_categoria, categoria FROM categorias";
-                  $resultado = mysqli_query($conexao, $consulta);
-                  if ($resultado) {
-                    while ($dado = mysqli_fetch_array($resultado)) {
-                      echo '<option value="' . $dado["id_categoria"] . '">' . $dado["categoria"] . '</option>';
+                  $categorias = CategoriaModel::buscarCategorias();
+                  if (!empty($categorias)) {
+                    foreach ($categorias as $dado) {
+                      echo '<option value="' . $dado["id_categoria"] . '">' . htmlspecialchars($dado["categoria"]) . '</option>';
                     }
                   } else {
                     echo '<option>Erro ao carregar os dados</option>';
@@ -172,16 +157,13 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
               </thead>
               <tbody>
                 <?php
-                $busca = "SELECT * FROM aulas WHERE id_curso = ? ORDER BY num_ordenacao ASC";
-                $stmt = mysqli_prepare($conexao, $busca);
-                mysqli_stmt_bind_param($stmt, "i", $id_curso);
-                mysqli_stmt_execute($stmt);
-                $resultado = mysqli_stmt_get_result($stmt);
-                $linha = mysqli_num_rows($resultado);
-                if ($linha == 0) {
+                $aulaModelRepo = new AulaModel();
+                $aulas_curso = $aulaModelRepo->buscarAulasPorCurso($id_curso);
+                
+                if (empty($aulas_curso)) {
                   echo "<tr><td colspan='3' class='text-center'>Nenhuma aula cadastrada.</td></tr>";
                 } else {
-                  while ($aula = mysqli_fetch_array($resultado)) {
+                  foreach ($aulas_curso as $aula) {
                 ?>
                     <tr>
                       <th scope="row"><?php echo $aula["num_ordenacao"]; ?></th>
@@ -240,12 +222,8 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
 ?>
 
 <?php
-$busca = "SELECT * FROM aulas WHERE id_curso = $id_curso";
-$resultado = mysqli_query($conexao, $busca);
-$linha = mysqli_num_rows($resultado);
-
-if ($linha > 0) {
-  while ($aula = mysqli_fetch_array($resultado)) {
+if (!empty($aulas)) {
+  foreach ($aulas as $aula) {
 ?>
     <!-- Modal para aula -->
     <div class="modal fade" id="aulaModal<?php echo $aula["id_aula"]; ?>" tabindex="-1" role="dialog" aria-labelledby="aulaModalLabel<?php echo $aula["id_aula"]; ?>" aria-hidden="true">
@@ -263,6 +241,14 @@ if ($linha > 0) {
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
             <button type="button" class="btn btn-success marcar-assistido" data-id-aula="<?php echo $aula['id_aula']; ?>">Marcar como Assistido</button>
+          </div>
+        </div>
+      </div>
+    </div>
+<?php
+  }
+}
+?>
           </div>
         </div>
       </div>

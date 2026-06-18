@@ -15,13 +15,15 @@
       </thead>
       <tbody>
         <?php
-        $busca = "SELECT * FROM galeria";
-        $resultado = mysqli_query($conexao, $busca);
-        $linha = mysqli_num_rows($resultado);
-        if ($linha == '') {
+        include_once __DIR__ . "/../../models/galeriaModel.php";
+        
+        $galeriaModelRepo = new Galeria();
+        $galerias = $galeriaModelRepo->buscarGaleriasComFotos(); // Reuse method
+
+        if (empty($galerias)) {
           echo "<h3> Não foram encontrados dados Cadastrados no Banco!! </h3>";
         } else {
-          while ($res_galeria = mysqli_fetch_array($resultado)) {
+          foreach ($galerias as $res_galeria) {
             $id_galeria = $res_galeria["id_galeria"];
             $nome = $res_galeria["nome"];
         ?>

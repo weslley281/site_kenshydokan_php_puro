@@ -1,10 +1,7 @@
 <?php
 include_once "menu.php";
-include_once __DIR__ . "/../../db/conexao.php";
 include_once __DIR__ . "/../../models/graduacaoModel.php";
-
-$c = new Conexao();
-$conexao = $c->conectar();
+include_once __DIR__ . "/../../models/estadoModel.php";
 
 if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
     $graduacaoRepositorio = new Graduacao();
@@ -76,10 +73,10 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
                                 <label for="id_estado">Estado: </label>
                                 <select id="id_estado" class="form-select form-control" name="id_estado">
                                     <?php
-                                    $consulta = "SELECT id_estado, estado FROM estados";
-                                    $resultado = mysqli_query($conexao, $consulta);
-                                    if ($resultado) {
-                                        while ($dado = mysqli_fetch_array($resultado)) {
+                                    $estadoModel = new EstadoModel();
+                                    $estados = $estadoModel->listarTodos();
+                                    if (!empty($estados)) {
+                                        foreach ($estados as $dado) {
                                             echo '<option value="' . $dado["id_estado"] . '">' . $dado["estado"] . '</option>';
                                         }
                                     } else {

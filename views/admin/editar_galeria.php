@@ -1,18 +1,12 @@
 <?php
 include_once "menu.php";
-include_once "../../db/conexao.php";
-
-$c = new Conexao();
-$conexao = $c->conectar();
+include_once "../../models/galeriaModel.php";
+include_once "../../models/fotoModel.php";
 
 $id_galeria = $_GET["id"];
 
-$busca = "SELECT * FROM galeria WHERE id_galeria = ?";
-$stmt = mysqli_prepare($conexao, $busca);
-mysqli_stmt_bind_param($stmt, "i", $id_galeria);
-mysqli_stmt_execute($stmt);
-$resultado = mysqli_stmt_get_result($stmt);
-$galeria = mysqli_fetch_array($resultado);
+$galeriaRepo = new Galeria();
+$galeria = $galeriaRepo->buscarGaleria($id_galeria);
 
 if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] == "admin") {
 ?>
@@ -29,7 +23,7 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
 
               <div class="form-group">
                 <label for="nome">Nome: </label>
-                <input id="nome" type="text" class="form-control" value="<?php echo $galeria["nome"]; ?>" name="nome" required autofocus>
+                <input id="nome" type="text" class="form-control" value="<?php echo htmlspecialchars($galeria["nome"]); ?>" name="nome" required autofocus>
               </div>
 
               <input class="btn btn-lg btn-success btn-block text-uppercase" type="submit" value="Salvar">
@@ -54,16 +48,13 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
               </thead>
               <tbody>
                 <?php
-                $busca = "SELECT * FROM fotos WHERE id_galeria = ?";
-                $stmt = mysqli_prepare($conexao, $busca);
-                mysqli_stmt_bind_param($stmt, "i", $id_galeria);
-                mysqli_stmt_execute($stmt);
-                $resultado = mysqli_stmt_get_result($stmt);
-                $linha = mysqli_num_rows($resultado);
-                if ($linha == '') {
+                $fotoRepo = new Foto();
+                $fotos = $fotoRepo->buscarFotosPorGaleria($id_galeria);
+                
+                if (empty($fotos)) {
                   echo "<h3> Não foram encontradas fotos nesta galeria!! </h3>";
                 } else {
-                  while ($foto = mysqli_fetch_array($resultado)) {
+                  foreach ($fotos as $foto) {
                 ?>
                     <tr>
                       <th scope="row"><img src="../../slides/<?php echo $foto["foto"]; ?>" width="50" height="50"></th>

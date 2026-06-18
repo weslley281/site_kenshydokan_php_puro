@@ -1,19 +1,12 @@
 <?php
 include_once "menu.php";
-include_once "../../db/conexao.php";
-
-$c = new Conexao();
-$conexao = $c->conectar();
+include_once "../../models/galeriaModel.php";
 
 if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] == "admin") {
   $id_galeria = $_GET["id"];
 
-  $busca_galeria = "SELECT * FROM galeria WHERE id_galeria = ?";
-  $stmt = mysqli_prepare($conexao, $busca_galeria);
-  mysqli_stmt_bind_param($stmt, "i", $id_galeria);
-  mysqli_stmt_execute($stmt);
-  $resultado_galeria = mysqli_stmt_get_result($stmt);
-  $galeria = mysqli_fetch_array($resultado_galeria);
+  $galeriaRepo = new Galeria();
+  $galeria = $galeriaRepo->buscarGaleria($id_galeria);
 ?>
   <div class="container">
     <div class="row">

@@ -15,13 +15,14 @@
       </thead>
       <tbody>
         <?php
-        $busca = "SELECT * FROM usuarios";
-        $resultado = mysqli_query($conexao, $busca);
-        $linha = mysqli_num_rows($resultado);
-        if ($linha == '') {
+        include_once __DIR__ . "/../../models/usuarioModel.php";
+        
+        $usuarios = Usuario::buscarTodosUsuarios();
+
+        if (empty($usuarios)) {
           echo "<h3> Não foram encontrados dados Cadastrados no Banco!! </h3>";
         } else {
-          while ($res_usuario = mysqli_fetch_array($resultado)) {
+          foreach ($usuarios as $res_usuario) {
             $id_usuario = $res_usuario["id_usuario"];
             $nome = $res_usuario["nome"];
             $nivel = $res_usuario["nivel"];

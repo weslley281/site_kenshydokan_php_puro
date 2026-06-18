@@ -330,4 +330,11 @@ class FiliadoModel
         $resultado = $this->conexao->query($query);
         return $resultado->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function listarTodosFiliadosCompleto()
+    {
+        $query = "SELECT * FROM filiados ORDER BY id_filiado ASC";
+        $resultado = $this->conexao->query($query);
+        return $resultado->fetch_all(MYSQLI_ASSOC);
+    }
 }

@@ -1,9 +1,6 @@
 <?php
 include_once "menu.php";
-include_once __DIR__ . "/../../db/conexao.php";
-
-$c = new Conexao();
-$conexao = $c->conectar();
+include_once __DIR__ . "/../../models/categoriaModel.php";
 
 if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
     ?>
@@ -25,10 +22,9 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
               <label for="id_categoria">Categoria: </label>
                 <select id="id_categoria" class="form-select form-control js-example-basic-single" aria-label="Default select example" name="id_categoria">
             <?php
-$consulta = "SELECT id_categoria, categoria FROM categorias";
-    $resultado = mysqli_query($conexao, $consulta);
-    if ($resultado) {
-        while ($dado = mysqli_fetch_array($resultado)) {
+    $categorias = CategoriaModel::buscarCategorias();
+    if (!empty($categorias)) {
+        foreach ($categorias as $dado) {
             echo '<option value="' . $dado["id_categoria"] . '">' . $dado["categoria"] . '</option>';
         }
     } else {

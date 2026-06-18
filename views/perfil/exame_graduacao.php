@@ -33,12 +33,10 @@ include __DIR__ . "/_perfil_auth.php";
               <label for="graduacao_atual">Graduação atual do atleta que fará o exame:</label>
               <select id="graduacao_atual" class="form-control mb-2" name="graduacao_atual">
                 <?php
-                include_once __DIR__ . "/../../db/conexao.php";
-                $c = new Conexao();
-                $conexao = $c->conectar();
-                $consulta = "SELECT * FROM graduacoes ORDER BY id_graduacao ASC";
-                $resultado = mysqli_query($conexao, $consulta);
-                while ($dado = mysqli_fetch_array($resultado)) {
+                include_once __DIR__ . "/../../models/graduacaoModel.php";
+                $graduacaoRepo = new Graduacao();
+                $graduacoes = $graduacaoRepo->listarGraduacoes();
+                foreach ($graduacoes as $dado) {
                     echo '<option value="' . $dado["id_graduacao"] . '">' . $dado["graduacao"] . '</option>';
                 }
                 ?>
@@ -48,8 +46,7 @@ include __DIR__ . "/_perfil_auth.php";
               <label for="graduacao_pretendida">Graduação pretendida do atleta que fará o exame:</label>
               <select id="graduacao_pretendida" class="form-control mb-2" name="graduacao_pretendida">
                 <?php
-                mysqli_data_seek($resultado, 0);
-                while ($dado = mysqli_fetch_array($resultado)) {
+                foreach ($graduacoes as $dado) {
                     echo '<option value="' . $dado["id_graduacao"] . '">' . $dado["graduacao"] . '</option>';
                 }
                 ?>

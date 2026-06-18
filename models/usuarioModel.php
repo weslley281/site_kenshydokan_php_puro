@@ -355,4 +355,19 @@ class Usuario
 
         return $token;
     }
+
+    public static function buscarTodosUsuarios()
+    {
+        $c = new Conexao();
+        $conexao = $c->conectar();
+        $busca = "SELECT * FROM usuarios";
+        $resultado = $conexao->query($busca);
+        $usuarios = [];
+        if ($resultado) {
+            while ($row = $resultado->fetch_assoc()) {
+                $usuarios[] = $row;
+            }
+        }
+        return $usuarios;
+    }
 }

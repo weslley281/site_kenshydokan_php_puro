@@ -13,13 +13,14 @@
 			</thead>
 			<tbody>
 				<?php
-				$busca = "SELECT * FROM postagens";
-				$resultado = mysqli_query($conexao, $busca);
-				$linha = mysqli_num_rows($resultado);
-				if ($linha == '') {
+				include_once __DIR__ . "/../../models/publicacaoModel.php";
+				
+				$postagens = Publicacao::buscarTodasPostagens();
+
+				if (empty($postagens)) {
 					echo "<h3> Não foram encontrados dados Cadastrados no Banco!! </h3>";
 				} else {
-					while ($res_postagem = mysqli_fetch_array($resultado)) {
+					foreach ($postagens as $res_postagem) {
 						$id_publicacao = $res_postagem["id_publicacao"];
 						$titulo = $res_postagem["titulo"];
 						$status = $res_postagem["status"];

@@ -15,13 +15,15 @@
       </thead>
       <tbody>
         <?php
-        $busca = "SELECT * FROM graduacoes";
-        $resultado = mysqli_query($conexao, $busca);
-        $linha = mysqli_num_rows($resultado);
-        if ($linha == '') {
+        include_once __DIR__ . "/../../models/graduacaoModel.php";
+        
+        $graduacaoModelRepo = new Graduacao();
+        $graduacoes = $graduacaoModelRepo->listarGraduacoes();
+
+        if (empty($graduacoes)) {
           echo "<h3> Não foram encontrados dados Cadastrados no Banco!! </h3>";
         } else {
-          while ($res_graduacao = mysqli_fetch_array($resultado)) {
+          foreach ($graduacoes as $res_graduacao) {
             $id_graduacao = $res_graduacao["id_graduacao"];
             $graduacao = $res_graduacao["graduacao"];
         ?>

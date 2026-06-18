@@ -198,4 +198,62 @@ class Publicacao
         }
         return $postagens;
     }
+
+    public static function buscarTodasPostagens()
+    {
+        $c = new Conexao();
+        $conexao = $c->conectar();
+
+        $busca = "SELECT * FROM postagens ORDER BY id_publicacao DESC";
+        $resultado = $conexao->query($busca);
+
+        $postagens = [];
+        if ($resultado) {
+            while ($row = $resultado->fetch_assoc()) {
+                $postagens[] = $row;
+            }
+        }
+        return $postagens;
+    }
+
+    public static function buscarPostagemPorId(int $id_publicacao)
+    {
+        $c = new Conexao();
+        $conexao = $c->conectar();
+
+        $busca = $conexao->prepare("SELECT * FROM postagens WHERE id_publicacao = ?");
+        $busca->bind_param("i", $id_publicacao);
+        $busca->execute();
+        $resultado = $busca->get_result();
+
+        if ($resultado->num_rows === 0) {
+            return null;
+        }
+
+        $postagem = $resultado->fetch_assoc();
+        $busca->close();
+
+        return $postagem;
+    }
+
+    public static function buscarPostagensPorUsuario(int $id_usuario)
+    {
+        $c = new Conexao();
+        $conexao = $c->conectar();
+
+        $busca = $conexao->prepare("SELECT * FROM postagens WHERE id_usuario = ? ORDER BY id_publicacao DESC");
+        $busca->bind_param("i", $id_usuario);
+        $busca->execute();
+        $resultado = $busca->get_result();
+
+        $postagens = [];
+        if ($resultado) {
+            while ($row = $resultado->fetch_assoc()) {
+                $postagens[] = $row;
+            }
+        }
+        $busca->close();
+
+        return $postagens;
+    }
 }

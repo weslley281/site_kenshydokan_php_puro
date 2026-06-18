@@ -2,6 +2,7 @@
 $page_title = "Editar Postagem";
 include __DIR__ . "/menu.php";
 include __DIR__ . "/_perfil_auth.php";
+include_once __DIR__ . "/../../models/publicacaoModel.php";
 
 // Check if ID is set
 if (!isset($_GET["id"])) {
@@ -12,14 +13,8 @@ if (!isset($_GET["id"])) {
 
 $id_publicacao = $_GET["id"];
 
-// Fetch the post using a prepared statement to prevent SQL injection
-$query = "SELECT * FROM postagens WHERE id_publicacao = ?";
-$stmt = $conexao->prepare($query);
-$stmt->bind_param("i", $id_publicacao);
-$stmt->execute();
-$result = $stmt->get_result();
-$postagem = $result->fetch_assoc();
-$stmt->close();
+// Fetch the post using the Model method
+$postagem = Publicacao::buscarPostagemPorId($id_publicacao);
 
 // Check if the post exists and if the current user is the author
 if (!$postagem || $postagem["id_usuario"] != $_SESSION["id_usuario"]) {

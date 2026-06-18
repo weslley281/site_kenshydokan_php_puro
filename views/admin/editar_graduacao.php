@@ -1,18 +1,10 @@
 <?php
 include_once "menu.php";
-include_once "../../db/conexao.php";
-
-$c = new Conexao();
-$conexao = $c->conectar();
+include_once "../../models/graduacaoModel.php";
 
 $id_graduacao = $_GET["id"];
 
-$busca = "SELECT * FROM graduacoes WHERE id_graduacao = ?";
-$stmt = mysqli_prepare($conexao, $busca);
-mysqli_stmt_bind_param($stmt, "i", $id_graduacao);
-mysqli_stmt_execute($stmt);
-$resultado = mysqli_stmt_get_result($stmt);
-$graduacao = mysqli_fetch_array($resultado);
+$graduacao = Graduacao::buscarGraduacao($id_graduacao);
 
 if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] == "admin") {
 ?>

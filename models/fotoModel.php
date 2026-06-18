@@ -73,6 +73,22 @@ class Foto
         }
     }
 
+    public function buscarFotosPorGaleria($id_galeria)
+    {
+        $busca = $this->conexao->prepare("SELECT * FROM fotos WHERE id_galeria = ? ORDER BY id_foto ASC");
+        $busca->bind_param("i", $id_galeria);
+        $busca->execute();
+        $resultado = $busca->get_result();
+        
+        $fotos = [];
+        while ($foto = $resultado->fetch_assoc()) {
+            $fotos[] = $foto;
+        }
+        $busca->close();
+        
+        return $fotos;
+    }
+
     public function excluirFoto($id_foto): bool
     {
         try {

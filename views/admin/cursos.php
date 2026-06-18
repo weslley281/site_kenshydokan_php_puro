@@ -23,13 +23,14 @@
       </thead>
       <tbody>
         <?php
-        $busca = "SELECT * FROM cursos";
-        $resultado = mysqli_query($conexao, $busca);
-        $linha = mysqli_num_rows($resultado);
-        if ($linha == '') {
+        include_once __DIR__ . "/../../models/cursoModel.php";
+        include_once __DIR__ . "/../../models/imagemModel.php";
+
+        $cursos = CursoModel::buscarTodosCursos();
+        if (empty($cursos)) {
           echo "<h3> Não foram encontrados dados Cadastrados no Banco!! </h3>";
         } else {
-          while ($res_curso = mysqli_fetch_array($resultado)) {
+          foreach ($cursos as $res_curso) {
             $id_curso = $res_curso["id_curso"];
             $id_imagem = $res_curso["id_imagem"];
             $nome = $res_curso["nome"];
@@ -38,15 +39,15 @@
             $dataCriacao = $res_curso["dataCriacao"];
             $dataMudanca = $res_curso["dataMudanca"];
 
-            $res_imagem = ImagemRepositorio::procura_imagem($id_imagem);
-            $caminho_imagem = $res_imagem["caminho"];
-            $nome_imagem = $res_imagem["nome"];
+            $res_imagem = Imagem::procura_imagem($id_imagem);
+            $caminho_imagem = $res_imagem ? $res_imagem["caminho"] : '';
+            $nome_imagem = $res_imagem ? $res_imagem["nome"] : '';
         ?>
             <tr>
-              <th class="font-weight-bold" scope="row"><img class="img-fluid" src="<?php echo $caminho_imagem; ?>" width="50" height="50" alt="<?php echo $nome_imagem; ?>"></th>
-              <td class="text-capitalize"><?php echo $nome; ?></td>
-              <td class="text-capitalize"><?php echo $professor; ?></td>
-              <td class="text-capitalize"><?php echo $status; ?></td>
+              <th class="font-weight-bold" scope="row"><img class="img-fluid" src="<?php echo htmlspecialchars($caminho_imagem); ?>" width="50" height="50" alt="<?php echo htmlspecialchars($nome_imagem); ?>"></th>
+              <td class="text-capitalize"><?php echo htmlspecialchars($nome); ?></td>
+              <td class="text-capitalize"><?php echo htmlspecialchars($professor); ?></td>
+              <td class="text-capitalize"><?php echo htmlspecialchars($status); ?></td>
               <td class="text-capitalize"><?php echo date_format(date_create($dataCriacao), "d/m/Y"); ?></td>
               <td class="text-capitalize"><?php echo date_format(date_create($dataMudanca), "d/m/Y"); ?></td>
               <td class="text-capitalize">
@@ -76,7 +77,7 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <p><?php echo $nome; ?></p>
+                    <p><?php echo htmlspecialchars($nome); ?></p>
                   </div>
                   <div class="modal-footer">
                     <form action="../controllers/cursoController" method="post">

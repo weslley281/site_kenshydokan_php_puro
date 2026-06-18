@@ -37,15 +37,15 @@ include __DIR__ . "/_perfil_auth.php";
 									</thead>
 									<tbody>
 										<?php
+										include_once __DIR__ . "/../../models/publicacaoModel.php";
 										$id_usuario = $usuario["id_usuario"];
-										$busca = "SELECT * FROM postagens WHERE id_usuario = '$id_usuario'";
-										$resultado = mysqli_query($conexao, $busca);
-										$linha = mysqli_num_rows($resultado);
+										$postagens = Publicacao::buscarPostagensPorUsuario($id_usuario);
+										$linha = count($postagens);
 
-										if ($linha == '') {
+										if ($linha == 0) {
 											echo "<h3> Você não postou nada!! </h3>";
 										} else {
-											while ($postagem = mysqli_fetch_array($resultado)) {
+											foreach ($postagens as $postagem) {
 										?>
 												<tr>
 													<td><?php echo $postagem["id_publicacao"]; ?></td>

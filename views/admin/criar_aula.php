@@ -1,10 +1,6 @@
 <?php
 include_once "menu.php";
-include_once "../../db/conexao.php";
 include_once "../../models/cursoModel.php";
-
-$c = new Conexao();
-$conexao = $c->conectar();
 
 if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] == "admin") {
   $id_curso = $_GET["id"];

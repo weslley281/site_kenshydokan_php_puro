@@ -44,19 +44,17 @@ include __DIR__ . "/_perfil_auth.php";
 							echo "<hr>";
 							return;
 						}else{
-						$busca = "SELECT * FROM cursos WHERE situacao = 'aprovado'";
-						$resultado = mysqli_query($conexao, $busca);
-						while ($curso = mysqli_fetch_array($resultado)) {
-							$id_imagem_curso = $curso["id_imagem"];
+						include_once __DIR__ . "/../../models/cursoModel.php";
+						include_once __DIR__ . "/../../models/imagemModel.php";
+						include_once __DIR__ . "/../../models/categoriaModel.php";
 
-							$busca_imagem_curso = "SELECT * FROM imagens WHERE id_imagem = '$id_imagem_curso'";
-							$resultado_imagem_curso = mysqli_query($conexao, $busca_imagem_curso);
-							$imagem_curso = mysqli_fetch_array($resultado_imagem_curso);
+						$cursos = CursoModel::buscarCursosAprovados();
+						foreach ($cursos as $curso) {
+							$id_imagem_curso = $curso["id_imagem"];
+							$imagem_curso = Imagem::procura_imagem($id_imagem_curso);
 
 							$id_categoria = $curso["id_categoria"];
-							$busca_categoria = "SELECT * FROM categorias WHERE id_categoria = '$id_categoria'";
-							$resultado_categoria = mysqli_query($conexao, $busca_categoria);
-							$categoria = mysqli_fetch_array($resultado_categoria);
+							$categoria = CategoriaModel::buscarCategoria($id_categoria);
 						?>
 							<div class="col-lg-4 col-md-6 mb-4">
 								<div class="card h-100">

@@ -91,6 +91,22 @@ class Galeria
         }
     }
 
+    public function buscarGaleria($id_galeria)
+    {
+        $busca = $this->conexao->prepare("SELECT * FROM galeria WHERE id_galeria = ?");
+        $busca->bind_param("i", $id_galeria);
+        $busca->execute();
+        $resultado = $busca->get_result();
+        
+        $galeria = null;
+        if ($resultado->num_rows > 0) {
+            $galeria = $resultado->fetch_assoc();
+        }
+        $busca->close();
+        
+        return $galeria;
+    }
+
     public function buscarGaleriasComFotos()
     {
         $galleries_data = [];
