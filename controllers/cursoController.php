@@ -3,8 +3,7 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     include_once "../models/cursoModel.php";
-    include_once "../repositorios/CursoRepositorio.php";
-    include_once "../repositorios/imagemRepositorio.php";
+    include_once "../models/imagemModel.php";
 
     define("MSG_ERRO", "Erro: Ocorreu um erro. Tente novamente.");
     define("MSG_SUCESSO", "Operação realizada com sucesso.");
@@ -12,8 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["tipo"])) {
         $dataMudanca = date("Y-m-d");
 
-        $cursoRepositorio = new CursoRepositorio();
-        $imagemRepositorio = new ImagemRepositorio;
+        $cursoModel = new CursoModel();
+        $imagemModelManager = new Imagem();
 
         if ($_POST["tipo"] == "inserir") {
 
@@ -30,10 +29,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if (move_uploaded_file($_FILES["imagem"]["tmp_name"], $caminho)) {
                 $imagemModel = new Imagem($nomeImagem, $caminho, $dataMudanca);
 
-                if ($imagemRepositorio->registrar_imagem($imagemModel)) {
-                    $id_imagem = $imagemRepositorio::procura_id_imagem($nomeImagem);
+                if ($imagemModelManager->registrar_imagem($imagemModel)) {
+                    $id_imagem = Imagem::procura_id_imagem($nomeImagem);
 
-                    $cursoModel = new CursoModel(
+                    $novoCurso = new CursoModel(
                         null,
                         $_POST["id_categoria"],
                         $_POST["nome"],
@@ -47,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         $_POST["temCertificado"]
                     );
 
-                    if ($cursoRepositorio->criarCurso($cursoModel)) {
+                    if ($cursoModel->criarCurso($novoCurso)) {
                         exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=cursos');
                     } else {
                         exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=cursos');
@@ -61,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } elseif ($_POST["tipo"] == "editar") {
             $id_curso = $_POST["id_curso"];
 
-            $cursoModel = new CursoModel(
+            $novoCurso = new CursoModel(
                 $id_curso,
                 $_POST["id_categoria"],
                 $_POST["nome"],
@@ -77,15 +76,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $destino = "../views/admin/editar_curso.php?id=" . $id_curso;
 
-            if ($cursoRepositorio->editarCurso($id_curso, $cursoModel)) {
+            if ($cursoModel->editarCurso($id_curso, $novoCurso)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, $destino);
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, $destino);
             }
         } elseif ($_POST["tipo"] == "editar_imagem") {
 
-            $imagemRepositorio = new ImagemRepositorio;
-            $cursoRepositorio = new CursoRepositorio;
+            $imagemModelManager = new Imagem();
+            $cursoModel = new CursoModel();
 
             $diretorioUpload = "../img/";
             $nomeImagem = uniqid() . $_FILES["imagem"]["name"];
@@ -97,10 +96,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 if (move_uploaded_file($_FILES["imagem"]["tmp_name"], $caminho)) {
                     $imagemModel = new Imagem($nomeImagem, $caminho, $dataMudanca);
 
-                    if ($imagemRepositorio->registrar_imagem($imagemModel)) {
-                        $id_imagem = $imagemRepositorio::procura_id_imagem($nomeImagem);
+                    if ($imagemModelManager->registrar_imagem($imagemModel)) {
+                        $id_imagem = Imagem::procura_id_imagem($nomeImagem);
 
-                        $dados_imagem_antiga = $imagemRepositorio::procura_imagem($_POST["id_imagem"]);
+                        $dados_imagem_antiga = Imagem::procura_imagem($_POST["id_imagem"]);
 
                         $caminho = $dados_imagem_antiga != null ? file_exists($dados_imagem_antiga["caminho"]) : "";
 
@@ -108,10 +107,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             unlink($caminhoImagemAntiga);
                         }
 
-                        $imagemRepositorio->deleta_imagem($_POST["id_imagem"]);
+                        $imagemModelManager->deleta_imagem($_POST["id_imagem"]);
                         $destino = "../views/admin/editar_curso.php?id=" . $_POST["id_curso"];
 
-                        if ($cursoRepositorio->editarImagemCurso($_POST["id_curso"], $id_imagem, $dataMudanca)) {
+                        if ($cursoModel->editarImagemCurso($_POST["id_curso"], $id_imagem, $dataMudanca)) {
                             exibirMensagemEredirecionar(MSG_SUCESSO, $destino);
                         } else {
                             exibirMensagemEredirecionar("Erro ao editar a imagem do usuário", $destino);
@@ -128,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } elseif ($_POST["tipo"] == "excluir") {
             $id_curso = $_POST["id_curso"];
 
-            if ($cursoRepositorio->excluirCurso($id_curso)) {
+            if ($cursoModel->excluirCurso($id_curso)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=cursos');
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=cursos');

@@ -12,13 +12,11 @@
           <div class="card-body">
             <h5 class="card-title text-center">Trocar a Senha</h5>
             <?php
-include_once "../db/conexao.php";
-$c = new Conexao();
-$conexao = $c->conectar();
+include_once "../models/usuarioModel.php";
 $id_usuario = $_GET["id_usuario"];
-$busca_usu = "SELECT * FROM `usuarios` where id_usuario = '$id_usuario'";
-$resultado_usu = mysqli_query($conexao, $busca_usu);
-while ($res = mysqli_fetch_array($resultado_usu)) {
+$usuarioModelRepo = new Usuario();
+$res = $usuarioModelRepo->buscarUsuario($id_usuario);
+if ($res) {
     $id_usuario = $res["id_usuario"];
     $nome = $res["nome"];
 }

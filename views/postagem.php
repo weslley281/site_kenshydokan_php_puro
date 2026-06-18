@@ -1,7 +1,7 @@
 <?php
 include_once "menu.php";
 include_once "../db/conexao.php";
-include_once "../repositorios/publicacaoRepositorio.php";
+include_once "../models/publicacaoModel.php";
 
 $c = new Conexao();
 $conexao = $c->conectar();
@@ -29,7 +29,7 @@ $postagem = mysqli_fetch_assoc($resultado_postagen);
 <section class="container mt-5 mb-5">
   <?php
   if ($postagem) {
-      $autor = PublicacaoRepositorio::buscar_nome_autor($postagem["id_usuario"]);
+      $autor = Publicacao::buscar_nome_autor($postagem["id_usuario"]);
       ?>
       <div class="card shadow-lg">
         <div class="card-body p-4 p-md-5">

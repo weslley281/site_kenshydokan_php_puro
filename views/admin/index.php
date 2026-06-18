@@ -1,17 +1,13 @@
 <?php
 include "menu.php";
-include_once __DIR__ . "/../../db/conexao.php";
-include_once __DIR__ . "/../../repositorios/imagemRepositorio.php";
-include_once __DIR__ . "/../../repositorios/graduacaoRepositorio.php";
-
-$c = new Conexao();
-$conexao = $c->conectar();
+include_once __DIR__ . "/../../models/usuarioModel.php";
+include_once __DIR__ . "/../../models/imagemModel.php";
+include_once __DIR__ . "/../../models/graduacaoModel.php";
 
 $id_usuario = $_SESSION['id_usuario'];
 
-$busca_usuario = "SELECT * FROM usuarios WHERE id_usuario = '$id_usuario'";
-$resultado_usuario = mysqli_query($conexao, $busca_usuario);
-$usuario = mysqli_fetch_array($resultado_usuario);
+$usuarioModelRepo = new Usuario();
+$usuario = $usuarioModelRepo->buscarUsuario($id_usuario);
 
 if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
 ?>

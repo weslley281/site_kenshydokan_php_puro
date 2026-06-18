@@ -2,16 +2,16 @@
 $page_title = "Meus Certificados";
 include __DIR__ . "/menu.php";
 include __DIR__ . "/_perfil_auth.php";
-include_once __DIR__ . "/../../repositorios/CertificadoRepositorio.php";
-include_once __DIR__ . "/../../repositorios/CursoRepositorio.php";
+include_once __DIR__ . "/../../models/certificadoModel.php";
+include_once __DIR__ . "/../../models/cursoModel.php";
 
 $certificados = [];
 if (isset($_SESSION['id_usuario'])) {
-    $certificadoRepositorio = new CertificadoRepositorio();
-    $certificados = $certificadoRepositorio->buscarCertificadosPorUsuario($_SESSION['id_usuario']);
+    $certificadoModelRepo = new CertificadoModel();
+    $certificados = $certificadoModelRepo->buscarCertificadosPorUsuario($_SESSION['id_usuario']);
 }
 
-$cursoRepositorio = new CursoRepositorio();
+$cursoModelRepo = new CursoModel();
 ?>
 
 <body>
@@ -44,7 +44,7 @@ $cursoRepositorio = new CursoRepositorio();
 								</thead>
 								<tbody>
 									<?php foreach ($certificados as $certificado) : ?>
-										<?php $curso = $cursoRepositorio->buscarCurso($certificado['id_curso']); ?>
+										<?php $curso = $cursoModelRepo->buscarCurso($certificado['id_curso']); ?>
 										<tr>
 											<td><?php echo htmlspecialchars($curso['nome'] ?? 'Curso Desconhecido'); ?></td>
 											<td><?php echo date('d/m/Y', strtotime($certificado['data_emissao'])); ?></td>

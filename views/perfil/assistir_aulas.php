@@ -2,13 +2,13 @@
 $page_title = "Aulas do Curso";
 include __DIR__ . "/menu.php";
 include __DIR__ . "/_perfil_auth.php";
-include_once __DIR__ . "/../../repositorios/AulaRepositorio.php";
-include_once __DIR__ . "/../../repositorios/CursoRepositorio.php";
+include_once __DIR__ . "/../../models/aulaModel.php";
+include_once __DIR__ . "/../../models/cursoModel.php";
 
-$aulaRepositorio = new AulaRepositorio();
+$aulaModelRepo = new AulaModel();
 $aulas_assistidas_ids = [];
 if (isset($_SESSION['id_usuario'])) {
-    $aulas_assistidas_ids = $aulaRepositorio->getAulasAssistidasPorUsuario($_SESSION['id_usuario']);
+    $aulas_assistidas_ids = $aulaModelRepo->getAulasAssistidasPorUsuario($_SESSION['id_usuario']);
 }
 
 $id_curso = isset($_GET["id"]) ? (int)$_GET["id"] : 0;
@@ -17,9 +17,8 @@ if ($id_curso === 0) {
     exit;
 }
 
-// Fetch course details using the repository for consistency
-$cursoRepositorio = new CursoRepositorio();
-$curso = $cursoRepositorio->buscarCurso($id_curso);
+$cursoModelRepo = new CursoModel();
+$curso = $cursoModelRepo->buscarCurso($id_curso);
 
 ?>
 
@@ -37,11 +36,10 @@ $curso = $cursoRepositorio->buscarCurso($id_curso);
                 <hr>
 
                 <?php
-                $total_aulas = $aulaRepositorio->getTotalAulasPorCurso($id_curso);
+                $total_aulas = $aulaModelRepo->getTotalAulasPorCurso($id_curso);
                 $aulas_assistidas_no_curso = 0;
 
-                // This logic can be simplified if we only need the count
-                $aulas_do_curso = $aulaRepositorio->buscarAulasPorCurso($id_curso);
+                $aulas_do_curso = $aulaModelRepo->buscarAulasPorCurso($id_curso);
                 foreach ($aulas_do_curso as $aula) {
                     if (in_array($aula['id_aula'], $aulas_assistidas_ids)) {
                         $aulas_assistidas_no_curso++;

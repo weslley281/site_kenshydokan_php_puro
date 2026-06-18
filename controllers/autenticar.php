@@ -2,7 +2,7 @@
 session_start();
 
 include_once "../db/conexao.php";
-include_once "../repositorios/usuarioRepositorio.php";
+include_once "../models/usuarioModel.php";
 
 $c = new Conexao();
 $conexao = $c->conectar();
@@ -46,7 +46,7 @@ if (isset($_POST['usuario'], $_POST['senha'])) {
                 $token_hash = hash('sha256', $token);
                 $expires = date('Y-m-d H:i:s', time() + (86400 * 30));
 
-                $usuarioRepo = new usuarioRepositorio($conexao);
+                $usuarioRepo = new Usuario($conexao);
                 $usuarioRepo->updateRememberToken($dado['id_usuario'], $token_hash, $expires);
 
                 setcookie('remember_token', $token, time() + (86400 * 30), "/");

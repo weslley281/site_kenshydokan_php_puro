@@ -1,13 +1,13 @@
 <?php
 include_once "menu.php";
 include_once __DIR__ . "/../../db/conexao.php";
-include_once __DIR__ . "/../../repositorios/graduacaoRepositorio.php";
+include_once __DIR__ . "/../../models/graduacaoModel.php";
 
 $c = new Conexao();
 $conexao = $c->conectar();
 
 if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
-    $graduacaoRepositorio = new GraduacaoRepositorio();
+    $graduacaoRepositorio = new Graduacao();
     $graduacoes = $graduacaoRepositorio->listarGraduacoes();
 ?>
     <div class="container">

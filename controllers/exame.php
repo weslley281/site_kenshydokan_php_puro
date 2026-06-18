@@ -3,7 +3,6 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     include_once "../models/exameGraduacaoModel.php";
-    include_once "../repositorios/exameGraduacaoRepositorio.php";
 
     define("MSG_ERRO", "Erro: Ocorreu um erro. Tente novamente.");
     define("MSG_SUCESSO", "Operação realizada com sucesso.");
@@ -11,9 +10,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $dataCriacao = date("Y-m-d H:i:s");
     $dataMudanca = date("Y-m-d H:i:s");
 
-    $exameRepositorio = new ExameGraduacaoRepositorio();
+    $exameModel = new ExameGraduacaoModel();
 
-    $exameModel = new ExameGraduacaoModel(
+    $exameData = new ExameGraduacaoModel(
         null,
         $_POST["nome"],
         $_POST["documento"],
@@ -26,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         'aguardando'
     );
 
-    if ($exameRepositorio->criar($exameModel)) {
+    if ($exameModel->criar($exameData)) {
         exibirMensagemEredirecionar(MSG_SUCESSO, '../views/perfil/perfil.php');
     } else {
         exibirMensagemEredirecionar(MSG_ERRO, '../views/perfil/exame_graduacao.php');

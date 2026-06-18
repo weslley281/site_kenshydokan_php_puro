@@ -1,17 +1,17 @@
 <?php
 include "menu.php";
-include_once "../db/conexao.php";
-include_once "../repositorios/graduacaoRepositorio.php";
-
-$c = new Conexao();
-$conexao = $c->conectar();
+include_once "../models/filiadoModel.php";
+include_once "../models/graduacaoModel.php";
 
 // Busca todas as graduações e monta um array associativo por id
-$graduacaoRepositorio = new GraduacaoRepositorio();
+$graduacaoRepositorio = new Graduacao();
 $graduacoes = [];
 foreach ($graduacaoRepositorio->listarGraduacoes() as $g) {
 	$graduacoes[$g['id_graduacao']] = $g['graduacao'];
 }
+
+$filiadoModel = new FiliadoModel();
+$filiadosConfirmados = $filiadoModel->listarFiliadosAtivos();
 ?>
 
 <div class="container mt-5">
@@ -26,13 +26,10 @@ foreach ($graduacaoRepositorio->listarGraduacoes() as $g) {
 		</thead>
 		<tbody>
 			<?php
-			$busca = "SELECT * FROM filiados where confirmacao = 'sim' order by id_filiado asc";
-			$resultado = mysqli_query($conexao, $busca);
-			$linha = mysqli_num_rows($resultado);
-			if ($linha == '') {
+			if (empty($filiadosConfirmados)) {
 				echo "<h3> Não foram encontrados dados Cadastrados no Banco!! </h3>";
 			} else {
-				while ($res = mysqli_fetch_array($resultado)) {
+				foreach ($filiadosConfirmados as $res) {
 					$id_filiado = $res["id_filiado"];
 					$nome = $res["nome"];
 					$dojo = $res["dojo"];
@@ -41,9 +38,9 @@ foreach ($graduacaoRepositorio->listarGraduacoes() as $g) {
 			?>
 					<tr>
 						<th class="font-weight-bold" scope="row"><?php echo $id_filiado; ?></th>
-						<td class="text-capitalize"><?php echo $nome; ?></td>
-						<td class="text-capitalize"><?php echo $dojo; ?></td>
-						<td class="text-capitalize"><?php echo $graduacao_nome; ?></td>
+						<td class="text-capitalize"><?php echo htmlspecialchars($nome); ?></td>
+						<td class="text-capitalize"><?php echo htmlspecialchars($dojo); ?></td>
+						<td class="text-capitalize"><?php echo htmlspecialchars($graduacao_nome); ?></td>
 					</tr>
 			<?php }
 			} ?>

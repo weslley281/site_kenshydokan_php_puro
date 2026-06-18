@@ -3,7 +3,7 @@ session_start();
 header('Content-Type: application/json');
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    include_once "../repositorios/AulaRepositorio.php";
+    include_once "../models/aulaModel.php";
 
     $response = ["success" => false, "message" => ""];
 
@@ -22,9 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $id_usuario = $_SESSION["id_usuario"];
     $id_aula = $_POST["id_aula"];
 
-    $aulaRepositorio = new AulaRepositorio();
+    $aulaModel = new AulaModel();
 
-    if ($aulaRepositorio->marcarAulaAssistida($id_usuario, $id_aula)) {
+    if ($aulaModel->marcarAulaAssistida($id_usuario, $id_aula)) {
         $response["success"] = true;
         $response["message"] = "Aula marcada como assistida com sucesso!";
     } else {

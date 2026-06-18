@@ -1,7 +1,7 @@
 <?php
 session_start();
 include_once "../db/conexao.php";
-include_once "../repositorios/usuarioRepositorio.php";
+include_once "../models/usuarioModel.php";
 
 $c = new Conexao();
 $conexao = $c->conectar();
@@ -9,10 +9,10 @@ $conexao = $c->conectar();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? '';
     if ($email) {
-        $usuario = UsuarioRepositorio::buscarUsuarioPorEmail($email);
+        $usuario = Usuario::buscarUsuarioPorEmail($email);
         if ($usuario) {
             // Gerar token e salvar no banco
-            $token = UsuarioRepositorio::gerarTokenRecuperacao($usuario['id_usuario']);
+            $token = Usuario::gerarTokenRecuperacao($usuario['id_usuario']);
 
             // Montar link de recuperação
             $link = "http://localhost/site_kenshydokan_php_puro/views/recuperar_senha.php?token=" . urlencode($token);

@@ -33,8 +33,8 @@ if (!isset($_SESSION['admin_id'])) {
                     </thead>
                     <tbody>
                         <?php
-                        require_once __DIR__ . '/../../repositorios/dojoRepositorio.php';
-                        $dojoRepositorio = new DojoRepositorio();
+                        require_once __DIR__ . '/../../models/dojoModel.php';
+                        $dojoRepositorio = new DojoModel();
                         $dojos = $dojoRepositorio->listarDojos();
                         foreach ($dojos as $dojo) {
                         ?>

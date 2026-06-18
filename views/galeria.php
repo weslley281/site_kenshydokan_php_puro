@@ -1,29 +1,9 @@
 <?php
 include "menu.php";
-include_once "../db/conexao.php";
+include_once "../models/galeriaModel.php";
 
-// --- 1. PHP agora apenas prepara os dados ---
-$c = new Conexao();
-$conexao = $c->conectar();
-
-$galleries_data = [];
-$busca_galleries = "SELECT * FROM galeria ORDER BY id_galeria ASC";
-$resultado_galleries = mysqli_query($conexao, $busca_galleries);
-
-while ($gallery = mysqli_fetch_assoc($resultado_galleries)) {
-    $id_galeria = $gallery["id_galeria"];
-    $photos_data = [];
-    
-    $busca_photos = "SELECT * FROM fotos WHERE id_galeria = '$id_galeria' ORDER BY id_foto ASC";
-    $resultado_photos = mysqli_query($conexao, $busca_photos);
-    
-    while ($photo = mysqli_fetch_assoc($resultado_photos)) {
-        $photos_data[] = $photo;
-    }
-    
-    $gallery['photos'] = $photos_data;
-    $galleries_data[] = $gallery;
-}
+$galeriaModel = new Galeria();
+$galleries_data = $galeriaModel->buscarGaleriasComFotos();
 ?>
 
 <style>

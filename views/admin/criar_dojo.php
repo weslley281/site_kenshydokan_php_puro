@@ -37,8 +37,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/site_kenshydokan/config.php';
                         <select class="form-control" id="id_filiado_responsavel" name="id_filiado_responsavel" required>
                             <option value="">Selecione um responsável...</option>
                             <?php
-                            require_once __DIR__ . '/../../repositorios/filiadoRepositorio.php';
-                            $filiadoRepo = new FiliadoRepositorio();
+                            require_once __DIR__ . '/../../models/filiadoModel.php';
+                            $filiadoRepo = new FiliadoModel();
                             $filiados = $filiadoRepo->listarFiliados();
                             foreach ($filiados as $filiado) {
                                 echo '<option value="' . $filiado['id_filiado'] . '">' . htmlspecialchars($filiado['nome']) . '</option>';

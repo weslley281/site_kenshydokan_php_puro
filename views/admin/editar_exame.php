@@ -1,10 +1,10 @@
 <?php
 include_once __DIR__ . "/../menu.php";
-include_once __DIR__ . "/../../repositorios/exameGraduacaoRepositorio.php";
-include_once __DIR__ . "/../../repositorios/graduacaoRepositorio.php";
+include_once __DIR__ . "/../../models/exameGraduacaoModel.php";
+include_once __DIR__ . "/../../models/graduacaoModel.php";
 
-$exameRepositorio = new ExameGraduacaoRepositorio();
-$graduacaoRepositorio = new GraduacaoRepositorio();
+$exameRepositorio = new ExameGraduacaoModel();
+$graduacaoRepositorio = new Graduacao();
 
 $exame = $exameRepositorio->buscarPorId($_GET['id']);
 $graduacoes = $graduacaoRepositorio->listarGraduacoes();

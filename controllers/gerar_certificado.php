@@ -1,13 +1,11 @@
 <?php
 session_start();
 
-// Include FPDF library and other necessary files
-//require_once('../libs/fpdf/fpdf.php'); // Assuming fpdf is in libs/fpdf
-include_once __DIR__ . "/../repositorios/AulaRepositorio.php";
-include_once __DIR__ . "/../repositorios/CursoRepositorio.php";
-include_once __DIR__ . "/../repositorios/CertificadoRepositorio.php";
+// Include necessary files
+include_once __DIR__ . "/../models/aulaModel.php";
+include_once __DIR__ . "/../models/cursoModel.php";
 include_once __DIR__ . "/../models/certificadoModel.php";
-include_once __DIR__ . "/../repositorios/usuarioRepositorio.php";
+include_once __DIR__ . "/../models/usuarioModel.php";
 
 // Helper function for messages and redirection
 function exibirMensagemEredirecionar($mensagem, $destino)
@@ -29,15 +27,15 @@ if (!isset($_GET["id_curso"])) {
 $id_usuario = $_SESSION["id_usuario"];
 $id_curso = $_GET["id_curso"];
 
-// Instantiate repositories
-$aulaRepositorio = new AulaRepositorio();
-$cursoRepositorio = new CursoRepositorio();
-$certificadoRepositorio = new CertificadoRepositorio();
-$usuarioRepositorio = new UsuarioRepositorio();
+// Instantiate models (which now handle database logic)
+$aulaModelRepo = new AulaModel();
+$cursoModelRepo = new CursoModel();
+$certificadoModelRepo = new CertificadoModel();
+$usuarioModelRepo = new Usuario();
 
 // Fetch course and user data
-$curso = $cursoRepositorio->buscarCurso($id_curso);
-$usuario = $usuarioRepositorio->buscarUsuario($id_usuario);
+$curso = $cursoModelRepo->buscarCurso($id_curso);
+$usuario = $usuarioModelRepo->buscarUsuario($id_usuario);
 
 if (!$curso || !$usuario) {
     exibirMensagemEredirecionar("Curso ou usuário não encontrado.", '../views/perfil/assistir_aulas.php');
@@ -48,11 +46,11 @@ if ($curso['temCertificado'] !== 'sim') {
 }
 
 // Check eligibility
-$total_aulas = $aulaRepositorio->getTotalAulasPorCurso($id_curso);
-$aulas_assistidas = $aulaRepositorio->getAulasAssistidasPorUsuario($id_usuario);
+$total_aulas = $aulaModelRepo->getTotalAulasPorCurso($id_curso);
+$aulas_assistidas = $aulaModelRepo->getAulasAssistidasPorUsuario($id_usuario);
 $aulas_assistidas_no_curso = 0;
 foreach ($aulas_assistidas as $aula_id) {
-    $aula_detail = $aulaRepositorio->buscarAula($aula_id);
+    $aula_detail = $aulaModelRepo->buscarAula($aula_id);
     if ($aula_detail && $aula_detail['id_curso'] == $id_curso) {
         $aulas_assistidas_no_curso++;
     }
@@ -66,7 +64,7 @@ if ($percentual_conclusao < $percentual_necessario) {
 }
 
 // Check if certificate already exists
-$existing_certificates = $certificadoRepositorio->buscarCertificadosPorUsuario($id_usuario);
+$existing_certificates = $certificadoModelRepo->buscarCertificadosPorUsuario($id_usuario);
 foreach ($existing_certificates as $cert) {
     if ($cert['id_curso'] == $id_curso) {
         exibirMensagemEredirecionar("Você já possui um certificado para este curso.", '../views/perfil/meus_certificados.php');
@@ -148,7 +146,7 @@ $certificadoModel = new CertificadoModel(
     $file_path
 );
 
-if ($certificadoRepositorio->criarCertificado($certificadoModel)) {
+if ($certificadoModelRepo->criarCertificado($certificadoModel)) {
     // Serve the generated PDF to the user for download
     header('Content-Type: application/pdf');
     header('Content-Disposition: attachment; filename="' . $file_name . '"');

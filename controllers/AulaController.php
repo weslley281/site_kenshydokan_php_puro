@@ -3,7 +3,6 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     include_once "../models/aulaModel.php";
-    include_once "../repositorios/AulaRepositorio.php";
 
     define("MSG_ERRO", "Erro: Ocorreu um erro. Tente novamente.");
     define("MSG_SUCESSO", "Operação realizada com sucesso.");
@@ -14,10 +13,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $id_curso = $_POST['id_curso'];
         $num_ordenacao = isset($_POST['num_ordenacao']) ? (int)$_POST['num_ordenacao'] : 0;
 
-        $aulaRepositorio = new AulaRepositorio();
+        $aulaModelRepo = new AulaModel();
 
         if ($_POST["tipo"] == "inserir") {
-            if ($aulaRepositorio->verificarOrdemExistente($id_curso, $num_ordenacao)) {
+            if ($aulaModelRepo->verificarOrdemExistente($id_curso, $num_ordenacao)) {
                 $destino = "../views/admin/editar_curso.php?id=$id_curso";
                 exibirMensagemEredirecionar(MSG_ORDEM_DUPLICADA, $destino);
             }
@@ -32,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             );
 
             $destino = "../views/admin/editar_curso.php?id=$id_curso";
-            if ($aulaRepositorio->criarAula($aulaModel)) {
+            if ($aulaModelRepo->criarAula($aulaModel)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, $destino);
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, $destino);
@@ -41,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $id_aula = $_POST["id_aula"];
             $id_curso = $_POST["id_curso"];
 
-            if ($aulaRepositorio->verificarOrdemExistente($id_curso, $num_ordenacao, $id_aula)) {
+            if ($aulaModelRepo->verificarOrdemExistente($id_curso, $num_ordenacao, $id_aula)) {
                 $destino = "../views/admin/editar_aula.php?id=$id_aula&id_curso=$id_curso";
                 exibirMensagemEredirecionar(MSG_ORDEM_DUPLICADA, $destino);
             }
@@ -56,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             );
             
             $destino = "../views/admin/editar_aula.php?id=$id_aula&id_curso=$id_curso";
-            if ($aulaRepositorio->editarAula($id_aula, $aulaModel)) {
+            if ($aulaModelRepo->editarAula($id_aula, $aulaModel)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, $destino);
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, $destino);
@@ -65,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $id_aula = $_POST["id_aula"];
             $id_curso = $_POST["id_curso"];
 
-            if ($aulaRepositorio->excluirAula($id_aula)) {
+            if ($aulaModelRepo->excluirAula($id_aula)) {
                 $destino = "../views/admin/editar_curso.php?id=$id_curso";
                 exibirMensagemEredirecionar(MSG_SUCESSO, $destino);
             } else {

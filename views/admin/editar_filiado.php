@@ -1,8 +1,8 @@
 <?php
 include_once "menu.php";
 include_once __DIR__ . "/../../db/conexao.php";
-include_once __DIR__ . "/../../repositorios/filiadoRepositorio.php";
-include_once __DIR__ . "/../../repositorios/graduacaoRepositorio.php";
+include_once __DIR__ . "/../../models/filiadoModel.php";
+include_once __DIR__ . "/../../models/graduacaoModel.php";
 
 $c = new Conexao();
 $conexao = $c->conectar();
@@ -11,7 +11,7 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
 
 	// Busca o filiado pelo ID
 	$id_filiado = isset($_GET['id']) ? intval($_GET['id']) : 0;
-	$filiadoRepositorio = new FiliadoRepositorio();
+	$filiadoRepositorio = new FiliadoModel();
 	$filiado = $filiadoRepositorio->buscarFiliadoPorId($id_filiado);
 
 	if (!$filiado) {
@@ -44,7 +44,7 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
 								<label for="id_graduacao">Graduação: </label>
 								<select id="id_graduacao" class="form-select form-control" name="id_graduacao" required>
 									<?php
-									$graduacaoRepositorio = new GraduacaoRepositorio();
+									$graduacaoRepositorio = new Graduacao();
 									$graduacoes = $graduacaoRepositorio->listarGraduacoes();
 									foreach ($graduacoes as $graduacao) {
 										$selected = $graduacao['id_graduacao'] == $filiado->getIdGraduacao() ? 'selected' : '';

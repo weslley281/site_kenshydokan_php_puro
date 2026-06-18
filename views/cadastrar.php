@@ -1,9 +1,6 @@
 <?php
 include_once "menu.php";
-include_once "../db/conexao.php";
-
-$c = new Conexao;
-$conexao = $c->conectar();
+include_once "../models/filiadoModel.php";
 
 if (isset($_SESSION["id_usuario"])) {
   echo "<script language='javascript'>window.location='../views/perfil.php'; </script>";
@@ -30,11 +27,11 @@ if (isset($_SESSION["id_usuario"])) {
               <select id="id_fil" class="form-select form-control js-example-basic-single" aria-label="Default select example" name="id_fil">
                 <option value="0" selected>Não sou filiado</option>
                 <?php
-                $consulta = "SELECT id_filiado, nome FROM filiados ORDER BY nome";
-                $resultado = mysqli_query($conexao, $consulta);
-                if ($resultado) {
-                  while ($dado = mysqli_fetch_array($resultado)) {
-                    echo '<option value="' . $dado["id_filiado"] . '">' . $dado["nome"] . '</option>';
+                $filiadoModel = new FiliadoModel();
+                $filiados = $filiadoModel->listarFiliados();
+                if ($filiados) {
+                  foreach ($filiados as $filiado) {
+                    echo '<option value="' . $filiado["id_filiado"] . '">' . $filiado["nome"] . '</option>';
                   }
                 } else {
                   echo '<option>Erro ao carregar os dados</option>';

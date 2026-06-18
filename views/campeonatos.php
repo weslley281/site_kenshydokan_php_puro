@@ -1,18 +1,16 @@
 <?php
 include "menu.php";
-include_once "../db/conexao.php";
+include_once "../models/campeonatoModel.php";
 
-$c = new Conexao();
-$conexao = $c->conectar();
+$campeonatoModel = new Campeonato();
+$campeonatos = $campeonatoModel->buscarTodos();
 ?>
 
 <section class="container">
 
 	<div>
 		<?php
-		$busca = "SELECT * FROM campeonatos order by dataCriacao asc";
-		$resultado = mysqli_query($conexao, $busca);
-		while ($res = mysqli_fetch_array($resultado)) {
+		foreach ($campeonatos as $res) {
 			$id_campeonato = $res["id_campeonato"];
 			$titulo_camp = $res["titulo"];
 			$subtitulo = $res["subtitulo"];

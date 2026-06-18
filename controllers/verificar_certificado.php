@@ -1,7 +1,7 @@
 <?php
-include_once __DIR__ . "/../repositorios/CertificadoRepositorio.php";
-include_once __DIR__ . "/../repositorios/usuarioRepositorio.php";
-include_once __DIR__ . "/../repositorios/cursoRepositorio.php";
+include_once __DIR__ . "/../models/certificadoModel.php";
+include_once __DIR__ . "/../models/usuarioModel.php";
+include_once __DIR__ . "/../models/cursoModel.php";
 
 function exibirMensagemEredirecionar($mensagem, $destino)
 {
@@ -16,18 +16,18 @@ if (empty($codigo_verificacao)) {
     exibirMensagemEredirecionar("Código de verificação não fornecido.", '../index.php');
 }
 
-$certificadoRepositorio = new CertificadoRepositorio();
-$usuarioRepositorio = new UsuarioRepositorio();
-$cursoRepositorio = new CursoRepositorio();
+$certificadoModelRepo = new CertificadoModel();
+$usuarioModelRepo = new Usuario();
+$cursoModelRepo = new CursoModel();
 
-$certificado = $certificadoRepositorio->buscarCertificadoPorCodigo($codigo_verificacao);
+$certificado = $certificadoModelRepo->buscarCertificadoPorCodigo($codigo_verificacao);
 
 if (!$certificado) {
     exibirMensagemEredirecionar("Certificado não encontrado ou código inválido.", '../index.php');
 }
 
-$usuario = $usuarioRepositorio->buscarUsuario($certificado['id_usuario']);
-$curso = $cursoRepositorio->buscarCurso($certificado['id_curso']);
+$usuario = $usuarioModelRepo->buscarUsuario($certificado['id_usuario']);
+$curso = $cursoModelRepo->buscarCurso($certificado['id_curso']);
 
 if (!$usuario || !$curso) {
     exibirMensagemEredirecionar("Dados associados ao certificado não encontrados.", '../index.php');

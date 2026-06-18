@@ -94,8 +94,8 @@
     <div class="text-center">
       <h2><b>Dojôs Filiados</b></h2>
       <?php
-      require_once __DIR__ . '/../repositorios/dojoRepositorio.php';
-      $dojoRepositorio = new DojoRepositorio();
+      require_once __DIR__ . '/../models/dojoModel.php';
+      $dojoRepositorio = new DojoModel();
       $dojosAfiliados = $dojoRepositorio->listarDojos();
 
       if (!empty($dojosAfiliados)) {

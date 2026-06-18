@@ -2,18 +2,17 @@
 $page_title = "Assistir Aula";
 include __DIR__ . "/menu.php";
 include __DIR__ . "/_perfil_auth.php";
-include_once __DIR__ . "/../../repositorios/AulaRepositorio.php";
+include_once __DIR__ . "/../../models/aulaModel.php";
 
-$aulaRepositorio = new AulaRepositorio();
+$aulaModelRepo = new AulaModel();
 
 $id_aula = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 if ($id_aula === 0) {
-    // Redirect or show an error if no ID is provided
-    header("Location: /cursos.php"); // Or your main courses list
+    header("Location: /cursos.php");
     exit;
 }
 
-$aula = $aulaRepositorio->buscarAula($id_aula);
+$aula = $aulaModelRepo->buscarAula($id_aula);
 if (!$aula) {
     echo "<p>Aula não encontrada.</p>";
     exit;
@@ -21,7 +20,7 @@ if (!$aula) {
 
 $aulas_assistidas_ids = [];
 if (isset($_SESSION['id_usuario'])) {
-    $aulas_assistidas_ids = $aulaRepositorio->getAulasAssistidasPorUsuario($_SESSION['id_usuario']);
+    $aulas_assistidas_ids = $aulaModelRepo->getAulasAssistidasPorUsuario($_SESSION['id_usuario']);
 }
 $aula_ja_assistida = in_array($id_aula, $aulas_assistidas_ids);
 

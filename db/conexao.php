@@ -1,21 +1,29 @@
-<?php
+﻿<?php
+
 class Conexao {
-    private $servidor = 'localhost';
-    private $usuario = 'root';
-    private $senha = '';
-    private $banco = 'kenshydokan';
+    private $host = 'localhost';
+    private $user = 'root';
+    private $pass = '';
+    private $db   = 'kenshydokan';
+    private $conn = null;
 
-    public function conectar()
-    {
-        $coneccao = mysqli_connect($this->servidor, $this->usuario, $this->senha, $this->banco);
-
-        if (mysqli_connect_errno()) {
-            die("Falha ao abrir banco de dados: " . mysqli_connect_error());
+    public function conectar() {
+        if ($this->conn === null) {
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            try {
+                $this->conn = new mysqli($this->host, $this->user, $this->pass, $this->db);
+                $this->conn->set_charset('utf8mb4');
+            } catch (Exception $e) {
+                die('Erro na conexao com o banco de dados: ' . $e->getMessage());
+            }
         }
+        return $this->conn;
+    }
+}
 
-        mysqli_set_charset($coneccao, "utf8");
-
-        return $coneccao;
+class Database extends Conexao {
+    public function getConnection() {
+        return $this->conectar();
     }
 }
 ?>

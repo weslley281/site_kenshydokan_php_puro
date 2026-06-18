@@ -1,6 +1,6 @@
 <?php
-include_once __DIR__ . "/../../repositorios/exameGraduacaoRepositorio.php";
-$exameRepositorio = new ExameGraduacaoRepositorio();
+include_once __DIR__ . "/../../models/exameGraduacaoModel.php";
+$exameRepositorio = new ExameGraduacaoModel();
 $exames = $exameRepositorio->listarTodos();
 ?>
 

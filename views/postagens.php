@@ -1,23 +1,17 @@
 <?php
 include_once "menu.php";
-include_once "../db/conexao.php";
-include_once "../repositorios/publicacaoRepositorio.php";
-
-$c = new Conexao();
-$conexao = $c->conectar();
+include_once "../models/publicacaoModel.php";
 ?>
 <!-- /Navigation -->
 
 <section class="container mt-5">
   <div class="row">
     <?php
-    // Query para buscar os campos necessários. A coluna 'imagem' foi removida.
-    $busca_postagen = "SELECT id_publicacao, id_usuario, titulo, conteudo, dataCriacao FROM postagens WHERE status = 'aprovado' order by id_publicacao desc";
-    $resultado_postagen = mysqli_query($conexao, $busca_postagen);
+    $postagens = Publicacao::buscarPostagensAprovadas();
 
-    if (mysqli_num_rows($resultado_postagen) > 0) {
-        while ($postagem = mysqli_fetch_array($resultado_postagen)) {
-            $autor = PublicacaoRepositorio::buscar_nome_autor($postagem["id_usuario"]);
+    if (count($postagens) > 0) {
+        foreach ($postagens as $postagem) {
+            $autor = Publicacao::buscar_nome_autor($postagem["id_usuario"]);
             // Gera um resumo com os primeiros 150 caracteres, decodificando entidades HTML.
             $resumo = substr(html_entity_decode(strip_tags($postagem['conteudo'])), 0, 150);
             ?>

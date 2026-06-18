@@ -3,7 +3,6 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     include_once "../models/categoriaModel.php";
-    include_once "../repositorios/categoriaRepositorio.php";
 
     define("MSG_ERRO", "Erro: Ocorreu um erro. Tente novamente.");
     define("MSG_SUCESSO", "Operação realizada com sucesso.");
@@ -11,16 +10,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["tipo"])) {
         $dataMudanca = date("Y-m-d");
 
-        $categoriaRepositorio = new CategoriaRepositorio();
+        $categoriaModel = new CategoriaModel();
 
         if ($_POST["tipo"] == "inserir") {
-            $categoriaModel = new CategoriaModel(
+            $novaCategoria = new CategoriaModel(
                 null,
                 $_POST["categoria"],
                 $dataMudanca
             );
 
-            if ($categoriaRepositorio->criarCategoria($categoriaModel)) {
+            if ($categoriaModel->criarCategoria($novaCategoria)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=cursos');
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=cursos');
@@ -28,13 +27,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } elseif ($_POST["tipo"] == "editar") {
             $id_categoria = $_POST["id_categoria"];
 
-            $categoriaModel = new CategoriaModel(
+            $novaCategoria = new CategoriaModel(
                 $id_categoria,
                 $_POST["categoria"],
                 $dataMudanca
             );
 
-            if ($categoriaRepositorio->editarCategoria($id_categoria, $categoriaModel)) {
+            if ($categoriaModel->editarCategoria($id_categoria, $novaCategoria)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=cursos');
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=cursos');
@@ -42,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } elseif ($_POST["tipo"] == "excluir") {
             $id_categoria = $_POST["id_categoria"];
 
-            if ($categoriaRepositorio->excluirCategoria($id_categoria)) {
+            if ($categoriaModel->excluirCategoria($id_categoria)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=cursos');
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=cursos');

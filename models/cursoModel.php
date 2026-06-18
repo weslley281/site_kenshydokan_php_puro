@@ -1,4 +1,6 @@
 <?php
+include_once __DIR__ . "/../db/conexao.php";
+
 class CursoModel
 {
     private $id_curso;
@@ -13,8 +15,9 @@ class CursoModel
     private $dataMudanca;
     private $percentual_conclusao_certificado;
     private $temCertificado;
+    private $conexao;
 
-    public function __construct($id_curso, $id_categoria, $nome, $descricao, $professor, $id_imagem, $cargaHoraria, $situacao, $dataMudanca, $percentual_conclusao_certificado, $temCertificado)
+    public function __construct($id_curso = null, $id_categoria = null, $nome = null, $descricao = null, $professor = null, $id_imagem = null, $cargaHoraria = null, $situacao = null, $dataMudanca = null, $percentual_conclusao_certificado = null, $temCertificado = null)
     {
         $this->id_curso = $id_curso;
         $this->id_categoria = $id_categoria;
@@ -28,6 +31,9 @@ class CursoModel
         $this->dataMudanca = $dataMudanca;
         $this->percentual_conclusao_certificado = $percentual_conclusao_certificado;
         $this->temCertificado = $temCertificado;
+
+        $c = new Conexao();
+        $this->conexao = $c->conectar();
     }
 
     public function getIdCurso()
@@ -148,5 +154,125 @@ class CursoModel
     public function setTemCertificado($temCertificado)
     {
         $this->temCertificado = $temCertificado;
+    }
+
+    // Métodos vindos do Repositório
+
+    public function criarCurso(CursoModel $curso): bool
+    {
+        try {
+            $inserir = $this->conexao->prepare("INSERT INTO cursos (id_categoria, nome, descricao, professor, id_imagem, cargaHoraria, situacao, dataMudanca, dataCriacao, percentual_conclusao_certificado, temCertificado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $id_cat = $curso->getIdCategoria();
+            $nome = $curso->getNome();
+            $desc = $curso->getDescricao();
+            $prof = $curso->getProfessor();
+            $id_img = $curso->getIdImagem();
+            $ch = $curso->getCargaHoraria();
+            $sit = $curso->getSituacao();
+            $dm = $curso->getDataMudanca();
+            $dc = $curso->getDataCriacao();
+            $pcc = $curso->getPercentualConclusaoCertificado();
+            $tc = $curso->getTemCertificado();
+
+            $inserir->bind_param("isssiisssis", $id_cat, $nome, $desc, $prof, $id_img, $ch, $sit, $dm, $dc, $pcc, $tc);
+            $resultado = $inserir->execute();
+            $inserir->close();
+
+            if (!$resultado) {
+                throw new Exception("Erro ao criar o curso.");
+            }
+
+            return true;
+        } catch (Exception $e) {
+            error_log("Erro ao criar o curso: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function editarCurso($id_curso, CursoModel $curso): bool
+    {
+        try {
+            $editar = $this->conexao->prepare("UPDATE cursos SET id_categoria = ?, nome = ?, descricao = ?, professor = ?, cargaHoraria = ?, situacao = ?, dataMudanca = ?, percentual_conclusao_certificado = ?, temCertificado = ? WHERE id_curso = ?");
+            $id_cat = $curso->getIdCategoria();
+            $nome = $curso->getNome();
+            $desc = $curso->getDescricao();
+            $prof = $curso->getProfessor();
+            $ch = $curso->getCargaHoraria();
+            $sit = $curso->getSituacao();
+            $dm = $curso->getDataMudanca();
+            $pcc = $curso->getPercentualConclusaoCertificado();
+            $tc = $curso->getTemCertificado();
+
+            $editar->bind_param("isssissisi", $id_cat, $nome, $desc, $prof, $ch, $sit, $dm, $pcc, $tc, $id_curso);
+            $resultado = $editar->execute();
+            $editar->close();
+
+            if (!$resultado) {
+                throw new Exception("Erro ao editar o curso.");
+            }
+
+            return true;
+        } catch (Exception $e) {
+            error_log("Erro ao editar o curso: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public static function editarImagemCurso(int $id_curso, $id_imagem, $dataMudanca): bool
+    {
+        $c = new Conexao();
+        $conexao = $c->conectar();
+
+        $atualizar = $conexao->prepare("UPDATE cursos SET id_imagem = ?, dataMudanca = ? WHERE id_curso = ?");
+        $atualizar->bind_param("isi", $id_imagem, $dataMudanca, $id_curso);
+        $resultado = $atualizar->execute();
+        $atualizar->close();
+
+        return $resultado;
+    }
+
+    public function excluirCurso($id_curso): bool
+    {
+        try {
+            $deletar = $this->conexao->prepare("DELETE FROM cursos WHERE id_curso = ?");
+            $deletar->bind_param("i", $id_curso);
+            $resultado = $deletar->execute();
+            $deletar->close();
+
+            if (!$resultado) {
+                throw new Exception("Erro ao excluir o curso.");
+            }
+
+            return true;
+        } catch (Exception $e) {
+            error_log("Erro ao excluir o curso: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public static function buscarCurso($id_curso)
+    {
+        try {
+            $c = new Conexao();
+            $conexao = $c->conectar();
+
+            $busca = "SELECT * FROM cursos WHERE id_curso = ?";
+            $procura = $conexao->prepare($busca);
+            $procura->bind_param("i", $id_curso);
+            $procura->execute();
+            $result = $procura->get_result();
+
+            if ($result->num_rows === 0) {
+                return null;
+            }
+
+            $curso = $result->fetch_assoc();
+            $procura->close();
+
+            return $curso;
+        } catch (Exception $e) {
+            error_log("Erro ao buscar o curso: " . $e->getMessage());
+            return null;
+        }
     }
 }

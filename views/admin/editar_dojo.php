@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . '/site_kenshydokan/config.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/site_kenshydokan/repositorios/dojoRepositorio.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/site_kenshydokan/models/dojoModel.php';
 
 // Verifica se o ID foi passado
 if (!isset($_GET['id'])) {
@@ -10,7 +10,7 @@ if (!isset($_GET['id'])) {
 }
 
 $id_dojo = $_GET['id'];
-$dojoRepositorio = new DojoRepositorio();
+$dojoRepositorio = new DojoModel();
 $dojo = $dojoRepositorio->buscarDojoPorId($id_dojo);
 
 // Se o dojô não for encontrado, redireciona
@@ -56,8 +56,8 @@ include_once __DIR__ . '/../menu.php';
                         <select class="form-control" id="id_filiado_responsavel" name="id_filiado_responsavel" required>
                             <option value="">Selecione um responsável...</option>
                             <?php
-                            require_once __DIR__ . '/../../repositorios/filiadoRepositorio.php';
-                            $filiadoRepo = new FiliadoRepositorio();
+                            require_once __DIR__ . '/../../models/filiadoModel.php';
+                            $filiadoRepo = new FiliadoModel();
                             $filiados = $filiadoRepo->listarFiliados();
                             foreach ($filiados as $filiado) {
                                 $selected = ($filiado['id_filiado'] == $dojo->getIdFiliadoResponsavel()) ? 'selected' : '';

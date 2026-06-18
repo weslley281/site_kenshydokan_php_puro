@@ -7,11 +7,11 @@ if (!isset($_SESSION["id_usuario"])) {
     exit();
 }
 
-include_once "../repositorios/publicacaoRepositorio.php";
+include_once "../models/publicacaoModel.php";
 
 $id_publicacao = $_GET["id"];
 
-if (PublicacaoRepositorio::excluir_publicacao($id_publicacao)) {
+if (Publicacao::excluir_publicacao($id_publicacao)) {
     echo "<script language='javascript'>window.alert('Postagem Excluida com sucesso'); </script>";
     echo "<script language='javascript'>window.location='../views/perfil/suas_postagens.php'; </script>";
 } else {

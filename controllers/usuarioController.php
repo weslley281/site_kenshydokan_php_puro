@@ -5,8 +5,6 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     include_once "../models/usuarioModel.php";
     include_once "../models/imagemModel.php";
-    include_once "../repositorios/usuarioRepositorio.php";
-    include_once "../repositorios/imagemRepositorio.php";
 
     define("MSG_ERRO", "Erro: Ocorreu um erro. Tente novamente.");
     define("MSG_SUCESSO", "Operação realizada com sucesso.");
@@ -14,11 +12,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["tipo"])) {
         $dataMudanca = date("Y-m-d");
 
+        $usuarioModel = new Usuario();
+        $imagemModel = new Imagem();
+
         if ($_POST["tipo"] == "inserir") {
 
-            $imagemRepositorio = new ImagemRepositorio;
-            $usuarioRepositorio = new UsuarioRepositorio;
-            if ($usuarioRepositorio::buscarUsuarioExistente($_POST["email"])) {
+            if (Usuario::buscarUsuarioExistente($_POST["email"])) {
 
                 exibirMensagemEredirecionar("Erro: Usuário já existe", '../views/login.php');
             } else {
@@ -35,10 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                     if (in_array($extensaoImagem, ["jpg", "jpeg", "gif", "png"])) {
                         if (move_uploaded_file($_FILES["imagem"]["tmp_name"], $caminho)) {
-                            $imagemModel = new Imagem($nomeImagem, $caminho, $dataMudanca);
+                            $novaImagem = new Imagem($nomeImagem, $caminho, $dataMudanca);
 
-                            if ($imagemRepositorio->registrar_imagem($imagemModel)) {
-                                $id_imagem = $imagemRepositorio::procura_id_imagem($nomeImagem);
+                            if ($imagemModel->registrar_imagem($novaImagem)) {
+                                $id_imagem = Imagem::procura_id_imagem($nomeImagem);
                             } else {
                                 exibirMensagemEredirecionar("Erro: Imagem não salva, tente novamente 1", '../views/cadastrar.php');
                             }
@@ -50,9 +49,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     }
                 }
 
-                $usuarioModel = new Usuario($_POST["nome"], $_POST["id_fil"], $id_imagem, $_POST["email"], $_POST["telefone"], $dataMudanca, $senhaSegura);
+                $novoUsuario = new Usuario($_POST["nome"], $_POST["id_fil"], $id_imagem, $_POST["email"], $_POST["telefone"], $dataMudanca, $senhaSegura);
 
-                if ($usuarioRepositorio->criarUsuario($usuarioModel)) {
+                if ($usuarioModel->criarUsuario($novoUsuario)) {
                     exibirMensagemEredirecionar("Usuário criado com sucesso", '../views/login.php');
                 } else {
                     exibirMensagemEredirecionar("Erro: Usuário não cadastrado, tente novamente", '../views/cadastrar.php');
@@ -65,12 +64,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $email = $_POST["email"];
             $telefone = $_POST["telefone"];
 
-            $usuarioRepositorio = new UsuarioRepositorio;
-            $usuarioModel = new Usuario($_POST["nome"], $_POST["id_fil"], $_POST["id_imagem"], $_POST["email"], $_POST["telefone"], $dataMudanca);
+            $usuarioEditado = new Usuario($_POST["nome"], $_POST["id_fil"], $_POST["id_imagem"], $_POST["email"], $_POST["telefone"], $dataMudanca);
 
-            $usuarioModel->setNivel($_POST["nivel"]);
+            $usuarioEditado->setNivel($_POST["nivel"]);
 
-            if ($usuarioRepositorio->editarUsuario($_POST["id_usuario"], $usuarioModel)) {
+            if ($usuarioModel->editarUsuario($_POST["id_usuario"], $usuarioEditado)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/perfil/editar_perfil.php');
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/perfil/editar_perfil.php');
@@ -83,27 +81,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $email = $_POST["email"];
             $telefone = $_POST["telefone"];
 
-            $usuarioRepositorio = new UsuarioRepositorio;
-            $usuarioModel = new Usuario($_POST["nome"], $_POST["id_fil"], $_POST["id_imagem"], $_POST["email"], $_POST["telefone"], $dataMudanca, null, $nivel);
+            $usuarioEditado = new Usuario($_POST["nome"], $_POST["id_fil"], $_POST["id_imagem"], $_POST["email"], $_POST["telefone"], $dataMudanca, null, $nivel);
 
-            $usuarioModel->setNivel($_POST["nivel"]);
+            $usuarioEditado->setNivel($_POST["nivel"]);
 
-            if ($usuarioRepositorio->editarUsuario($_POST["id_usuario"], $usuarioModel)) {
+            if ($usuarioModel->editarUsuario($_POST["id_usuario"], $usuarioEditado)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/perfil/editar_perfil.php');
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/perfil/editar_perfil.php');
             }
         } elseif ($_POST["tipo"] == "editar_nivel" && $_SESSION["nivel"] == "admin") {
 
-            if ($usuarioRepositorio::editarNivelUsuario($_POST["id_usuario"], $_POST["nivel"], $dataMudanca)) {
+            if (Usuario::editarNivelUsuario($_POST["id_usuario"], $_POST["nivel"], $dataMudanca)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/perfil/editar_perfil.php');
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/perfil/editar_perfil.php');
             }
         } elseif ($_POST["tipo"] == "editar_imagem") {
-
-            $imagemRepositorio = new ImagemRepositorio;
-            $usuarioRepositorio = new UsuarioRepositorio;
 
             $diretorioUpload = "../img/";
             $nomeImagem = uniqid() . $_FILES["imagem"]["name"];
@@ -116,12 +110,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if (in_array($extensaoImagem, ["jpg", "jpeg", "gif", "png"])) {
                 var_dump($_FILES["imagem"]["tmp_name"], $caminho);
                 if (move_uploaded_file($_FILES["imagem"]["tmp_name"], $caminho)) {
-                    $imagemModel = new Imagem($nomeImagem, $caminho, $dataMudanca);
+                    $novaImagem = new Imagem($nomeImagem, $caminho, $dataMudanca);
 
-                    if ($imagemRepositorio->registrar_imagem($imagemModel)) {
-                        $id_imagem = $imagemRepositorio::procura_id_imagem($nomeImagem);
+                    if ($imagemModel->registrar_imagem($novaImagem)) {
+                        $id_imagem = Imagem::procura_id_imagem($nomeImagem);
 
-                        $dados_imagem_antiga = $imagemRepositorio::procura_imagem($_POST["id_imagem"]);
+                        $dados_imagem_antiga = Imagem::procura_imagem($_POST["id_imagem"]);
 
                         $caminho = $dados_imagem_antiga != null ? file_exists($dados_imagem_antiga["caminho"]) : "";
 
@@ -129,9 +123,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             unlink($caminho);
                         }
 
-                        $imagemRepositorio->deleta_imagem($_POST["id_imagem"]);
+                        $imagemModel->deleta_imagem($_POST["id_imagem"]);
 
-                        if ($usuarioRepositorio->editarImagemUsuario($_POST["id_usuario"], $id_imagem, $dataMudanca)) {
+                        if (Usuario::editarImagemUsuario($_POST["id_usuario"], $id_imagem, $dataMudanca)) {
                             exibirMensagemEredirecionar(MSG_SUCESSO, '../views/perfil/editar_perfil.php');
                         } else {
                             exibirMensagemEredirecionar("Erro ao editar a imagem do usuário", '../views/perfil/editar_perfil.php');
@@ -147,7 +141,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 exibirMensagemEredirecionar("Formato de imagem inválido", '../views/perfil/editar_perfil.php');
             }
         } elseif ($_POST["tipo"] == "editar_senha") {
-            $usuarioRepositorio = new UsuarioRepositorio();
 
             if ($_POST["nova_senha"] != $_POST["senha2"]) {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/login.php');
@@ -159,17 +152,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $senhaSegura = password_hash($nova_senha, PASSWORD_DEFAULT);
 
-            if ($usuarioRepositorio->editarSenhaUsuario($id_usuario, $senhaSegura)) {
-                $usuarioRepositorio->editarTokenUsuario($id_usuario, "");
+            if ($usuarioModel->editarSenhaUsuario($id_usuario, $senhaSegura)) {
+                $usuarioModel->editarTokenUsuario($id_usuario, "");
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/perfil/editar_perfil.php');
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/perfil/editar_perfil.php');
             }
         } elseif ($_POST["tipo"] == "deletar") {
-            $usuarioRepositorio = new UsuarioRepositorio();
             $id_usuario = $_POST["id_usuario"];
 
-            if ($usuarioRepositorio->excluirUsuario($id_usuario)) {
+            if (Usuario::excluirUsuario($id_usuario)) {
                 exibirMensagemEredirecionar("Usuário excluído com sucesso", '../views/admin/index.php?pagina=usuarios');
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=usuarios');

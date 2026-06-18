@@ -3,7 +3,6 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     include_once "../models/filiadoModel.php";
-    include_once "../repositorios/filiadoRepositorio.php";
 
     define("MSG_ERRO", "Erro: Ocorreu um erro. Tente novamente.");
     define("MSG_SUCESSO", "Operação realizada com sucesso.");
@@ -11,10 +10,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["tipo"])) {
         $dataMudanca = date("Y-m-d");
 
-        $filiadoRepositorio = new FiliadoRepositorio();
+        $filiadoModel = new FiliadoModel();
 
         if ($_POST["tipo"] == "inserir") {
-            $filiadoModel = new FiliadoModel(
+            $novoFiliado = new FiliadoModel(
                 null,
                 $_POST["codigo"],
                 $_POST["id_graduacao"],
@@ -30,18 +29,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $dataMudanca
             );
 
-            if ($filiadoRepositorio->criarFiliado($filiadoModel)) {
+            if ($filiadoModel->criarFiliado($novoFiliado)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=filiados');
             } else {
-                var_dump($filiadoModel);
+                var_dump($novoFiliado);
 
                 //exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/criar_filiado.php');
             }
         } elseif ($_POST["tipo"] == "editar") {
             $id_filiado = $_POST["id_filiado"];
-            $filiado_existente = $filiadoRepositorio->buscarFiliadoPorId($id_filiado);
+            $filiado_existente = $filiadoModel->buscarFiliadoPorId($id_filiado);
 
-            $filiadoModel = new FiliadoModel(
+            $novoFiliado = new FiliadoModel(
                 $id_filiado,
                 $_POST["codigo"],
                 $_POST["id_graduacao"],
@@ -57,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $dataMudanca
             );
 
-            if ($filiadoRepositorio->editarFiliado($id_filiado, $filiadoModel)) {
+            if ($filiadoModel->editarFiliado($id_filiado, $novoFiliado)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=filiados');
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=filiados');
@@ -65,17 +64,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } elseif ($_POST["tipo"] == "excluir") {
             $id_filiado = $_POST["id_filiado"];
 
-            if ($filiadoRepositorio->excluirFiliado($id_filiado)) {
+            if ($filiadoModel->excluirFiliado($id_filiado)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=filiados');
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=filiados');
             }
         } elseif ($_POST["tipo"] == "desconfirmar") {
             $id_filiado = $_POST["id_filiado"];
-            $filiado = $filiadoRepositorio->buscarFiliadoPorId($id_filiado);
+            $filiado = $filiadoModel->buscarFiliadoPorId($id_filiado);
             if ($filiado) {
                 $filiado->setConfirmacao("nao");
-                if ($filiadoRepositorio->editarFiliado($id_filiado, $filiado)) {
+                if ($filiadoModel->editarFiliado($id_filiado, $filiado)) {
                     exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=filiados');
                 } else {
                     exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=filiados');

@@ -1,9 +1,7 @@
 <?php
 include "menu.php";
-include_once "../db/conexao.php";
-include_once "../repositorios/usuarioRepositorio.php";
-$c = new Conexao();
-$conexao = $c->conectar();
+include_once "../models/usuarioModel.php";
+
 ?>
 
 <div class="container">
@@ -14,7 +12,7 @@ $conexao = $c->conectar();
           <h5 class="card-title text-center">Recuperar Senha</h5>
           <?php
           if (isset($_GET["token"])) {
-            $usuario = UsuarioRepositorio::buscarUsuarioPorToken($_GET["token"]);
+            $usuario = Usuario::buscarUsuarioPorToken($_GET["token"]);
             if (!$usuario) {
               echo "<script language='javascript'>window.location='../views/recuperar_senha.php'; </script>";
               exit();

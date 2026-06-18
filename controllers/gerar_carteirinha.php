@@ -12,8 +12,8 @@ if (!isset($_SESSION["id_usuario"])) {
 }
 
 require_once '../libs/fpdf/fpdf.php';
-require_once '../repositorios/filiadoRepositorio.php';
-require_once '../repositorios/graduacaoRepositorio.php';
+require_once '../models/filiadoModel.php';
+require_once '../models/graduacaoModel.php';
 require_once '../db/conexao.php'; // Para a busca da imagem do usuário
 
 // Pega o ID do filiado da sessão do usuário
@@ -24,8 +24,8 @@ if (!$id_filiado) {
 }
 
 // Busca os dados do filiado
-$filiadoRepo = new FiliadoRepositorio();
-$filiado = $filiadoRepo->buscarFiliadoPorId($id_filiado);
+$filiadoModel = new FiliadoModel();
+$filiado = $filiadoModel->buscarFiliadoPorId($id_filiado);
 
 if (!$filiado) {
     die("Filiado não encontrado.");
@@ -35,8 +35,8 @@ if ($filiado->getConfirmacao() !== 'sim') {
     die("Você não tem uma filiação confirmada para gerar a carteirinha.");
 }
 
-$graduacaoRepositorio = new GraduacaoRepositorio();
-$graduacao = $graduacaoRepositorio->buscarGraduacaoPorId($filiado->getIdGraduacao());
+$graduacaoModel = new Graduacao();
+$graduacao = $graduacaoModel->buscarGraduacaoPorId($filiado->getIdGraduacao());
 
 // --- Busca a imagem do usuário (lógica similar a _perfil_auth.php) ---
 $conn = new Conexao();

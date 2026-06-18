@@ -1,14 +1,14 @@
 <?php
 include_once "menu.php";
 include_once "../../db/conexao.php";
-include_once "../../repositorios/CursoRepositorio.php";
+include_once "../../models/cursoModel.php";
 
 $c = new Conexao();
 $conexao = $c->conectar();
 
 if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] == "admin") {
   $id_curso = $_GET["id"];
-  $cursoRepo = new CursoRepositorio();
+  $cursoRepo = new CursoModel();
   $curso = $cursoRepo->buscarCurso($id_curso);
 ?>
   <div class="container">

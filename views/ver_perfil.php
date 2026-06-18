@@ -1,23 +1,32 @@
 <?php
 include "menu.php";
-include_once "../db/conexao.php";
-$c = new Conexao();
-$conexao = $c->conectar();
+include_once "../models/usuarioModel.php";
+include_once "../models/imagemModel.php";
+include_once "../models/filiadoModel.php";
+include_once "../models/graduacaoModel.php";
+
 $id_usuario = $_GET['id_usuario'];
 
-$busca_usuario = "SELECT * FROM usuarios WHERE id_usuario = '$id_usuario'";
-$resultado_usuario = mysqli_query($conexao, $busca_usuario);
-$usuario = mysqli_fetch_array($resultado_usuario);
+$usuarioModelRepo = new Usuario();
+$usuario = $usuarioModelRepo->buscarUsuario($id_usuario);
 
-$id_imagem = $usuario["id_imagem"];
-$busca_imagem = "SELECT * FROM imagens WHERE id_imagem = '$id_imagem'";
-$resultado_imagem = mysqli_query($conexao, $busca_imagem);
-$imagem = mysqli_fetch_array($resultado_imagem);
+$imagem = Imagem::procura_imagem($usuario["id_imagem"]);
 
 $id_filiado = $usuario["id_fil"];
-$busca_filiado = "SELECT * FROM filiados WHERE id_filiado = '$id_filiado'";
-$resultado_filiado = mysqli_query($conexao, $busca_filiado);
-$filiado = mysqli_fetch_array($resultado_filiado);
+$filiadoModelRepo = new FiliadoModel();
+$filiado_obj = $filiadoModelRepo->buscarFiliadoPorId($id_filiado);
+
+if ($filiado_obj) {
+    $filiado = [
+        'confirmacao' => $filiado_obj->getConfirmacao(),
+        'dojo' => $filiado_obj->getDojo()
+    ];
+    $id_graduacao = $filiado_obj->getIdGraduacao();
+} else {
+    $filiado = ['confirmacao' => 'nao', 'dojo' => 'Não informado'];
+    $id_graduacao = 0;
+}
+
 $confirmacao = $filiado["confirmacao"];
 if ($confirmacao == "sim") {
 	$ativo = "Ele está filiado";
@@ -25,10 +34,7 @@ if ($confirmacao == "sim") {
 	$ativo = "Aguardando Cofirmação de Filiação, Não Está Filiado Não";
 }
 
-$id_graduacao = $filiado["id_graduacao"];
-$busca_graduacao = "SELECT * FROM graduacoes WHERE id_graduacao = '$id_graduacao'";
-$resultado_graduacao = mysqli_query($conexao, $busca_graduacao);
-$graduacao = mysqli_fetch_array($resultado_graduacao);
+$graduacao = Graduacao::buscarGraduacao($id_graduacao);
 ?>
 
 <body>
@@ -61,24 +67,22 @@ $graduacao = mysqli_fetch_array($resultado_graduacao);
 							</div>
 							<!-- mais informações -->
 							<?php
-							$busca = "SELECT * FROM filiados where id_filiado = '$id_filiado'";
-							$resultado = mysqli_query($conexao, $busca);
-							while ($res = mysqli_fetch_array($resultado)) {
+							if ($filiado_obj) {
 								if ($id_filiado == 23) {
-									$graduacao = ':<br><ul class="list-group mt-1"><li class="list-group-item">Faixa preta 3° dan em Karatê Kenshydokan</li><li class="list-group-item">Faixa preta 2° dan em Judô Kodokan</li><li class="list-group-item">Faixa preta em Jiu Jitsu Brasileiro</li></ul>';
+									$graduacao_display = ':<br><ul class="list-group mt-1"><li class="list-group-item">Faixa preta 3° dan em Karatê Kenshydokan</li><li class="list-group-item">Faixa preta 2° dan em Judô Kodokan</li><li class="list-group-item">Faixa preta em Jiu Jitsu Brasileiro</li></ul>';
 								} elseif ($id_filiado == 14) {
-									$graduacao = ':<br><ul class="list-group mt-1"><li class="list-group-item">10° Dan Karate Kenshydokan</li><li class="list-group-item">7° Dan Ju jitsu</li><li class="list-group-item">7° Dan em KickBoxing</li><li class="list-group-item">6° Dan Judo Kodokan</li><li class="list-group-item">5° Dan em Karate Kyokushin</li><li class="list-group-item">Faixa Preta Quinto Grau Brasilian Jiu Jitsu</li></ul>';
+									$graduacao_display = ':<br><ul class="list-group mt-1"><li class="list-group-item">10° Dan Karate Kenshydokan</li><li class="list-group-item">7° Dan Ju jitsu</li><li class="list-group-item">7° Dan em KickBoxing</li><li class="list-group-item">6° Dan Judo Kodokan</li><li class="list-group-item">5° Dan em Karate Kyokushin</li><li class="list-group-item">Faixa Preta Quinto Grau Brasilian Jiu Jitsu</li></ul>';
 								} elseif ($id_filiado == 79) {
-									$graduacao = ':<br><ul class="list-group mt-1"><li class="list-group-item">14° Khan Muay Thai</li><li class="list-group-item">3° Dan Kickboxing</li><li class="list-group-item">2° Dan Karatê</li><li class="list-group-item">Faixa Roxa Jiu Jitsu Brasileiro</li></ul>';
+									$graduacao_display = ':<br><ul class="list-group mt-1"><li class="list-group-item">14° Khan Muay Thai</li><li class="list-group-item">3° Dan Kickboxing</li><li class="list-group-item">2° Dan Karatê</li><li class="list-group-item">Faixa Roxa Jiu Jitsu Brasileiro</li></ul>';
 								} else {
-									$graduacao = $graduacao["graduacao"];
+									$graduacao_display = $graduacao["graduacao"] ?? 'Sem registro';
 								}
 							?>
 								<div class="col mb-4">
 									<div class="card">
 										<h5 class="card-header"><?php echo "$ativo"; ?></h5>
 										<div class="card-body">
-											<h3 class="card-title">Sua graduação é <?php echo $graduacao; ?></h3>
+											<h3 class="card-title">Sua graduação é <?php echo $graduacao_display; ?></h3>
 											<p class="card-text">Dojo: <?php echo $filiado["dojo"]; ?></p>
 											<p class="card-text">E-mail: <?php echo $usuario["email"]; ?></p>
 											<p class="card-text">Telefone: <?php echo $usuario["telefone"]; ?></p>

@@ -4,21 +4,19 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     include_once "../models/galeriaModel.php";
     include_once "../models/fotoModel.php";
-    include_once "../repositorios/galeriaRepositorio.php";
-    include_once "../repositorios/fotoRepositorio.php";
 
     define("MSG_ERRO", "Erro: Ocorreu um erro. Tente novamente.");
     define("MSG_SUCESSO", "Operação realizada com sucesso.");
 
     if (isset($_POST["tipo"])) {
-        $galeriaRepositorio = new GaleriaRepositorio();
-        $fotoRepositorio = new FotoRepositorio();
+        $galeriaManager = new Galeria();
+        $fotoManager = new Foto();
 
         if ($_POST["tipo"] == "criar_galeria") {
             $nome = $_POST["nome"];
             $galeriaModel = new Galeria(null, $nome);
 
-            if ($galeriaRepositorio->criarGaleria($galeriaModel)) {
+            if ($galeriaManager->criarGaleria($galeriaModel)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=galerias');
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=galerias');
@@ -27,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $id_galeria = $_POST["id_galeria"];
             $nome = $_POST["nome"];
 
-            if ($galeriaRepositorio->editarGaleria($id_galeria, $nome)) {
+            if ($galeriaManager->editarGaleria($id_galeria, $nome)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/editar_galeria.php?id=' . $id_galeria);
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/editar_galeria.php?id=' . $id_galeria);
@@ -35,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } elseif ($_POST["tipo"] == "excluir_galeria") {
             $id_galeria = $_POST["id_galeria"];
 
-            if ($galeriaRepositorio->excluirGaleria($id_galeria)) {
+            if ($galeriaManager->excluirGaleria($id_galeria)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=galerias');
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=galerias');
@@ -61,11 +59,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if (move_uploaded_file($_FILES["foto"]["tmp_name"], $caminho)) {
                 $fotoModel = new Foto(null, $id_galeria, $nome, $nomeFoto, $dataUpload);
 
-                if ($fotoRepositorio->adicionarFoto($fotoModel)) {
+                if ($fotoManager->adicionarFoto($fotoModel)) {
                     exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/editar_galeria.php?id=' . $id_galeria);
                 } else {
                     echo "Erro ao salvar no banco de dados.<br>";
-                    var_dump($fotoRepositorio->adicionarFoto($fotoModel));
+                    var_dump($fotoManager->adicionarFoto($fotoModel));
                     var_dump($fotoModel);
                     //exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/editar_galeria.php?id=' . $id_galeria);
                 }
@@ -81,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $id_foto = $_POST["id_foto"];
             $id_galeria = $_POST["id_galeria"];
 
-            if ($fotoRepositorio->excluirFoto($id_foto)) {
+            if ($fotoManager->excluirFoto($id_foto)) {
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/editar_galeria.php?id=' . $id_galeria);
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/editar_galeria.php?id=' . $id_galeria);

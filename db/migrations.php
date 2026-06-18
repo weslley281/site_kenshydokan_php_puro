@@ -3,12 +3,12 @@ include_once "conexao.php";
 
 class Migration
 {
-    private $conexao;
+    private $conn;
 
     public function __construct()
     {
-        $conexaoDB = new Conexao();
-        $this->conexao = $conexaoDB->conectar();
+        $connDB = new Database();
+        $this->conn = $connDB->getConnection();
     }
 
     public function criarTabelaUsuarios()
@@ -29,10 +29,10 @@ class Migration
         );
         ";
 
-        if ($this->conexao->query($sql) === true) {
+        if ($this->conn->query($sql) === true) {
             //echo "Tabela 'usuarios' criada com sucesso!";
         } else {
-            echo "Erro ao criar tabela de usuarios: " . $this->conexao->error;
+            echo "Erro ao criar tabela de usuarios: " . $this->conn->error;
         }
     }
 
@@ -51,10 +51,10 @@ class Migration
         );
         ";
 
-        if ($this->conexao->query($sql) === true) {
+        if ($this->conn->query($sql) === true) {
             //echo "Tabela 'postagens' criada com sucesso!";
         } else {
-            echo "Erro ao criar tabela de postagens: " . $this->conexao->error;
+            echo "Erro ao criar tabela de postagens: " . $this->conn->error;
         }
     }
 
@@ -78,10 +78,10 @@ class Migration
         );
         ";
 
-        if ($this->conexao->query($sql) === true) {
+        if ($this->conn->query($sql) === true) {
             //echo "Tabela 'filiados' criada com sucesso!";
         } else {
-            echo "Erro ao criar tabela de filiados: " . $this->conexao->error;
+            echo "Erro ao criar tabela de filiados: " . $this->conn->error;
         }
     }
 
@@ -96,10 +96,10 @@ class Migration
         );
         ";
 
-        if ($this->conexao->query($sql) === true) {
+        if ($this->conn->query($sql) === true) {
             //echo "Tabela 'graduacao' criada com sucesso!";
         } else {
-            echo "Erro ao criar tabela de graduação: " . $this->conexao->error;
+            echo "Erro ao criar tabela de graduação: " . $this->conn->error;
         }
     }
 
@@ -114,10 +114,10 @@ class Migration
         );
         ";
 
-        if ($this->conexao->query($sql) === true) {
+        if ($this->conn->query($sql) === true) {
             //echo "Tabela 'galeria' criada com sucesso!";
         } else {
-            echo "Erro ao criar tabela de galeria: " . $this->conexao->error;
+            echo "Erro ao criar tabela de galeria: " . $this->conn->error;
         }
     }
 
@@ -135,10 +135,10 @@ class Migration
         );
         ";
 
-        if ($this->conexao->query($sql) === true) {
+        if ($this->conn->query($sql) === true) {
             //echo "Tabela 'fotos' criada com sucesso!";
         } else {
-            echo "Erro ao criar tabela de fotos: " . $this->conexao->error;
+            echo "Erro ao criar tabela de fotos: " . $this->conn->error;
         }
     }
 
@@ -156,10 +156,10 @@ class Migration
         );
         ";
 
-        if ($this->conexao->query($sql) === true) {
+        if ($this->conn->query($sql) === true) {
             //echo "Tabela 'campeonatos' criada com sucesso!";
         } else {
-            echo "Erro ao criar tabela de campeonatos: " . $this->conexao->error;
+            echo "Erro ao criar tabela de campeonatos: " . $this->conn->error;
         }
     }
 
@@ -175,10 +175,10 @@ class Migration
         );
         ";
 
-        if ($this->conexao->query($sql) === true) {
+        if ($this->conn->query($sql) === true) {
             //echo "Tabela 'imagens' criada com sucesso!";
         } else {
-            echo "Erro ao criar tabela de imagens: " . $this->conexao->error;
+            echo "Erro ao criar tabela de imagens: " . $this->conn->error;
         }
     }
 
@@ -200,10 +200,10 @@ class Migration
         );
         ";
 
-        if ($this->conexao->query($sql) === true) {
+        if ($this->conn->query($sql) === true) {
             //echo "Tabela 'cursos' criada com sucesso!";
         } else {
-            echo "Erro ao criar tabela de cursos: " . $this->conexao->error;
+            echo "Erro ao criar tabela de cursos: " . $this->conn->error;
         }
     }
 
@@ -221,10 +221,10 @@ class Migration
         );
         ";
 
-        if ($this->conexao->query($sql) === true) {
+        if ($this->conn->query($sql) === true) {
             //echo "Tabela 'avaliacoes' criada com sucesso!";
         } else {
-            echo "Erro ao criar tabela de avaliacoes: " . $this->conexao->error;
+            echo "Erro ao criar tabela de avaliacoes: " . $this->conn->error;
         }
     }
 
@@ -241,10 +241,10 @@ class Migration
         );
         ";
 
-        if ($this->conexao->query($sql) === true) {
+        if ($this->conn->query($sql) === true) {
             //echo "Tabela 'aulas' criada com sucesso!";
         } else {
-            echo "Erro ao criar tabela de aulas: " . $this->conexao->error;
+            echo "Erro ao criar tabela de aulas: " . $this->conn->error;
         }
     }
 
@@ -259,10 +259,10 @@ class Migration
         );
         ";
 
-        if ($this->conexao->query($sql) === true) {
+        if ($this->conn->query($sql) === true) {
             //echo "Tabela 'categorias' criada com sucesso!";
         } else {
-            echo "Erro ao criar tabela de categorias: " . $this->conexao->error;
+            echo "Erro ao criar tabela de categorias: " . $this->conn->error;
         }
     }
 
@@ -277,10 +277,10 @@ class Migration
         );
         ";
 
-        if ($this->conexao->query($sql) === true) {
+        if ($this->conn->query($sql) === true) {
             //echo "Tabela 'estados' criada com sucesso!";
         } else {
-            echo "Erro ao criar tabela de estados: " . $this->conexao->error;
+            echo "Erro ao criar tabela de estados: " . $this->conn->error;
         }
     }
 
@@ -298,10 +298,10 @@ class Migration
         );
         ";
 
-        if ($this->conexao->query($sql) === true) {
+        if ($this->conn->query($sql) === true) {
             //echo "Tabela 'certificados' criada com sucesso!";
         } else {
-            echo "Erro ao criar tabela de certificados: " . $this->conexao->error;
+            echo "Erro ao criar tabela de certificados: " . $this->conn->error;
         }
     }
 }
