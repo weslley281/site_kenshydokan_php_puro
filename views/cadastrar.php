@@ -9,23 +9,26 @@ if (isset($_SESSION["id_usuario"])) {
 ?>
 <!-- /Navigation -->
 
-<div class="container">
+<div class="container py-5">
   <div class="row">
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-      <div class="card card-signin my-5">
-        <div class="card-body">
-          <h5 class="card-title text-center">Cadastrar-se</h5>
+      <div class="card border-0 shadow-lg my-5">
+        <div class="card-header text-center bg-white pt-4 pb-0 border-0">
+          <img src="../img/wkka.jpg" width="60" alt="Logo" class="mb-3 rounded-circle shadow-sm">
+          <h3 class="font-weight-bold text-dark mb-0">Cadastre-se</h3>
+        </div>
+        <div class="card-body p-4 p-sm-5">
           <form class="form-signin" enctype="multipart/form-data" action="../controllers/usuarioController.php" method="post">
 
-            <div class="form-group">
-              <label for="nome">Nome: </label>
-              <input id="nome" type="text" class="form-control" placeholder="Nome" name="nome" required autofocus>
+            <div class="form-group mb-4">
+              <label for="nome" class="text-muted small font-weight-bold">NOME COMPLETO</label>
+              <input id="nome" type="text" class="form-control form-control-lg bg-light border-0" placeholder="Digite seu nome" name="nome" required autofocus style="font-size: 1rem;">
             </div>
 
-            <div class="form-group">
-              <label for="id_fil">Registro de Filiado: </label>
-              <select id="id_fil" class="form-select form-control js-example-basic-single" aria-label="Default select example" name="id_fil">
-                <option value="0" selected>Não sou filiado</option>
+            <div class="form-group mb-4">
+              <label for="id_fil" class="text-muted small font-weight-bold">REGISTRO DE FILIADO</label>
+              <select id="id_fil" class="form-select form-control form-control-lg bg-light border-0 js-example-basic-single" aria-label="Selecione se for filiado" name="id_fil" style="font-size: 1rem;">
+                <option value="0" selected>Não sou filiado / Aluno</option>
                 <?php
                 $filiadoModel = new FiliadoModel();
                 $filiados = $filiadoModel->listarFiliados();
@@ -40,48 +43,45 @@ if (isset($_SESSION["id_usuario"])) {
               </select>
             </div>
 
-            <div class="form-group">
-              <label for="imagem">Imagem de Perfil</label>
-              <input type="file" class="form-control" id="imagem" accept="image/*" name="imagem">
+            <div class="form-group mb-4">
+              <label for="imagem" class="text-muted small font-weight-bold">IMAGEM DE PERFIL</label>
+              <input type="file" class="form-control form-control-lg bg-light border-0" id="imagem" accept="image/*" name="imagem" style="font-size: 0.9rem; padding: 0.375rem 0.75rem;">
 
-              <div class="text-center mt-2">
-                <img src="#" class="img-thumbnail" alt="Prévia da Imagem" id="imagePreview" style="max-width: 100%; display: none;">
+              <div class="text-center mt-3">
+                <img src="#" class="rounded-circle shadow-sm border border-danger" alt="Prévia da Imagem" id="imagePreview" style="width: 120px; height: 120px; object-fit: cover; display: none;">
               </div>
             </div>
 
-
-            <div class="form-group">
-              <label for="email">Email: </label>
-              <input id="email" type="email" class="form-control" placeholder="Endereço de Email" name="email" required>
+            <div class="form-group mb-4">
+              <label for="email" class="text-muted small font-weight-bold">E-MAIL</label>
+              <input id="email" type="email" class="form-control form-control-lg bg-light border-0" placeholder="Digite seu e-mail" name="email" required style="font-size: 1rem;">
             </div>
 
-            <div class="form-group">
-              <label for="telefone">Telefone: </label>
-              <input id="telefone" type="text" class="form-control" placeholder="Nome" name="telefone" onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" required>
+            <div class="form-group mb-4">
+              <label for="telefone" class="text-muted small font-weight-bold">TELEFONE / WHATSAPP</label>
+              <input id="telefone" type="text" class="form-control form-control-lg bg-light border-0" placeholder="(99) 99999-9999" name="telefone" onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" required style="font-size: 1rem;">
             </div>
 
-            <div class="form-group">
-              <label for="senha">Senha</label>
-              <input id="senha" type="password" class="form-control" placeholder="Senha" name="senha" required>
+            <div class="form-group mb-4">
+              <label for="senha" class="text-muted small font-weight-bold">SENHA</label>
+              <input id="senha" type="password" class="form-control form-control-lg bg-light border-0" placeholder="Crie uma senha segura" name="senha" required style="font-size: 1rem;">
             </div>
 
             <input type="hidden" name="tipo" value="inserir">
 
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="customCheck1">
-              <label class="custom-control-label" for="customCheck1">Lembrar Senha</label>
+            <div class="custom-control custom-checkbox mb-4">
+              <input type="checkbox" class="custom-control-input" id="customCheck1" name="lembrar">
+              <label class="custom-control-label text-muted" for="customCheck1">Lembrar meus dados</label>
             </div>
 
-            <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" name="entrar" value="Cadastrar-se">
+            <input class="btn btn-lg btn-danger btn-block text-uppercase font-weight-bold rounded-pill shadow-sm" type="submit" name="entrar" value="Cadastrar-se">
+            
             <hr class="my-4">
-            <div class="row">
-              <div class="col"><a href="recuperar_senha.php">Esqueci a senha</a></div>
-              <div class="col"><a href="login.php">Fazer Login</a></div>
+            
+            <div class="row text-center">
+              <div class="col-12 mb-2"><a href="recuperar_senha.php" class="text-muted"><small>Esqueci minha senha</small></a></div>
+              <div class="col-12"><a href="login.php" class="font-weight-bold text-danger">Já tem conta? Faça Login</a></div>
             </div>
-            <!--
-              <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Entrar com Google</button>
-              <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Entrar com Facebook</button>
-            -->
           </form>
         </div>
       </div>

@@ -275,4 +275,34 @@ class CursoModel
             return null;
         }
     }
+
+    public static function buscarCursosAprovados()
+    {
+        try {
+            $c = new Conexao();
+            $conexao = $c->conectar();
+
+            $query = "SELECT * FROM cursos WHERE situacao = 'aprovado' ORDER BY nome ASC";
+            $resultado = $conexao->query($query);
+            return $resultado->fetch_all(MYSQLI_ASSOC);
+        } catch (Exception $e) {
+            error_log("Erro ao buscar os cursos aprovados: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    public static function buscarTodosCursos()
+    {
+        try {
+            $c = new Conexao();
+            $conexao = $c->conectar();
+
+            $query = "SELECT * FROM cursos ORDER BY nome ASC";
+            $resultado = $conexao->query($query);
+            return $resultado->fetch_all(MYSQLI_ASSOC);
+        } catch (Exception $e) {
+            error_log("Erro ao buscar todos os cursos: " . $e->getMessage());
+            return [];
+        }
+    }
 }

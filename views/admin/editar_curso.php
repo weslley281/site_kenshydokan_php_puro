@@ -253,7 +253,4 @@ if (!empty($aulas)) {
         </div>
       </div>
     </div>
-<?php
-  }
-}
-?>
+  </div>

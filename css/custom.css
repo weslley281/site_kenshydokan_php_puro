@@ -134,3 +134,33 @@ footer a:hover {
 .hero-subtitle {
     font-size: clamp(1.1rem, 3vw, 1.75rem);
 }
+
+/* Sidebar and List Group Customizations */
+.list-group-item {
+    font-weight: 500;
+    transition: all 0.25s ease;
+    border-color: rgba(0, 0, 0, 0.05) !important;
+    padding: 0.85rem 1.25rem;
+    color: #495057;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+    color: var(--primary-red);
+    padding-left: 1.5rem;
+}
+
+.list-group-item.active {
+    background-color: var(--primary-red) !important;
+    border-color: var(--primary-red) !important;
+    color: #fff !important;
+    font-weight: 700;
+}
+
+.list-group-item.active:hover {
+    color: #fff !important;
+}
+
+.tracking-wider {
+    letter-spacing: 0.08em;
+}
