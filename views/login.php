@@ -7,34 +7,40 @@ if (isset($_SESSION["id_usuario"])) {
 ?>
 <!-- /Navigation -->
 
-<div class="container">
+<div class="container py-5">
   <div class="row">
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-      <div class="card card-signin my-5">
-        <div class="card-body">
-          <h5 class="card-title text-center">Entrar</h5>
+      <div class="card border-0 shadow-lg my-5">
+        <div class="card-header text-center bg-white pt-4 pb-0 border-0">
+          <img src="../img/wkka.jpg" width="60" alt="Logo" class="mb-3 rounded-circle shadow-sm">
+          <h3 class="font-weight-bold text-dark mb-0">Área de Acesso</h3>
+        </div>
+        <div class="card-body p-4 p-sm-5">
           <form class="form-signin" action="../controllers/autenticar.php" method="post">
-            <div class="form-group mb-3">
-              <input type="email" id="inputEmail" class="form-control" placeholder="Endereço de Email" name="usuario" value="" required autofocus>
+            
+            <div class="form-group mb-4">
+              <label for="inputEmail" class="text-muted small font-weight-bold">E-MAIL</label>
+              <input type="email" id="inputEmail" class="form-control form-control-lg bg-light border-0" placeholder="Digite seu email" name="usuario" value="" required autofocus style="font-size: 1rem;">
             </div>
-            <div class="form-group mb-3">
-              <input type="password" id="inputPassword" class="form-control" placeholder="Senha" name="senha" required>
+            
+            <div class="form-group mb-4">
+              <label for="inputPassword" class="text-muted small font-weight-bold">SENHA</label>
+              <input type="password" id="inputPassword" class="form-control form-control-lg bg-light border-0" placeholder="Digite sua senha" name="senha" required style="font-size: 1rem;">
             </div>
 
-            <div class="custom-control custom-checkbox mb-3">
+            <div class="custom-control custom-checkbox mb-4">
               <input type="checkbox" class="custom-control-input" id="customCheck1" name="lembrar">
-              <label class="custom-control-label" for="customCheck1">Lembrar de mim</label>
+              <label class="custom-control-label text-muted" for="customCheck1">Lembrar meu acesso</label>
             </div>
-            <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" name="entrar" value="entrar">
+            
+            <input class="btn btn-lg btn-danger btn-block text-uppercase font-weight-bold rounded-pill shadow-sm" type="submit" name="entrar" value="Entrar no Sistema">
+            
             <hr class="my-4">
-            <div class="row">
-              <div class="col"><a href="recuperar_senha.php">Esqueci a senha</a></div>
-              <div class="col"><a href="cadastrar.php">Cadastrar-se</a></div>
+            
+            <div class="row text-center">
+              <div class="col-12 mb-2"><a href="recuperar_senha.php" class="text-muted"><small>Esqueci minha senha</small></a></div>
+              <div class="col-12"><a href="cadastrar.php" class="font-weight-bold text-danger">Não tem conta? Cadastre-se</a></div>
             </div>
-            <!--
-              <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Entrar com Google</button>
-              <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Entrar com Facebook</button>
-            -->
           </form>
         </div>
       </div>

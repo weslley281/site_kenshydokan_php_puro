@@ -29,16 +29,20 @@ if (isset($_POST['accept_cookie'])) {
     });
 </script>
 
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; WKKA <?php echo date("Y"); ?></p>
-        <br>
-        <br>
-        <p class="m-0 text-white">©Instituto de Artes Marciais e Defesa Pessoal Kenshydokan <?php echo date("Y"); ?>. Todos os direitos reservados.</p>
-        <p class="m-0 text-white"><a class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="politicas.php">Politicas e Privácidade</a> | <a class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="termos.php">Termos e Condições</a></p>
-        <hr class="bg-light">
-        <p class="m-0 text-white">Desenvolvido por Weslley Henrique Vieira Ferraz<br>
-            Tenha um site incrivel como esse faça um orçamento sem compromisso <a href="https://engenheirosoftwareweslley.com.br" target="_blank">clicando aqui</a></p>
+<footer class="py-5 bg-dark mt-5">
+    <div class="container text-center">
+        <p class="m-0 text-white font-weight-bold">Instituto de Artes Marciais e Defesa Pessoal Kenshydokan</p>
+        <p class="m-0 mb-3 text-white-50"><small>Copyright &copy; WKKA <?php echo date("Y"); ?>. Todos os direitos reservados.</small></p>
+        
+        <p class="m-0">
+            <a href="politicas.php">Políticas de Privacidade</a> | 
+            <a href="termos.php">Termos e Condições</a>
+        </p>
+        
+        <hr class="bg-secondary my-4" style="opacity: 0.3;">
+        
+        <p class="m-0 text-white-50"><small>Desenvolvido por Weslley Henrique Vieira Ferraz<br>
+            Faça um orçamento sem compromisso <a href="https://engenheirosoftwareweslley.com.br" target="_blank" class="text-white font-weight-bold">clicando aqui</a></small></p>
     </div>
 </footer>
 <!-- Vue.js -->

@@ -128,6 +128,10 @@ $pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
 
     <link rel="stylesheet" href="../libs/DataTables/datatables.css" />
     <link rel="stylesheet" href="../../libs/DataTables/datatables.css" />
+    
+    <!-- Custom Modern Theme CSS -->
+    <link rel="stylesheet" href="../css/custom.css" />
+    <link rel="stylesheet" href="../../css/custom.css" />
     <?php
     // Itera sobre as páginas e adiciona a classe "active" se a URL atual corresponder
     // foreach ($paginas as $url => $nome_da_pagina) {
