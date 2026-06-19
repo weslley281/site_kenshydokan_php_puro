@@ -5,9 +5,9 @@ $active_page = basename($_SERVER['PHP_SELF']);
 <div class="col-lg-3 mb-4">
     <div class="card border-0 shadow-sm">
         <div class="card-header bg-dark text-white d-lg-none d-flex justify-content-between align-items-center py-3 border-0 rounded-lg">
-            <h6 class="mb-0 font-weight-bold text-uppercase tracking-wider"><i class="fa-solid fa-bars-staggered mr-2"></i>Painel de Controle</h6>
+            <h6 class="mb-0 font-weight-bold text-uppercase tracking-wider">Painel de Controle</h6>
             <button class="btn btn-outline-light btn-sm font-weight-bold px-3 rounded-pill" type="button" data-toggle="collapse" data-target="#perfilMenuCollapse" aria-controls="perfilMenuCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
+                <i class="fa-solid fa-bars-staggered mr-2"></i> Menu
             </button>
         </div>
         <div class="collapse d-lg-block" id="perfilMenuCollapse">

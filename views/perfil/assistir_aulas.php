@@ -85,6 +85,4 @@ $curso = $cursoModelRepo->buscarCurso($id_curso);
         </div>
     </div>
 
-<?php
-include __DIR__ . "/../rodape.php";
-?>
+    <?php include __DIR__ . "/rodape.php"; ?>

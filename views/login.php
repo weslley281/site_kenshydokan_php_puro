@@ -35,6 +35,14 @@ if (isset($_SESSION["id_usuario"])) {
             
             <input class="btn btn-lg btn-danger btn-block text-uppercase font-weight-bold rounded-pill shadow-sm" type="submit" name="entrar" value="Entrar no Sistema">
             
+            <div class="text-center my-3">
+              <span class="text-muted small font-weight-bold">OU</span>
+            </div>
+
+            <a href="../controllers/auth_google.php" class="btn btn-lg btn-outline-dark btn-block text-uppercase font-weight-bold rounded-pill shadow-sm d-flex align-items-center justify-content-center mb-3" style="font-size: 0.85rem; border-color: #ddd; background-color: #fff; color: #495057;">
+              <i class="fab fa-google text-danger mr-2" style="font-size: 1.1rem;"></i> Entrar com o Google
+            </a>
+            
             <hr class="my-4">
             
             <div class="row text-center">

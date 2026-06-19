@@ -46,7 +46,7 @@
               <li>Faixa preta 1° Dan em Judo Kodokan.</li>
               <li>1° Dan Karatê Kyokushin</li>
               <li>Faixa preta de Jiu Jitsu Brasileiro.</li>
-              <li>12° Khan Muay Thai</li>
+              <li>Prajied Preto 12° Khan Muay Thai</li>
               <li>Faixa Roxa Ju Jitsu</li>
             </ul>
           </div>
@@ -93,6 +93,22 @@
             <h5>Suas Graduações: </h5>
             <ul>
               <li>Faixa Preta 1° Dan do Karate Kenshydokan.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-sm-6 mb-4">
+        <div class="card h-100">
+          <a href=""><img class="card-img-top" src="../img/sensei_nilson.jpg" alt="Nilson Egues Faixa Preta 1° Dan do Karate Kenshydokan"></a>
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="">Nilson Egues </a>
+            </h4>
+            <h5>Suas Graduações: </h5>
+            <ul>
+              <li>Faixa Preta 1° Dan do Karate Kenshydokan.</li>
+              <li>Prajied Preto 12° Khan Muay Thai</li>
             </ul>
           </div>
         </div>

@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $token = Usuario::gerarTokenRecuperacao($usuario['id_usuario']);
 
             // Montar link de recuperação
-            $link = "http://localhost/site_kenshydokan_php_puro/views/recuperar_senha.php?token=" . urlencode($token);
+            $link = "https://kenshydokan.org.br/views/recuperar_senha.php?token=" . urlencode($token);
 
             // Enviar e-mail (exemplo simples)
             $to = $usuario['email'];
