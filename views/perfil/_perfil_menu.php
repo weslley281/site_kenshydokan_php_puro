@@ -41,6 +41,9 @@ $active_page = basename($_SERVER['PHP_SELF']);
                         <a href="../admin" class="list-group-item list-group-item-action <?php echo ($active_page == 'admin.php') ? 'active' : ''; ?>">
                             <i class="fa-solid fa-screwdriver-wrench mr-2 <?php echo ($active_page == 'admin.php') ? '' : 'text-danger'; ?>"></i> Administrativo
                         </a>
+                        <a href="../gerenciamento_dojo" class="list-group-item list-group-item-action <?php echo (strpos($_SERVER['REQUEST_URI'], 'gerenciamento_dojo') !== false) ? 'active' : ''; ?>">
+                            <i class="fa-solid fa-store mr-2 <?php echo (strpos($_SERVER['REQUEST_URI'], 'gerenciamento_dojo') !== false) ? '' : 'text-danger'; ?>"></i> Gerenciar Dojô
+                        </a>
                     <?php } ?>
                     <a href="eventos.php" class="list-group-item list-group-item-action <?php echo ($active_page == 'eventos.php') ? 'active' : ''; ?>">
                         <i class="fa-solid fa-circle-play mr-2 <?php echo ($active_page == 'eventos.php') ? '' : 'text-danger'; ?>"></i> Eventos Online

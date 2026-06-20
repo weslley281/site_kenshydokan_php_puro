@@ -1,72 +1,84 @@
 <div class="tab-pane fade show active">
-  <div class="container text-center">
-    <h2>Todas as Graduações</h2>
-    <div class="row my-4">
-      <div class="col mx-1 my-1">
-        <a href="criar_graduacao.php" class="btn btn-outline-success btn-lg btn-block">Criar Graduação</a>
+  <div class="container py-4">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <h2 class="font-weight-bold text-dark mb-0">Gerenciar Graduações</h2>
+      <a href="criar_graduacao.php" class="btn btn-danger font-weight-bold rounded-pill shadow-sm px-4">
+        <i class="fas fa-plus mr-2"></i> Criar Graduação
+      </a>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-lg">
+      <div class="card-body p-4">
+        <div class="table-responsive">
+          <table id="minhaTabela3" class="table table-hover align-middle" width="100%" cellspacing="0">
+            <thead>
+              <tr class="text-secondary small font-weight-bold border-bottom">
+                <th scope="col" style="width: 80px;">Código</th>
+                <th scope="col">Graduação</th>
+                <th scope="col" class="text-center" style="width: 120px;">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              include_once __DIR__ . "/../../models/graduacaoModel.php";
+              
+              $graduacaoModelRepo = new Graduacao();
+              $graduacoes = $graduacaoModelRepo->listarGraduacoes();
+
+              if (empty($graduacoes)) {
+                echo '<tr><td colspan="3" class="text-center text-muted py-4">Nenhuma graduação cadastrada no momento.</td></tr>';
+              } else {
+                foreach ($graduacoes as $res_graduacao) {
+                  $id_graduacao = $res_graduacao["id_graduacao"];
+                  $graduacao = $res_graduacao["graduacao"];
+              ?>
+                  <tr>
+                    <td class="align-middle font-weight-bold text-secondary">#<?php echo $id_graduacao; ?></td>
+                    <td class="align-middle font-weight-bold text-dark text-capitalize"><?php echo htmlspecialchars($graduacao); ?></td>
+                    <td class="align-middle text-center">
+                      <a href="editar_graduacao.php?id=<?php echo $id_graduacao; ?>" class="btn btn-sm btn-outline-primary border-0 rounded-circle mr-1" title="Editar Graduação" style="width: 32px; height: 32px; padding: 5px 0;">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                      </a>
+                      <button type="button" class="btn btn-sm btn-outline-danger border-0 rounded-circle" data-toggle="modal" data-target="#modalExcluirGraduacao<?php echo $id_graduacao; ?>" title="Excluir Graduação" style="width: 32px; height: 32px; padding: 5px 0;">
+                        <i class="fa-solid fa-trash-can"></i>
+                      </button>
+
+                      <!-- Modal de Exclusão -->
+                      <div class="modal fade" id="modalExcluirGraduacao<?php echo $id_graduacao; ?>" tabindex="-1" role="dialog" aria-labelledby="excluirLabel<?php echo $id_graduacao; ?>" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content border-0 shadow-lg">
+                            <div class="modal-header bg-danger text-white border-0 py-3">
+                              <h5 class="modal-title font-weight-bold" id="excluirLabel<?php echo $id_graduacao; ?>">
+                                <i class="fa-solid fa-triangle-exclamation mr-2"></i> Confirmar Exclusão
+                              </h5>
+                              <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body p-4 text-center">
+                              <p class="lead mb-2">Tem certeza que deseja excluir esta graduação?</p>
+                              <h5 class="font-weight-bold text-danger mb-0"><?php echo htmlspecialchars($graduacao); ?></h5>
+                              <p class="text-muted mt-2 small">Esta ação não poderá ser desfeita.</p>
+                            </div>
+                            <div class="modal-footer border-0 bg-light py-3 text-center d-flex justify-content-center">
+                              <button type="button" class="btn btn-secondary px-4 rounded-pill font-weight-bold mr-2" data-dismiss="modal">Cancelar</button>
+                              <form action="../../controllers/graduacaoController.php" method="post" class="d-inline">
+                                <input type="hidden" name="tipo" value="excluir_graduacao">
+                                <input type="hidden" name="id_graduacao" value="<?php echo $id_graduacao; ?>">
+                                <button type="submit" class="btn btn-danger px-4 rounded-pill font-weight-bold shadow-sm">Excluir</button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+              <?php } 
+              } ?>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-    <table id="minhaTabela3" class="table table-bordered" width="100%" cellspacing="0">
-      <thead>
-        <tr>
-          <th scope="col">Graduação</th>
-          <th scope="col">Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php
-        include_once __DIR__ . "/../../models/graduacaoModel.php";
-        
-        $graduacaoModelRepo = new Graduacao();
-        $graduacoes = $graduacaoModelRepo->listarGraduacoes();
-
-        if (empty($graduacoes)) {
-          echo "<h3> Não foram encontrados dados Cadastrados no Banco!! </h3>";
-        } else {
-          foreach ($graduacoes as $res_graduacao) {
-            $id_graduacao = $res_graduacao["id_graduacao"];
-            $graduacao = $res_graduacao["graduacao"];
-        ?>
-            <tr>
-              <td class="text-capitalize"><?php echo $graduacao; ?></td>
-              <td class="text-capitalize">
-                <div class="form-group">
-                  <a class="btn btn-primary" href="editar_graduacao.php?id=<?php echo $id_graduacao; ?>" title="Editar Graduação"><i class="fa-solid fa-pen-to-square"></i></a>
-                </div>
-                <div class="form-group">
-                  <button class="btn btn-danger" data-toggle="modal" data-target="#modalExcluirGraduacao<?php echo $id_graduacao; ?>" title="Excluir Graduação"><i class="fa-regular fa-trash-can"></i></button>
-                </div>
-              </td>
-            </tr>
-
-            <!-- Modal -->
-            <div class="modal fade" id="modalExcluirGraduacao<?php echo $id_graduacao; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Você tem certeza que deseja excluir:</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <p><?php echo $graduacao; ?></p>
-                  </div>
-                  <div class="modal-footer">
-                    <form action="../controllers/graduacaoController.php" method="post">
-                      <input type="hidden" name="tipo" value="excluir_graduacao">
-                      <input type="hidden" name="id_graduacao" value="<?php echo $id_graduacao; ?>">
-
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                      <button type="submit" class="btn btn-danger">Sim</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-        <?php } 
-        } ?>
-      </tbody>
-    </table>
   </div>
 </div>

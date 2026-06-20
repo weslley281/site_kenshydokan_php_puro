@@ -214,7 +214,7 @@ class DojoModel
     public function criarDojo(DojoModel $dojo): bool
     {
         try {
-            $inserir = $this->conexao->prepare("INSERT INTO dojos (id_dojo, razao_social, nome_fantasia, cnpj, id_filiado_responsavel, telefone, celular, email, cep, endereco, cidade, estado, data_filiacao, status, imagem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $inserir = $this->conexao->prepare("INSERT INTO dojos (id, razao_social, nome_fantasia, cnpj, id_filiado_responsavel, telefone, celular, email, cep, endereco, cidade, estado, data_filiacao, status, imagem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             
             $id = $dojo->getIdDojo();
             $rs = $dojo->getRazaoSocial();
@@ -250,7 +250,7 @@ class DojoModel
     public function editarDojo(DojoModel $dojo): bool
     {
         try {
-            $atualizar = $this->conexao->prepare("UPDATE dojos SET razao_social = ?, nome_fantasia = ?, cnpj = ?, id_filiado_responsavel = ?, telefone = ?, celular = ?, email = ?, cep = ?, endereco = ?, cidade = ?, estado = ?, data_filiacao = ?, status = ?, imagem = ? WHERE id_dojo = ?");
+            $atualizar = $this->conexao->prepare("UPDATE dojos SET razao_social = ?, nome_fantasia = ?, cnpj = ?, id_filiado_responsavel = ?, telefone = ?, celular = ?, email = ?, cep = ?, endereco = ?, cidade = ?, estado = ?, data_filiacao = ?, status = ?, imagem = ? WHERE id = ?");
             
             $rs = $dojo->getRazaoSocial();
             $nf = $dojo->getNomeFantasia();
@@ -286,7 +286,7 @@ class DojoModel
     public function excluirDojo($id_dojo): bool
     {
         try {
-            $excluir = $this->conexao->prepare("DELETE FROM dojos WHERE id_dojo = ?");
+            $excluir = $this->conexao->prepare("DELETE FROM dojos WHERE id = ?");
             $excluir->bind_param("s", $id_dojo);
             $resultado = $excluir->execute();
             $excluir->close();
@@ -310,7 +310,7 @@ class DojoModel
         if ($resultado) {
             while ($row = $resultado->fetch_assoc()) {
                 $dojo = new DojoModel(
-                    $row['id_dojo'],
+                    $row['id'],
                     $row['razao_social'],
                     $row['nome_fantasia'],
                     $row['cnpj'],
@@ -340,7 +340,7 @@ class DojoModel
     {
         $c = new Conexao();
         $conexao = $c->conectar();
-        $stmt = $conexao->prepare("SELECT * FROM dojos WHERE id_dojo = ?");
+        $stmt = $conexao->prepare("SELECT * FROM dojos WHERE id = ?");
         $stmt->bind_param("s", $id_dojo);
         $stmt->execute();
         $resultado = $stmt->get_result();
@@ -348,7 +348,7 @@ class DojoModel
         if ($resultado && $resultado->num_rows > 0) {
             $row = $resultado->fetch_assoc();
             return new DojoModel(
-                $row['id_dojo'],
+                $row['id'],
                 $row['razao_social'],
                 $row['nome_fantasia'],
                 $row['cnpj'],
@@ -380,8 +380,9 @@ class DojoModel
 
         if ($resultado && $resultado->num_rows > 0) {
             $row = $resultado->fetch_assoc();
+            $stmt->close();
             return new DojoModel(
-                $row['id_dojo'],
+                $row['id'],
                 $row['razao_social'],
                 $row['nome_fantasia'],
                 $row['cnpj'],
@@ -399,6 +400,7 @@ class DojoModel
             );
         }
 
+        $stmt->close();
         return null;
     }
 
@@ -407,7 +409,7 @@ class DojoModel
         try {
             $c = new Conexao();
             $conexao = $c->conectar();
-            $stmt = $conexao->prepare("UPDATE dojos SET status = ? WHERE id_dojo = ?");
+            $stmt = $conexao->prepare("UPDATE dojos SET status = ? WHERE id = ?");
             $stmt->bind_param("ss", $novo_status, $id_dojo);
             $resultado = $stmt->execute();
             $stmt->close();
@@ -428,7 +430,7 @@ class DojoModel
         try {
             $c = new Conexao();
             $conexao = $c->conectar();
-            $stmt = $conexao->prepare("UPDATE dojos SET imagem = ? WHERE id_dojo = ?");
+            $stmt = $conexao->prepare("UPDATE dojos SET imagem = ? WHERE id = ?");
             $stmt->bind_param("ss", $nova_imagem, $id_dojo);
             $resultado = $stmt->execute();
             $stmt->close();

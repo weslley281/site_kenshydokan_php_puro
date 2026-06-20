@@ -304,4 +304,100 @@ class Migration
             echo "Erro ao criar tabela de certificados: " . $this->conn->error;
         }
     }
+
+    public function criarTabelaDojos()
+    {
+        $sql = "
+        CREATE TABLE IF NOT EXISTS dojos (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `razao_social` varchar(255) DEFAULT NULL,
+            `nome_fantasia` varchar(255) DEFAULT NULL,
+            `cnpj` varchar(20) DEFAULT NULL,
+            `id_filiado_responsavel` int(11) DEFAULT NULL,
+            `telefone` varchar(20) DEFAULT NULL,
+            `celular` varchar(20) DEFAULT NULL,
+            `email` varchar(255) DEFAULT NULL,
+            `cep` varchar(10) DEFAULT NULL,
+            `endereco` varchar(255) DEFAULT NULL,
+            `cidade` varchar(100) DEFAULT NULL,
+            `estado` varchar(50) DEFAULT NULL,
+            `data_filiacao` date DEFAULT NULL,
+            `status` varchar(50) DEFAULT 'ativo',
+            `imagem` varchar(255) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `fk_dojo_filiado_responsavel` (`id_filiado_responsavel`),
+            CONSTRAINT `fk_dojo_filiado_responsavel` FOREIGN KEY (`id_filiado_responsavel`) REFERENCES `filiados` (`id_filiado`) ON DELETE SET NULL ON UPDATE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        ";
+
+        if ($this->conn->query($sql) === true) {
+            //echo "Tabela 'dojos' criada com sucesso!";
+        } else {
+            echo "Erro ao criar tabela de dojos: " . $this->conn->error;
+        }
+    }
+
+    public function criarTabelaDojoAlunosConfig()
+    {
+        $sql = "
+        CREATE TABLE IF NOT EXISTS `dojo_alunos_config` (
+          `id_filiado` INT NOT NULL,
+          `valor_mensalidade` DECIMAL(10,2) NOT NULL DEFAULT 100.00,
+          `dia_vencimento` INT NOT NULL DEFAULT 10,
+          `status_aluno` VARCHAR(20) NOT NULL DEFAULT 'adimplente',
+          PRIMARY KEY (`id_filiado`),
+          FOREIGN KEY (`id_filiado`) REFERENCES `filiados` (`id_filiado`) ON DELETE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        ";
+
+        if ($this->conn->query($sql) === true) {
+            //echo "Tabela 'dojo_alunos_config' criada com sucesso!";
+        } else {
+            echo "Erro ao criar tabela de configurações de alunos: " . $this->conn->error;
+        }
+    }
+
+    public function criarTabelaDojoMensalidades()
+    {
+        $sql = "
+        CREATE TABLE IF NOT EXISTS `dojo_mensalidades` (
+          `id` INT AUTO_INCREMENT PRIMARY KEY,
+          `id_filiado` INT NOT NULL,
+          `referencia` VARCHAR(7) NOT NULL,
+          `valor` DECIMAL(10,2) NOT NULL,
+          `data_vencimento` DATE NOT NULL,
+          `data_pagamento` DATE NULL,
+          `status_pagamento` VARCHAR(20) NOT NULL DEFAULT 'pendente',
+          FOREIGN KEY (`id_filiado`) REFERENCES `filiados` (`id_filiado`) ON DELETE CASCADE,
+          UNIQUE KEY `filiado_referencia` (`id_filiado`, `referencia`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        ";
+
+        if ($this->conn->query($sql) === true) {
+            //echo "Tabela 'dojo_mensalidades' criada com sucesso!";
+        } else {
+            echo "Erro ao criar tabela de mensalidades: " . $this->conn->error;
+        }
+    }
+
+    public function criarTabelaDojoFinanceiro()
+    {
+        $sql = "
+        CREATE TABLE IF NOT EXISTS `dojo_financeiro` (
+          `id` INT AUTO_INCREMENT PRIMARY KEY,
+          `descricao` VARCHAR(255) NOT NULL,
+          `tipo` VARCHAR(10) NOT NULL,
+          `valor` DECIMAL(10,2) NOT NULL,
+          `data_movimentacao` DATE NOT NULL,
+          `categoria` VARCHAR(50) NOT NULL,
+          `id_referencia` INT NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        ";
+
+        if ($this->conn->query($sql) === true) {
+            //echo "Tabela 'dojo_financeiro' criada com sucesso!";
+        } else {
+            echo "Erro ao criar tabela do financeiro: " . $this->conn->error;
+        }
+    }
 }

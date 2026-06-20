@@ -29,5 +29,13 @@ echo "<br>";
 $migration->criarTabelaAvaliacoes();
 echo "<br>";
 $migration->criarTabelaCertificados();
+echo "<br>";
+$migration->criarTabelaDojos();
+echo "<br>";
+$migration->criarTabelaDojoAlunosConfig();
+echo "<br>";
+$migration->criarTabelaDojoMensalidades();
+echo "<br>";
+$migration->criarTabelaDojoFinanceiro();
 
 echo "<script language='javascript'>window.location='views/inicio.php'; </script>";
