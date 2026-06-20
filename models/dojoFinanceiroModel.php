@@ -99,5 +99,31 @@ class DojoFinanceiroModel
         }
         return $resumo;
     }
+
+    public function buscarResumoAnual($ano): array
+    {
+        $dados = [];
+        $query = "
+            SELECT 
+                DATE_FORMAT(data_movimentacao, '%Y-%m') AS mes_ref,
+                SUM(CASE WHEN tipo = 'entrada' THEN valor ELSE 0 END) AS entradas,
+                SUM(CASE WHEN tipo = 'saida' THEN valor ELSE 0 END) AS saidas
+            FROM dojo_financeiro
+            WHERE YEAR(data_movimentacao) = ?
+            GROUP BY DATE_FORMAT(data_movimentacao, '%Y-%m')
+            ORDER BY mes_ref ASC
+        ";
+        try {
+            $stmt = $this->conexao->prepare($query);
+            $stmt->bind_param("i", $ano);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $dados = $result->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+        } catch (Exception $e) {
+            error_log("Erro ao buscar resumo anual: " . $e->getMessage());
+        }
+        return $dados;
+    }
 }
 ?>

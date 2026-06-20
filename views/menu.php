@@ -11,6 +11,7 @@ $paginas = array(
     '/views/sobre.php' => 'Sobre Nós',
     '/views/login.php' => 'Sistema',
     '/views/postagens.php' => 'Postagens',
+    '/views/transparencia.php' => 'Transparência',
     '/views/ver_perfil.php' => 'Perfil',
     '/views/perfil/perfil.php' => 'Perfil',
     '/views/galeria.php' => 'Galeria',
@@ -145,6 +146,56 @@ $pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
 
     <script src="../libs/tinymce/tinymce.min.js"></script>
     <script src="../../libs/tinymce/tinymce.min.js"></script>
+    
+    <style>
+        /* Estilização Premium do Google Translate */
+        body {
+            top: 0px !important;
+            position: static !important;
+        }
+        .goog-te-banner-frame.skiptranslate, 
+        .goog-te-banner-frame,
+        #goog-gt-tt,
+        .goog-te-balloon-frame {
+            display: none !important;
+        }
+        .goog-logo-link {
+            display: none !important;
+        }
+        .goog-te-gadget {
+            color: transparent !important;
+            font-size: 0px !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        .goog-te-combo {
+            background-color: #2b3035 !important;
+            color: #f8f9fa !important;
+            border: 1px solid #495057 !important;
+            border-radius: 30px !important;
+            padding: 5px 12px !important;
+            font-size: 0.85rem !important;
+            font-family: inherit !important;
+            outline: none !important;
+            cursor: pointer !important;
+            font-weight: 600 !important;
+            transition: all 0.25s ease-in-out !important;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+        }
+        .goog-te-combo:hover {
+            border-color: #dc3545 !important;
+            background-color: #343a40 !important;
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.25) !important;
+        }
+        .goog-te-combo option {
+            background-color: #212529 !important;
+            color: #fff !important;
+        }
+        /* Oculta barra de ferramentas do Google no topo */
+        .skiptranslate {
+            margin-top: 0px !important;
+        }
+    </style>
 </head>
 
 <body class="bg-light">
@@ -181,6 +232,10 @@ $pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
 
                 <li class="nav-item <?php echo ($url_atual == "/views/postagens.php") ? 'active' : ''; ?>">
                     <a class="nav-link" href="postagens.php">Postagens</a>
+                </li>
+
+                <li class="nav-item <?php echo ($url_atual == "/views/transparencia.php") ? 'active' : ''; ?>">
+                    <a class="nav-link" href="transparencia.php">Transparência</a>
                 </li>
 
                 <li class="nav-item dropdown <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>">
@@ -225,20 +280,21 @@ $pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
                     </div>
                 </li>
             </ul>
-            <!-- <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
-            </form> -->
+            
+            <!-- Google Translate Element Integrado -->
+            <div class="d-flex align-items-center ml-lg-3 my-2 my-lg-0" id="google_translate_container">
+                <i class="fa-solid fa-language text-white mr-2" style="font-size: 1.15rem; opacity: 0.85;"></i>
+                <div id="google_translate_element"></div>
+            </div>
+            
+            <script type="text/javascript">
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({
+                        pageLanguage: 'pt',
+                        includedLanguages: 'pt,en,es,fr,it,ja'
+                    }, 'google_translate_element');
+                }
+            </script>
+            <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
         </div>
     </nav>
-    
-    <!-- Google Translate Element -->
-    <div id="google_translate_element" style="text-align: right; padding: 10px; background-color: #f8f9fa; min-height: 40px; border-bottom: 1px solid #ddd;"></div>
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'pt'
-            }, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
