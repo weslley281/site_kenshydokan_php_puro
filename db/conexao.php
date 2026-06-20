@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class Conexao {
     private $host = 'localhost';
@@ -26,4 +26,3 @@ class Database extends Conexao {
         return $this->conectar();
     }
 }
-?>

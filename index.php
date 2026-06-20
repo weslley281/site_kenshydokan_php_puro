@@ -37,5 +37,7 @@ echo "<br>";
 $migration->criarTabelaDojoMensalidades();
 echo "<br>";
 $migration->criarTabelaDojoFinanceiro();
+echo "<br>";
+$migration->criarTabelaCertificadosManuais();
 
 echo "<script language='javascript'>window.location='views/inicio.php'; </script>";

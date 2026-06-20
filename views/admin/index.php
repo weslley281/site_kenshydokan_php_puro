@@ -60,6 +60,11 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
           <i class="fa-solid fa-store mr-1"></i> Dojos
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link rounded-pill font-weight-bold <?php echo ($pagina == 'certificados_manuais') ? 'active bg-danger text-white' : 'text-secondary'; ?>" href="index.php?pagina=certificados_manuais">
+          <i class="fa-solid fa-certificate mr-1"></i> Certificados
+        </a>
+      </li>
     </ul>
 
     <!-- Tab Contents -->
@@ -90,6 +95,9 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
       } ?>
       <?php if ($pagina == "dojos") {
         include_once "dojos.php";
+      } ?>
+      <?php if ($pagina == "certificados_manuais") {
+        include_once "certificados_manuais.php";
       } ?>
     </div>
   </div>
