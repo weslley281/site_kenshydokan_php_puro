@@ -537,7 +537,7 @@ INSERT INTO `galeria` (`id_galeria`, `nome`) VALUES
 -- Estrutura da tabela `graduacao`
 --
 
-CREATE TABLE `graduacao` (
+CREATE TABLE `graduacoes` (
   `id_graduacao` int(11) NOT NULL,
   `graduacao` varchar(300) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

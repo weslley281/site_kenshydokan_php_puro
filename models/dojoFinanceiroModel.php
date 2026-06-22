@@ -42,15 +42,16 @@ class DojoFinanceiroModel
         }
     }
 
-    public function buscarMovimentacoesMes($referencia_mes): array
+    public function buscarMovimentacoesMes($referencia_mes, $excluir_mensalidades = false): array
     {
         $movimentacoes = [];
         $data_inicio = $referencia_mes . '-01';
         $data_fim = date("Y-m-t", strtotime($data_inicio));
 
+        $filtro = $excluir_mensalidades ? " AND (categoria != 'mensalidade' OR categoria IS NULL)" : "";
         $query = "
             SELECT * FROM dojo_financeiro 
-            WHERE data_movimentacao BETWEEN ? AND ?
+            WHERE data_movimentacao BETWEEN ? AND ? {$filtro}
             ORDER BY data_movimentacao DESC, id DESC
         ";
 
@@ -67,16 +68,17 @@ class DojoFinanceiroModel
         return $movimentacoes;
     }
 
-    public function buscarResumoFinanceiroMes($referencia_mes): array
+    public function buscarResumoFinanceiroMes($referencia_mes, $excluir_mensalidades = false): array
     {
         $resumo = ['entradas' => 0.00, 'saidas' => 0.00, 'saldo' => 0.00];
         $data_inicio = $referencia_mes . '-01';
         $data_fim = date("Y-m-t", strtotime($data_inicio));
 
+        $filtro = $excluir_mensalidades ? " AND (categoria != 'mensalidade' OR categoria IS NULL)" : "";
         $query = "
             SELECT tipo, SUM(valor) as total 
             FROM dojo_financeiro 
-            WHERE data_movimentacao BETWEEN ? AND ?
+            WHERE data_movimentacao BETWEEN ? AND ? {$filtro}
             GROUP BY tipo
         ";
 
@@ -100,16 +102,17 @@ class DojoFinanceiroModel
         return $resumo;
     }
 
-    public function buscarResumoAnual($ano): array
+    public function buscarResumoAnual($ano, $excluir_mensalidades = false): array
     {
         $dados = [];
+        $filtro = $excluir_mensalidades ? " AND (categoria != 'mensalidade' OR categoria IS NULL)" : "";
         $query = "
             SELECT 
                 DATE_FORMAT(data_movimentacao, '%Y-%m') AS mes_ref,
                 SUM(CASE WHEN tipo = 'entrada' THEN valor ELSE 0 END) AS entradas,
                 SUM(CASE WHEN tipo = 'saida' THEN valor ELSE 0 END) AS saidas
             FROM dojo_financeiro
-            WHERE YEAR(data_movimentacao) = ?
+            WHERE YEAR(data_movimentacao) = ? {$filtro}
             GROUP BY DATE_FORMAT(data_movimentacao, '%Y-%m')
             ORDER BY mes_ref ASC
         ";

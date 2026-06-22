@@ -17,10 +17,10 @@ if (substr($mes_selecionado, 0, 4) != $ano_selecionado) {
     $mes_selecionado = $ano_selecionado . '-' . date("m");
 }
 
-// Buscar dados no banco
-$resumo_mes = $financeiroModel->buscarResumoFinanceiroMes($mes_selecionado);
-$movimentacoes = $financeiroModel->buscarMovimentacoesMes($mes_selecionado);
-$resumo_anual = $financeiroModel->buscarResumoAnual($ano_selecionado);
+// Buscar dados no banco (excluindo mensalidades de alunos no portal público)
+$resumo_mes = $financeiroModel->buscarResumoFinanceiroMes($mes_selecionado, true);
+$movimentacoes = $financeiroModel->buscarMovimentacoesMes($mes_selecionado, true);
+$resumo_anual = $financeiroModel->buscarResumoAnual($ano_selecionado, true);
 
 // Calcular totais anuais
 $total_entradas_ano = 0.00;
