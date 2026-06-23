@@ -84,7 +84,10 @@ class CertificadoManualModel
             SELECT c.*, f.nome, f.codigo, f.dojo, g.graduacao
             FROM certificados_manuais c
             INNER JOIN filiados f ON c.id_filiado = f.id_filiado
-            LEFT JOIN graduacoes g ON f.id_graduacao = g.id_graduacao
+            LEFT JOIN graduacoes g ON g.id_graduacao = COALESCE(
+                (SELECT id_graduacao FROM filiados_graduacoes WHERE id_filiado = f.id_filiado AND id_arte = 1 LIMIT 1), 
+                (SELECT id_graduacao FROM filiados_graduacoes WHERE id_filiado = f.id_filiado LIMIT 1)
+            )
             ORDER BY c.data_emissao DESC, c.id DESC
         ";
         $resultado = $this->conexao->query($query);
@@ -103,7 +106,10 @@ class CertificadoManualModel
                 SELECT c.*, f.nome, f.codigo, f.dojo, g.graduacao
                 FROM certificados_manuais c
                 INNER JOIN filiados f ON c.id_filiado = f.id_filiado
-                LEFT JOIN graduacoes g ON f.id_graduacao = g.id_graduacao
+                LEFT JOIN graduacoes g ON g.id_graduacao = COALESCE(
+                    (SELECT id_graduacao FROM filiados_graduacoes WHERE id_filiado = f.id_filiado AND id_arte = 1 LIMIT 1), 
+                    (SELECT id_graduacao FROM filiados_graduacoes WHERE id_filiado = f.id_filiado LIMIT 1)
+                )
                 WHERE c.id_filiado = ?
                 ORDER BY c.data_emissao DESC
             ");

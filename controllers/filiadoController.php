@@ -9,14 +9,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (isset($_POST["tipo"])) {
         $dataMudanca = date("Y-m-d");
-
         $filiadoModel = new FiliadoModel();
 
         if ($_POST["tipo"] == "inserir") {
             $novoFiliado = new FiliadoModel(
                 null,
                 $_POST["codigo"],
-                $_POST["id_graduacao"],
+                null, // id_graduacao legada ignorada
                 $_POST["nome"],
                 $_POST["dojo"],
                 $_POST["telefone"],
@@ -30,20 +29,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             );
 
             if ($filiadoModel->criarFiliado($novoFiliado)) {
+                $id_novo = $novoFiliado->getIdFiliado();
+                $graduacoes = isset($_POST["graduacoes"]) ? $_POST["graduacoes"] : [];
+                $filiadoModel->salvarGraduacoes($id_novo, $graduacoes);
+
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=filiados');
             } else {
-                var_dump($novoFiliado);
-
-                //exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/criar_filiado.php');
+                exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=filiados');
             }
         } elseif ($_POST["tipo"] == "editar") {
             $id_filiado = $_POST["id_filiado"];
-            $filiado_existente = $filiadoModel->buscarFiliadoPorId($id_filiado);
-
+            
             $novoFiliado = new FiliadoModel(
                 $id_filiado,
                 $_POST["codigo"],
-                $_POST["id_graduacao"],
+                null, // id_graduacao legada ignorada
                 $_POST["nome"],
                 $_POST["dojo"],
                 $_POST["telefone"],
@@ -57,6 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             );
 
             if ($filiadoModel->editarFiliado($id_filiado, $novoFiliado)) {
+                $graduacoes = isset($_POST["graduacoes"]) ? $_POST["graduacoes"] : [];
+                $filiadoModel->salvarGraduacoes($id_filiado, $graduacoes);
+
                 exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/index.php?pagina=filiados');
             } else {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/index.php?pagina=filiados');

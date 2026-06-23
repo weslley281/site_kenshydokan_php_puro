@@ -27,12 +27,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] == UPLOAD_ERR_OK && $_FILES['imagem']['size'] > 0) {
                     $diretorioUpload = "../img/";
-                    $nomeImagem = uniqid() . $_FILES["imagem"]["name"];
-                    $caminho = $diretorioUpload . $nomeImagem;
+                    $extensaoImagem = strtolower(pathinfo($_FILES["imagem"]["name"], PATHINFO_EXTENSION));
 
-                    $extensaoImagem = strtolower(pathinfo($caminho, PATHINFO_EXTENSION));
+                    if (in_array($extensaoImagem, ["jpg", "jpeg", "gif", "png", "webp"])) {
+                        $nomeImagem = uniqid() . '.' . $extensaoImagem;
+                        $caminho = $diretorioUpload . $nomeImagem;
 
-                    if (in_array($extensaoImagem, ["jpg", "jpeg", "gif", "png"])) {
                         if (move_uploaded_file($_FILES["imagem"]["tmp_name"], $caminho)) {
                             $novaImagem = new Imagem($nomeImagem, $caminho, $dataMudanca);
 
@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             exibirMensagemEredirecionar("Erro: Imagem não salva, tente novamente 2", '../views/cadastrar.php');
                         }
                     } else {
-                        exibirMensagemEredirecionar("Erro: Imagem não salva, tente novamente 3", '../views/cadastrar.php');
+                        exibirMensagemEredirecionar("Erro: Formato de imagem inválido (permitido: jpg, jpeg, png, gif, webp)", '../views/cadastrar.php');
                     }
                 }
 
@@ -98,47 +98,64 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 exibirMensagemEredirecionar(MSG_ERRO, '../views/perfil/editar_perfil.php');
             }
         } elseif ($_POST["tipo"] == "editar_imagem") {
+            if (!isset($_FILES["imagem"]) || $_FILES["imagem"]["error"] !== UPLOAD_ERR_OK) {
+                $erroMsg = "Erro no envio da imagem.";
+                if (isset($_FILES["imagem"])) {
+                    switch ($_FILES["imagem"]["error"]) {
+                        case UPLOAD_ERR_INI_SIZE:
+                        case UPLOAD_ERR_FORM_SIZE:
+                            $erroMsg = "Erro: A imagem enviada é muito grande. O limite permitido é 512MB.";
+                            break;
+                        case UPLOAD_ERR_NO_FILE:
+                            $erroMsg = "Erro: Selecione uma imagem antes de enviar.";
+                            break;
+                        case UPLOAD_ERR_PARTIAL:
+                            $erroMsg = "Erro: O upload foi feito apenas parcialmente. Tente novamente.";
+                            break;
+                    }
+                }
+                exibirMensagemEredirecionar($erroMsg, '../views/perfil/editar_perfil.php');
+                exit;
+            }
 
             $diretorioUpload = "../img/";
-            $nomeImagem = uniqid() . $_FILES["imagem"]["name"];
-            var_dump($nomeImagem);
-            $caminho = $diretorioUpload . $nomeImagem;
+            $extensaoImagem = strtolower(pathinfo($_FILES["imagem"]["name"], PATHINFO_EXTENSION));
 
-            $extensaoImagem = strtolower(pathinfo($caminho, PATHINFO_EXTENSION));
-            var_dump($extensaoImagem);
+            if (in_array($extensaoImagem, ["jpg", "jpeg", "gif", "png", "webp"])) {
+                $nomeImagem = uniqid() . '.' . $extensaoImagem;
+                $caminho = $diretorioUpload . $nomeImagem;
 
-            if (in_array($extensaoImagem, ["jpg", "jpeg", "gif", "png"])) {
-                var_dump($_FILES["imagem"]["tmp_name"], $caminho);
                 if (move_uploaded_file($_FILES["imagem"]["tmp_name"], $caminho)) {
                     $novaImagem = new Imagem($nomeImagem, $caminho, $dataMudanca);
 
                     if ($imagemModel->registrar_imagem($novaImagem)) {
                         $id_imagem = Imagem::procura_id_imagem($nomeImagem);
 
-                        $dados_imagem_antiga = Imagem::procura_imagem($_POST["id_imagem"]);
-
-                        $caminho = $dados_imagem_antiga != null ? file_exists($dados_imagem_antiga["caminho"]) : "";
-
-                        if (file_exists($caminho)) {
-                            unlink($caminho);
+                        // Deleta imagem antiga se houver
+                        if (!empty($_POST["id_imagem"])) {
+                            $dados_imagem_antiga = Imagem::procura_imagem($_POST["id_imagem"]);
+                            if ($dados_imagem_antiga != null) {
+                                $caminho_antigo = $dados_imagem_antiga["caminho"];
+                                if (!empty($caminho_antigo) && !str_contains($caminho_antigo, "sem_foto") && file_exists($caminho_antigo)) {
+                                    unlink($caminho_antigo);
+                                }
+                            }
+                            $imagemModel->deleta_imagem($_POST["id_imagem"]);
                         }
-
-                        $imagemModel->deleta_imagem($_POST["id_imagem"]);
 
                         if (Usuario::editarImagemUsuario($_POST["id_usuario"], $id_imagem, $dataMudanca)) {
                             exibirMensagemEredirecionar(MSG_SUCESSO, '../views/perfil/editar_perfil.php');
                         } else {
-                            exibirMensagemEredirecionar("Erro ao editar a imagem do usuário", '../views/perfil/editar_perfil.php');
+                            exibirMensagemEredirecionar("Erro ao atualizar a imagem do usuário no banco de dados", '../views/perfil/editar_perfil.php');
                         }
                     } else {
-                        exibirMensagemEredirecionar("Erro: Imagem não salva, tente novamente", '../views/perfil/editar_perfil.php');
+                        exibirMensagemEredirecionar("Erro: Registro da imagem no banco de dados falhou", '../views/perfil/editar_perfil.php');
                     }
                 } else {
-                    var_dump(error_get_last());
-                    exibirMensagemEredirecionar("Erro: Imagem não enviada, tente novamente", '../views/perfil/editar_perfil.php');
+                    exibirMensagemEredirecionar("Erro: Falha ao mover o arquivo para o servidor", '../views/perfil/editar_perfil.php');
                 }
             } else {
-                exibirMensagemEredirecionar("Formato de imagem inválido", '../views/perfil/editar_perfil.php');
+                exibirMensagemEredirecionar("Formato de imagem inválido. Apenas JPG, JPEG, PNG, GIF e WEBP são permitidos.", '../views/perfil/editar_perfil.php');
             }
         } elseif ($_POST["tipo"] == "editar_senha") {
 

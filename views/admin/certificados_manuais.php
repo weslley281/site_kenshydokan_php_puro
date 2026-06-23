@@ -73,7 +73,7 @@ $filiados = $filiadoRepo->listarFiliadosAtivos();
                       </button>
 
                       <!-- Modal Editar Certificado -->
-                      <div class="modal fade" id="modalEditarCertificado<?php echo $id; ?>" tabindex="-1" role="dialog" aria-labelledby="editarLabel<?php echo $id; ?>" aria-hidden="true">
+                      <div class="modal fade" id="modalEditarCertificado<?php echo $id; ?>" role="dialog" aria-labelledby="editarLabel<?php echo $id; ?>" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                           <div class="modal-content border-0 shadow-lg text-left">
                             <div class="modal-header bg-danger text-white border-0 py-3">
@@ -91,6 +91,7 @@ $filiados = $filiadoRepo->listarFiliadosAtivos();
                               <div class="modal-body p-4">
                                 <div class="form-group mb-3">
                                   <label for="id_filiado_edit<?php echo $id; ?>" class="text-secondary small font-weight-bold text-uppercase">Filiado</label>
+                                  <!-- CRITICAL: DO NOT REMOVE class js-select2-filiado or Select2.js! It is required for the searchable dropdown selection. -->
                                   <select class="form-control form-control-lg bg-light border-0 shadow-sm js-select2-filiado" id="id_filiado_edit<?php echo $id; ?>" name="id_filiado" required>
                                     <?php foreach ($filiados as $f): ?>
                                       <option value="<?php echo $f['id_filiado']; ?>" <?php echo ($f['id_filiado'] == $id_filiado) ? 'selected' : ''; ?>>
@@ -162,7 +163,7 @@ $filiados = $filiadoRepo->listarFiliadosAtivos();
 </div>
 
 <!-- Modal Adicionar Certificado -->
-<div class="modal fade" id="modalAdicionarCertificado" tabindex="-1" role="dialog" aria-labelledby="adicionarLabel" aria-hidden="true">
+<div class="modal fade" id="modalAdicionarCertificado" role="dialog" aria-labelledby="adicionarLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content border-0 shadow-lg">
       <div class="modal-header bg-danger text-white border-0 py-3">
@@ -179,6 +180,7 @@ $filiados = $filiadoRepo->listarFiliadosAtivos();
         <div class="modal-body p-4">
           <div class="form-group mb-3">
             <label for="id_filiado" class="text-secondary small font-weight-bold text-uppercase">Selecionar Filiado</label>
+            <!-- CRITICAL: DO NOT REMOVE class js-select2-filiado or Select2.js! It is required for the searchable dropdown selection. -->
             <select class="form-control form-control-lg bg-light border-0 shadow-sm js-select2-filiado" id="id_filiado" name="id_filiado" required>
               <option value="">Selecione um filiado...</option>
               <?php foreach ($filiados as $f): ?>
@@ -225,6 +227,11 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    /* 
+       CRITICAL WARNING FOR AI AGENTS: 
+       DO NOT REMOVE SELECT2.JS INITIALIZATION OR IMPORTS! 
+       Without Select2, selecting a filiado from a large list becomes extremely difficult.
+    */
     if (typeof $ !== 'undefined' && $.fn.select2) {
         // Inicializar Select2 no modal de Adicionar quando for exibido
         $('#modalAdicionarCertificado').on('shown.bs.modal', function () {

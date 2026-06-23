@@ -1,118 +1,278 @@
-<?php include "menu.php"; ?>
+<?php
+include "menu.php";
+include_once "../models/filiadoModel.php";
+
+$filiadoModel = new FiliadoModel();
+$dbConn = new Conexao();
+$conexao = $dbConn->conectar();
+
+// Função para buscar dados dinâmicos de um filiado
+function obterDadosMembro($conexao, $filiadoModel, $id_filiado, $default_img, $cargo = '') {
+    $nome = '';
+    $id_usuario = null;
+    $img_nome_db = null;
+
+    // Busca o nome do filiado
+    $stmt_fil = $conexao->prepare("SELECT nome FROM filiados WHERE id_filiado = ? LIMIT 1");
+    $stmt_fil->bind_param("i", $id_filiado);
+    $stmt_fil->execute();
+    $res_fil = $stmt_fil->get_result();
+    if ($row_fil = $res_fil->fetch_assoc()) {
+        $nome = $row_fil['nome'];
+    }
+    $stmt_fil->close();
+
+    // Busca id_usuario e imagem do usuário vinculado
+    $stmt = $conexao->prepare("
+        SELECT u.id_usuario, img.nome AS imagem_nome
+        FROM usuarios u
+        LEFT JOIN imagens img ON u.id_imagem = img.id_imagem
+        WHERE u.id_fil = ?
+        LIMIT 1
+    ");
+    $stmt->bind_param("i", $id_filiado);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    if ($res->num_rows > 0) {
+        $row = $res->fetch_assoc();
+        $id_usuario = $row['id_usuario'];
+        $img_nome_db = $row['imagem_nome'];
+    }
+    $stmt->close();
+
+    $caminho_foto = $default_img;
+    if (!empty($img_nome_db) && file_exists(__DIR__ . '/../img/' . $img_nome_db)) {
+        $caminho_foto = '../img/' . $img_nome_db;
+    }
+
+    $graduacoes = $filiadoModel->buscarGraduacoesFiliado($id_filiado);
+
+    return [
+        'id_filiado' => $id_filiado,
+        'id_usuario' => $id_usuario,
+        'nome' => !empty($nome) ? $nome : 'Nome não disponível',
+        'caminho_foto' => $caminho_foto,
+        'cargo' => $cargo,
+        'graduacoes' => $graduacoes
+    ];
+}
+
+$membros = [
+    'jonas' => obterDadosMembro($conexao, $filiadoModel, 14, '../img/shihan.jpg', 'Presidente do Instituto e Fundador do Estilo Karatê Kenshydokan.'),
+    'weslley' => obterDadosMembro($conexao, $filiadoModel, 23, '../img/sensei_weslley.jpg'),
+    'elyakin' => obterDadosMembro($conexao, $filiadoModel, 22, '../img/sensei_elyakin.jpg'),
+    'rafael' => obterDadosMembro($conexao, $filiadoModel, 25, '../img/sensei_rafael.jpg'),
+    'roset' => obterDadosMembro($conexao, $filiadoModel, 33, '../img/sensei_rose.jpg'),
+    'nilson' => obterDadosMembro($conexao, $filiadoModel, 98, '../img/sensei_nilson.jpg')
+];
+
+$conexao->close();
+?>
 <!-- /Navigation -->
 <div class="container mt-5">
   <!-- Project One -->
   <div class="row mt-5">
     <div class="col-md-7">
-      <a href="ver_perfil.php?id_usuario=5">
-        <img class="img-fluid rounded mb-3 mb-md-0" src="../img/shihan.jpg" alt="Jonas Teixeira de Andrade Presidente da FKCMT">
-      </a>
+      <?php if ($membros['jonas']['id_usuario']): ?>
+        <a href="ver_perfil.php?id_usuario=<?php echo $membros['jonas']['id_usuario']; ?>">
+          <img class="img-fluid rounded mb-3 mb-md-0 shadow-sm border" src="<?php echo $membros['jonas']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['jonas']['nome']); ?> Presidente da FKCMT" style="width: 100%; max-height: 400px; object-fit: cover;">
+        </a>
+      <?php else: ?>
+        <img class="img-fluid rounded mb-3 mb-md-0 shadow-sm border" src="<?php echo $membros['jonas']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['jonas']['nome']); ?> Presidente da FKCMT" style="width: 100%; max-height: 400px; object-fit: cover;">
+      <?php endif; ?>
     </div>
     <div class="col-md-5">
-      <h3><a href="ver_perfil.php?id_usuario=5">Jonas Teixeira de Andrade</a></h3>
-      <p>Presidente do Instituto e Fundador do Estilo Karatê Kenshydokan.</p>
-      <h4>Suas Graduações: </h4>
-      <ul>
-        <li>10° Dan Karate Kenshydokan</li>
-        <li>7° Dan Ju jitsu</li>
-        <li>7° Dan em KickBoxing</li>
-        <li>6° Dan Judo Kodokan</li>
-        <li>5° Dan em Karate Kyokushin</li>
-        <li>15° Khan Muay Thai</li>
-        <li>Faixa Preta 5° Brasilian Jiu Jitsu</li>
+      <h3>
+        <?php if ($membros['jonas']['id_usuario']): ?>
+          <a href="ver_perfil.php?id_usuario=<?php echo $membros['jonas']['id_usuario']; ?>" class="text-danger font-weight-bold text-decoration-none"><?php echo htmlspecialchars($membros['jonas']['nome']); ?></a>
+        <?php else: ?>
+          <?php echo htmlspecialchars($membros['jonas']['nome']); ?>
+        <?php endif; ?>
+      </h3>
+      <p class="text-muted font-weight-bold"><?php echo htmlspecialchars($membros['jonas']['cargo']); ?></p>
+      <h4 class="font-weight-bold mt-4"><i class="fa-solid fa-award text-danger mr-2"></i>Suas Graduações: </h4>
+      <ul class="list-unstyled">
+        <?php if (!empty($membros['jonas']['graduacoes'])): ?>
+          <?php foreach ($membros['jonas']['graduacoes'] as $g): ?>
+            <li class="mb-2"><i class="fa-solid fa-check text-danger mr-2"></i> <?php echo htmlspecialchars($g['graduacao_nome']) . ' em ' . htmlspecialchars($g['arte_nome']); ?></li>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <li class="text-muted"><i class="fa-solid fa-xmark text-secondary mr-2"></i> Sem registro de graduação</li>
+        <?php endif; ?>
       </ul>
     </div>
   </div>
 
   <br>
 
-
-  <div class="container-fluid">
-    <h1 class="my-4">Seus Alunos Graduados
-      <small>Faixas Pretas</small>
+  <div class="container-fluid px-0">
+    <h1 class="my-4 font-weight-bold">Seus Alunos Graduados
+      <small class="text-secondary font-weight-light" style="font-size: 1.5rem;">Faixas Pretas</small>
     </h1>
 
     <div class="row">
+      <!-- Weslley -->
       <div class="col-lg-4 col-sm-6 mb-4">
-        <div class="card h-100">
-          <a href="ver_perfil.php?id_usuario=1"><img class="card-img-top" src="../img/sensei_weslley.jpg" alt="Weslley Henrique Vieira Ferraz Faixa Preta 3° Dan do Karate Kenshydokan, Faixa preta 2° Dan em Judo Kodokan e Faixa preta de Jiu Jitsu Brasileiro"></a>
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="ver_perfil.php?id_usuario=1">Weslley Henrique Vieira Ferraz</a>
+        <div class="card h-100 border-0 shadow-sm rounded-lg overflow-hidden">
+          <?php if ($membros['weslley']['id_usuario']): ?>
+            <a href="ver_perfil.php?id_usuario=<?php echo $membros['weslley']['id_usuario']; ?>">
+              <img class="card-img-top" src="<?php echo $membros['weslley']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['weslley']['nome']); ?>" style="height: 280px; object-fit: cover;">
+            </a>
+          <?php else: ?>
+            <img class="card-img-top" src="<?php echo $membros['weslley']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['weslley']['nome']); ?>" style="height: 280px; object-fit: cover;">
+          <?php endif; ?>
+          <div class="card-body p-4">
+            <h4 class="card-title font-weight-bold">
+              <?php if ($membros['weslley']['id_usuario']): ?>
+                <a href="ver_perfil.php?id_usuario=<?php echo $membros['weslley']['id_usuario']; ?>" class="text-danger text-decoration-none"><?php echo htmlspecialchars($membros['weslley']['nome']); ?></a>
+              <?php else: ?>
+                <?php echo htmlspecialchars($membros['weslley']['nome']); ?>
+              <?php endif; ?>
             </h4>
-            <h5>Suas Graduações: </h5>
-            <ul>
-              <li>Faixa Preta 3° Dan do Karate Kenshydokan.</li>
-              <li>Faixa preta 1° Dan em Judo Kodokan.</li>
-              <li>1° Dan Karatê Kyokushin</li>
-              <li>Faixa preta de Jiu Jitsu Brasileiro.</li>
-              <li>Prajied Preto 12° Khan Muay Thai</li>
-              <li>Faixa Roxa Ju Jitsu</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-sm-6 mb-4">
-        <div class="card h-100">
-          <a href=""><img class="card-img-top" src="../img/sensei_elyakin.jpg" alt="Patrick jordhan dos Santos Faixa Preta 1° Dan do Karate Kenshydokan"></a>
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="">Elyakin Vinicius C de M Metello</a>
-            </h4>
-            <h5>Suas Graduações: </h5>
-            <ul>
-              <li>Faixa Preta 2° Dan do Karate Kenshydokan.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-sm-6 mb-4">
-        <div class="card h-100">
-          <a href=""><img class="card-img-top" src="../img/sensei_rafael.jpg" alt="Rafael Carlos de Almeida Faria Faixa Preta 1° Dan do Karate Kenshydokan"></a>
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="">Rafael Carlos de Almeida Faria</a>
-            </h4>
-            <h5>Suas Graduações: </h5>
-            <ul>
-              <li>Faixa Preta 1° Dan do Karate Kenshydokan.</li>
+            <h5 class="font-weight-bold mt-3 text-secondary" style="font-size: 0.95rem;">GRADUAÇÕES:</h5>
+            <ul class="list-unstyled small mt-2">
+              <?php if (!empty($membros['weslley']['graduacoes'])): ?>
+                <?php foreach ($membros['weslley']['graduacoes'] as $g): ?>
+                  <li class="mb-2"><i class="fa-solid fa-check text-danger mr-2"></i> <?php echo htmlspecialchars($g['graduacao_nome']) . ' em ' . htmlspecialchars($g['arte_nome']); ?></li>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <li class="text-muted"><i class="fa-solid fa-xmark text-secondary mr-2"></i> Sem registro de graduação</li>
+              <?php endif; ?>
             </ul>
           </div>
         </div>
       </div>
 
+      <!-- Elyakin -->
+      <div class="col-lg-4 col-sm-6 mb-4">
+        <div class="card h-100 border-0 shadow-sm rounded-lg overflow-hidden">
+          <?php if ($membros['elyakin']['id_usuario']): ?>
+            <a href="ver_perfil.php?id_usuario=<?php echo $membros['elyakin']['id_usuario']; ?>">
+              <img class="card-img-top" src="<?php echo $membros['elyakin']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['elyakin']['nome']); ?>" style="height: 280px; object-fit: cover;">
+            </a>
+          <?php else: ?>
+            <img class="card-img-top" src="<?php echo $membros['elyakin']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['elyakin']['nome']); ?>" style="height: 280px; object-fit: cover;">
+          <?php endif; ?>
+          <div class="card-body p-4">
+            <h4 class="card-title font-weight-bold">
+              <?php if ($membros['elyakin']['id_usuario']): ?>
+                <a href="ver_perfil.php?id_usuario=<?php echo $membros['elyakin']['id_usuario']; ?>" class="text-danger text-decoration-none"><?php echo htmlspecialchars($membros['elyakin']['nome']); ?></a>
+              <?php else: ?>
+                <?php echo htmlspecialchars($membros['elyakin']['nome']); ?>
+              <?php endif; ?>
+            </h4>
+            <h5 class="font-weight-bold mt-3 text-secondary" style="font-size: 0.95rem;">GRADUAÇÕES:</h5>
+            <ul class="list-unstyled small mt-2">
+              <?php if (!empty($membros['elyakin']['graduacoes'])): ?>
+                <?php foreach ($membros['elyakin']['graduacoes'] as $g): ?>
+                  <li class="mb-2"><i class="fa-solid fa-check text-danger mr-2"></i> <?php echo htmlspecialchars($g['graduacao_nome']) . ' em ' . htmlspecialchars($g['arte_nome']); ?></li>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <li class="text-muted"><i class="fa-solid fa-xmark text-secondary mr-2"></i> Sem registro de graduação</li>
+              <?php endif; ?>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rafael -->
+      <div class="col-lg-4 col-sm-6 mb-4">
+        <div class="card h-100 border-0 shadow-sm rounded-lg overflow-hidden">
+          <?php if ($membros['rafael']['id_usuario']): ?>
+            <a href="ver_perfil.php?id_usuario=<?php echo $membros['rafael']['id_usuario']; ?>">
+              <img class="card-img-top" src="<?php echo $membros['rafael']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['rafael']['nome']); ?>" style="height: 280px; object-fit: cover;">
+            </a>
+          <?php else: ?>
+            <img class="card-img-top" src="<?php echo $membros['rafael']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['rafael']['nome']); ?>" style="height: 280px; object-fit: cover;">
+          <?php endif; ?>
+          <div class="card-body p-4">
+            <h4 class="card-title font-weight-bold">
+              <?php if ($membros['rafael']['id_usuario']): ?>
+                <a href="ver_perfil.php?id_usuario=<?php echo $membros['rafael']['id_usuario']; ?>" class="text-danger text-decoration-none"><?php echo htmlspecialchars($membros['rafael']['nome']); ?></a>
+              <?php else: ?>
+                <?php echo htmlspecialchars($membros['rafael']['nome']); ?>
+              <?php endif; ?>
+            </h4>
+            <h5 class="font-weight-bold mt-3 text-secondary" style="font-size: 0.95rem;">GRADUAÇÕES:</h5>
+            <ul class="list-unstyled small mt-2">
+              <?php if (!empty($membros['rafael']['graduacoes'])): ?>
+                <?php foreach ($membros['rafael']['graduacoes'] as $g): ?>
+                  <li class="mb-2"><i class="fa-solid fa-check text-danger mr-2"></i> <?php echo htmlspecialchars($g['graduacao_nome']) . ' em ' . htmlspecialchars($g['arte_nome']); ?></li>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <li class="text-muted"><i class="fa-solid fa-xmark text-secondary mr-2"></i> Sem registro de graduação</li>
+              <?php endif; ?>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
+
     <div class="row">
+      <!-- Roset -->
       <div class="col-lg-4 col-sm-6 mb-4">
-        <div class="card h-100">
-          <a href=""><img class="card-img-top" src="../img/sensei_rose.jpg" alt="Roset Almeida Lobo Faixa Preta 1° Dan do Karate Kenshydokan"></a>
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="">Roset Almeida Lobo</a>
+        <div class="card h-100 border-0 shadow-sm rounded-lg overflow-hidden">
+          <?php if ($membros['roset']['id_usuario']): ?>
+            <a href="ver_perfil.php?id_usuario=<?php echo $membros['roset']['id_usuario']; ?>">
+              <img class="card-img-top" src="<?php echo $membros['roset']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['roset']['nome']); ?>" style="height: 280px; object-fit: cover;">
+            </a>
+          <?php else: ?>
+            <img class="card-img-top" src="<?php echo $membros['roset']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['roset']['nome']); ?>" style="height: 280px; object-fit: cover;">
+          <?php endif; ?>
+          <div class="card-body p-4">
+            <h4 class="card-title font-weight-bold">
+              <?php if ($membros['roset']['id_usuario']): ?>
+                <a href="ver_perfil.php?id_usuario=<?php echo $membros['roset']['id_usuario']; ?>" class="text-danger text-decoration-none"><?php echo htmlspecialchars($membros['roset']['nome']); ?></a>
+              <?php else: ?>
+                <?php echo htmlspecialchars($membros['roset']['nome']); ?>
+              <?php endif; ?>
             </h4>
-            <h5>Suas Graduações: </h5>
-            <ul>
-              <li>Faixa Preta 1° Dan do Karate Kenshydokan.</li>
+            <h5 class="font-weight-bold mt-3 text-secondary" style="font-size: 0.95rem;">GRADUAÇÕES:</h5>
+            <ul class="list-unstyled small mt-2">
+              <?php if (!empty($membros['roset']['graduacoes'])): ?>
+                <?php foreach ($membros['roset']['graduacoes'] as $g): ?>
+                  <li class="mb-2"><i class="fa-solid fa-check text-danger mr-2"></i> <?php echo htmlspecialchars($g['graduacao_nome']) . ' em ' . htmlspecialchars($g['arte_nome']); ?></li>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <li class="text-muted"><i class="fa-solid fa-xmark text-secondary mr-2"></i> Sem registro de graduação</li>
+              <?php endif; ?>
             </ul>
           </div>
         </div>
       </div>
 
+      <!-- Nilson -->
       <div class="col-lg-4 col-sm-6 mb-4">
-        <div class="card h-100">
-          <a href=""><img class="card-img-top" src="../img/sensei_nilson.jpg" alt="Nilson Egues Faixa Preta 1° Dan do Karate Kenshydokan"></a>
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="">Nilson Egues </a>
+        <div class="card h-100 border-0 shadow-sm rounded-lg overflow-hidden">
+          <?php if ($membros['nilson']['id_usuario']): ?>
+            <a href="ver_perfil.php?id_usuario=<?php echo $membros['nilson']['id_usuario']; ?>">
+              <img class="card-img-top" src="<?php echo $membros['nilson']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['nilson']['nome']); ?>" style="height: 280px; object-fit: cover;">
+            </a>
+          <?php else: ?>
+            <img class="card-img-top" src="<?php echo $membros['nilson']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['nilson']['nome']); ?>" style="height: 280px; object-fit: cover;">
+          <?php endif; ?>
+          <div class="card-body p-4">
+            <h4 class="card-title font-weight-bold">
+              <?php if ($membros['nilson']['id_usuario']): ?>
+                <a href="ver_perfil.php?id_usuario=<?php echo $membros['nilson']['id_usuario']; ?>" class="text-danger text-decoration-none"><?php echo htmlspecialchars($membros['nilson']['nome']); ?></a>
+              <?php else: ?>
+                <?php echo htmlspecialchars($membros['nilson']['nome']); ?>
+              <?php endif; ?>
             </h4>
-            <h5>Suas Graduações: </h5>
-            <ul>
-              <li>Faixa Preta 1° Dan do Karate Kenshydokan.</li>
-              <li>Prajied Preto 12° Khan Muay Thai</li>
+            <h5 class="font-weight-bold mt-3 text-secondary" style="font-size: 0.95rem;">GRADUAÇÕES:</h5>
+            <ul class="list-unstyled small mt-2">
+              <?php if (!empty($membros['nilson']['graduacoes'])): ?>
+                <?php foreach ($membros['nilson']['graduacoes'] as $g): ?>
+                  <li class="mb-2"><i class="fa-solid fa-check text-danger mr-2"></i> <?php echo htmlspecialchars($g['graduacao_nome']) . ' em ' . htmlspecialchars($g['arte_nome']); ?></li>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <li class="text-muted"><i class="fa-solid fa-xmark text-secondary mr-2"></i> Sem registro de graduação</li>
+              <?php endif; ?>
             </ul>
           </div>
         </div>
       </div>
+    </div>
     </div>
     <hr>
   </div>

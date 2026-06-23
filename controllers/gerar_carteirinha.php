@@ -35,8 +35,13 @@ if ($filiado->getConfirmacao() !== 'sim') {
     die("Você não tem uma filiação confirmada para gerar a carteirinha.");
 }
 
-$graduacaoModel = new Graduacao();
-$graduacao = $graduacaoModel->buscarGraduacaoPorId($filiado->getIdGraduacao());
+// Busca as graduações do filiado
+$filiadoGraduacoes = $filiadoModel->buscarGraduacoesFiliado($id_filiado);
+$graduacoes_list = [];
+foreach ($filiadoGraduacoes as $fg) {
+    $arte = str_replace(' Kenshydokan', '', $fg['arte_nome']);
+    $graduacoes_list[] = $arte . ": " . $fg['graduacao_nome'];
+}
 
 // --- Busca a imagem do usuário (lógica similar a _perfil_auth.php) ---
 $conn = new Conexao();
@@ -124,26 +129,70 @@ $detalhes = [
     'Dojo' => $filiado->getDojo(),
     'Registro' => str_pad($filiado->getCodigo(), 5, '0', STR_PAD_LEFT),
     'Nascimento' => date('d/m/Y', strtotime($filiado->getDataNascimento())),
-    'Graduação' => $graduacao->getGraduacao(),
+    'Graduação' => !empty($graduacoes_list) ? $graduacoes_list : ['Sem graduação'],
     'Validade' => '31/12/' . date('Y')
 ];
 
-$y_detalhe = 20.2;
+// Calcula o número total de linhas físicas para ajustar o espaçamento
+$num_graduacoes = !empty($graduacoes_list) ? count($graduacoes_list) : 1;
+$total_linhas = 4 + $num_graduacoes;
+
+if ($total_linhas <= 5) {
+    $spacing = 2.8;
+} elseif ($total_linhas == 6) {
+    $spacing = 2.4;
+} else {
+    $spacing = 2.1;
+}
+
+$y_detalhe = 19.5;
 foreach ($detalhes as $label => $value) {
     $pdf->SetXY(28, $y_detalhe);
     
-    // Label (Cinza, Negrito)
-    $pdf->SetFont('Arial', 'B', 5.5);
-    $pdf->SetTextColor(110, 110, 110);
-    $pdf->Cell(15, 3, mb_convert_encoding($label . ':', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
+    if ($label === 'Graduação' && is_array($value)) {
+        // Label (Cinza, Negrito)
+        $pdf->SetFont('Arial', 'B', 5.5);
+        $pdf->SetTextColor(110, 110, 110);
+        $pdf->Cell(15, 3, mb_convert_encoding($label . ':', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
+        
+        $first = true;
+        foreach ($value as $grad_item) {
+            if (!$first) {
+                $pdf->SetXY(43, $y_detalhe);
+            }
+            
+            // Valor (Escuro, Normal)
+            if (strlen($grad_item) > 28) {
+                $pdf->SetFont('Arial', '', 4.2);
+            } elseif (strlen($grad_item) > 20) {
+                $pdf->SetFont('Arial', '', 4.8);
+            } else {
+                $pdf->SetFont('Arial', '', 5.5);
+            }
+            $pdf->SetTextColor(26, 26, 26);
+            $pdf->Cell(38, 3, mb_convert_encoding($grad_item, 'ISO-8859-1', 'UTF-8'), 0, 1, 'L');
+            
+            $y_detalhe += $spacing;
+            $first = false;
+        }
+        $y_detalhe -= $spacing; // Desfaz o incremento extra do último item
+    } else {
+        // Label (Cinza, Negrito)
+        $pdf->SetFont('Arial', 'B', 5.5);
+        $pdf->SetTextColor(110, 110, 110);
+        $pdf->Cell(15, 3, mb_convert_encoding($label . ':', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
+        
+        // Valor (Escuro, Normal)
+        $pdf->SetFont('Arial', '', 5.5);
+        $pdf->SetTextColor(26, 26, 26);
+        $pdf->Cell(38, 3, mb_convert_encoding($value, 'ISO-8859-1', 'UTF-8'), 0, 1, 'L');
+    }
     
-    // Valor (Escuro, Normal)
-    $pdf->SetFont('Arial', '', 5.5);
-    $pdf->SetTextColor(26, 26, 26);
-    $pdf->Cell(38, 3, mb_convert_encoding($value, 'ISO-8859-1', 'UTF-8'), 0, 1, 'L');
-    
-    $y_detalhe += 2.8;
+    $y_detalhe += $spacing;
 }
+
+// Calcula dinamicamente a posição Y da assinatura para ficar abaixo dos detalhes e evitar sobreposição
+$y_assinatura = max(33.0, $y_detalhe - $spacing + 3.5);
 
 // 5. Assinatura do Presidente
 // Desenha a imagem da assinatura

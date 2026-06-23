@@ -152,18 +152,27 @@ $pdf->Ln(15);
 
 // Space for signatures
 $pdf->SetFont('Arial', '', 10);
-$pdf->Cell(120, 5, "___________________________________", 0, 0, 'C');
+$y_linha = $pdf->GetY();
+$pdf->Cell(110, 5, "___________________________________", 0, 0, 'C');
 $pdf->Cell(57, 5, '', 0, 0, 'C');
-$pdf->Cell(120, 5, "___________________________________", 0, 1, 'C');
+$pdf->Cell(110, 5, "___________________________________", 0, 1, 'C');
 
-$pdf->Cell(120, 5, mb_convert_encoding("Shihan Jonas Teixeira de Andrade", 'ISO-8859-1', 'UTF-8'), 0, 0, 'C');
+// Draw signature images on top of the lines if they exist
+if (file_exists(__DIR__ . '/../arquivos/assinatura_presidente.png')) {
+    $pdf->Image(__DIR__ . '/../arquivos/assinatura_presidente.png', 42.5, $y_linha - 8, 45, 15);
+}
+if (file_exists(__DIR__ . '/../arquivos/assinatura_diretor.png')) {
+    $pdf->Image(__DIR__ . '/../arquivos/assinatura_diretor.png', 209.5, $y_linha - 8, 45, 15);
+}
+
+$pdf->Cell(110, 5, mb_convert_encoding("Shihan Jonas Teixeira de Andrade", 'ISO-8859-1', 'UTF-8'), 0, 0, 'C');
 $pdf->Cell(57, 5, '', 0, 0, 'C');
-$pdf->Cell(120, 5, mb_convert_encoding("Diretoria Técnica WKKA", 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
+$pdf->Cell(110, 5, mb_convert_encoding("Diretoria Técnica WKKA", 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
 
 $pdf->SetFont('Arial', 'I', 8);
-$pdf->Cell(120, 5, mb_convert_encoding("Presidente do Instituto", 'ISO-8859-1', 'UTF-8'), 0, 0, 'C');
+$pdf->Cell(110, 5, mb_convert_encoding("Presidente do Instituto", 'ISO-8859-1', 'UTF-8'), 0, 0, 'C');
 $pdf->Cell(57, 5, '', 0, 0, 'C');
-$pdf->Cell(120, 5, mb_convert_encoding("Homologação Kenshydokan", 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
+$pdf->Cell(110, 5, mb_convert_encoding("Homologação Kenshydokan", 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
 
 // Output PDF inline
 header('Content-Type: application/pdf');

@@ -5,7 +5,7 @@ class FiliadoModel
 {
     private $id_filiado;
     private $codigo;
-    private $id_graduacao;
+    private $id_graduacao; // Mantido para compatibilidade em memória
     private $nome;
     private $dojo;
     private $telefone;
@@ -75,7 +75,36 @@ class FiliadoModel
 
     public function getIdGraduacao()
     {
-        return $this->id_graduacao;
+        // Se já temos a propriedade instanciada em memória, retorna ela
+        if ($this->id_graduacao !== null && $this->id_graduacao != 0) {
+            return $this->id_graduacao;
+        }
+        
+        // Caso contrário, busca a graduação da arte padrão (ID 1 - Karatê Kenshydokan) ou qualquer outra
+        if ($this->id_filiado) {
+            $query = "
+                SELECT id_graduacao FROM filiados_graduacoes 
+                WHERE id_filiado = ? 
+                ORDER BY CASE WHEN id_arte = 1 THEN 0 ELSE 1 END ASC 
+                LIMIT 1
+            ";
+            try {
+                $stmt = $this->conexao->prepare($query);
+                $stmt->bind_param("i", $this->id_filiado);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $this->id_graduacao = intval($row['id_graduacao']);
+                    $stmt->close();
+                    return $this->id_graduacao;
+                }
+                $stmt->close();
+            } catch (Exception $e) {
+                error_log("Erro ao buscar id_graduacao em FiliadoModel: " . $e->getMessage());
+            }
+        }
+        return 0;
     }
 
     public function setIdGraduacao($id_graduacao)
@@ -198,10 +227,9 @@ class FiliadoModel
     public function criarFiliado(FiliadoModel $filiado): bool
     {
         try {
-            $inserir = $this->conexao->prepare("INSERT INTO filiados (codigo, id_graduacao, nome, dojo, telefone, dataNascimento, email, endereco, cidade, id_estado, confirmacao, dataCriacao, dataMudanca) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $inserir = $this->conexao->prepare("INSERT INTO filiados (codigo, nome, dojo, telefone, dataNascimento, email, endereco, cidade, id_estado, confirmacao, dataCriacao, dataMudanca) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             
             $codigo = $filiado->getCodigo();
-            $ig = $filiado->getIdGraduacao();
             $nome = $filiado->getNome();
             $dojo = $filiado->getDojo();
             $tel = $filiado->getTelefone();
@@ -214,13 +242,16 @@ class FiliadoModel
             $dc = $filiado->getDataCriacao();
             $dm = $filiado->getDataMudanca();
 
-            $inserir->bind_param("iisssssssisss", $codigo, $ig, $nome, $dojo, $tel, $dn, $email, $end, $cid, $ie, $conf, $dc, $dm);
+            $inserir->bind_param("isssssssisss", $codigo, $nome, $dojo, $tel, $dn, $email, $end, $cid, $ie, $conf, $dc, $dm);
             $resultado = $inserir->execute();
             $inserir->close();
 
             if (!$resultado) {
                 throw new Exception("Erro ao criar o filiado.");
             }
+
+            // Define o ID gerado no próprio objeto
+            $filiado->setIdFiliado($this->conexao->insert_id);
 
             return true;
         } catch (Exception $e) {
@@ -232,10 +263,9 @@ class FiliadoModel
     public function editarFiliado($id_filiado, FiliadoModel $filiado): bool
     {
         try {
-            $editar = $this->conexao->prepare("UPDATE filiados SET codigo = ?, id_graduacao = ?, nome = ?, dojo = ?, telefone = ?, dataNascimento = ?, email = ?, endereco = ?, cidade = ?, id_estado = ?, confirmacao = ?, dataMudanca = ? WHERE id_filiado = ?");
+            $editar = $this->conexao->prepare("UPDATE filiados SET codigo = ?, nome = ?, dojo = ?, telefone = ?, dataNascimento = ?, email = ?, endereco = ?, cidade = ?, id_estado = ?, confirmacao = ?, dataMudanca = ? WHERE id_filiado = ?");
             
             $codigo = $filiado->getCodigo();
-            $ig = $filiado->getIdGraduacao();
             $nome = $filiado->getNome();
             $dojo = $filiado->getDojo();
             $tel = $filiado->getTelefone();
@@ -247,7 +277,7 @@ class FiliadoModel
             $conf = $filiado->getConfirmacao();
             $dm = $filiado->getDataMudanca();
 
-            $editar->bind_param("iisssssssissi", $codigo, $ig, $nome, $dojo, $tel, $dn, $email, $end, $cid, $ie, $conf, $dm, $id_filiado);
+            $editar->bind_param("isssssssissi", $codigo, $nome, $dojo, $tel, $dn, $email, $end, $cid, $ie, $conf, $dm, $id_filiado);
             $resultado = $editar->execute();
             $editar->close();
 
@@ -284,7 +314,7 @@ class FiliadoModel
     public function buscarFiliadoPorId($id_filiado)
     {
         try {
-            $busca = $this->conexao->prepare("SELECT codigo, id_filiado, id_graduacao, nome, dojo, telefone, dataNascimento, email, endereco, cidade, id_estado, confirmacao, dataMudanca FROM filiados WHERE id_filiado = ?");
+            $busca = $this->conexao->prepare("SELECT codigo, id_filiado, nome, dojo, telefone, dataNascimento, email, endereco, cidade, id_estado, confirmacao, dataMudanca FROM filiados WHERE id_filiado = ?");
             $busca->bind_param("i", $id_filiado);
             $busca->execute();
             $result = $busca->get_result();
@@ -296,10 +326,27 @@ class FiliadoModel
             $dados = $result->fetch_assoc();
             $busca->close();
 
+            // Buscar a graduação padrão para compatibilidade em memória
+            $id_graduacao = 0;
+            $gradQuery = $this->conexao->prepare("
+                SELECT id_graduacao FROM filiados_graduacoes 
+                WHERE id_filiado = ? 
+                ORDER BY CASE WHEN id_arte = 1 THEN 0 ELSE 1 END ASC 
+                LIMIT 1
+            ");
+            $gradQuery->bind_param("i", $id_filiado);
+            $gradQuery->execute();
+            $gradResult = $gradQuery->get_result();
+            if ($gradResult->num_rows > 0) {
+                $gradRow = $gradResult->fetch_assoc();
+                $id_graduacao = intval($gradRow['id_graduacao']);
+            }
+            $gradQuery->close();
+
             return new FiliadoModel(
                 $dados['id_filiado'],
                 $dados['codigo'],
-                $dados['id_graduacao'],
+                $id_graduacao,
                 $dados['nome'],
                 $dados['dojo'],
                 $dados['telefone'],
@@ -326,15 +373,118 @@ class FiliadoModel
 
     public function listarFiliadosAtivos()
     {
-        $query = "SELECT * FROM filiados WHERE confirmacao = 'sim' ORDER BY id_filiado ASC";
+        $query = "
+            SELECT f.*, 
+                   COALESCE(
+                       (SELECT id_graduacao FROM filiados_graduacoes WHERE id_filiado = f.id_filiado AND id_arte = 1 LIMIT 1), 
+                       (SELECT id_graduacao FROM filiados_graduacoes WHERE id_filiado = f.id_filiado LIMIT 1),
+                       0
+                   ) AS id_graduacao
+            FROM filiados f 
+            WHERE f.confirmacao = 'sim' 
+            ORDER BY f.id_filiado ASC
+        ";
         $resultado = $this->conexao->query($query);
         return $resultado->fetch_all(MYSQLI_ASSOC);
     }
 
     public function listarTodosFiliadosCompleto()
     {
-        $query = "SELECT * FROM filiados ORDER BY id_filiado ASC";
+        $query = "
+            SELECT f.*, 
+                   COALESCE(
+                       (SELECT id_graduacao FROM filiados_graduacoes WHERE id_filiado = f.id_filiado AND id_arte = 1 LIMIT 1), 
+                       (SELECT id_graduacao FROM filiados_graduacoes WHERE id_filiado = f.id_filiado LIMIT 1),
+                       0
+                   ) AS id_graduacao
+            FROM filiados f 
+            ORDER BY f.id_filiado ASC
+        ";
         $resultado = $this->conexao->query($query);
         return $resultado->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Novos Métodos para Múltiplas Graduações
+
+    public function salvarGraduacoes($id_filiado, array $graduacoes): bool
+    {
+        try {
+            // 1. Remover graduacoes existentes para este filiado
+            $deletar = $this->conexao->prepare("DELETE FROM filiados_graduacoes WHERE id_filiado = ?");
+            $deletar->bind_param("i", $id_filiado);
+            $deletar->execute();
+            $deletar->close();
+
+            // 2. Inserir as novas graduacoes
+            if (!empty($graduacoes)) {
+                $inserir = $this->conexao->prepare("
+                    INSERT INTO filiados_graduacoes (id_filiado, id_arte, id_graduacao) 
+                    VALUES (?, ?, ?)
+                ");
+                
+                foreach ($graduacoes as $g) {
+                    $id_arte = intval($g['id_arte']);
+                    $id_graduacao = intval($g['id_graduacao']);
+                    
+                    if ($id_arte > 0 && $id_graduacao > 0) {
+                        $inserir->bind_param("iii", $id_filiado, $id_arte, $id_graduacao);
+                        $inserir->execute();
+                    }
+                }
+                $inserir->close();
+            }
+            return true;
+        } catch (Exception $e) {
+            error_log("Erro ao salvar graduações do filiado: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function buscarGraduacoesFiliado($id_filiado): array
+    {
+        $dados = [];
+        $query = "
+            SELECT fg.id_arte, fg.id_graduacao, am.nome AS arte_nome, g.graduacao AS graduacao_nome
+            FROM filiados_graduacoes fg
+            JOIN artes_marciais am ON fg.id_arte = am.id_arte
+            JOIN graduacoes g ON fg.id_graduacao = g.id_graduacao
+            WHERE fg.id_filiado = ?
+            ORDER BY am.nome ASC
+        ";
+        try {
+            $stmt = $this->conexao->prepare($query);
+            $stmt->bind_param("i", $id_filiado);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $dados = $result->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+        } catch (Exception $e) {
+            error_log("Erro ao buscar graduações do filiado: " . $e->getMessage());
+        }
+        return $dados;
+    }
+
+    public function listarFiliadosPorArte($id_arte): array
+    {
+        $query = "
+            SELECT f.id_filiado, f.nome, f.dojo, g.graduacao AS graduacao_nome
+            FROM filiados f
+            INNER JOIN filiados_graduacoes fg ON f.id_filiado = fg.id_filiado
+            INNER JOIN graduacoes g ON fg.id_graduacao = g.id_graduacao
+            WHERE fg.id_arte = ? AND f.confirmacao = 'sim'
+            ORDER BY f.nome ASC
+        ";
+        try {
+            $stmt = $this->conexao->prepare($query);
+            $stmt->bind_param("i", $id_arte);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $dados = $result->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+            return $dados;
+        } catch (Exception $e) {
+            error_log("Erro ao listar filiados por arte: " . $e->getMessage());
+            return [];
+        }
     }
 }

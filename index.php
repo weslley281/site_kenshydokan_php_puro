@@ -39,5 +39,9 @@ echo "<br>";
 $migration->criarTabelaDojoFinanceiro();
 echo "<br>";
 $migration->criarTabelaCertificadosManuais();
+echo "<br>";
+$migration->criarTabelaArtesMarciais();
+echo "<br>";
+$migration->criarTabelaFiliadosGraduacoes();
 
 echo "<script language='javascript'>window.location='views/inicio.php'; </script>";

@@ -82,7 +82,9 @@ if (isset($_POST['accept_cookie'])) {
 <script src="../../libs/select2/js/i18n/pt-BR.js"></script>
 <script src="../../../libs/select2/js/i18n/pt-BR.js"></script>
 
-<script src="/libs/DataTables/datatables.js"></script>
+<script src="../libs/DataTables/datatables.js"></script>
+<script src="../../libs/DataTables/datatables.js"></script>
+<script src="../../../libs/DataTables/datatables.js"></script>
 
 <script src="https://vjs.zencdn.net/7.11.4/video.js"></script>
 <script>
@@ -128,23 +130,85 @@ if (isset($_POST['accept_cookie'])) {
 </script>
 
 <script type="text/javascript">
-    // Função para mostrar a pré-visualização da imagem
-    function showImagePreview(input) {
+    // Função para comprimir e mostrar a pré-visualização da imagem
+    function processAndPreviewImage(input) {
         if (input.files && input.files[0]) {
-            var reader = new FileReader();
+            const file = input.files[0];
+            
+            // Apenas processa se for imagem
+            if (!file.type.startsWith('image/')) {
+                return;
+            }
 
+            const reader = new FileReader();
             reader.onload = function(e) {
-                $('#imagePreview').attr('src', e.target.result);
-                $('#imagePreview').show();
-            };
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
 
-            reader.readAsDataURL(input.files[0]);
+                    // Limita as dimensões máximas
+                    // Se for foto de galeria (name="foto"), permitimos uma resolução maior (ex: 1200px)
+                    // Para perfil/logo (name="imagem"), 600px é suficiente
+                    const isGallery = input.name === 'foto';
+                    const MAX_WIDTH = isGallery ? 1200 : 600;
+                    const MAX_HEIGHT = isGallery ? 1200 : 600;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    // Converte para JPEG com qualidade 0.75 (excelente relação qualidade/tamanho)
+                    canvas.toBlob(function(blob) {
+                        // Cria um novo arquivo a partir do blob comprimido
+                        const extensao = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+                        const novoNome = file.name.substring(0, file.name.lastIndexOf('.')) + '_min' + (extensao === '.webp' ? '.webp' : '.jpg');
+                        const novoFormato = extensao === '.webp' ? 'image/webp' : 'image/jpeg';
+                        
+                        const compressedFile = new File([blob], novoNome, {
+                            type: novoFormato,
+                            lastModified: Date.now()
+                        });
+
+                        // Substitui o arquivo no input usando DataTransfer para que o form envie a versão leve
+                        try {
+                            const dataTransfer = new DataTransfer();
+                            dataTransfer.items.add(compressedFile);
+                            input.files = dataTransfer.files;
+                        } catch (err) {
+                            console.error("Erro ao definir arquivos via DataTransfer:", err);
+                        }
+
+                        // Atualiza a pré-visualização na tela com o blob comprimido
+                        const blobURL = URL.createObjectURL(blob);
+                        $('#imagePreview').attr('src', blobURL);
+                        $('#imagePreview').show();
+                    }, file.type === 'image/webp' ? 'image/webp' : 'image/jpeg', 0.75);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
         }
     }
 
-    // Adicione um ouvinte de evento para o campo de entrada de arquivo
+    // Ouvinte de evento para o campo de entrada de arquivo
     $('#imagem').change(function() {
-        showImagePreview(this);
+        processAndPreviewImage(this);
     });
 </script>
 

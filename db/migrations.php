@@ -64,7 +64,6 @@ class Migration
 
         CREATE TABLE IF NOT EXISTS filiados (
         `id_filiado` INT AUTO_INCREMENT PRIMARY KEY,
-        `id_graduacao` INT,
         `nome` VARCHAR(255) NOT NULL,
         `dojo` VARCHAR(255) NOT NULL,
         `telefone` VARCHAR(255) NOT NULL,
@@ -417,6 +416,87 @@ class Migration
             //echo "Tabela 'certificados_manuais' criada com sucesso!";
         } else {
             echo "Erro ao criar tabela de certificados manuais: " . $this->conn->error;
+        }
+    }
+
+    public function criarTabelaArtesMarciais()
+    {
+        $sql = "
+        CREATE TABLE IF NOT EXISTS artes_marciais (
+            id_arte INT AUTO_INCREMENT PRIMARY KEY,
+            nome VARCHAR(100) NOT NULL,
+            dataCriacao DATE,
+            dataMudanca DATE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        ";
+
+        if ($this->conn->query($sql) === true) {
+            // Verificar se tabela está vazia para inserir registros padrão
+            $check = $this->conn->query("SELECT id_arte FROM artes_marciais LIMIT 1");
+            if ($check && $check->num_rows == 0) {
+                $insert = "
+                INSERT INTO artes_marciais (nome, dataCriacao) VALUES 
+                ('Karatê Kenshydokan', CURDATE()),
+                ('Judô Kodokan', CURDATE()),
+                ('Brazilian Jiu-Jitsu', CURDATE()),
+                ('Muay Thai', CURDATE()),
+                ('Kickboxing', CURDATE());
+                ";
+                $this->conn->query($insert);
+            }
+        } else {
+            echo "Erro ao criar tabela artes_marciais: " . $this->conn->error;
+        }
+    }
+
+    public function criarTabelaFiliadosGraduacoes()
+    {
+        // 1. Criar tabela associativa
+        $sql = "
+        CREATE TABLE IF NOT EXISTS filiados_graduacoes (
+            id_filiado INT NOT NULL,
+            id_arte INT NOT NULL,
+            id_graduacao INT NOT NULL,
+            PRIMARY KEY (id_filiado, id_arte),
+            FOREIGN KEY (id_filiado) REFERENCES filiados(id_filiado) ON DELETE CASCADE,
+            FOREIGN KEY (id_arte) REFERENCES artes_marciais(id_arte) ON DELETE RESTRICT,
+            FOREIGN KEY (id_graduacao) REFERENCES graduacoes(id_graduacao) ON UPDATE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        ";
+
+        if ($this->conn->query($sql) === true) {
+            // 2. Verificar se a coluna id_graduacao ainda existe na tabela filiados (indica que não migramos ainda)
+            $checkSql = "
+                SELECT COLUMN_NAME 
+                FROM INFORMATION_SCHEMA.COLUMNS 
+                WHERE TABLE_SCHEMA = DATABASE() 
+                  AND TABLE_NAME = 'filiados' 
+                  AND COLUMN_NAME = 'id_graduacao'
+            ";
+            $res = $this->conn->query($checkSql);
+            if ($res && $res->num_rows > 0) {
+                // A coluna existe, vamos migrar os dados!
+                // Primeiro, precisamos garantir que temos o id_arte do Karatê Kenshydokan
+                $arteRes = $this->conn->query("SELECT id_arte FROM artes_marciais WHERE nome = 'Karatê Kenshydokan' LIMIT 1");
+                if ($arteRes && $arteRes->num_rows > 0) {
+                    $arteRow = $arteRes->fetch_assoc();
+                    $id_arte = intval($arteRow['id_arte']);
+
+                    // Migrar dados: inserir na tabela associativa onde id_graduacao é válido e não é 0
+                    $migracaoSql = "
+                        INSERT IGNORE INTO filiados_graduacoes (id_filiado, id_arte, id_graduacao)
+                        SELECT id_filiado, {$id_arte}, id_graduacao 
+                        FROM filiados 
+                        WHERE id_graduacao IS NOT NULL AND id_graduacao != 0
+                    ";
+                    $this->conn->query($migracaoSql);
+                }
+
+                // Agora podemos remover com segurança a coluna
+                $this->conn->query("ALTER TABLE filiados DROP COLUMN id_graduacao");
+            }
+        } else {
+            echo "Erro ao criar tabela filiados_graduacoes: " . $this->conn->error;
         }
     }
 }

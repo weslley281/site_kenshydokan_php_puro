@@ -18,9 +18,15 @@ include __DIR__ . "/_perfil_auth.php";
 							<!-- card do perfil -->
 							<div class="col d-inline-flex mb-4">
 								<div class="card" style="width: 18rem;">
-									<img id="imagePreview" class="card-img-top" src="../<?php echo $imagem["caminho"] ?>" alt="<?php echo $usuario["nome"]; ?>">
+									<?php
+									$caminho_foto = "../../img/sem_foto.png";
+									if ($imagem && !empty($imagem["caminho"])) {
+										$caminho_foto = "../" . $imagem["caminho"];
+									}
+									?>
+									<img id="imagePreview" class="card-img-top" src="<?php echo $caminho_foto; ?>" alt="<?php echo htmlspecialchars($usuario["nome"]); ?>">
 									<div class="card-body">
-										<h5 class="card-title"><?php echo $usuario["nome"]; ?></h5>
+										<h5 class="card-title"><?php echo htmlspecialchars($usuario["nome"]); ?></h5>
 									</div>
 								</div>
 							</div>

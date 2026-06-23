@@ -65,6 +65,11 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
           <i class="fa-solid fa-certificate mr-1"></i> Certificados
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link rounded-pill font-weight-bold <?php echo ($pagina == 'artes') ? 'active bg-danger text-white' : 'text-secondary'; ?>" href="index.php?pagina=artes">
+          <i class="fa-solid fa-hand-fist mr-1"></i> Artes
+        </a>
+      </li>
     </ul>
 
     <!-- Tab Contents -->
@@ -99,11 +104,14 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
       <?php if ($pagina == "certificados_manuais") {
         include_once "certificados_manuais.php";
       } ?>
+      <?php if ($pagina == "artes") {
+        include_once "artes.php";
+      } ?>
     </div>
   </div>
 
 <?php
-  include __DIR__ . "/../rodape.php";
+  include __DIR__ . "/rodape.php";
 } else {
   echo "<script language='javascript'>window.location='login.php'; </script>";
 }

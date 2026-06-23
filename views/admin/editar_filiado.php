@@ -3,6 +3,7 @@ include_once "menu.php";
 include_once __DIR__ . "/../../models/filiadoModel.php";
 include_once __DIR__ . "/../../models/graduacaoModel.php";
 include_once __DIR__ . "/../../models/estadoModel.php";
+include_once __DIR__ . "/../../models/arteModel.php";
 
 if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
 
@@ -16,6 +17,16 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
 		include "rodape.php";
 		exit;
 	}
+
+    // Carregar dados de suporte
+    $graduacaoRepositorio = new Graduacao();
+    $graduacoes = $graduacaoRepositorio->listarGraduacoes();
+
+    $arteRepositorio = new ArteMarcial();
+    $artes_marciais = $arteRepositorio->listarArtes();
+
+    // Carregar graduações salvas do filiado
+    $graduacoes_salvas = $filiadoRepositorio->buscarGraduacoesFiliado($id_filiado);
 ?>
   <div class="container py-4">
     <div class="d-flex align-items-center justify-content-between mb-4">
@@ -31,7 +42,7 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
           <input type="hidden" name="tipo" value="editar">
           <input type="hidden" name="id_filiado" value="<?php echo $filiado->getIdFiliado(); ?>">
 
-          <h5 class="text-danger font-weight-bold mb-3"><i class="fa-solid fa-user-pen mr-2"></i>Informações Pessoais e Graduação</h5>
+          <h5 class="text-danger font-weight-bold mb-3"><i class="fa-solid fa-user-pen mr-2"></i>Informações Pessoais</h5>
 
           <div class="form-row">
             <div class="form-group col-md-6">
@@ -45,31 +56,31 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
           </div>
 
           <div class="form-row">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-4">
               <label for="codigo" class="text-secondary small font-weight-bold text-uppercase">Código</label>
               <input id="codigo" type="text" class="form-control form-control-lg bg-light border-0 shadow-sm" name="codigo" value="<?php echo htmlspecialchars($filiado->getCodigo()); ?>" required>
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-4">
               <label for="data_nascimento" class="text-secondary small font-weight-bold text-uppercase">Data de Nascimento</label>
               <input id="data_nascimento" type="date" class="form-control form-control-lg bg-light border-0 shadow-sm" name="data_nascimento" value="<?php echo htmlspecialchars($filiado->getDataNascimento()); ?>" required>
             </div>
-            <div class="form-group col-md-3">
-              <label for="id_graduacao" class="text-secondary small font-weight-bold text-uppercase">Graduação</label>
-              <select id="id_graduacao" class="form-control form-control-lg bg-light border-0 shadow-sm js-example-basic-single" name="id_graduacao">
-                <?php
-                $graduacaoRepositorio = new Graduacao();
-                $graduacoes = $graduacaoRepositorio->listarGraduacoes();
-                foreach ($graduacoes as $graduacao) {
-                  $selected = $graduacao['id_graduacao'] == $filiado->getIdGraduacao() ? 'selected' : '';
-                  echo '<option value="' . $graduacao["id_graduacao"] . '" ' . $selected . '>' . htmlspecialchars($graduacao["graduacao"]) . '</option>';
-                }
-                ?>
-              </select>
-            </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-4">
               <label for="dojo" class="text-secondary small font-weight-bold text-uppercase">Dojo</label>
               <input id="dojo" type="text" class="form-control form-control-lg bg-light border-0 shadow-sm" name="dojo" value="<?php echo htmlspecialchars($filiado->getDojo()); ?>" required>
             </div>
+          </div>
+
+          <!-- Seção de Graduações Dinâmicas -->
+          <h5 class="text-danger font-weight-bold mb-3 mt-4"><i class="fa-solid fa-medal mr-2"></i>Graduações em Artes Marciais</h5>
+          <div class="card bg-light border-0 p-4 mb-4 rounded-lg">
+              <div id="graduacoes-dinamicas-container" class="mb-3">
+                  <!-- Linhas dinâmicas inseridas via JavaScript -->
+              </div>
+              <div>
+                  <button type="button" id="btn-adicionar-graduacao" class="btn btn-sm btn-danger font-weight-bold rounded-pill shadow-sm px-4">
+                      <i class="fas fa-plus mr-1"></i> Adicionar Graduação
+                  </button>
+              </div>
           </div>
 
           <hr class="my-4">
@@ -126,6 +137,77 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
       </div>
     </div>
   </div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+      const container = document.getElementById("graduacoes-dinamicas-container");
+      const btnAdd = document.getElementById("btn-adicionar-graduacao");
+      let indiceRow = 0;
+
+      const listaArtes = <?php echo json_encode($artes_marciais); ?>;
+      const listaGraduacoes = <?php echo json_encode($graduacoes); ?>;
+
+      function criarLinhaGraduacao(idArte = "", idGraduacao = "") {
+          const row = document.createElement("div");
+          row.className = "row align-items-center mb-2 dynamic-graduacao-row";
+          row.id = `grad-row-${indiceRow}`;
+
+          // Options de Artes
+          let artesOptions = '<option value="">Selecione a Arte Marcial...</option>';
+          listaArtes.forEach(a => {
+              const selected = a.id_arte == idArte ? "selected" : "";
+              artesOptions += `<option value="${a.id_arte}" ${selected}>${a.nome}</option>`;
+          });
+
+          // Options de Graduações
+          let graduacoesOptions = '<option value="">Selecione a Graduação...</option>';
+          listaGraduacoes.forEach(g => {
+              const selected = g.id_graduacao == idGraduacao ? "selected" : "";
+              graduacoesOptions += `<option value="${g.id_graduacao}" ${selected}>${g.graduacao}</option>`;
+          });
+
+          row.innerHTML = `
+              <div class="col-md-6 mb-2 mb-md-0">
+                  <select name="graduacoes[${indiceRow}][id_arte]" class="form-control bg-white border-0 shadow-sm" required>
+                      ${artesOptions}
+                  </select>
+              </div>
+              <div class="col-md-5 mb-2 mb-md-0">
+                  <select name="graduacoes[${indiceRow}][id_graduacao]" class="form-control bg-white border-0 shadow-sm" required>
+                      ${graduacoesOptions}
+                  </select>
+              </div>
+              <div class="col-md-1 text-center">
+                  <button type="button" class="btn btn-sm btn-outline-danger border-0 rounded-circle btn-remover-row" data-row-id="grad-row-${indiceRow}">
+                      <i class="fa-solid fa-trash-can"></i>
+                  </button>
+              </div>
+          `;
+
+          container.appendChild(row);
+          
+          // Ativar remoção
+          row.querySelector(".btn-remover-row").addEventListener("click", function() {
+              const rowId = this.getAttribute("data-row-id");
+              document.getElementById(rowId).remove();
+          });
+
+          indiceRow++;
+      }
+
+      btnAdd.addEventListener("click", () => criarLinhaGraduacao());
+
+      // Popular com as graduações salvas do filiado
+      <?php if (!empty($graduacoes_salvas)): ?>
+          <?php foreach ($graduacoes_salvas as $gs): ?>
+              criarLinhaGraduacao("<?php echo $gs['id_arte']; ?>", "<?php echo $gs['id_graduacao']; ?>");
+          <?php endforeach; ?>
+      <?php else: ?>
+          // Linha inicial padrão em branco
+          criarLinhaGraduacao("1", "");
+      <?php endif; ?>
+  });
+  </script>
 
 <?php
   include "rodape.php";

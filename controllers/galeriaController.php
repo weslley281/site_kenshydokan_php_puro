@@ -43,18 +43,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $nome = $_POST["nome"];
             $dataUpload = date("Y-m-d");
 
-            $diretorioUpload = "../slides/";
-            $nomeFoto = uniqid() . $_FILES["foto"]["name"];
-            var_dump($nomeFoto);
-            $caminho = $diretorioUpload . $nomeFoto;
-            var_dump($caminho);
-            $extensaoFoto = strtolower(pathinfo($caminho, PATHINFO_EXTENSION));
-            var_dump($extensaoFoto);
-
-            if (!in_array($extensaoFoto, ["jpg", "jpeg", "gif", "png"])) {
-                exibirMensagemEredirecionar("Formato de imagem inválido", '../views/admin/editar_galeria.php?id=' . $id_galeria);
+            if (!isset($_FILES["foto"]) || $_FILES["foto"]["error"] !== UPLOAD_ERR_OK) {
+                $erroMsg = "Erro no envio da foto.";
+                if (isset($_FILES["foto"])) {
+                    switch ($_FILES["foto"]["error"]) {
+                        case UPLOAD_ERR_INI_SIZE:
+                        case UPLOAD_ERR_FORM_SIZE:
+                            $erroMsg = "Erro: A imagem enviada excede o limite de tamanho permitido.";
+                            break;
+                        case UPLOAD_ERR_NO_FILE:
+                            $erroMsg = "Erro: Selecione uma imagem antes de enviar.";
+                            break;
+                    }
+                }
+                exibirMensagemEredirecionar($erroMsg, '../views/admin/adicionar_foto.php?id=' . $id_galeria);
                 exit();
             }
+
+            $diretorioUpload = "../slides/";
+            $extensaoFoto = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
+
+            if (!in_array($extensaoFoto, ["jpg", "jpeg", "gif", "png", "webp"])) {
+                exibirMensagemEredirecionar("Formato de imagem inválido. Apenas JPG, JPEG, PNG, GIF e WEBP são permitidos.", '../views/admin/adicionar_foto.php?id=' . $id_galeria);
+                exit();
+            }
+
+            $nomeFoto = uniqid() . '.' . $extensaoFoto;
+            $caminho = $diretorioUpload . $nomeFoto;
 
             if (move_uploaded_file($_FILES["foto"]["tmp_name"], $caminho)) {
                 $fotoModel = new Foto(null, $id_galeria, $nome, $nomeFoto, $dataUpload);
@@ -62,18 +77,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 if ($fotoManager->adicionarFoto($fotoModel)) {
                     exibirMensagemEredirecionar(MSG_SUCESSO, '../views/admin/editar_galeria.php?id=' . $id_galeria);
                 } else {
-                    echo "Erro ao salvar no banco de dados.<br>";
-                    var_dump($fotoManager->adicionarFoto($fotoModel));
-                    var_dump($fotoModel);
-                    //exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/editar_galeria.php?id=' . $id_galeria);
+                    exibirMensagemEredirecionar("Erro ao salvar a foto no banco de dados.", '../views/admin/editar_galeria.php?id=' . $id_galeria);
                 }
             } else {
                 exibirMensagemEredirecionar(
-                    "A imagem excede o limite de tamanho permitido (2MB). Por favor, envie uma imagem menor.",
+                    "Erro ao salvar o arquivo no servidor. Tente novamente.",
                     '../views/admin/adicionar_foto.php?id=' . $id_galeria
                 );
                 exit();
-                //exibirMensagemEredirecionar(MSG_ERRO, '../views/admin/editar_galeria.php?id=' . $id_galeria);
             }
         } elseif ($_POST["tipo"] == "excluir_foto") {
             $id_foto = $_POST["id_foto"];

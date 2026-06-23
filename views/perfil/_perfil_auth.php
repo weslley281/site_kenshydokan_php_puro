@@ -25,6 +25,7 @@ $imagem = Imagem::procura_imagem($usuario["id_imagem"]);
 $estaFiliado = "Não filiado";
 $filiado = ['dojo' => 'A definir', 'confirmacao' => 'nao', 'id_graduacao' => 0];
 $graduacao = ['graduacao' => 'Sem registro'];
+$filiadoGraduacoes = [];
 
 if (!empty($usuario["id_fil"])) {
     $id_filiado = $usuario["id_fil"];
@@ -33,6 +34,7 @@ if (!empty($usuario["id_fil"])) {
     $filiado_data_obj = $filiadoModelRepo->buscarFiliadoPorId($id_filiado);
     
     if ($filiado_data_obj) {
+        $filiadoGraduacoes = $filiadoModelRepo->buscarGraduacoesFiliado($id_filiado);
         $filiado = [
             'id_filiado' => $filiado_data_obj->getIdFiliado(),
             'codigo' => $filiado_data_obj->getCodigo(),

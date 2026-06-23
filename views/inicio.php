@@ -1,4 +1,7 @@
-<?php include "menu.php"; ?>
+<?php 
+include "menu.php"; 
+include_once "../models/filiadoModel.php";
+?>
 
 <div class="container-fluid py-0 px-0 position-relative">
   <!-- Hero Section -->
@@ -142,54 +145,110 @@
     <div class="text-center mb-5">
       <h2 class="font-weight-bold">Equipe Diretiva</h2>
     </div>
-    <div class="row text-center">
-      <div class="col-lg-4 mb-5">
-        <div class="card h-100 border-0 shadow-sm pt-4 pb-2 px-3 align-items-center">
-          <a href="ver_perfil.php?id_usuario=5">
-            <img class="rounded-circle shadow mb-3 border border-danger" src="../img/Jonas.jpg" width="160" height="160" alt="Jonas Teixeira de Andrade" style="border-width: 4px !important; object-fit: cover;">
-          </a>
-          <h4 class="font-weight-bold mb-1">Jonas Teixeira de Andrade</h4>
-          <p class="text-danger font-weight-bold mb-3"><small>PRESIDENTE E FUNDADOR DA KENSHYDOKAN</small></p>
-          <ul class="list-unstyled text-muted small text-left ml-4">
-            <li><i class="fa-solid fa-check text-danger mr-2"></i> 10° Dan Karatê Kenshydokan</li>
-            <li><i class="fa-solid fa-check text-danger mr-2"></i> 7° Dan Ju Jitsu</li>
-            <li><i class="fa-solid fa-check text-danger mr-2"></i> 7° Dan em KickBoxing</li>
-            <li><i class="fa-solid fa-check text-danger mr-2"></i> 6° Dan Judo Kodokan</li>
-            <li><i class="fa-solid fa-check text-danger mr-2"></i> 5° Dan Karate Kyokushin</li>
-            <li><i class="fa-solid fa-check text-danger mr-2"></i> 15° Khan Muay Thai</li>
-            <li><i class="fa-solid fa-check text-danger mr-2"></i> Faixa Preta 5º Grau BJJ</li>
-          </ul>
-        </div>
-      </div>
+    <div class="row text-center justify-content-center">
+      <?php
+      $filiadoModel = new FiliadoModel();
+      $dbConn = new Conexao();
+      $conexao = $dbConn->conectar();
 
-      <div class="col-lg-4 mb-5">
-        <div class="card h-100 border-0 shadow pt-4 pb-2 px-3 align-items-center" style="transform: scale(1.05); z-index: 1;">
-          <a href="ver_perfil.php?id_usuario=1">
-            <img class="rounded-circle shadow mb-3 border border-danger" src="../img/sensei_weslley.jpg" width="180" height="180" alt="Weslley Henrique Vieira Ferraz" style="border-width: 4px !important; object-fit: cover;">
-          </a>
-          <h4 class="font-weight-bold mb-1">Weslley Henrique Vieira Ferraz</h4>
-          <p class="text-danger font-weight-bold mb-3"><small>DIRETOR TÉCNICO</small></p>
-          <ul class="list-unstyled text-muted small text-left ml-4">
-            <li><i class="fa-solid fa-check text-danger mr-2" alt="3° Dan Karatê Kenshydokan"></i> 3° Dan Karatê Kenshydokan</li>
-            <li><i class="fa-solid fa-check text-danger mr-2" alt="2° Dan Judo Kodokan"></i> 1° Dan Judo Kodokan</li>
-            <li><i class="fa-solid fa-check text-danger mr-2" alt="1° Dan Karatê Kyokushin"></i> 1° Dan Karatê Kyokushin</li>
-            <li><i class="fa-solid fa-check text-danger mr-2" alt="12° Khan Muay Thai"></i> 12° Khan Muay Thai</li>
-            <li><i class="fa-solid fa-check text-danger mr-2" alt="Faixa Preta BJJ"></i> Faixa Preta BJJ</li>
-            <li><i class="fa-solid fa-check text-danger mr-2" alt="Faixa Roxa Ju Jitsu"></i> Faixa Roxa Ju Jitsu</li>
-          </ul>
-        </div>
-      </div>
+      $diretores = [
+          [
+              'id_filiado' => 20,
+              'nome' => 'Everson Jones Batista Leite',
+              'cargo' => 'DIRETOR TÉCNICO',
+              'default_img' => '../img/sensei-everson.jpg',
+              'destaque' => false
+          ],
+          [
+              'id_filiado' => 14,
+              'nome' => 'Jonas Teixeira de Andrade',
+              'cargo' => 'PRESIDENTE E FUNDADOR DA KENSHYDOKAN',
+              'default_img' => '../img/Jonas.jpg',
+              'destaque' => true
+          ],
+          [
+              'id_filiado' => 23,
+              'nome' => 'Weslley Henrique Vieira Ferraz',
+              'cargo' => 'DIRETOR TÉCNICO',
+              'default_img' => '../img/sensei_weslley.jpg',
+              'destaque' => false
+          ],
+          [
+              'id_filiado' => 98,
+              'nome' => 'Nilson Egues',
+              'cargo' => 'DIRETOR DE ARBITRAGEM',
+              'default_img' => '../img/sensei_nilson.jpg',
+              'destaque' => false
+          ],
+          [
+              'id_filiado' => 22,
+              'nome' => 'Elyakin Vinicius C de M Metello',
+              'cargo' => 'DIRETOR DE SAÚDE E APOIO MÉDICO',
+              'default_img' => '../img/sensei_elyakin.jpg',
+              'destaque' => false
+          ]
+      ];
 
-      <div class="col-lg-4 mb-5">
-        <div class="card h-100 border-0 shadow-sm pt-4 pb-2 px-3 align-items-center">
-          <img class="rounded-circle shadow mb-3 border border-danger" src="../img/sensei_elyakin.jpg" width="160" height="160" alt="Elyakin Vinicius C de M Metello" style="border-width: 4px !important; object-fit: cover;">
-          <h4 class="font-weight-bold mb-1">Elyakin Vinicius C de M Metello</h4>
-          <p class="text-danger font-weight-bold mb-3"><small>DIRETOR DE ARBITRAGEM</small></p>
-          <ul class="list-unstyled text-muted small text-left ml-4">
-            <li><i class="fa-solid fa-check text-danger mr-2"></i> 2° Dan Karatê Kenshydokan</li>
-          </ul>
-        </div>
-      </div>
+      foreach ($diretores as $d) {
+          $id_filiado = $d['id_filiado'];
+          $nome = $d['nome'];
+          $cargo = $d['cargo'];
+          $default_img = $d['default_img'];
+          $destaque = $d['destaque'];
+
+          // Busca id_usuario e imagem do usuário vinculado
+          $id_usuario = null;
+          $img_nome_db = null;
+          $stmt = $conexao->prepare("
+              SELECT u.id_usuario, img.nome AS imagem_nome
+              FROM usuarios u
+              LEFT JOIN imagens img ON u.id_imagem = img.id_imagem
+              WHERE u.id_fil = ?
+              LIMIT 1
+          ");
+          $stmt->bind_param("i", $id_filiado);
+          $stmt->execute();
+          $res = $stmt->get_result();
+          if ($res->num_rows > 0) {
+              $row = $res->fetch_assoc();
+              $id_usuario = $row['id_usuario'];
+              $img_nome_db = $row['imagem_nome'];
+          }
+          $stmt->close();
+
+          $caminho_foto = $default_img;
+          if (!empty($img_nome_db) && file_exists(__DIR__ . '/../img/' . $img_nome_db)) {
+              $caminho_foto = '../img/' . $img_nome_db;
+          }
+
+          $graduacoes = $filiadoModel->buscarGraduacoesFiliado($id_filiado);
+          ?>
+          <div class="col-lg-4 col-md-6 mb-5 d-flex justify-content-center">
+            <div class="<?php echo $destaque ? 'card h-100 border-0 shadow pt-4 pb-2 px-3 align-items-center w-100' : 'card h-100 border-0 shadow-sm pt-4 pb-2 px-3 align-items-center w-100'; ?>" <?php echo $destaque ? 'style="transform: scale(1.05); z-index: 1;"' : ''; ?>>
+              <?php if ($id_usuario): ?>
+                <a href="ver_perfil.php?id_usuario=<?php echo $id_usuario; ?>">
+                  <img class="rounded-circle shadow mb-3 border border-danger" src="<?php echo $caminho_foto; ?>" width="<?php echo $destaque ? '180' : '160'; ?>" height="<?php echo $destaque ? '180' : '160'; ?>" alt="<?php echo htmlspecialchars($nome); ?>" style="border-width: 4px !important; object-fit: cover;">
+                </a>
+              <?php else: ?>
+                <img class="rounded-circle shadow mb-3 border border-danger" src="<?php echo $caminho_foto; ?>" width="160" height="160" alt="<?php echo htmlspecialchars($nome); ?>" style="border-width: 4px !important; object-fit: cover;">
+              <?php endif; ?>
+              <h4 class="font-weight-bold mb-1"><?php echo htmlspecialchars($nome); ?></h4>
+              <p class="text-danger font-weight-bold mb-3" style="min-height: 30px;"><small><?php echo htmlspecialchars($cargo); ?></small></p>
+              <ul class="list-unstyled text-muted small text-left ml-4 w-100">
+                <?php if (!empty($graduacoes)): ?>
+                  <?php foreach ($graduacoes as $g): ?>
+                    <li><i class="fa-solid fa-check text-danger mr-2"></i> <?php echo htmlspecialchars($g['graduacao_nome']) . ' em ' . htmlspecialchars($g['arte_nome']); ?></li>
+                  <?php endforeach; ?>
+                <?php else: ?>
+                  <li><i class="fa-solid fa-check text-danger mr-2"></i> Sem registro de graduação</li>
+                <?php endif; ?>
+              </ul>
+            </div>
+          </div>
+          <?php
+      }
+      $conexao->close();
+      ?>
     </div><!-- /.row -->
   </div>
 

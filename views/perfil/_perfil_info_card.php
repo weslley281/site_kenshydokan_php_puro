@@ -28,7 +28,16 @@
                     <div class="row text-dark" style="font-size: 0.95rem;">
                         <div class="col-12 mb-2">
                             <i class="fa-solid fa-graduation-cap text-muted mr-2" style="width: 20px;"></i>
-                            <strong>Graduação:</strong> <?php echo $graduacao["graduacao"]; ?>
+                            <strong>Graduações:</strong>
+                            <?php if (!empty($filiadoGraduacoes)): ?>
+                                <ul class="list-unstyled pl-4 mb-0 text-capitalize">
+                                    <?php foreach ($filiadoGraduacoes as $fg): ?>
+                                        <li><i class="fa-solid fa-chevron-right text-danger mr-1" style="font-size: 0.8rem;"></i> <?php echo htmlspecialchars($fg['graduacao_nome']) . " (" . htmlspecialchars($fg['arte_nome']) . ")"; ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php else: ?>
+                                <span><?php echo htmlspecialchars($graduacao["graduacao"] ?? 'Sem registro'); ?></span>
+                            <?php endif; ?>
                         </div>
                         <div class="col-12 mb-2">
                             <i class="fa-solid fa-gopuran text-muted mr-2" style="width: 20px;"></i>

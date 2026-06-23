@@ -49,8 +49,12 @@
                   $dataCriacao = $res_filiado["dataCriacao"];
                   $dataMudanca = $res_filiado["dataMudanca"];
 
-                  $res_graduacao = Graduacao::buscarGraduacao($id_graduacao);
-                  $graduacao = $res_graduacao ? $res_graduacao["graduacao"] : "Sem graduação";
+                  $filiadoGraduacoes = $filiadoModelRepo->buscarGraduacoesFiliado($id_filiado);
+                  $graduacoes_list = [];
+                  foreach ($filiadoGraduacoes as $fg) {
+                      $graduacoes_list[] = htmlspecialchars($fg['arte_nome']) . ": " . htmlspecialchars($fg['graduacao_nome']);
+                  }
+                  $graduacao = !empty($graduacoes_list) ? implode("<br>", $graduacoes_list) : "Sem graduação";
 
                   $estado = $estadoModel->buscarPorId($id_estado);
                   $uf = ($estado && !empty($estado["estado"])) ? htmlspecialchars($estado["estado"]) : "";
@@ -63,7 +67,7 @@
                   <tr>
                     <td class="align-middle font-weight-bold text-secondary">#<?php echo $id_filiado; ?></td>
                     <td class="align-middle font-weight-bold text-dark text-capitalize"><?php echo htmlspecialchars($nome ?? ''); ?></td>
-                    <td class="align-middle text-dark small text-capitalize"><?php echo htmlspecialchars($graduacao ?? ''); ?></td>
+                    <td class="align-middle text-dark small"><?php echo $graduacao; ?></td>
                     <td class="align-middle text-dark small text-capitalize"><?php echo htmlspecialchars($dojo ?? ''); ?></td>
                     <td class="align-middle text-dark small text-capitalize"><?php echo $localidade; ?></td>
                     <td class="align-middle">

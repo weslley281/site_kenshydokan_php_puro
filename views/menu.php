@@ -5,6 +5,27 @@ include_once __DIR__ . "/../controllers/contador_paginas.php";
 // Obtém o caminho da URL atual
 $url_atual = $_SERVER['REQUEST_URI'];
 
+// Query registered martial arts for menu
+$artes_marciais_menu = [];
+try {
+    include_once __DIR__ . "/../db/conexao.php";
+    if (class_exists('Conexao')) {
+        $dbConnMenu = new Conexao();
+        $conexaoMenu = $dbConnMenu->conectar();
+        if ($conexaoMenu) {
+            $resultMenu = $conexaoMenu->query("SELECT id_arte, nome FROM artes_marciais ORDER BY id_arte ASC");
+            if ($resultMenu) {
+                while ($rowMenu = $resultMenu->fetch_assoc()) {
+                    $artes_marciais_menu[] = $rowMenu;
+                }
+            }
+            $conexaoMenu->close();
+        }
+    }
+} catch (Throwable $t) {
+    // Fail silently
+}
+
 // Define um array associativo com os URLs das páginas e seus nomes no menu
 $paginas = array(
     '/views/inicio.php' => 'Início',
@@ -247,6 +268,12 @@ $pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
                         <a class="dropdown-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>" href="atemi_waza.php">Atemi Waza</a>
                         <a class="dropdown-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>" href="nage_waza.php">Nage Waza</a>
                         <a class="dropdown-item <?php echo ($url_atual == "/views/artes_marciais.php") ? 'active' : ''; ?>" href="katame_waza.php">Katame Waza</a>
+                        <?php if (!empty($artes_marciais_menu)): ?>
+                            <div class="dropdown-divider"></div>
+                            <?php foreach ($artes_marciais_menu as $am): ?>
+                                <a class="dropdown-item" href="arte_marcial.php?id=<?php echo $am['id_arte']; ?>"><?php echo htmlspecialchars($am['nome']); ?></a>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </li>
 

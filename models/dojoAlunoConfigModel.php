@@ -73,7 +73,10 @@ class DojoAlunoConfigModel
                        ELSE 'adimplente'
                    END AS status_aluno
             FROM filiados f
-            LEFT JOIN graduacoes g ON f.id_graduacao = g.id_graduacao
+            LEFT JOIN graduacoes g ON g.id_graduacao = COALESCE(
+                (SELECT id_graduacao FROM filiados_graduacoes WHERE id_filiado = f.id_filiado AND id_arte = 1 LIMIT 1), 
+                (SELECT id_graduacao FROM filiados_graduacoes WHERE id_filiado = f.id_filiado LIMIT 1)
+            )
             LEFT JOIN dojo_alunos_config c ON f.id_filiado = c.id_filiado
             WHERE f.confirmacao = 'sim'
             ORDER BY f.nome ASC
