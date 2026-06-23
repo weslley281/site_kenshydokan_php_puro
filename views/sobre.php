@@ -59,6 +59,7 @@ function obterDadosMembro($conexao, $filiadoModel, $id_filiado, $default_img, $c
 
 $membros = [
     'jonas' => obterDadosMembro($conexao, $filiadoModel, 14, '../img/shihan.jpg', 'Presidente do Instituto e Fundador do Estilo Karatê Kenshydokan.'),
+    'everson' => obterDadosMembro($conexao, $filiadoModel, 20, '../img/sensei-everson.jpg'),
     'weslley' => obterDadosMembro($conexao, $filiadoModel, 23, '../img/sensei_weslley.jpg'),
     'elyakin' => obterDadosMembro($conexao, $filiadoModel, 22, '../img/sensei_elyakin.jpg'),
     'rafael' => obterDadosMembro($conexao, $filiadoModel, 25, '../img/sensei_rafael.jpg'),
@@ -72,16 +73,16 @@ $conexao->close();
 <div class="container mt-5">
   <!-- Project One -->
   <div class="row mt-5">
-    <div class="col-md-7">
+    <div class="col-lg-7">
       <?php if ($membros['jonas']['id_usuario']): ?>
         <a href="ver_perfil.php?id_usuario=<?php echo $membros['jonas']['id_usuario']; ?>">
-          <img class="img-fluid rounded mb-3 mb-md-0 shadow-sm border" src="<?php echo $membros['jonas']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['jonas']['nome']); ?> Presidente da FKCMT" style="width: 100%; max-height: 400px; object-fit: cover;">
+          <img class="img-fluid rounded mb-3 mb-lg-0 shadow-sm border" src="<?php echo $membros['jonas']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['jonas']['nome']); ?> Presidente da FKCMT" style="width: 100%; height: 400px; object-fit: cover; object-position: center top;">
         </a>
       <?php else: ?>
-        <img class="img-fluid rounded mb-3 mb-md-0 shadow-sm border" src="<?php echo $membros['jonas']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['jonas']['nome']); ?> Presidente da FKCMT" style="width: 100%; max-height: 400px; object-fit: cover;">
+        <img class="img-fluid rounded mb-3 mb-lg-0 shadow-sm border" src="<?php echo $membros['jonas']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['jonas']['nome']); ?> Presidente da FKCMT" style="width: 100%; height: 400px; object-fit: cover; object-position: center top;">
       <?php endif; ?>
     </div>
-    <div class="col-md-5">
+    <div class="col-lg-5">
       <h3>
         <?php if ($membros['jonas']['id_usuario']): ?>
           <a href="ver_perfil.php?id_usuario=<?php echo $membros['jonas']['id_usuario']; ?>" class="text-danger font-weight-bold text-decoration-none"><?php echo htmlspecialchars($membros['jonas']['nome']); ?></a>
@@ -111,15 +112,47 @@ $conexao->close();
     </h1>
 
     <div class="row">
+      <!-- Everson -->
+      <div class="col-lg-4 col-sm-6 mb-4">
+        <div class="card h-100 border-0 shadow-sm rounded-lg overflow-hidden">
+          <?php if ($membros['everson']['id_usuario']): ?>
+            <a href="ver_perfil.php?id_usuario=<?php echo $membros['everson']['id_usuario']; ?>">
+              <img class="card-img-top" src="<?php echo $membros['everson']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['everson']['nome']); ?>" style="height: 280px; object-fit: cover; object-position: center top;">
+            </a>
+          <?php else: ?>
+            <img class="card-img-top" src="<?php echo $membros['everson']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['everson']['nome']); ?>" style="height: 280px; object-fit: cover; object-position: center top;">
+          <?php endif; ?>
+          <div class="card-body p-4">
+            <h4 class="card-title font-weight-bold">
+              <?php if ($membros['everson']['id_usuario']): ?>
+                <a href="ver_perfil.php?id_usuario=<?php echo $membros['everson']['id_usuario']; ?>" class="text-danger text-decoration-none"><?php echo htmlspecialchars($membros['everson']['nome']); ?></a>
+              <?php else: ?>
+                <?php echo htmlspecialchars($membros['everson']['nome']); ?>
+              <?php endif; ?>
+            </h4>
+            <h5 class="font-weight-bold mt-3 text-secondary" style="font-size: 0.95rem;">GRADUAÇÕES:</h5>
+            <ul class="list-unstyled small mt-2">
+              <?php if (!empty($membros['everson']['graduacoes'])): ?>
+                <?php foreach ($membros['everson']['graduacoes'] as $g): ?>
+                  <li class="mb-2"><i class="fa-solid fa-check text-danger mr-2"></i> <?php echo htmlspecialchars($g['graduacao_nome']) . ' em ' . htmlspecialchars($g['arte_nome']); ?></li>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <li class="text-muted"><i class="fa-solid fa-xmark text-secondary mr-2"></i> Sem registro de graduação</li>
+              <?php endif; ?>
+            </ul>
+          </div>
+        </div>
+      </div>
+
       <!-- Weslley -->
       <div class="col-lg-4 col-sm-6 mb-4">
         <div class="card h-100 border-0 shadow-sm rounded-lg overflow-hidden">
           <?php if ($membros['weslley']['id_usuario']): ?>
             <a href="ver_perfil.php?id_usuario=<?php echo $membros['weslley']['id_usuario']; ?>">
-              <img class="card-img-top" src="<?php echo $membros['weslley']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['weslley']['nome']); ?>" style="height: 280px; object-fit: cover;">
+              <img class="card-img-top" src="<?php echo $membros['weslley']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['weslley']['nome']); ?>" style="height: 280px; object-fit: cover; object-position: center top;">
             </a>
           <?php else: ?>
-            <img class="card-img-top" src="<?php echo $membros['weslley']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['weslley']['nome']); ?>" style="height: 280px; object-fit: cover;">
+            <img class="card-img-top" src="<?php echo $membros['weslley']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['weslley']['nome']); ?>" style="height: 280px; object-fit: cover; object-position: center top;">
           <?php endif; ?>
           <div class="card-body p-4">
             <h4 class="card-title font-weight-bold">
@@ -148,10 +181,10 @@ $conexao->close();
         <div class="card h-100 border-0 shadow-sm rounded-lg overflow-hidden">
           <?php if ($membros['elyakin']['id_usuario']): ?>
             <a href="ver_perfil.php?id_usuario=<?php echo $membros['elyakin']['id_usuario']; ?>">
-              <img class="card-img-top" src="<?php echo $membros['elyakin']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['elyakin']['nome']); ?>" style="height: 280px; object-fit: cover;">
+              <img class="card-img-top" src="<?php echo $membros['elyakin']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['elyakin']['nome']); ?>" style="height: 280px; object-fit: cover; object-position: center top;">
             </a>
           <?php else: ?>
-            <img class="card-img-top" src="<?php echo $membros['elyakin']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['elyakin']['nome']); ?>" style="height: 280px; object-fit: cover;">
+            <img class="card-img-top" src="<?php echo $membros['elyakin']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['elyakin']['nome']); ?>" style="height: 280px; object-fit: cover; object-position: center top;">
           <?php endif; ?>
           <div class="card-body p-4">
             <h4 class="card-title font-weight-bold">
@@ -174,16 +207,18 @@ $conexao->close();
           </div>
         </div>
       </div>
+    </div>
 
+    <div class="row">
       <!-- Rafael -->
       <div class="col-lg-4 col-sm-6 mb-4">
         <div class="card h-100 border-0 shadow-sm rounded-lg overflow-hidden">
           <?php if ($membros['rafael']['id_usuario']): ?>
             <a href="ver_perfil.php?id_usuario=<?php echo $membros['rafael']['id_usuario']; ?>">
-              <img class="card-img-top" src="<?php echo $membros['rafael']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['rafael']['nome']); ?>" style="height: 280px; object-fit: cover;">
+              <img class="card-img-top" src="<?php echo $membros['rafael']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['rafael']['nome']); ?>" style="height: 280px; object-fit: cover; object-position: center top;">
             </a>
           <?php else: ?>
-            <img class="card-img-top" src="<?php echo $membros['rafael']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['rafael']['nome']); ?>" style="height: 280px; object-fit: cover;">
+            <img class="card-img-top" src="<?php echo $membros['rafael']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['rafael']['nome']); ?>" style="height: 280px; object-fit: cover; object-position: center top;">
           <?php endif; ?>
           <div class="card-body p-4">
             <h4 class="card-title font-weight-bold">
@@ -206,18 +241,16 @@ $conexao->close();
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="row">
       <!-- Roset -->
       <div class="col-lg-4 col-sm-6 mb-4">
         <div class="card h-100 border-0 shadow-sm rounded-lg overflow-hidden">
           <?php if ($membros['roset']['id_usuario']): ?>
             <a href="ver_perfil.php?id_usuario=<?php echo $membros['roset']['id_usuario']; ?>">
-              <img class="card-img-top" src="<?php echo $membros['roset']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['roset']['nome']); ?>" style="height: 280px; object-fit: cover;">
+              <img class="card-img-top" src="<?php echo $membros['roset']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['roset']['nome']); ?>" style="height: 280px; object-fit: cover; object-position: center top;">
             </a>
           <?php else: ?>
-            <img class="card-img-top" src="<?php echo $membros['roset']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['roset']['nome']); ?>" style="height: 280px; object-fit: cover;">
+            <img class="card-img-top" src="<?php echo $membros['roset']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['roset']['nome']); ?>" style="height: 280px; object-fit: cover; object-position: center top;">
           <?php endif; ?>
           <div class="card-body p-4">
             <h4 class="card-title font-weight-bold">
@@ -246,10 +279,10 @@ $conexao->close();
         <div class="card h-100 border-0 shadow-sm rounded-lg overflow-hidden">
           <?php if ($membros['nilson']['id_usuario']): ?>
             <a href="ver_perfil.php?id_usuario=<?php echo $membros['nilson']['id_usuario']; ?>">
-              <img class="card-img-top" src="<?php echo $membros['nilson']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['nilson']['nome']); ?>" style="height: 280px; object-fit: cover;">
+              <img class="card-img-top" src="<?php echo $membros['nilson']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['nilson']['nome']); ?>" style="height: 280px; object-fit: cover; object-position: center top;">
             </a>
           <?php else: ?>
-            <img class="card-img-top" src="<?php echo $membros['nilson']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['nilson']['nome']); ?>" style="height: 280px; object-fit: cover;">
+            <img class="card-img-top" src="<?php echo $membros['nilson']['caminho_foto']; ?>" alt="<?php echo htmlspecialchars($membros['nilson']['nome']); ?>" style="height: 280px; object-fit: cover; object-position: center top;">
           <?php endif; ?>
           <div class="card-body p-4">
             <h4 class="card-title font-weight-bold">
@@ -315,12 +348,12 @@ $conexao->close();
 
     <!-- Project Two -->
     <div class="row mt-5">
-      <div class="col-md-7">
+      <div class="col-lg-7">
         <a href="#">
-          <img class="img-fluid rounded mb-3 mb-md-0" src="../img/certificado 1.jpeg" alt="Certificado se Representatividade da WKA do Karate Kenshydokan">
+          <img class="img-fluid rounded mb-3 mb-lg-0" src="../img/certificado 1.jpeg" alt="Certificado se Representatividade da WKA do Karate Kenshydokan">
         </a>
       </div>
-      <div class="col-md-5">
+      <div class="col-lg-5">
         <h3>Certificado se Representatividade da WKA</h3>
         <p>.</p>
         <a href="imagens/certificado 1.jpeg" download="certificado 1.jpeg" class="btn btn-primary"> Baixar </a>
@@ -332,12 +365,12 @@ $conexao->close();
 
     <!-- Project Three -->
     <div class="row">
-      <div class="col-md-7">
+      <div class="col-lg-7">
         <a href="#">
-          <img class="img-fluid rounded mb-3 mb-md-0" src="../img/certificado 2.jpeg" alt="Certificado de Homologação do Karate Kenshydokan">
+          <img class="img-fluid rounded mb-3 mb-lg-0" src="../img/certificado 2.jpeg" alt="Certificado de Homologação do Karate Kenshydokan">
         </a>
       </div>
-      <div class="col-md-5">
+      <div class="col-lg-5">
         <h3>Certificado de Homologação</h3>
         <p></p>
         <a href="imagens/certificado 2.jpeg" download="certificado 2.jpeg" class="btn btn-primary"> Baixar </a>
@@ -350,12 +383,12 @@ $conexao->close();
     <!-- Project For -->
     <div class="row">
 
-      <div class="col-md-7">
+      <div class="col-lg-7">
         <a href="#">
-          <img class="img-fluid rounded mb-3 mb-md-0" src="../img/homologacao.jpeg" alt="Certificado de Homologação do Karate Kenshydokan">
+          <img class="img-fluid rounded mb-3 mb-lg-0" src="../img/homologacao.jpeg" alt="Certificado de Homologação do Karate Kenshydokan">
         </a>
       </div>
-      <div class="col-md-5">
+      <div class="col-lg-5">
         <h3>Certificado de Homologação</h3>
         <p></p>
         <a href="imagens/homologacao.jpeg" download="homologacao.jpeg" class="btn btn-primary"> Baixar </a>
@@ -368,12 +401,12 @@ $conexao->close();
     <!-- Project Five -->
     <div class="row">
 
-      <div class="col-md-7">
+      <div class="col-lg-7">
         <a href="#">
-          <img class="img-fluid rounded mb-3 mb-md-0" src="../arquivos/certificado instituto muay thai.png" alt="Certificado de Filiação Concedida do KickBosing a Kenshydokan">
+          <img class="img-fluid rounded mb-3 mb-lg-0" src="../arquivos/certificado instituto muay thai.png" alt="Certificado de Filiação Concedida do KickBosing a Kenshydokan">
         </a>
       </div>
-      <div class="col-md-5">
+      <div class="col-lg-5">
         <h3>Certificado de Filiação Muay Thai</h3>
         <p></p>
         <a href="imagens/homologacao.jpeg" download="homologacao.jpeg" class="btn btn-primary"> Baixar </a>
@@ -386,12 +419,12 @@ $conexao->close();
     <!-- Project Five -->
     <div class="row">
 
-      <div class="col-md-7">
+      <div class="col-lg-7">
         <a href="#">
-          <img class="img-fluid rounded mb-3 mb-md-0" src="../arquivos/filiação consedida.jpg" alt="Certificado de Filiação Concedida do KickBosing a Kenshydokan">
+          <img class="img-fluid rounded mb-3 mb-lg-0" src="../arquivos/filiação consedida.jpg" alt="Certificado de Filiação Concedida do KickBosing a Kenshydokan">
         </a>
       </div>
-      <div class="col-md-5">
+      <div class="col-lg-5">
         <h3>Certificado de Filiação KickBoxing</h3>
         <p></p>
         <a href="imagens/homologacao.jpeg" download="homologacao.jpeg" class="btn btn-primary"> Baixar </a>
@@ -404,12 +437,12 @@ $conexao->close();
     <!-- Project Six -->
     <div class="row">
 
-      <div class="col-md-7">
+      <div class="col-lg-7">
         <a href="#">
-          <img class="img-fluid rounded mb-3 mb-md-0" src="../img/gradução kenshydokan.jpg" alt="Sistema de Graduação do Karate Kenshydokan">
+          <img class="img-fluid rounded mb-3 mb-lg-0" src="../img/gradução kenshydokan.jpg" alt="Sistema de Graduação do Karate Kenshydokan">
         </a>
       </div>
-      <div class="col-md-5">
+      <div class="col-lg-5">
         <h3>Sistema de Graduação do Karatê Kenshydokan</h3>
         <p></p>
         <a href="imagens/gradução kenshydokan.jpg" download="gradução kenshydokan.jpg" class="btn btn-primary"> Baixar </a>

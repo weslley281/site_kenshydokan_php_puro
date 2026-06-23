@@ -44,6 +44,9 @@ $active_page = basename($_SERVER['PHP_SELF']);
                         <a href="../gerenciamento_dojo" class="list-group-item list-group-item-action <?php echo (strpos($_SERVER['REQUEST_URI'], 'gerenciamento_dojo') !== false) ? 'active' : ''; ?>">
                             <i class="fa-solid fa-store mr-2 <?php echo (strpos($_SERVER['REQUEST_URI'], 'gerenciamento_dojo') !== false) ? '' : 'text-danger'; ?>"></i> Gerenciar Dojô
                         </a>
+                        <a href="../cobrancas" class="list-group-item list-group-item-action <?php echo (strpos($_SERVER['REQUEST_URI'], 'cobrancas') !== false) ? 'active' : ''; ?>">
+                            <i class="fa-solid fa-credit-card mr-2 <?php echo (strpos($_SERVER['REQUEST_URI'], 'cobrancas') !== false) ? '' : 'text-danger'; ?>"></i> Gerenciar Cobranças
+                        </a>
                     <?php } ?>
                     <a href="eventos.php" class="list-group-item list-group-item-action <?php echo ($active_page == 'eventos.php') ? 'active' : ''; ?>">
                         <i class="fa-solid fa-circle-play mr-2 <?php echo ($active_page == 'eventos.php') ? '' : 'text-danger'; ?>"></i> Eventos Online
