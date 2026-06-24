@@ -66,6 +66,11 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link rounded-pill font-weight-bold <?php echo ($pagina == 'certificados_upload') ? 'active bg-danger text-white' : 'text-secondary'; ?>" href="index.php?pagina=certificados_upload">
+          <i class="fa-solid fa-file-image mr-1"></i> Certificados Imagem
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link rounded-pill font-weight-bold <?php echo ($pagina == 'artes') ? 'active bg-danger text-white' : 'text-secondary'; ?>" href="index.php?pagina=artes">
           <i class="fa-solid fa-hand-fist mr-1"></i> Artes
         </a>
@@ -103,6 +108,9 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
       } ?>
       <?php if ($pagina == "certificados_manuais") {
         include_once "certificados_manuais.php";
+      } ?>
+      <?php if ($pagina == "certificados_upload") {
+        include_once "certificados_upload.php";
       } ?>
       <?php if ($pagina == "artes") {
         include_once "artes.php";

@@ -40,6 +40,8 @@ $migration->criarTabelaDojoFinanceiro();
 echo "<br>";
 $migration->criarTabelaCertificadosManuais();
 echo "<br>";
+$migration->criarTabelaCertificadosUpload();
+echo "<br>";
 $migration->criarTabelaArtesMarciais();
 echo "<br>";
 $migration->criarTabelaFiliadosGraduacoes();

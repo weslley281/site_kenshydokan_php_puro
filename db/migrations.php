@@ -419,6 +419,27 @@ class Migration
         }
     }
 
+    public function criarTabelaCertificadosUpload()
+    {
+        $sql = "
+        CREATE TABLE IF NOT EXISTS `certificados_upload` (
+          `id` INT AUTO_INCREMENT PRIMARY KEY,
+          `id_filiado` INT NOT NULL,
+          `titulo` VARCHAR(255) NOT NULL,
+          `imagem` VARCHAR(255) NOT NULL,
+          `data_upload` DATE NOT NULL,
+          FOREIGN KEY (`id_filiado`) REFERENCES `filiados` (`id_filiado`) ON DELETE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        ";
+
+        if ($this->conn->query($sql) === true) {
+            //echo "Tabela 'certificados_upload' criada com sucesso!";
+        } else {
+            echo "Erro ao criar tabela de certificados upload: " . $this->conn->error;
+        }
+    }
+
+
     public function criarTabelaArtesMarciais()
     {
         $sql = "

@@ -72,84 +72,6 @@ $filiados = $filiadoRepo->listarFiliadosAtivos();
                         <i class="fa-solid fa-trash-can"></i>
                       </button>
 
-                      <!-- Modal Editar Certificado -->
-                      <div class="modal fade" id="modalEditarCertificado<?php echo $id; ?>" role="dialog" aria-labelledby="editarLabel<?php echo $id; ?>" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content border-0 shadow-lg text-left">
-                            <div class="modal-header bg-danger text-white border-0 py-3">
-                              <h5 class="modal-title font-weight-bold" id="editarLabel<?php echo $id; ?>">
-                                <i class="fa-solid fa-pen-to-square mr-2"></i> Editar Certificado
-                              </h5>
-                              <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <form action="../../controllers/certificadoManualController.php" method="post">
-                              <input type="hidden" name="tipo" value="editar">
-                              <input type="hidden" name="id" value="<?php echo $id; ?>">
-                              
-                              <div class="modal-body p-4">
-                                <div class="form-group mb-3">
-                                  <label for="id_filiado_edit<?php echo $id; ?>" class="text-secondary small font-weight-bold text-uppercase">Filiado</label>
-                                  <!-- CRITICAL: DO NOT REMOVE class js-select2-filiado or Select2.js! It is required for the searchable dropdown selection. -->
-                                  <select class="form-control form-control-lg bg-light border-0 shadow-sm js-select2-filiado" id="id_filiado_edit<?php echo $id; ?>" name="id_filiado" required>
-                                    <?php foreach ($filiados as $f): ?>
-                                      <option value="<?php echo $f['id_filiado']; ?>" <?php echo ($f['id_filiado'] == $id_filiado) ? 'selected' : ''; ?>>
-                                        <?php echo htmlspecialchars($f['nome']) . ' (Código: ' . htmlspecialchars($f['codigo'] ?? $f['id_filiado']) . ')'; ?>
-                                      </option>
-                                    <?php endforeach; ?>
-                                  </select>
-                                </div>
-
-                                <div class="form-group mb-3">
-                                  <label for="titulo_edit<?php echo $id; ?>" class="text-secondary small font-weight-bold text-uppercase">Título do Certificado</label>
-                                  <input type="text" class="form-control form-control-lg bg-light border-0 shadow-sm" id="titulo_edit<?php echo $id; ?>" name="titulo" value="<?php echo htmlspecialchars($titulo); ?>" required>
-                                </div>
-
-                                <div class="form-group mb-0">
-                                  <label for="data_emissao_edit<?php echo $id; ?>" class="text-secondary small font-weight-bold text-uppercase">Data de Emissão</label>
-                                  <input type="date" class="form-control form-control-lg bg-light border-0 shadow-sm" id="data_emissao_edit<?php echo $id; ?>" name="data_emissao" value="<?php echo $data_emissao; ?>" required>
-                                </div>
-                              </div>
-
-                              <div class="modal-footer border-0 bg-light py-3 d-flex justify-content-end">
-                                <button type="button" class="btn btn-secondary px-4 rounded-pill font-weight-bold mr-2" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-danger px-4 rounded-pill font-weight-bold shadow-sm">Salvar Alterações</button>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Modal Excluir Certificado -->
-                      <div class="modal fade" id="modalExcluirCertificado<?php echo $id; ?>" tabindex="-1" role="dialog" aria-labelledby="excluirLabel<?php echo $id; ?>" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content border-0 shadow-lg text-left">
-                            <div class="modal-header bg-danger text-white border-0 py-3">
-                              <h5 class="modal-title font-weight-bold" id="excluirLabel<?php echo $id; ?>">
-                                <i class="fa-solid fa-triangle-exclamation mr-2"></i> Confirmar Exclusão
-                              </h5>
-                              <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body p-4 text-center">
-                              <p class="lead mb-2">Tem certeza que deseja excluir o certificado de?</p>
-                              <h5 class="font-weight-bold text-danger mb-2"><?php echo htmlspecialchars($nome); ?></h5>
-                              <p class="text-secondary font-weight-bold mb-0">"<?php echo htmlspecialchars($titulo); ?>"</p>
-                              <p class="text-muted mt-3 small">Esta ação não poderá ser desfeita.</p>
-                            </div>
-                            <div class="modal-footer border-0 bg-light py-3 text-center d-flex justify-content-center">
-                              <button type="button" class="btn btn-secondary px-4 rounded-pill font-weight-bold mr-2" data-dismiss="modal">Cancelar</button>
-                              <form action="../../controllers/certificadoManualController.php" method="post" class="d-inline">
-                                <input type="hidden" name="tipo" value="excluir">
-                                <input type="hidden" name="id" value="<?php echo $id; ?>">
-                                <button type="submit" class="btn btn-danger px-4 rounded-pill font-weight-bold shadow-sm">Excluir</button>
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </td>
                   </tr>
                 <?php endforeach; ?>
@@ -161,6 +83,95 @@ $filiados = $filiadoRepo->listarFiliadosAtivos();
     </div>
   </div>
 </div>
+
+<?php if (!empty($certificados)): ?>
+  <?php foreach ($certificados as $cert): 
+    $id = $cert['id'];
+    $id_filiado = $cert['id_filiado'];
+    $nome = $cert['nome'];
+    $titulo = $cert['titulo'];
+    $data_emissao = $cert['data_emissao'];
+  ?>
+    <!-- Modal Editar Certificado -->
+    <div class="modal fade" id="modalEditarCertificado<?php echo $id; ?>" role="dialog" aria-labelledby="editarLabel<?php echo $id; ?>" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 shadow-lg text-left">
+          <div class="modal-header bg-danger text-white border-0 py-3">
+            <h5 class="modal-title font-weight-bold" id="editarLabel<?php echo $id; ?>">
+              <i class="fa-solid fa-pen-to-square mr-2"></i> Editar Certificado
+            </h5>
+            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="../../controllers/certificadoManualController.php" method="post">
+            <input type="hidden" name="tipo" value="editar">
+            <input type="hidden" name="id" value="<?php echo $id; ?>">
+            
+            <div class="modal-body p-4">
+              <div class="form-group mb-3">
+                <label for="id_filiado_edit<?php echo $id; ?>" class="text-secondary small font-weight-bold text-uppercase">Filiado</label>
+                <!-- CRITICAL: DO NOT REMOVE class js-select2-filiado or Select2.js! It is required for the searchable dropdown selection. -->
+                <select class="form-control form-control-lg bg-light border-0 shadow-sm js-select2-filiado" id="id_filiado_edit<?php echo $id; ?>" name="id_filiado" required>
+                  <?php foreach ($filiados as $f): ?>
+                    <option value="<?php echo $f['id_filiado']; ?>" <?php echo ($f['id_filiado'] == $id_filiado) ? 'selected' : ''; ?>>
+                      <?php echo htmlspecialchars($f['nome']) . ' (Código: ' . htmlspecialchars($f['codigo'] ?? $f['id_filiado']) . ')'; ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="titulo_edit<?php echo $id; ?>" class="text-secondary small font-weight-bold text-uppercase">Título do Certificado</label>
+                <input type="text" class="form-control form-control-lg bg-light border-0 shadow-sm" id="titulo_edit<?php echo $id; ?>" name="titulo" value="<?php echo htmlspecialchars($titulo); ?>" required>
+              </div>
+
+              <div class="form-group mb-0">
+                <label for="data_emissao_edit<?php echo $id; ?>" class="text-secondary small font-weight-bold text-uppercase">Data de Emissão</label>
+                <input type="date" class="form-control form-control-lg bg-light border-0 shadow-sm" id="data_emissao_edit<?php echo $id; ?>" name="data_emissao" value="<?php echo $data_emissao; ?>" required>
+              </div>
+            </div>
+
+            <div class="modal-footer border-0 bg-light py-3 d-flex justify-content-end">
+              <button type="button" class="btn btn-secondary px-4 rounded-pill font-weight-bold mr-2" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-danger px-4 rounded-pill font-weight-bold shadow-sm">Salvar Alterações</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Excluir Certificado -->
+    <div class="modal fade" id="modalExcluirCertificado<?php echo $id; ?>" tabindex="-1" role="dialog" aria-labelledby="excluirLabel<?php echo $id; ?>" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 shadow-lg text-left">
+          <div class="modal-header bg-danger text-white border-0 py-3">
+            <h5 class="modal-title font-weight-bold" id="excluirLabel<?php echo $id; ?>">
+              <i class="fa-solid fa-triangle-exclamation mr-2"></i> Confirmar Exclusão
+            </h5>
+            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body p-4 text-center">
+            <p class="lead mb-2">Tem certeza que deseja excluir o certificado de?</p>
+            <h5 class="font-weight-bold text-danger mb-2"><?php echo htmlspecialchars($nome); ?></h5>
+            <p class="text-secondary font-weight-bold mb-0">"<?php echo htmlspecialchars($titulo); ?>"</p>
+            <p class="text-muted mt-3 small">Esta ação não poderá ser desfeita.</p>
+          </div>
+          <div class="modal-footer border-0 bg-light py-3 text-center d-flex justify-content-center">
+            <button type="button" class="btn btn-secondary px-4 rounded-pill font-weight-bold mr-2" data-dismiss="modal">Cancelar</button>
+            <form action="../../controllers/certificadoManualController.php" method="post" class="d-inline">
+              <input type="hidden" name="tipo" value="excluir">
+              <input type="hidden" name="id" value="<?php echo $id; ?>">
+              <button type="submit" class="btn btn-danger px-4 rounded-pill font-weight-bold shadow-sm">Excluir</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  <?php endforeach; ?>
+<?php endif; ?>
 
 <!-- Modal Adicionar Certificado -->
 <div class="modal fade" id="modalAdicionarCertificado" role="dialog" aria-labelledby="adicionarLabel" aria-hidden="true">
@@ -233,6 +244,11 @@ document.addEventListener("DOMContentLoaded", function() {
        Without Select2, selecting a filiado from a large list becomes extremely difficult.
     */
     if (typeof $ !== 'undefined' && $.fn.select2) {
+        // Desativa a imposição de foco do Bootstrap modal para evitar loops infinitos de foco com o Select2
+        if ($.fn.modal && $.fn.modal.Constructor) {
+            $.fn.modal.Constructor.prototype._enforceFocus = function() {};
+        }
+
         // Inicializar Select2 no modal de Adicionar quando for exibido
         $('#modalAdicionarCertificado').on('shown.bs.modal', function () {
             var $select = $('#id_filiado');
