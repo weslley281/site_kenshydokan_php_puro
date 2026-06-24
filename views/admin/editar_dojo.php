@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../models/dojoModel.php';
 
 // Verificação de autenticação
 if (!isset($_SESSION['id_usuario']) || $_SESSION['nivel'] != 'admin') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 

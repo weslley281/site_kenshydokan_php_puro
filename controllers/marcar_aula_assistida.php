@@ -27,6 +27,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($aulaModel->marcarAulaAssistida($id_usuario, $id_aula)) {
         $response["success"] = true;
         $response["message"] = "Aula marcada como assistida com sucesso!";
+
+        try {
+            $aula = $aulaModel->buscarAula($id_aula);
+            if ($aula && isset($aula['id_curso'])) {
+                include_once "../models/certificadoModel.php";
+                CertificadoModel::verificarEGerarCertificadoAuto($id_usuario, (int)$aula['id_curso']);
+            }
+        } catch (Exception $e) {
+            error_log("Erro ao processar certificado automatico ao assistir aula: " . $e->getMessage());
+        }
     } else {
         $response["message"] = "Erro ao marcar aula como assistida.";
     }

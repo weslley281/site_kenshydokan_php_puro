@@ -2,7 +2,24 @@
 $page_title = "Meu Perfil";
 include __DIR__ . "/menu.php";
 include __DIR__ . "/_perfil_auth.php";
+include_once __DIR__ . "/../../models/listaPresencaModel.php";
+
+$presencaModel = new ListaPresencaModel();
+$frequencias = [];
+if (!empty($filiado['id_filiado'])) {
+    $frequencias = $presencaModel->buscarFrequenciaPorFiliado($filiado['id_filiado']);
+}
 ?>
+
+<style>
+.transition-hover {
+    transition: all 0.25s ease;
+}
+.transition-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important;
+}
+</style>
 
 <body>
 	<div class="container mt-5">
@@ -14,6 +31,55 @@ include __DIR__ . "/_perfil_auth.php";
 				<!-- Content -->
 				<div class="col-lg-9">
 					<?php include __DIR__ . "/_perfil_info_card.php"; ?>
+
+					<?php if (!empty($frequencias)): ?>
+						<div class="card border-0 shadow-sm rounded-lg mb-4 mt-3">
+							<div class="card-body p-4">
+								<h5 class="font-weight-bold text-danger mb-4 border-bottom pb-2">
+									<i class="fa-solid fa-chart-line mr-2"></i>Frequência e Desempenho nas Aulas
+								</h5>
+								<div class="row">
+									<?php foreach ($frequencias as $freq): 
+										$pct = $freq['taxa_frequencia'];
+										$bar_color = 'bg-success';
+										if ($pct < 50) {
+											$bar_color = 'bg-danger';
+										} elseif ($pct < 75) {
+											$bar_color = 'bg-warning';
+										}
+									?>
+										<div class="col-md-6 mb-3">
+											<div class="p-3 border rounded-lg bg-light h-100 shadow-sm transition-hover">
+												<h6 class="font-weight-bold text-dark mb-3 text-capitalize"><?php echo htmlspecialchars($freq['modalidade']); ?></h6>
+												
+												<div class="d-flex align-items-center mb-3">
+													<div class="progress flex-grow-1 mr-3" style="height: 10px; border-radius: 5px;">
+														<div class="progress-bar <?php echo $bar_color; ?>" role="progressbar" style="width: <?php echo $pct; ?>%; border-radius: 5px;" aria-valuenow="<?php echo $pct; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
+													<span class="font-weight-bold text-dark small" style="min-width: 50px; text-align: right;"><?php echo $pct; ?>%</span>
+												</div>
+
+												<div class="row text-secondary text-center" style="font-size: 0.8rem;">
+													<div class="col-4 border-right">
+														<span class="d-block text-uppercase font-weight-bold text-muted" style="font-size: 0.6rem;">Total Aulas</span>
+														<span class="h6 font-weight-bold text-dark"><?php echo $freq['total_aulas']; ?></span>
+													</div>
+													<div class="col-4 border-right">
+														<span class="d-block text-uppercase font-weight-bold text-muted" style="font-size: 0.6rem;">Presenças</span>
+														<span class="h6 font-weight-bold text-success"><?php echo $freq['total_presencas']; ?></span>
+													</div>
+													<div class="col-4">
+														<span class="d-block text-uppercase font-weight-bold text-muted" style="font-size: 0.6rem;">Faltas</span>
+														<span class="h6 font-weight-bold text-danger"><?php echo $freq['total_faltas']; ?></span>
+													</div>
+												</div>
+											</div>
+										</div>
+									<?php endforeach; ?>
+								</div>
+							</div>
+						</div>
+					<?php endif; ?>
 					
 					<div class="text-center my-5">
 						<h2 class="font-weight-bold text-dark mb-0">Cursos Disponíveis</h2>

@@ -280,6 +280,6 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
 <?php
   include "rodape.php";
 } else {
-  echo "<script language='javascript'>window.location='login.php'; </script>";
+  echo "<script language='javascript'>window.location='../login.php'; </script>";
 }
 ?>

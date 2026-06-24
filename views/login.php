@@ -1,7 +1,7 @@
 <?php
 include "menu.php";
 if (isset($_SESSION["id_usuario"])) {
-  echo "<script language='javascript'>window.location='../views/perfil.php'; </script>";
+  echo "<script language='javascript'>window.location='perfil/perfil.php'; </script>";
   exit();
 }
 ?>

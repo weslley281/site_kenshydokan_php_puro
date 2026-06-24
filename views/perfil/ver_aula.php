@@ -24,6 +24,35 @@ if (isset($_SESSION['id_usuario'])) {
 }
 $aula_ja_assistida = in_array($id_aula, $aulas_assistidas_ids);
 
+// Busca próxima aula do mesmo curso
+$proxima_aula = null;
+try {
+    include_once __DIR__ . "/../../db/conexao.php";
+    $dbConnNext = new Conexao();
+    $conexaoNext = $dbConnNext->conectar();
+    if ($conexaoNext) {
+        $stmtNext = $conexaoNext->prepare("
+            SELECT id_aula, titulo 
+            FROM aulas 
+            WHERE id_curso = ? AND (num_ordenacao > ? OR (num_ordenacao = ? AND id_aula > ?))
+            ORDER BY num_ordenacao ASC, id_aula ASC 
+            LIMIT 1
+        ");
+        $id_curso_curr = intval($aula['id_curso']);
+        $num_ord_curr = intval($aula['num_ordenacao']);
+        $id_aula_curr = intval($aula['id_aula']);
+        $stmtNext->bind_param("iiii", $id_curso_curr, $num_ord_curr, $num_ord_curr, $id_aula_curr);
+        $stmtNext->execute();
+        $resNext = $stmtNext->get_result();
+        if ($resNext && $rowNext = $resNext->fetch_assoc()) {
+            $proxima_aula = $rowNext;
+        }
+        $stmtNext->close();
+        $conexaoNext->close();
+    }
+} catch (Throwable $t) {
+    // Fail silently
+}
 ?>
 
 
@@ -51,11 +80,20 @@ $aula_ja_assistida = in_array($id_aula, $aulas_assistidas_ids);
                 <form action="../../controllers/gerar_pdf_aula.php" method="post" target="_blank">
                     <input type="hidden" name="titulo" value="<?php echo htmlspecialchars($aula['titulo']); ?>">
                     <input type="hidden" name="conteudo" value="<?php echo htmlspecialchars($aula['aula']); ?>">
-                    <div class="card-footer text-right">
-                        <button type="submit" class="btn btn-primary">Baixar PDF</button>
-                        <button type="button" class="btn btn-success marcar-assistido" data-id-aula="<?php echo $aula['id_aula']; ?>" <?php if ($aula_ja_assistida) echo 'disabled'; ?>>
-                            <?php echo $aula_ja_assistida ? 'Assistido' : 'Marcar como Assistido'; ?>
-                        </button>
+                    <div class="card-footer d-flex flex-wrap justify-content-between align-items-center" style="gap: 15px;">
+                        <div>
+                            <?php if ($proxima_aula): ?>
+                                <a href="ver_aula.php?id=<?php echo $proxima_aula['id_aula']; ?>" class="btn btn-danger rounded-pill font-weight-bold shadow-sm px-4">
+                                    Próxima Aula: <?php echo htmlspecialchars($proxima_aula['titulo']); ?> <i class="fa-solid fa-arrow-right ml-1"></i>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-outline-primary rounded-pill font-weight-bold px-3 mr-2">Baixar PDF</button>
+                            <button type="button" class="btn btn-success rounded-pill font-weight-bold px-4 marcar-assistido" data-id-aula="<?php echo $aula['id_aula']; ?>" <?php if ($aula_ja_assistida) echo 'disabled'; ?>>
+                                <?php echo $aula_ja_assistida ? 'Assistido' : 'Marcar como Assistido'; ?>
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>

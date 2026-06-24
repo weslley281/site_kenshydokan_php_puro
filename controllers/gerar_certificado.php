@@ -79,53 +79,93 @@ $codigoVerificacao = uniqid('CERT_') . bin2hex(random_bytes(8));
 $nome = $usuario['nome'];
 $nome_curso = $curso['nome'];
 $cargaHoraria = $curso['cargaHoraria'];
-$data = date('d \d\e F \d\e Y');
+$meses = [
+    'January' => 'janeiro', 'February' => 'fevereiro', 'March' => 'março',
+    'April' => 'abril', 'May' => 'maio', 'June' => 'junho',
+    'July' => 'julho', 'August' => 'agosto', 'September' => 'setembro',
+    'October' => 'outubro', 'November' => 'novembro', 'December' => 'dezembro'
+];
+$mes_en = date('F');
+$mes_pt = $meses[$mes_en] ?? $mes_en;
+$data = date('d') . ' de ' . $mes_pt . ' de ' . date('Y');
 
 $pdf = new PDF('L', 'mm', 'A4');
 $pdf->AddPage();
 
-// Border
-$pdf->Rect(10, 10, 277, 190);
+// Draw a beautiful double border
+$pdf->SetDrawColor(168, 32, 26); // WKKA Red
+$pdf->SetLineWidth(1.5);
+$pdf->Rect(12, 12, 273, 186);
+
+$pdf->SetDrawColor(30, 30, 36); // Charcoal
+$pdf->SetLineWidth(0.5);
+$pdf->Rect(14, 14, 269, 182);
 
 // Centered Title
-$pdf->SetFont('Arial', 'B', 20);
-$pdf->Cell(0, 20, mb_convert_encoding('CERTIFICADO DE CONCLUSÃO', 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
-$pdf->Ln(3);
+$pdf->SetY(26);
+$pdf->SetFont('Arial', 'B', 24);
+$pdf->SetTextColor(168, 32, 26);
+$pdf->Cell(0, 12, mb_convert_encoding('CERTIFICADO DE CONCLUSÃO', 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
 
 // Centered logo
-$pdf->Image('../arquivos/logo_instituto.png', 120, 40, 50, 50);
-$pdf->Ln(45);
+$logo_path = '../arquivos/logo_instituto.png';
+if (file_exists($logo_path)) {
+    $pdf->Image($logo_path, 133.5, 41, 30, 30);
+}
+
+$pdf->Ln(32);
 
 // Main text
-$pdf->SetFont('Arial', '', 12);
-$pdf->MultiCell(0, 10, mb_convert_encoding("Certificamos que o(a) Sr(a).", 'ISO-8859-1', 'UTF-8'), 0, 'C');
-$pdf->Ln(3);
+$pdf->SetFont('Arial', 'I', 13);
+$pdf->SetTextColor(50, 50, 50);
+$pdf->Cell(0, 10, mb_convert_encoding("Certificamos que o(a) aluno(a)", 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
+$pdf->Ln(1);
 
 // Highlighted name
-$pdf->SetFont('Arial', 'B', 20);
+$pdf->SetFont('Arial', 'B', 22);
+$pdf->SetTextColor(30, 30, 36);
 $pdf->Cell(0, 15, mb_convert_encoding($nome, 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
-$pdf->Ln(3);
+$pdf->Ln(2);
 
-// Course text and workload (justified)
-$pdf->SetFont('Arial', '', 12);
-$texto_curso = "concluiu com sucesso o curso de $nome_curso, com carga horária de $cargaHoraria horas.";
-$pdf->MultiCell(0, 10, mb_convert_encoding($texto_curso, 'ISO-8859-1', 'UTF-8'), 0, 'J');
-$pdf->Ln(10);
+// Course text and workload
+$pdf->SetFont('Arial', '', 13);
+$pdf->SetTextColor(50, 50, 50);
+$pdf->Cell(0, 8, mb_convert_encoding("concluiu com sucesso o curso online de", 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
 
-// Date on the bottom right
-$pdf->SetFont('Arial', '', 11);
-$pdf->Cell(0, 10, mb_convert_encoding("Cuiabá - MT, $data", 'ISO-8859-1', 'UTF-8'), 0, 1, 'R');
-$pdf->Ln(10);
+$pdf->SetFont('Arial', 'B', 16);
+$pdf->SetTextColor(168, 32, 26);
+$pdf->Cell(0, 10, mb_convert_encoding($nome_curso, 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
+
+$pdf->SetFont('Arial', '', 13);
+$pdf->SetTextColor(50, 50, 50);
+$pdf->Cell(0, 8, mb_convert_encoding("com carga horária total de $cargaHoraria horas.", 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
+$pdf->Ln(6);
+
+// Date
+$pdf->SetFont('Arial', 'I', 11);
+$pdf->SetTextColor(100, 100, 100);
+$pdf->Cell(0, 10, mb_convert_encoding("Cuiabá - MT, $data", 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
+$pdf->Ln(4);
 
 // Space for signatures
 $pdf->SetFont('Arial', '', 10);
-$pdf->Cell(120, 10, "_________________________", 0, 0, 'C');
-$pdf->Cell(40, 10, '', 0, 0, 'C');
-$pdf->Cell(120, 10, "_________________________", 0, 1, 'C');
+$pdf->SetTextColor(50, 50, 50);
+$y_linha = $pdf->GetY();
+$pdf->Cell(120, 8, "_________________________", 0, 0, 'C');
+$pdf->Cell(40, 8, '', 0, 0, 'C');
+$pdf->Cell(120, 8, "_________________________", 0, 1, 'C');
 
-$pdf->Cell(120, 10, mb_convert_encoding("Presidente do Instituto", 'ISO-8859-1', 'UTF-8'), 0, 0, 'C');
-$pdf->Cell(40, 10, '', 0, 0, 'C');
-$pdf->Cell(120, 10, mb_convert_encoding("Diretor Técnico", 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
+// Draw signatures
+if (file_exists('../arquivos/assinatura_presidente.png')) {
+    $pdf->Image('../arquivos/assinatura_presidente.png', 47.5, $y_linha - 6, 45, 15);
+}
+if (file_exists('../arquivos/assinatura_diretor.png')) {
+    $pdf->Image('../arquivos/assinatura_diretor.png', 207.5, $y_linha - 6, 45, 15);
+}
+
+$pdf->Cell(120, 8, mb_convert_encoding("Presidente do Instituto", 'ISO-8859-1', 'UTF-8'), 0, 0, 'C');
+$pdf->Cell(40, 8, '', 0, 0, 'C');
+$pdf->Cell(120, 8, mb_convert_encoding("Diretor Técnico", 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
 
 // Save PDF to file
 $cert_dir = '../arquivos/certificados/';

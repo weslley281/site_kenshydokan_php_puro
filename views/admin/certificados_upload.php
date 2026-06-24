@@ -57,7 +57,7 @@ $filiados = $filiadoRepo->listarFiliadosAtivos();
                     <td class="align-middle text-muted small"><?php echo date("d/m/Y", strtotime($data_upload)); ?></td>
                     <td class="align-middle text-center">
                       <!-- Visualizar Imagem -->
-                      <a href="../img/certificados/<?php echo htmlspecialchars($imagem); ?>" target="_blank" class="btn btn-sm btn-outline-success border-0 rounded-circle mr-1" title="Visualizar Certificado" style="width: 32px; height: 32px; padding: 5px 0;">
+                      <a href="../../img/certificados/<?php echo htmlspecialchars($imagem); ?>" target="_blank" class="btn btn-sm btn-outline-success border-0 rounded-circle mr-1" title="Visualizar Certificado" style="width: 32px; height: 32px; padding: 5px 0;">
                         <i class="fa-solid fa-eye"></i>
                       </a>
 
@@ -101,7 +101,7 @@ $filiados = $filiadoRepo->listarFiliadosAtivos();
             <h5 class="font-weight-bold text-danger mb-2"><?php echo htmlspecialchars($nome); ?></h5>
             <p class="text-secondary font-weight-bold mb-3">"<?php echo htmlspecialchars($titulo); ?>"</p>
             
-            <img src="../img/certificados/<?php echo htmlspecialchars($imagem); ?>" class="img-fluid rounded border shadow-sm mb-3" style="max-height: 150px;" alt="Prévia">
+            <img src="../../img/certificados/<?php echo htmlspecialchars($imagem); ?>" class="img-fluid rounded border shadow-sm mb-3" style="max-height: 150px;" alt="Prévia">
             
             <p class="text-muted small">Esta ação apagará a imagem permanentemente e não poderá ser desfeita.</p>
           </div>

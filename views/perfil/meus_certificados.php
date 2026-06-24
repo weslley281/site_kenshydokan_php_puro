@@ -10,6 +10,26 @@ include_once __DIR__ . "/../../models/cursoModel.php";
 
 $certificados = [];
 if (isset($_SESSION['id_usuario'])) {
+    // Retroactive check: verify and generate certificates for any completed courses
+    try {
+        include_once __DIR__ . "/../../models/aulaModel.php";
+        $aulaModelTmp = new AulaModel();
+        $aulas_assistidas = $aulaModelTmp->getAulasAssistidasPorUsuario($_SESSION['id_usuario']);
+        $cursos_ids = [];
+        foreach ($aulas_assistidas as $aula_id) {
+            $aula_detail = $aulaModelTmp->buscarAula($aula_id);
+            if ($aula_detail && isset($aula_detail['id_curso'])) {
+                $cursos_ids[] = (int)$aula_detail['id_curso'];
+            }
+        }
+        $cursos_ids = array_unique($cursos_ids);
+        foreach ($cursos_ids as $id_curso_auto) {
+            CertificadoModel::verificarEGerarCertificadoAuto($_SESSION['id_usuario'], $id_curso_auto);
+        }
+    } catch (Exception $e) {
+        error_log("Erro no check retroativo de certificados: " . $e->getMessage());
+    }
+
     $certificadoModelRepo = new CertificadoModel();
     $certificados = $certificadoModelRepo->buscarCertificadosPorUsuario($_SESSION['id_usuario']);
 }
@@ -135,7 +155,7 @@ $cursoModelRepo = new CursoModel();
 										<div class="col-md-4 mb-4">
 											<div class="card h-100 border-0 shadow-sm rounded-lg overflow-hidden">
 												<div style="height: 180px; background-color: #f8f9fa; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #dee2e6; position: relative;">
-													<img src="../img/certificados/<?php echo htmlspecialchars($cert['imagem']); ?>" class="img-fluid" style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="<?php echo htmlspecialchars($cert['titulo']); ?>">
+													<img src="../../img/certificados/<?php echo htmlspecialchars($cert['imagem']); ?>" class="img-fluid" style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="<?php echo htmlspecialchars($cert['titulo']); ?>">
 												</div>
 												<div class="card-body p-3 d-flex flex-column justify-content-between">
 													<div>
@@ -143,10 +163,10 @@ $cursoModelRepo = new CursoModel();
 														<small class="text-muted d-block mb-3">Enviado em: <?php echo date('d/m/Y', strtotime($cert['data_upload'])); ?></small>
 													</div>
 													<div class="d-flex justify-content-between">
-														<a href="../img/certificados/<?php echo htmlspecialchars($cert['imagem']); ?>" target="_blank" class="btn btn-sm btn-outline-danger font-weight-bold px-3 rounded-pill">
+														<a href="../../img/certificados/<?php echo htmlspecialchars($cert['imagem']); ?>" target="_blank" class="btn btn-sm btn-outline-danger font-weight-bold px-3 rounded-pill">
 															<i class="fa-solid fa-eye mr-1"></i>Ver
 														</a>
-														<a href="../img/certificados/<?php echo htmlspecialchars($cert['imagem']); ?>" download="<?php echo htmlspecialchars($cert['titulo'] . '.' . pathinfo($cert['imagem'], PATHINFO_EXTENSION)); ?>" class="btn btn-sm btn-danger font-weight-bold px-3 rounded-pill shadow-sm">
+														<a href="../../img/certificados/<?php echo htmlspecialchars($cert['imagem']); ?>" download="<?php echo htmlspecialchars($cert['titulo'] . '.' . pathinfo($cert['imagem'], PATHINFO_EXTENSION)); ?>" class="btn btn-sm btn-danger font-weight-bold px-3 rounded-pill shadow-sm">
 															<i class="fa-solid fa-download mr-1"></i>Baixar
 														</a>
 													</div>

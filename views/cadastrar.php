@@ -3,7 +3,7 @@ include_once "menu.php";
 include_once "../models/filiadoModel.php";
 
 if (isset($_SESSION["id_usuario"])) {
-  echo "<script language='javascript'>window.location='../views/perfil.php'; </script>";
+  echo "<script language='javascript'>window.location='perfil/perfil.php'; </script>";
   exit();
 }
 ?>

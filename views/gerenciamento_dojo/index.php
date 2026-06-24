@@ -5,7 +5,7 @@ include_once __DIR__ . "/../../models/dojoMensalidadeModel.php";
 include_once __DIR__ . "/../../models/dojoFinanceiroModel.php";
 
 // Verificação de autenticação
-if (!isset($_SESSION["id_usuario"]) || $_SESSION['nivel'] != "admin") {
+if (!isset($_SESSION["id_usuario"]) || !in_array($_SESSION['nivel'], ['admin', 'sensei'])) {
     echo "<script>alert('Acesso negado.'); window.location.href = '../login.php';</script>";
     exit();
 }
@@ -59,6 +59,11 @@ $counts_alunos = $alunoConfigModel->contarStatus();
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link rounded-pill font-weight-bold <?php echo ($pagina == 'chamada') ? 'active bg-danger text-white' : 'text-secondary'; ?>" href="index.php?pagina=chamada&referencia=<?php echo $referencia; ?>">
+                <i class="fa-solid fa-clipboard-user mr-1"></i> Frequência
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link rounded-pill font-weight-bold <?php echo ($pagina == 'mensalidades') ? 'active bg-danger text-white' : 'text-secondary'; ?>" href="index.php?pagina=mensalidades&referencia=<?php echo $referencia; ?>">
                 <i class="fa-solid fa-sack-dollar mr-1"></i> Mensalidades
             </a>
@@ -77,6 +82,8 @@ $counts_alunos = $alunoConfigModel->contarStatus();
             include_once __DIR__ . '/dashboard.php';
         } elseif ($pagina === 'alunos') {
             include_once __DIR__ . '/alunos.php';
+        } elseif ($pagina === 'chamada') {
+            include_once __DIR__ . '/chamada.php';
         } elseif ($pagina === 'mensalidades') {
             include_once __DIR__ . '/mensalidades.php';
         } elseif ($pagina === 'financeiro') {

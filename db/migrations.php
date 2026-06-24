@@ -520,5 +520,25 @@ class Migration
             echo "Erro ao criar tabela filiados_graduacoes: " . $this->conn->error;
         }
     }
+
+    public function criarTabelaListaPresenca()
+    {
+        $sql = "
+        CREATE TABLE IF NOT EXISTS lista_presenca (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            id_filiado INT NOT NULL,
+            id_arte INT NOT NULL,
+            data_presenca DATE NOT NULL,
+            status CHAR(1) NOT NULL,
+            conteudo_aula TEXT,
+            FOREIGN KEY (id_filiado) REFERENCES filiados(id_filiado) ON DELETE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        ";
+        if ($this->conn->query($sql) === true) {
+            // Sucesso
+        } else {
+            echo "Erro ao criar tabela de lista_presenca: " . $this->conn->error;
+        }
+    }
 }
 ?>

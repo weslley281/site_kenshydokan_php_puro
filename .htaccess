@@ -3,3 +3,12 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^(.*)$ $1.php [L]
+
+# Evitar colisão de sessões no localhost com o gerenciador_dojo
+<IfModule mod_php.c>
+    php_value session.name "KENSHYDOKAN_SESSID"
+</IfModule>
+<IfModule mod_php7.c>
+    php_value session.name "KENSHYDOKAN_SESSID"
+</IfModule>
+

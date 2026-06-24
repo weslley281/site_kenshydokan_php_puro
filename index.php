@@ -43,7 +43,8 @@ echo "<br>";
 $migration->criarTabelaCertificadosUpload();
 echo "<br>";
 $migration->criarTabelaArtesMarciais();
-echo "<br>";
 $migration->criarTabelaFiliadosGraduacoes();
+echo "<br>";
+$migration->criarTabelaListaPresenca();
 
 echo "<script language='javascript'>window.location='views/inicio.php'; </script>";
