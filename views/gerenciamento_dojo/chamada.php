@@ -171,8 +171,8 @@ if ($id_arte > 0) {
                                 <tbody>
                                     <?php foreach ($alunos as $aluno): 
                                         $aid = $aluno['id_filiado'];
-                                        // Padrão é presente se não houver chamada anterior, senão recupera o status salvo
-                                        $isPresent = empty($chamadaSalva) || (isset($chamadaSalva[$aid]) && $chamadaSalva[$aid] === 'P');
+                                        // Padrão é falta se não houver chamada anterior, senão recupera o status salvo
+                                        $isPresent = !empty($chamadaSalva) && (isset($chamadaSalva[$aid]) && $chamadaSalva[$aid] === 'P');
                                     ?>
                                         <tr>
                                              <td class="align-middle text-center">
@@ -220,6 +220,92 @@ if ($id_arte > 0) {
             </div>
         </div>
     <?php endif; ?>
+
+    <!-- Aulas já Realizadas -->
+    <div class="card border-0 shadow-sm rounded-lg mt-5">
+        <div class="card-body p-4">
+            <h4 class="font-weight-bold text-dark mb-4"><i class="fa-solid fa-list-check mr-2 text-danger"></i>Aulas já Realizadas / Histórico</h4>
+            
+            <?php
+            $aulasRealizadas = $presencaRepo->listarAulasRealizadas();
+            ?>
+            <div class="table-responsive">
+                <table id="minhaTabela" class="table table-hover align-middle" width="100%" cellspacing="0">
+                    <thead>
+                        <tr class="text-secondary small font-weight-bold border-bottom">
+                            <th scope="col">Modalidade</th>
+                            <th scope="col">Data da Aula</th>
+                            <th scope="col">Conteúdo Ministrado</th>
+                            <th scope="col" class="text-center">Alunos Confirmados</th>
+                            <th scope="col" class="text-center">Alunos Presentes</th>
+                            <th scope="col" class="text-center" style="width: 150px;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($aulasRealizadas)): ?>
+                            <?php foreach ($aulasRealizadas as $index => $aula): 
+                                $id_art = $aula['id_arte'];
+                                $data_p = $aula['data_presenca'];
+                                $modalidade = $aula['modalidade'];
+                                $conteudo = $aula['conteudo_aula'];
+                                $total_alunos = $aula['total_alunos'];
+                                $total_presentes = $aula['total_presentes'];
+                            ?>
+                                <tr>
+                                    <td class="align-middle font-weight-bold text-dark text-capitalize"><?php echo htmlspecialchars($modalidade); ?></td>
+                                    <td class="align-middle text-dark font-weight-bold"><?php echo date("d/m/Y", strtotime($data_p)); ?></td>
+                                    <td class="align-middle text-secondary small"><?php echo htmlspecialchars($conteudo); ?></td>
+                                    <td class="align-middle text-center text-dark font-weight-bold"><?php echo $total_alunos; ?></td>
+                                    <td class="align-middle text-center text-success font-weight-bold"><?php echo $total_presentes; ?></td>
+                                    <td class="align-middle text-center">
+                                        <!-- Editar Aula -->
+                                        <a href="index.php?pagina=chamada&id_arte=<?php echo $id_art; ?>&data_presenca=<?php echo $data_p; ?>&referencia=<?php echo htmlspecialchars($referencia ?? date('Y-m')); ?>" class="btn btn-sm btn-outline-primary border-0 rounded-circle mr-1" title="Editar Frequência" style="width: 32px; height: 32px; padding: 5px 0;">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+
+                                        <!-- Excluir Aula -->
+                                        <button type="button" class="btn btn-sm btn-outline-danger border-0 rounded-circle" data-toggle="modal" data-target="#modalExcluirAula<?php echo $index; ?>" title="Excluir Aula" style="width: 32px; height: 32px; padding: 5px 0;">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+
+                                        <!-- Modal de Confirmação de Exclusão -->
+                                        <div class="modal fade" id="modalExcluirAula<?php echo $index; ?>" tabindex="-1" role="dialog" aria-labelledby="excluirAulaLabel<?php echo $index; ?>" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content border-0 shadow-lg text-left">
+                                                    <div class="modal-header bg-danger text-white border-0 py-3">
+                                                        <h5 class="modal-title font-weight-bold" id="excluirAulaLabel<?php echo $index; ?>">
+                                                            <i class="fa-solid fa-triangle-exclamation mr-2"></i> Confirmar Exclusão
+                                                        </h5>
+                                                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body p-4 text-center">
+                                                        <p class="lead mb-2">Deseja realmente excluir a aula de <b><?php echo htmlspecialchars($modalidade); ?></b>?</p>
+                                                        <h5 class="font-weight-bold text-danger mb-2">Data: <?php echo date("d/m/Y", strtotime($data_p)); ?></h5>
+                                                        <p class="text-secondary small">Isso excluirá permanentemente o histórico de presença de todos os alunos nesta aula.</p>
+                                                    </div>
+                                                    <div class="modal-footer border-0 bg-light py-3 text-center d-flex justify-content-center">
+                                                        <button type="button" class="btn btn-secondary px-4 rounded-pill font-weight-bold mr-2" data-dismiss="modal">Cancelar</button>
+                                                        <form action="../../controllers/presencaController.php" method="post" class="d-inline">
+                                                            <input type="hidden" name="tipo" value="excluir_aula">
+                                                            <input type="hidden" name="id_arte" value="<?php echo $id_art; ?>">
+                                                            <input type="hidden" name="data_presenca" value="<?php echo $data_p; ?>">
+                                                            <button type="submit" class="btn btn-danger px-4 rounded-pill font-weight-bold shadow-sm">Excluir</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>

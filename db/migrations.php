@@ -540,5 +540,24 @@ class Migration
             echo "Erro ao criar tabela de lista_presenca: " . $this->conn->error;
         }
     }
+
+    public function criarTabelaDocumentos()
+    {
+        $sql = "
+        CREATE TABLE IF NOT EXISTS documentos (
+            id_documento INT AUTO_INCREMENT PRIMARY KEY,
+            titulo VARCHAR(255) NOT NULL,
+            descricao TEXT DEFAULT NULL,
+            arquivo VARCHAR(255) NOT NULL,
+            dataCriacao DATE DEFAULT NULL,
+            dataMudanca DATE DEFAULT NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        ";
+        if ($this->conn->query($sql) === true) {
+            // Sucesso
+        } else {
+            echo "Erro ao criar tabela de documentos: " . $this->conn->error;
+        }
+    }
 }
 ?>

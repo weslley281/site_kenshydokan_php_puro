@@ -75,6 +75,11 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
           <i class="fa-solid fa-hand-fist mr-1"></i> Artes
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link rounded-pill font-weight-bold <?php echo ($pagina == 'documentos') ? 'active bg-danger text-white' : 'text-secondary'; ?>" href="index.php?pagina=documentos">
+          <i class="fa-solid fa-file-pdf mr-1"></i> Documentos
+        </a>
+      </li>
     </ul>
 
     <!-- Tab Contents -->
@@ -114,6 +119,9 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
       } ?>
       <?php if ($pagina == "artes") {
         include_once "artes.php";
+      } ?>
+      <?php if ($pagina == "documentos") {
+        include_once "documentos.php";
       } ?>
     </div>
   </div>

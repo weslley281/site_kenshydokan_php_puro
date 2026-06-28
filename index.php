@@ -46,5 +46,7 @@ $migration->criarTabelaArtesMarciais();
 $migration->criarTabelaFiliadosGraduacoes();
 echo "<br>";
 $migration->criarTabelaListaPresenca();
+echo "<br>";
+$migration->criarTabelaDocumentos();
 
 echo "<script language='javascript'>window.location='views/inicio.php'; </script>";

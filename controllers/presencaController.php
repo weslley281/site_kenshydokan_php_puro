@@ -45,6 +45,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             echo "<script>alert('Erro ao gravar chamada.'); window.history.back();</script>";
         }
         exit();
+    } elseif ($tipo === 'excluir_aula') {
+        $id_arte = intval($_POST['id_arte'] ?? 0);
+        $data_presenca = $_POST['data_presenca'] ?? '';
+
+        if ($id_arte <= 0 || empty($data_presenca)) {
+            echo "<script>alert('Erro: Modalidade ou data inválida.'); window.history.back();</script>";
+            exit();
+        }
+
+        $sucesso = $presencaModel->excluirAulaRealizada($id_arte, $data_presenca);
+
+        if ($sucesso) {
+            echo "<script>alert('Aula excluída com sucesso!'); window.location='../views/gerenciamento_dojo/index.php?pagina=chamada';</script>";
+        } else {
+            echo "<script>alert('Erro ao excluir aula.'); window.history.back();</script>";
+        }
+        exit();
     }
 }
 
