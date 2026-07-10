@@ -67,6 +67,12 @@ if (isset($_SESSION["id_usuario"])) {
               <input id="senha" type="password" class="form-control form-control-lg bg-light border-0" placeholder="Crie uma senha segura" name="senha" required style="font-size: 1rem;">
             </div>
 
+            <!-- Honeypot Field (Invisible for humans, filled by spam bots) -->
+            <div class="form-group d-none" style="display: none !important;">
+              <label for="username_honey">Deixe este campo em branco</label>
+              <input type="text" id="username_honey" name="username_honey" value="" tabindex="-1" autocomplete="off">
+            </div>
+
             <input type="hidden" name="tipo" value="inserir">
 
             <div class="custom-control custom-checkbox mb-4">

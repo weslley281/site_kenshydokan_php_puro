@@ -51,9 +51,11 @@ $active_page = basename($_SERVER['PHP_SELF']);
                     <a href="eventos.php" class="list-group-item list-group-item-action <?php echo ($active_page == 'eventos.php') ? 'active' : ''; ?>">
                         <i class="fa-solid fa-circle-play mr-2 <?php echo ($active_page == 'eventos.php') ? '' : 'text-danger'; ?>"></i> Eventos Online
                     </a>
+                    <?php if ($usuario["nivel"] !== "aluno"): ?>
                     <a href="meus_certificados.php" class="list-group-item list-group-item-action <?php echo ($active_page == 'meus_certificados.php') ? 'active' : ''; ?>">
                         <i class="fa-solid fa-certificate mr-2 <?php echo ($active_page == 'meus_certificados.php') ? '' : 'text-danger'; ?>"></i> Meus Certificados
                     </a>
+                    <?php endif; ?>
                     <a href="../../controllers/sair.php" class="list-group-item list-group-item-action text-danger font-weight-bold">
                         <i class="fa-solid fa-right-from-bracket mr-2"></i> Sair
                     </a>

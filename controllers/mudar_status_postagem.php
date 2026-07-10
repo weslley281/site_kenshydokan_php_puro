@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["id_usuario"]) || $_SESSION['nivel'] != "admin") {
+if (!isset($_SESSION["id_usuario"]) || $_SESSION['nivel'] !== "admin") {
     echo "<script language='javascript'>window.alert('Você não pode fazer isso'); </script>";
     echo "<script language='javascript'>window.location='../views/login.php'; </script>";
     exit();
@@ -10,20 +10,26 @@ if (!isset($_SESSION["id_usuario"]) || $_SESSION['nivel'] != "admin") {
 include_once "../db/conexao.php";
 include_once "../models/publicacaoModel.php";
 
-$c = new Conexao;
-$conexao = $c->conectar();
+if (!isset($_GET["id"])) {
+    echo "<script language='javascript'>window.location='../views/admin/index.php?pagina=postagens'; </script>";
+    exit();
+}
 
-$id_publicacao = $_GET["id"];
+$id_publicacao = (int)$_GET["id"];
+$postagem = Publicacao::buscarPostagemPorId($id_publicacao);
 
-$busca = "SELECT * FROM postagens WHERE id_publicacao = '$id_publicacao'";
-$resultado = mysqli_query($conexao, $busca);
-$publicacao = mysqli_fetch_array($resultado);
+if (!$postagem) {
+    echo "<script language='javascript'>window.alert('Postagem não encontrada.'); </script>";
+    echo "<script language='javascript'>window.location='../views/admin/index.php?pagina=postagens'; </script>";
+    exit();
+}
 
-$status = $publicacao["status"] == "aguardando" ? "aprovado" : "aguardando";
+$status = ($postagem["status"] === "aguardando") ? "aprovado" : "aguardando";
 
 if (Publicacao::editar_status_publicacao($id_publicacao, $status)) {
     echo "<script language='javascript'>window.location='../views/admin/index.php?pagina=postagens'; </script>";
 } else {
-    echo "<script language='javascript'>window.alert('Erro'); </script>";
+    echo "<script language='javascript'>window.alert('Erro ao atualizar status'); </script>";
     echo "<script language='javascript'>window.location='../views/admin/index.php?pagina=postagens'; </script>";
 }
+?>

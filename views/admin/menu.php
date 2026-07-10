@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include_once __DIR__ . "/../../controllers/verificar_lembrar_me.php";
 include_once __DIR__ . "/../../controllers/contador_paginas.php";
 // Obtém o caminho da URL atual
@@ -99,8 +101,8 @@ $paginas = array(
     <link rel="stylesheet" href="../../../libs/DataTables/datatables.css" />
     
     <!-- Custom Modern Theme CSS -->
-    <link rel="stylesheet" href="../../css/custom.css" />
-    <link rel="stylesheet" href="../../../css/custom.css" />
+    <link rel="stylesheet" href="../../css/custom.css?v=1.3" />
+    <link rel="stylesheet" href="../../../css/custom.css?v=1.3" />
     <?php
     // Itera sobre as páginas e adiciona a classe "active" se a URL atual corresponder
     foreach ($paginas as $url => $nome_da_pagina) {
@@ -150,8 +152,8 @@ $paginas = array(
                 <li class="nav-item dropdown <?php echo ($url_atual == "/views/filiar.php" || $url_atual == "/views/filiados.php") ? 'active' : ''; ?>">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filiação</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item <?php echo ($url_atual == "/../views/filiar.php") ? 'active' : ''; ?>" href="filiar.php">Filiar-se</a>
-                        <a class="dropdown-item <?php echo ($url_atual == "/../views/filiados.php") ? 'active' : ''; ?>" href="filiados.php">Filiados</a>
+                        <a class="dropdown-item <?php echo ($url_atual == "/../views/filiar.php") ? 'active' : ''; ?>" href="../filiar.php">Filiar-se</a>
+                        <a class="dropdown-item <?php echo ($url_atual == "/../views/filiados.php") ? 'active' : ''; ?>" href="../filiados.php">Filiados</a>
                 </li>
 
                 <li class="nav-item <?php echo ($url_atual == "/views/galeria.php") ? 'active' : ''; ?>">

@@ -5,7 +5,11 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION["id_usuario"])) {
-    header("Location: ../login.php");
+    if (!headers_sent()) {
+        header("Location: ../login.php");
+    } else {
+        echo "<script language='javascript'>window.location='../login.php';</script>";
+    }
     exit();
 }
 

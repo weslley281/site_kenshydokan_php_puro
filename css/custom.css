@@ -164,3 +164,197 @@ footer a:hover {
 .tracking-wider {
     letter-spacing: 0.08em;
 }
+
+/* Blog Specific Styles */
+.blog-hero {
+    background: linear-gradient(135deg, #121212 0%, #1a1a1a 50%, #2b0b0d 100%);
+    border-bottom: 4px solid var(--primary-red);
+    position: relative;
+    overflow: hidden;
+}
+
+.blog-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(217, 35, 45, 0.15) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.search-container {
+    max-width: 500px;
+    margin: -30px auto 0;
+    position: relative;
+    z-index: 10;
+}
+
+.search-input {
+    border-radius: 50px !important;
+    padding: 1.5rem 2rem !important;
+    font-size: 1.05rem !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+    border: 2px solid #fff !important;
+    transition: all 0.3s ease !important;
+}
+
+.search-input:focus {
+    border-color: var(--primary-red) !important;
+    box-shadow: 0 10px 25px rgba(217, 35, 45, 0.15) !important;
+}
+
+/* Blog Cards */
+.blog-card {
+    border: none;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.blog-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+}
+
+.blog-card-img-container {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: #eaeaea;
+}
+
+.blog-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.blog-card:hover .blog-card-img {
+    transform: scale(1.05);
+}
+
+.blog-card-img-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #1f1f1f, #2d2d2d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.07);
+}
+
+.blog-card-img-placeholder i {
+    font-size: 4rem;
+}
+
+.blog-card-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: var(--primary-red);
+    color: #fff;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    padding: 5px 12px;
+    border-radius: 50px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.blog-card-title {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+    transition: color 0.25s ease;
+}
+
+.blog-card:hover .blog-card-title {
+    color: var(--primary-red);
+}
+
+.blog-card-text {
+    color: #6c757d;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.avatar-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.avatar-placeholder {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    color: #495057;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Single Post page styles */
+.post-header-hero {
+    background: linear-gradient(135deg, #121212 0%, #1a1a1a 60%, #2b0b0d 100%);
+    border-bottom: 4px solid var(--primary-red);
+    color: #fff;
+    position: relative;
+}
+
+.post-header-hero a {
+    color: #ff4d55;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.post-header-hero a:hover {
+    color: #ff787e;
+}
+
+.post-container {
+    max-width: 800px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    margin-top: -80px;
+    position: relative;
+    z-index: 20;
+}
+
+.post-cover-image {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.post-body {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #333;
+}
+
+.post-body p {
+    margin-bottom: 1.5rem;
+}
+
+.author-bio-card {
+    background-color: #f8f9fa;
+    border-left: 4px solid var(--primary-red);
+    border-radius: 0 8px 8px 0;
+}

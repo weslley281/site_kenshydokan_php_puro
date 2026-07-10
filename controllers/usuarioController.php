@@ -17,6 +17,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if ($_POST["tipo"] == "inserir") {
 
+            // Honeypot anti-spam check
+            if (!empty($_POST["username_honey"])) {
+                // Silent redirect pretending success to fool spam bots
+                exibirMensagemEredirecionar("Cadastro realizado com sucesso", '../views/login.php');
+                exit();
+            }
+
             if (Usuario::buscarUsuarioExistente($_POST["email"])) {
 
                 exibirMensagemEredirecionar("Erro: Usuário já existe", '../views/login.php');
@@ -171,9 +178,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             if ($usuarioModel->editarSenhaUsuario($id_usuario, $senhaSegura)) {
                 $usuarioModel->editarTokenUsuario($id_usuario, "");
-                exibirMensagemEredirecionar(MSG_SUCESSO, '../views/perfil/editar_perfil.php');
+                $redirectDestino = isset($_SESSION["id_usuario"]) ? '../views/perfil/editar_perfil.php' : '../views/login.php';
+                exibirMensagemEredirecionar(MSG_SUCESSO, $redirectDestino);
             } else {
-                exibirMensagemEredirecionar(MSG_ERRO, '../views/perfil/editar_perfil.php');
+                $redirectDestino = isset($_SESSION["id_usuario"]) ? '../views/perfil/editar_perfil.php' : '../views/login.php';
+                exibirMensagemEredirecionar(MSG_ERRO, $redirectDestino);
             }
         } elseif ($_POST["tipo"] == "deletar") {
             $id_usuario = $_POST["id_usuario"];

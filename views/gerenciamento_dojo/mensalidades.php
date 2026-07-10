@@ -76,8 +76,8 @@ $mensalidades = $mensalidadeModel->buscarMensalidadesReferencia($referencia);
                     </button>
                   <?php else: ?>
                     <!-- Botão de Imprimir Recibo -->
-                    <a href="../../controllers/gerar_recibo.php?id=<?php echo $id_mensalidade; ?>" target="_blank" class="btn btn-sm btn-outline-danger border-0 rounded-circle" title="Imprimir Recibo" style="width: 32px; height: 32px; padding: 5px 0; display: inline-flex; align-items: center; justify-content: center;">
-                      <i class="fa-solid fa-file-pdf"></i>
+                    <a href="../../controllers/imprimir_recibo.php?id=<?php echo $id_mensalidade; ?>" target="_blank" class="btn btn-sm btn-outline-danger border-0 rounded-circle" title="Imprimir Recibo" style="width: 32px; height: 32px; padding: 5px 0; display: inline-flex; align-items: center; justify-content: center;">
+                      <i class="fa-solid fa-print"></i>
                     </a>
                   <?php endif; ?>
                 </td>

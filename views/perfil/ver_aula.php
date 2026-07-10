@@ -147,5 +147,5 @@ try {
 </script>
 
 <?php
-include __DIR__ . "/../rodape.php";
+include __DIR__ . "/rodape.php";
 ?>

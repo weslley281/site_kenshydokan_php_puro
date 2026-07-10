@@ -4,6 +4,7 @@ include_once __DIR__ . "/../db/conexao.php";
 class Publicacao
 {
     private $id_usuario;
+    private $id_imagem;
     private $titulo;
     private $conteudo;
     private $status;
@@ -11,9 +12,10 @@ class Publicacao
     private $dataMudanca;
     private $conexao;
 
-    public function __construct($id_usuario = null, $titulo = null, $conteudo = null, $dataMudanca = null, $status = "aguardando")
+    public function __construct($id_usuario = null, $id_imagem = null, $titulo = null, $conteudo = null, $dataMudanca = null, $status = "aguardando")
     {
         $this->id_usuario = $id_usuario;
+        $this->id_imagem = $id_imagem;
         $this->titulo = $titulo;
         $this->conteudo = $conteudo;
         $this->status = $status;
@@ -28,6 +30,16 @@ class Publicacao
     public function getIdUsuario()
     {
         return $this->id_usuario;
+    }
+
+    public function getIdImagem()
+    {
+        return $this->id_imagem;
+    }
+
+    public function setIdImagem($id_imagem)
+    {
+        $this->id_imagem = $id_imagem;
     }
 
     public function getTitulo()
@@ -90,15 +102,16 @@ class Publicacao
 
     public function criarPublicacao(Publicacao $publicacao): bool
     {
-        $inserir = $this->conexao->prepare("INSERT INTO postagens (id_usuario, titulo, conteudo, status, dataCriacao, dataMudanca) VALUES (?, ?, ?, ?, ?, ?)");
+        $inserir = $this->conexao->prepare("INSERT INTO postagens (id_usuario, id_imagem, titulo, conteudo, status, dataCriacao, dataMudanca) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $id_u = $publicacao->getIdUsuario();
+        $id_img = $publicacao->getIdImagem();
         $tit = $publicacao->getTitulo();
         $cont = $publicacao->getConteudo();
         $st = $publicacao->getStatus();
         $dc = $publicacao->getDataCriacao();
         $dm = $publicacao->getDataMudanca();
 
-        $inserir->bind_param("isssss", $id_u, $tit, $cont, $st, $dc, $dm);
+        $inserir->bind_param("iisssss", $id_u, $id_img, $tit, $cont, $st, $dc, $dm);
         $resultado = $inserir->execute();
         $inserir->close();
 
@@ -107,13 +120,14 @@ class Publicacao
 
     public function editar_publicacao(int $id_publicacao, Publicacao $publicacao): bool
     {
-        $atualizar = $this->conexao->prepare("UPDATE postagens SET titulo = ?, conteudo = ?, status = ?, dataMudanca = ? WHERE id_publicacao = ?");
+        $atualizar = $this->conexao->prepare("UPDATE postagens SET id_imagem = ?, titulo = ?, conteudo = ?, status = ?, dataMudanca = ? WHERE id_publicacao = ?");
+        $id_img = $publicacao->getIdImagem();
         $tit = $publicacao->getTitulo();
         $cont = $publicacao->getConteudo();
         $st = $publicacao->getStatus();
         $dm = $publicacao->getDataMudanca();
 
-        $atualizar->bind_param("ssssi", $tit, $cont, $st, $dm, $id_publicacao);
+        $atualizar->bind_param("issssi", $id_img, $tit, $cont, $st, $dm, $id_publicacao);
         $resultado = $atualizar->execute();
         $atualizar->close();
 
@@ -182,12 +196,34 @@ class Publicacao
         return $autor;
     }
 
+    public static function buscar_autor($id_usuario)
+    {
+        $c = new Conexao();
+        $conexao = $c->conectar();
+
+        $busca = "SELECT u.nome, i.caminho as foto FROM usuarios u LEFT JOIN imagens i ON u.id_imagem = i.id_imagem WHERE u.id_usuario = ?";
+
+        $procura = $conexao->prepare($busca);
+        $procura->bind_param("i", $id_usuario);
+        $procura->execute();
+        $resultado = $procura->get_result();
+        $autor = null;
+
+        if ($resultado && $row = $resultado->fetch_assoc()) {
+            $autor = $row;
+        }
+
+        $procura->close();
+
+        return $autor;
+    }
+
     public static function buscarPostagensAprovadas()
     {
         $c = new Conexao();
         $conexao = $c->conectar();
 
-        $busca = "SELECT id_publicacao, id_usuario, titulo, conteudo, dataCriacao FROM postagens WHERE status = 'aprovado' ORDER BY id_publicacao DESC";
+        $busca = "SELECT p.*, i.caminho as caminho_imagem FROM postagens p LEFT JOIN imagens i ON p.id_imagem = i.id_imagem WHERE p.status = 'aprovado' ORDER BY p.id_publicacao DESC";
         $resultado = $conexao->query($busca);
 
         $postagens = [];
@@ -204,7 +240,7 @@ class Publicacao
         $c = new Conexao();
         $conexao = $c->conectar();
 
-        $busca = "SELECT * FROM postagens ORDER BY id_publicacao DESC";
+        $busca = "SELECT p.*, i.caminho as caminho_imagem FROM postagens p LEFT JOIN imagens i ON p.id_imagem = i.id_imagem ORDER BY p.id_publicacao DESC";
         $resultado = $conexao->query($busca);
 
         $postagens = [];
@@ -221,7 +257,7 @@ class Publicacao
         $c = new Conexao();
         $conexao = $c->conectar();
 
-        $busca = $conexao->prepare("SELECT * FROM postagens WHERE id_publicacao = ?");
+        $busca = $conexao->prepare("SELECT p.*, i.caminho as caminho_imagem FROM postagens p LEFT JOIN imagens i ON p.id_imagem = i.id_imagem WHERE p.id_publicacao = ?");
         $busca->bind_param("i", $id_publicacao);
         $busca->execute();
         $resultado = $busca->get_result();
@@ -241,7 +277,7 @@ class Publicacao
         $c = new Conexao();
         $conexao = $c->conectar();
 
-        $busca = $conexao->prepare("SELECT * FROM postagens WHERE id_usuario = ? ORDER BY id_publicacao DESC");
+        $busca = $conexao->prepare("SELECT p.*, i.caminho as caminho_imagem FROM postagens p LEFT JOIN imagens i ON p.id_imagem = i.id_imagem WHERE p.id_usuario = ? ORDER BY p.id_publicacao DESC");
         $busca->bind_param("i", $id_usuario);
         $busca->execute();
         $resultado = $busca->get_result();

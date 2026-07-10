@@ -87,38 +87,9 @@
                       <a href="editar_curso.php?id=<?php echo $id_curso; ?>" class="btn btn-sm btn-outline-primary border-0 rounded-circle mr-1" title="Editar Curso" style="width: 32px; height: 32px; padding: 5px 0;">
                         <i class="fa-solid fa-pen-to-square"></i>
                       </a>
-                      <button type="button" class="btn btn-sm btn-outline-danger border-0 rounded-circle" data-toggle="modal" data-target="#modalExcluirCurso<?php echo $id_curso; ?>" title="Excluir Curso" style="width: 32px; height: 32px; padding: 5px 0;">
+                      <button type="button" class="btn btn-sm btn-outline-danger border-0 rounded-circle" data-toggle="modal" data-target="#confirmDeleteCursoModal" data-id="<?php echo $id_curso; ?>" data-nome="<?php echo htmlspecialchars($nome); ?>" title="Excluir Curso" style="width: 32px; height: 32px; padding: 5px 0;">
                         <i class="fa-solid fa-trash-can"></i>
                       </button>
-
-                      <!-- Modal de Exclusão -->
-                      <div class="modal fade" id="modalExcluirCurso<?php echo $id_curso; ?>" tabindex="-1" role="dialog" aria-labelledby="excluirLabel<?php echo $id_curso; ?>" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content border-0 shadow-lg">
-                            <div class="modal-header bg-danger text-white border-0 py-3">
-                              <h5 class="modal-title font-weight-bold" id="excluirLabel<?php echo $id_curso; ?>">
-                                <i class="fa-solid fa-triangle-exclamation mr-2"></i> Confirmar Exclusão
-                              </h5>
-                              <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body p-4 text-center">
-                              <p class="lead mb-2">Tem certeza que deseja excluir este curso?</p>
-                              <h5 class="font-weight-bold text-danger mb-0"><?php echo htmlspecialchars($nome); ?></h5>
-                              <p class="text-muted mt-2 small">Esta ação não poderá ser desfeita.</p>
-                            </div>
-                            <div class="modal-footer border-0 bg-light py-3 text-center d-flex justify-content-center">
-                              <button type="button" class="btn btn-secondary px-4 rounded-pill font-weight-bold mr-2" data-dismiss="modal">Cancelar</button>
-                              <form action="../../controllers/cursoController.php" method="post" class="d-inline">
-                                <input type="hidden" name="tipo" value="excluir">
-                                <input type="hidden" name="id_curso" value="<?php echo $id_curso; ?>">
-                                <button type="submit" class="btn btn-danger px-4 rounded-pill font-weight-bold shadow-sm">Excluir</button>
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </td>
                   </tr>
               <?php }
@@ -130,3 +101,46 @@
     </div>
   </div>
 </div>
+
+<!-- Modal de Exclusão Único -->
+<div class="modal fade" id="confirmDeleteCursoModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteCursoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-0 shadow-lg text-left">
+      <div class="modal-header bg-danger text-white border-0 py-3">
+        <h5 class="modal-title font-weight-bold" id="confirmDeleteCursoLabel">
+          <i class="fa-solid fa-triangle-exclamation mr-2"></i> Confirmar Exclusão
+        </h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-4 text-center">
+        <p class="lead mb-2">Tem certeza que deseja excluir este curso?</p>
+        <h5 class="font-weight-bold text-danger mb-0" id="deleteCursoName"></h5>
+        <p class="text-muted mt-2 small">Esta ação não poderá ser desfeita.</p>
+      </div>
+      <div class="modal-footer border-0 bg-light py-3 text-center d-flex justify-content-center">
+        <button type="button" class="btn btn-secondary px-4 rounded-pill font-weight-bold mr-2" data-dismiss="modal">Cancelar</button>
+        <form action="../../controllers/cursoController.php" method="post" class="d-inline">
+          <input type="hidden" name="tipo" value="excluir">
+          <input type="hidden" name="id_curso" id="deleteCursoId" value="">
+          <button type="submit" class="btn btn-danger px-4 rounded-pill font-weight-bold shadow-sm">Excluir</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    $('#confirmDeleteCursoModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var nome = button.data('nome');
+        
+        var modal = $(this);
+        modal.find('#deleteCursoId').val(id);
+        modal.find('#deleteCursoName').text(nome);
+    });
+});
+</script>

@@ -82,72 +82,14 @@
                       </a>
                       
                       <?php if ($confirmacao == 'sim'): ?>
-                        <button type="button" class="btn btn-sm btn-outline-warning border-0 rounded-circle mr-1" data-toggle="modal" data-target="#modalDesconfirmarFiliado<?php echo $id_filiado; ?>" title="Desconfirmar Filiado" style="width: 32px; height: 32px; padding: 5px 0;">
+                        <button type="button" class="btn btn-sm btn-outline-warning border-0 rounded-circle mr-1" data-toggle="modal" data-target="#confirmDesconfirmarFiliadoModal" data-id="<?php echo $id_filiado; ?>" data-nome="<?php echo htmlspecialchars($nome ?? ''); ?>" title="Desconfirmar Filiado" style="width: 32px; height: 32px; padding: 5px 0;">
                           <i class="fa-solid fa-user-xmark"></i>
                         </button>
                       <?php endif; ?>
 
-                      <button type="button" class="btn btn-sm btn-outline-danger border-0 rounded-circle" data-toggle="modal" data-target="#modalExcluirFiliado<?php echo $id_filiado; ?>" title="Excluir Filiado" style="width: 32px; height: 32px; padding: 5px 0;">
+                      <button type="button" class="btn btn-sm btn-outline-danger border-0 rounded-circle" data-toggle="modal" data-target="#confirmDeleteFiliadoModal" data-id="<?php echo $id_filiado; ?>" data-nome="<?php echo htmlspecialchars($nome ?? ''); ?>" title="Excluir Filiado" style="width: 32px; height: 32px; padding: 5px 0;">
                         <i class="fa-solid fa-trash-can"></i>
                       </button>
-
-                      <!-- Modal Excluir -->
-                      <div class="modal fade" id="modalExcluirFiliado<?php echo $id_filiado; ?>" tabindex="-1" role="dialog" aria-labelledby="excluirLabel<?php echo $id_filiado; ?>" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content border-0 shadow-lg">
-                            <div class="modal-header bg-danger text-white border-0 py-3">
-                              <h5 class="modal-title font-weight-bold" id="excluirLabel<?php echo $id_filiado; ?>">
-                                <i class="fa-solid fa-triangle-exclamation mr-2"></i> Confirmar Exclusão
-                              </h5>
-                              <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body p-4 text-center">
-                              <p class="lead mb-2">Tem certeza que deseja excluir este filiado?</p>
-                              <h5 class="font-weight-bold text-danger mb-0"><?php echo htmlspecialchars($nome ?? ''); ?></h5>
-                              <p class="text-muted mt-2 small">Esta ação não poderá ser desfeita.</p>
-                            </div>
-                            <div class="modal-footer border-0 bg-light py-3 text-center d-flex justify-content-center">
-                              <button type="button" class="btn btn-secondary px-4 rounded-pill font-weight-bold mr-2" data-dismiss="modal">Cancelar</button>
-                              <form action="../../controllers/filiadoController.php" method="post" class="d-inline">
-                                <input type="hidden" name="tipo" value="excluir">
-                                <input type="hidden" name="id_filiado" value="<?php echo $id_filiado; ?>">
-                                <button type="submit" class="btn btn-danger px-4 rounded-pill font-weight-bold shadow-sm">Excluir</button>
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Modal Desconfirmar -->
-                      <div class="modal fade" id="modalDesconfirmarFiliado<?php echo $id_filiado; ?>" tabindex="-1" role="dialog" aria-labelledby="desconfirmarLabel<?php echo $id_filiado; ?>" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content border-0 shadow-lg">
-                            <div class="modal-header bg-warning text-dark border-0 py-3">
-                              <h5 class="modal-title font-weight-bold" id="desconfirmarLabel<?php echo $id_filiado; ?>">
-                                <i class="fa-solid fa-user-slash mr-2"></i> Desconfirmar Filiado
-                              </h5>
-                              <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body p-4 text-center">
-                              <p class="lead mb-2">Tem certeza que deseja remover a confirmação deste filiado?</p>
-                              <h5 class="font-weight-bold text-warning mb-0"><?php echo htmlspecialchars($nome ?? ''); ?></h5>
-                              <p class="text-muted mt-2 small">O status do filiado retornará para pendente.</p>
-                            </div>
-                            <div class="modal-footer border-0 bg-light py-3 text-center d-flex justify-content-center">
-                              <button type="button" class="btn btn-secondary px-4 rounded-pill font-weight-bold mr-2" data-dismiss="modal">Cancelar</button>
-                              <form action="../../controllers/filiadoController.php" method="post" class="d-inline">
-                                <input type="hidden" name="tipo" value="desconfirmar">
-                                <input type="hidden" name="id_filiado" value="<?php echo $id_filiado; ?>">
-                                <button type="submit" class="btn btn-warning px-4 rounded-pill font-weight-bold shadow-sm text-dark">Desconfirmar</button>
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </td>
                   </tr>
               <?php }
@@ -159,3 +101,85 @@
     </div>
   </div>
 </div>
+
+<!-- Modal de Exclusão Único -->
+<div class="modal fade" id="confirmDeleteFiliadoModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteFiliadoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-0 shadow-lg text-left">
+      <div class="modal-header bg-danger text-white border-0 py-3">
+        <h5 class="modal-title font-weight-bold" id="confirmDeleteFiliadoLabel">
+          <i class="fa-solid fa-triangle-exclamation mr-2"></i> Confirmar Exclusão
+        </h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-4 text-center">
+        <p class="lead mb-2">Tem certeza que deseja excluir este filiado?</p>
+        <h5 class="font-weight-bold text-danger mb-0" id="deleteFiliadoName"></h5>
+        <p class="text-muted mt-2 small">Esta ação não poderá ser desfeita.</p>
+      </div>
+      <div class="modal-footer border-0 bg-light py-3 text-center d-flex justify-content-center">
+        <button type="button" class="btn btn-secondary px-4 rounded-pill font-weight-bold mr-2" data-dismiss="modal">Cancelar</button>
+        <form action="../../controllers/filiadoController.php" method="post" class="d-inline">
+          <input type="hidden" name="tipo" value="excluir">
+          <input type="hidden" name="id_filiado" id="deleteFiliadoId" value="">
+          <button type="submit" class="btn btn-danger px-4 rounded-pill font-weight-bold shadow-sm">Excluir</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Desconfirmar Único -->
+<div class="modal fade" id="confirmDesconfirmarFiliadoModal" tabindex="-1" role="dialog" aria-labelledby="confirmDesconfirmarLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-0 shadow-lg text-left">
+      <div class="modal-header bg-warning text-dark border-0 py-3">
+        <h5 class="modal-title font-weight-bold" id="confirmDesconfirmarLabel">
+          <i class="fa-solid fa-user-slash mr-2"></i> Desconfirmar Filiado
+        </h5>
+        <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-4 text-center">
+        <p class="lead mb-2">Tem certeza que deseja remover a confirmação deste filiado?</p>
+        <h5 class="font-weight-bold text-warning mb-0" id="desconfirmarFiliadoName"></h5>
+        <p class="text-muted mt-2 small">O status do filiado retornará para pendente.</p>
+      </div>
+      <div class="modal-footer border-0 bg-light py-3 text-center d-flex justify-content-center">
+        <button type="button" class="btn btn-secondary px-4 rounded-pill font-weight-bold mr-2" data-dismiss="modal">Cancelar</button>
+        <form action="../../controllers/filiadoController.php" method="post" class="d-inline">
+          <input type="hidden" name="tipo" value="desconfirmar">
+          <input type="hidden" name="id_filiado" id="desconfirmarFiliadoId" value="">
+          <button type="submit" class="btn btn-warning px-4 rounded-pill font-weight-bold shadow-sm text-dark">Desconfirmar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    $('#confirmDeleteFiliadoModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var nome = button.data('nome');
+        
+        var modal = $(this);
+        modal.find('#deleteFiliadoId').val(id);
+        modal.find('#deleteFiliadoName').text(nome);
+    });
+
+    $('#confirmDesconfirmarFiliadoModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var nome = button.data('nome');
+        
+        var modal = $(this);
+        modal.find('#desconfirmarFiliadoId').val(id);
+        modal.find('#desconfirmarFiliadoName').text(nome);
+    });
+});
+</script>

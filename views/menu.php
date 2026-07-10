@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include_once __DIR__ . "/../controllers/verificar_lembrar_me.php";
 include_once __DIR__ . "/../controllers/contador_paginas.php";
 // Obtém o caminho da URL atual
@@ -154,8 +156,8 @@ $pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
     <link rel="stylesheet" href="../../libs/DataTables/datatables.css" />
     
     <!-- Custom Modern Theme CSS -->
-    <link rel="stylesheet" href="../css/custom.css" />
-    <link rel="stylesheet" href="../../css/custom.css" />
+    <link rel="stylesheet" href="../css/custom.css?v=1.3" />
+    <link rel="stylesheet" href="../../css/custom.css?v=1.3" />
     <?php
     // Itera sobre as páginas e adiciona a classe "active" se a URL atual corresponder
     // foreach ($paginas as $url => $nome_da_pagina) {

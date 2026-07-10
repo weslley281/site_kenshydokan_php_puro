@@ -1,8 +1,14 @@
 <?php
 // views/perfil/meus_certificados.php
 $page_title = "Meus Certificados";
-include __DIR__ . "/menu.php";
 include __DIR__ . "/_perfil_auth.php";
+
+if ($usuario["nivel"] === "aluno") {
+    header("Location: perfil.php");
+    exit();
+}
+
+include __DIR__ . "/menu.php";
 include_once __DIR__ . "/../../models/certificadoModel.php";
 include_once __DIR__ . "/../../models/certificadoManualModel.php";
 include_once __DIR__ . "/../../models/certificadoUploadModel.php";

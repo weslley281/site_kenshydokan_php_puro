@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $destino = '../views/gerenciamento_dojo/index.php?pagina=mensalidades&referencia=' . $mensalidade['referencia'];
                     echo "<script language='javascript'>
                         if (confirm('Operação realizada com sucesso! Deseja gerar e imprimir o recibo de pagamento?')) {
-                            window.open('gerar_recibo.php?id=" . $id_mensalidade . "', '_blank');
+                            window.open('imprimir_recibo.php?id=" . $id_mensalidade . "', '_blank');
                         }
                         window.location='" . $destino . "';
                     </script>";

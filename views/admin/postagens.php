@@ -69,38 +69,9 @@
                         <?php endif; ?>
                       </a>
 
-                      <button type="button" class="btn btn-sm btn-outline-danger border-0 rounded-circle" data-toggle="modal" data-target="#modalExcluirPostagem<?php echo $id_publicacao; ?>" title="Excluir Postagem" style="width: 32px; height: 32px; padding: 5px 0;">
+                      <button type="button" class="btn btn-sm btn-outline-danger border-0 rounded-circle" data-toggle="modal" data-target="#confirmDeletePostModal" data-id="<?php echo $id_publicacao; ?>" data-titulo="<?php echo htmlspecialchars($titulo); ?>" title="Excluir Postagem" style="width: 32px; height: 32px; padding: 5px 0;">
                         <i class="fa-solid fa-trash-can"></i>
                       </button>
-
-                      <!-- Modal de Exclusão -->
-                      <div class="modal fade" id="modalExcluirPostagem<?php echo $id_publicacao; ?>" tabindex="-1" role="dialog" aria-labelledby="excluirLabel<?php echo $id_publicacao; ?>" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content border-0 shadow-lg">
-                            <div class="modal-header bg-danger text-white border-0 py-3">
-                              <h5 class="modal-title font-weight-bold" id="excluirLabel<?php echo $id_publicacao; ?>">
-                                <i class="fa-solid fa-triangle-exclamation mr-2"></i> Confirmar Exclusão
-                              </h5>
-                              <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body p-4 text-center">
-                              <p class="lead mb-2">Tem certeza que deseja excluir esta postagem?</p>
-                              <h5 class="font-weight-bold text-danger mb-0"><?php echo htmlspecialchars($titulo); ?></h5>
-                              <p class="text-muted mt-2 small">Esta ação não poderá ser desfeita.</p>
-                            </div>
-                            <div class="modal-footer border-0 bg-light py-3 text-center d-flex justify-content-center">
-                              <button type="button" class="btn btn-secondary px-4 rounded-pill font-weight-bold mr-2" data-dismiss="modal">Cancelar</button>
-                              <form action="../../controllers/postagemController.php" method="post" class="d-inline">
-                                <input type="hidden" name="tipo" value="excluir">
-                                <input type="hidden" name="id_publicacao" value="<?php echo $id_publicacao; ?>">
-                                <button type="submit" class="btn btn-danger px-4 rounded-pill font-weight-bold shadow-sm">Excluir</button>
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </td>
                   </tr>
               <?php }
@@ -112,3 +83,46 @@
     </div>
   </div>
 </div>
+
+<!-- Modal de Exclusão Único -->
+<div class="modal fade" id="confirmDeletePostModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeletePostLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-0 shadow-lg text-left">
+      <div class="modal-header bg-danger text-white border-0 py-3">
+        <h5 class="modal-title font-weight-bold" id="confirmDeletePostLabel">
+          <i class="fa-solid fa-triangle-exclamation mr-2"></i> Confirmar Exclusão
+        </h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-4 text-center">
+        <p class="lead mb-2">Tem certeza que deseja excluir esta postagem?</p>
+        <h5 class="font-weight-bold text-danger mb-0" id="deletePostTitle"></h5>
+        <p class="text-muted mt-2 small">Esta ação não poderá ser desfeita.</p>
+      </div>
+      <div class="modal-footer border-0 bg-light py-3 text-center d-flex justify-content-center">
+        <button type="button" class="btn btn-secondary px-4 rounded-pill font-weight-bold mr-2" data-dismiss="modal">Cancelar</button>
+        <form action="../../controllers/postagemController.php" method="post" class="d-inline">
+          <input type="hidden" name="tipo" value="excluir">
+          <input type="hidden" name="id_publicacao" id="deletePostId" value="">
+          <button type="submit" class="btn btn-danger px-4 rounded-pill font-weight-bold shadow-sm">Excluir</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    $('#confirmDeletePostModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var titulo = button.data('titulo');
+        
+        var modal = $(this);
+        modal.find('#deletePostId').val(id);
+        modal.find('#deletePostTitle').text(titulo);
+    });
+});
+</script>
