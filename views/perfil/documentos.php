@@ -19,12 +19,29 @@ include __DIR__ . "/_perfil_auth.php";
 					<div class="text-center">
 						<h1><strong>Documento para baixar</strong></h1>
 					</div>
-					<div class="row">
-						<ul>
-							<li><a href="../../arquivos/Dojokum.pdf"><b>Dojo Kum</b></a></li>
-							<li><a href="../../arquivos/ficha.pdf"><b>Ficha para inscrever atleta em exame de graduação manualmente</b></a></li>
-							<li><a href="../../arquivos/regras.pdf"><b>Regras para Campeonatos</b></a></li>
-						</ul>
+					<?php
+					include_once __DIR__ . "/../../models/documentoModel.php";
+					$docModel = new DocumentoModel();
+					$documentos = $docModel->listarTodos();
+					?>
+					<div class="row pl-3">
+						<?php if (!empty($documentos)): ?>
+							<ul class="list-unstyled" style="line-height: 2;">
+								<?php foreach ($documentos as $doc): ?>
+									<li class="mb-2">
+										<i class="fa-solid fa-file-pdf text-danger mr-2"></i>
+										<a href="../../arquivos/<?php echo htmlspecialchars($doc['arquivo']); ?>" target="_blank" class="text-dark font-weight-bold">
+											<?php echo htmlspecialchars($doc['titulo']); ?>
+										</a>
+										<?php if (!empty($doc['descricao'])): ?>
+											<span class="text-secondary d-block small ml-4"><?php echo htmlspecialchars($doc['descricao']); ?></span>
+										<?php endif; ?>
+									</li>
+								<?php endforeach; ?>
+							</ul>
+						<?php else: ?>
+							<p class="text-muted">Nenhum documento disponível para download no momento.</p>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>

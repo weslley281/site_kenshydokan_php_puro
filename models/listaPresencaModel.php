@@ -144,5 +144,47 @@ class ListaPresencaModel
             return [];
         }
     }
+
+    public function listarAulasRealizadas(): array
+    {
+        $query = "
+            SELECT 
+                p.id_arte, 
+                p.data_presenca, 
+                p.conteudo_aula, 
+                a.nome AS modalidade, 
+                COUNT(p.id) AS total_alunos, 
+                SUM(CASE WHEN p.status = 'P' THEN 1 ELSE 0 END) AS total_presentes
+            FROM lista_presenca p 
+            INNER JOIN artes_marciais a ON p.id_arte = a.id_arte 
+            GROUP BY p.id_arte, p.data_presenca, p.conteudo_aula, a.nome
+            ORDER BY p.data_presenca DESC
+        ";
+        try {
+            $resultado = $this->conexao->query($query);
+            if ($resultado) {
+                $dados = $resultado->fetch_all(MYSQLI_ASSOC);
+                $resultado->free();
+                return $dados;
+            }
+        } catch (Exception $e) {
+            error_log("Erro ao listar aulas realizadas: " . $e->getMessage());
+        }
+        return [];
+    }
+
+    public function excluirAulaRealizada($id_arte, $data_presenca): bool
+    {
+        try {
+            $stmt = $this->conexao->prepare("DELETE FROM lista_presenca WHERE id_arte = ? AND data_presenca = ?");
+            $stmt->bind_param("is", $id_arte, $data_presenca);
+            $res = $stmt->execute();
+            $stmt->close();
+            return $res;
+        } catch (Exception $e) {
+            error_log("Erro ao excluir aula realizada: " . $e->getMessage());
+            return false;
+        }
+    }
 }
 ?>
