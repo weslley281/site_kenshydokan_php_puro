@@ -74,6 +74,38 @@ $paginas = array(
         gtag('config', 'UA-118512913-1');
     </script>
 
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SportsOrganization",
+            "name": "Instituto de Artes Marciais e Defesa Pessoal Kenshydokan",
+            "alternateName": "Kenshydokan Karate Institute",
+            "url": "https://kenshydokan.com/",
+            "description": "Organização dedicada ao ensino do Karatê Kenshydokan.",
+            "founder": {
+                "@type": "Person",
+                "name": "Shihan Jonas Teixeira de Andrade",
+                "jobTitle": "Criador e Presidente"
+            },
+            "member": {
+                "@type": "Person",
+                "name": "Weslley Henrique Vieira Ferraz",
+                "jobTitle": "Discípulo Direto do Fundador, Diretor Técnico e Instrutor da Kenshydokan de nivel mais elevado"
+            },
+            "location": {
+                "@type": "Place",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "Rua 24 de Outubro, 154",
+                    "addressLocality": "Várzea Grande",
+                    "addressRegion": "MT",
+                    "postalCode": "78110-350",
+                    "addressCountry": "BR"
+                }
+            }
+        }
+    </script>
+
 
 
     <meta name="author" content="Weslley Henrique Vieira Ferraz" />
@@ -98,7 +130,7 @@ $paginas = array(
 
     <link rel="stylesheet" href="../../libs/DataTables/datatables.css" />
     <link rel="stylesheet" href="../../../libs/DataTables/datatables.css" />
-    
+
     <!-- Custom Modern Theme CSS -->
     <link rel="stylesheet" href="../../css/custom.css?v=1.3" />
     <link rel="stylesheet" href="../../../css/custom.css?v=1.3" />
