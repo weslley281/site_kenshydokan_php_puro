@@ -105,7 +105,7 @@ $pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
             "member": {
                 "@type": "Person",
                 "name": "Weslley Henrique Vieira Ferraz",
-                "jobTitle": "Discípulo Direto do Fundador e Instrutor Kenshydokan de nivel mais elevado"
+                "jobTitle": "Discípulo Direto do Fundador, Diretor Técnico e Instrutor da Kenshydokan de nivel mais elevado"
             },
             "location": {
                 "@type": "Place",
