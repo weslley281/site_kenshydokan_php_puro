@@ -11,6 +11,12 @@ if (!isset($_SESSION["id_usuario"])) {
     die("Acesso negado. Por favor, faça o login.");
 }
 
+// Apenas kohai, sensei e admin podem gerar ou ver a carteirinha
+$niveis_permitidos = ['kohai', 'sensei', 'admin'];
+if (!isset($_SESSION["nivel"]) || !in_array($_SESSION["nivel"], $niveis_permitidos)) {
+    die("Acesso negado. Apenas kohai, sensei e admin possuem permissão para gerar carteirinha.");
+}
+
 require_once '../libs/fpdf/fpdf.php';
 require_once '../models/filiadoModel.php';
 require_once '../models/graduacaoModel.php';
@@ -47,11 +53,17 @@ foreach ($filiadoGraduacoes as $fg) {
 $conn = new Conexao();
 $conexao = $conn->conectar();
 $id_usuario = $_SESSION['id_usuario'];
-$busca_usuario = $conexao->prepare("SELECT id_imagem FROM usuarios WHERE id_usuario = ?");
+$busca_usuario = $conexao->prepare("SELECT id_imagem, nivel FROM usuarios WHERE id_usuario = ?");
 $busca_usuario->bind_param("i", $id_usuario);
 $busca_usuario->execute();
 $resultado_usuario = $busca_usuario->get_result();
 $usuario = $resultado_usuario->fetch_assoc();
+
+if (!$usuario || !in_array($usuario['nivel'], ['kohai', 'sensei', 'admin'])) {
+    $conexao->close();
+    die("Acesso negado. Apenas kohai, sensei e admin possuem permissão para gerar carteirinha.");
+}
+
 $id_imagem = $usuario['id_imagem'] ?? null;
 $largura_assinatura = 18;
 $x_assinatura = 61;
@@ -141,8 +153,10 @@ if ($total_linhas <= 5) {
     $spacing = 2.8;
 } elseif ($total_linhas == 6) {
     $spacing = 2.4;
-} else {
+} elseif ($total_linhas <= 8) {
     $spacing = 2.1;
+} else {
+    $spacing = 1.8;
 }
 
 $y_detalhe = 19.5;
@@ -155,22 +169,32 @@ foreach ($detalhes as $label => $value) {
         $pdf->SetTextColor(110, 110, 110);
         $pdf->Cell(15, 3, mb_convert_encoding($label . ':', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
         
+        // Determina tamanho uniforme de fonte para todas as graduações
+        $max_len = 0;
+        foreach ($value as $grad_item) {
+            $max_len = max($max_len, strlen($grad_item));
+        }
+        
+        $font_size = 4.8;
+        if ($max_len > 28 || count($value) > 6) {
+            $font_size = 3.6;
+        } elseif ($max_len > 20 || count($value) > 4) {
+            $font_size = 4.2;
+        }
+        
         $first = true;
         foreach ($value as $grad_item) {
             if (!$first) {
                 $pdf->SetXY(43, $y_detalhe);
             }
             
-            // Valor (Escuro, Normal)
-            if (strlen($grad_item) > 28) {
-                $pdf->SetFont('Arial', '', 4.2);
-            } elseif (strlen($grad_item) > 20) {
-                $pdf->SetFont('Arial', '', 4.8);
-            } else {
-                $pdf->SetFont('Arial', '', 5.5);
-            }
+            // Valor (Escuro, Normal) - Fonte uniforme
+            $pdf->SetFont('Arial', '', $font_size);
             $pdf->SetTextColor(26, 26, 26);
-            $pdf->Cell(38, 3, mb_convert_encoding($grad_item, 'ISO-8859-1', 'UTF-8'), 0, 1, 'L');
+            
+            // Lista não ordenada com marcador bullet point (chr(149))
+            $bullet = chr(149) . " ";
+            $pdf->Cell(38, 3, $bullet . mb_convert_encoding($grad_item, 'ISO-8859-1', 'UTF-8'), 0, 1, 'L');
             
             $y_detalhe += $spacing;
             $first = false;
