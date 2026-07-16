@@ -65,26 +65,44 @@ $saldo_ano = $total_entradas_ano - $total_saidas_ano;
 // Determina qual aba exibir por padrão (mensal ou anual)
 $aba_ativa = isset($_GET['aba']) ? $_GET['aba'] : 'mensal';
 ?>
+<!-- Custom Style Overrides for Responsiveness -->
+<style>
+.custom-nav-pills {
+    border-radius: 50rem;
+}
+@media (max-width: 575.98px) {
+    .custom-nav-pills {
+        border-radius: 16px !important;
+        flex-direction: column;
+    }
+    .custom-nav-pills .nav-item {
+        width: 100%;
+    }
+    .custom-nav-pills .nav-link {
+        border-radius: 10px !important;
+    }
+}
+</style>
 
 <div class="container my-5">
     <!-- Banner de Apresentação com Gradiente Kenshydokan -->
     <div class="card border-0 shadow-lg mb-4 text-white rounded-lg overflow-hidden" style="background: linear-gradient(135deg, #1e1e24 0%, #a8201a 100%);">
-        <div class="card-body p-5">
-            <div class="d-flex align-items-center mb-3">
-                <div class="bg-light rounded-circle p-2 mr-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; box-shadow: 0 4px 15px rgba(0,0,0,0.25);">
+        <div class="card-body p-4 p-md-5">
+            <div class="d-flex flex-column flex-sm-row align-items-center text-center text-sm-left mb-3">
+                <div class="bg-light rounded-circle p-2 mb-3 mb-sm-0 mr-0 mr-sm-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; min-width: 60px; box-shadow: 0 4px 15px rgba(0,0,0,0.25);">
                     <img src="../img/wkka.jpg" width="45" height="45" alt="logo kenshydokan" class="rounded-circle">
                 </div>
-                <h1 class="font-weight-bold mb-0" style="letter-spacing: 0.5px;">Portal da Transparência</h1>
+                <h1 class="font-weight-bold mb-0" style="letter-spacing: 0.5px; font-size: calc(1.6rem + 1.2vw);">Portal da Transparência</h1>
             </div>
-            <h5 class="text-white-50 font-weight-normal mb-3">Demonstrativo Operacional e Responsabilidade Financeira — Kenshydokan</h5>
-            <p class="mb-0 text-white-50" style="max-width: 800px; line-height: 1.6;">
+            <h5 class="text-white-50 font-weight-normal mb-3 text-center text-sm-left" style="font-size: calc(0.95rem + 0.2vw);">Demonstrativo Operacional e Responsabilidade Financeira — Kenshydokan</h5>
+            <p class="mb-0 text-white-50 text-center text-sm-left" style="max-width: 800px; line-height: 1.6; font-size: calc(0.85rem + 0.15vw);">
                 Acompanhe publicamente as receitas, despesas e a saúde financeira do dojô principal Kenshydokan. Este canal visa demonstrar o compromisso ético, a prestação de contas aos filiados e a sustentabilidade operacional da nossa instituição.
             </p>
         </div>
     </div>
 
     <!-- Navegação por Abas (Pills Premium) -->
-    <ul class="nav nav-pills nav-fill mb-4 p-1 bg-white rounded-pill shadow-sm border" style="gap: 5px;">
+    <ul class="nav nav-pills nav-fill mb-4 p-1 bg-white shadow-sm border custom-nav-pills" style="gap: 5px;">
         <li class="nav-item">
             <a class="nav-link rounded-pill font-weight-bold <?php echo ($aba_ativa == 'mensal') ? 'active bg-danger text-white' : 'text-secondary'; ?>" href="?aba=mensal&mes=<?php echo $mes_selecionado; ?>&ano=<?php echo $ano_selecionado; ?>">
                 <i class="fa-solid fa-calendar-days mr-2"></i>Demonstrativo Mensal

@@ -68,7 +68,7 @@ include "./header.php";
         <p>Esta política é eficaz a partir de 27 de outubro de 2023.</p>
 
         <h2>Contate-nos</h2>
-        <p>Se você tiver alguma dúvida ou sugestão sobre nossa Política de Privacidade, não hesite em entrar em contato conosco pelo e-mail instituto@kenshydokan.org.br.</p>
+        <p>Se você tiver alguma dúvida ou sugestão sobre nossa Política de Privacidade, não hesite em entrar em contato conosco pelo e-mail institutokenshydokan@gmail.com.</p>
 
         <p>Esta página de política de privacidade foi criada em [privacypolicytemplate.net](https://privacypolicytemplate.net) e modificada/gerada pelo [Gerador de Política de Privacidade de Aplicativo](https://app-privacy-policy-generator.nisrulz.com/).</p>
     </div>

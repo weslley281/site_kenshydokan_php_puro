@@ -61,6 +61,11 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link rounded-pill font-weight-bold <?php echo ($pagina == 'eventos') ? 'active bg-danger text-white' : 'text-secondary'; ?>" href="index.php?pagina=eventos">
+          <i class="fa-solid fa-calendar-days mr-1"></i> Eventos
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link rounded-pill font-weight-bold <?php echo ($pagina == 'certificados_manuais') ? 'active bg-danger text-white' : 'text-secondary'; ?>" href="index.php?pagina=certificados_manuais">
           <i class="fa-solid fa-certificate mr-1"></i> Certificados
         </a>
@@ -110,6 +115,9 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
       } ?>
       <?php if ($pagina == "dojos") {
         include_once "dojos.php";
+      } ?>
+      <?php if ($pagina == "eventos") {
+        include_once "eventos.php";
       } ?>
       <?php if ($pagina == "certificados_manuais") {
         include_once "certificados_manuais.php";
