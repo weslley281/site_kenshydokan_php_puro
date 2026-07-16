@@ -2,9 +2,9 @@
 
 class Conexao {
     private $host = 'localhost';
-    private $user = 'root';
-    private $pass = '';
-    private $db   = 'kenshydokan';
+    private $user = 'u515961161_kenshydokan';
+    private $pass = 'Wesv@g28';
+    private $db   = 'u515961161_kenshydokan';
     private $conn = null;
 
     public function conectar() {
@@ -26,3 +26,4 @@ class Database extends Conexao {
         return $this->conectar();
     }
 }
+?>
