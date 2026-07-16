@@ -66,6 +66,11 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link rounded-pill font-weight-bold <?php echo ($pagina == 'campeonatos') ? 'active bg-danger text-white' : 'text-secondary'; ?>" href="index.php?pagina=campeonatos">
+          <i class="fa-solid fa-trophy mr-1"></i> Campeonatos
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link rounded-pill font-weight-bold <?php echo ($pagina == 'certificados_manuais') ? 'active bg-danger text-white' : 'text-secondary'; ?>" href="index.php?pagina=certificados_manuais">
           <i class="fa-solid fa-certificate mr-1"></i> Certificados
         </a>
@@ -118,6 +123,15 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
       } ?>
       <?php if ($pagina == "eventos") {
         include_once "eventos.php";
+      } ?>
+      <?php if ($pagina == "campeonatos") {
+        include_once "campeonatos.php";
+      } ?>
+      <?php if ($pagina == "criar_campeonato") {
+        include_once "criar_campeonato.php";
+      } ?>
+      <?php if ($pagina == "editar_campeonato") {
+        include_once "editar_campeonato.php";
       } ?>
       <?php if ($pagina == "certificados_manuais") {
         include_once "certificados_manuais.php";

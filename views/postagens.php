@@ -1,4 +1,6 @@
 <?php
+$pageTitle = "Blog & Notícias | Instituto Kenshydokan";
+$pageDescription = "Leia artigos sobre artes marciais, conceitos técnicos de karatê e fique por dentro dos eventos e novidades de nossa associação.";
 include_once "menu.php";
 include_once "../models/publicacaoModel.php";
 ?>
@@ -81,7 +83,7 @@ include_once "../models/publicacaoModel.php";
                   <p class="blog-card-text mb-4" style="font-size: 0.85rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; height: 58px;"><?php echo htmlspecialchars($resumo); ?>...</p>
                   
                   <div class="d-flex align-items-center justify-content-between mt-auto pt-2 border-top" style="border-top: 1px solid rgba(0,0,0,0.05) !important;">
-                    <a href="postagem.php?id=<?php echo $postagem['id_publicacao']; ?>" class="btn btn-sm btn-outline-danger font-weight-bold rounded-pill px-3">Ler Artigo</a>
+                    <a href="postagem.php?<?php echo !empty($postagem['slug']) ? 'slug=' . $postagem['slug'] : 'id=' . $postagem['id_publicacao']; ?>" class="btn btn-sm btn-outline-danger font-weight-bold rounded-pill px-3">Ler Artigo</a>
                     <span class="text-muted small" style="font-size: 0.8rem;">
                       <i class="fa-regular fa-clock mr-1"></i> <?php echo $readTime; ?> min
                     </span>

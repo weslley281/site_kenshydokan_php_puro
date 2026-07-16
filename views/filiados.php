@@ -1,4 +1,6 @@
 <?php
+$pageTitle = "Filiados Credenciados | Instituto Kenshydokan";
+$pageDescription = "Veja a relação de filiados oficiais (atletas, instrutores e dojôs) credenciados e reconhecidos pelo Instituto Kenshydokan.";
 include "menu.php";
 include_once "../models/filiadoModel.php";
 include_once "../models/arteModel.php";

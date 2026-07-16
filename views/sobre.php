@@ -1,4 +1,6 @@
 <?php
+$pageTitle = "Sobre o Instituto Kenshydokan | História e Diretoria";
+$pageDescription = "Conheça a história do Karatê Kenshydokan, fundado por Shihan Jonas Teixeira de Andrade. Instituição oficial de Utilidade Pública Estadual.";
 include "menu.php";
 include_once "../models/filiadoModel.php";
 

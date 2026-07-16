@@ -1,5 +1,7 @@
 <?php
 // views/transparencia.php
+$pageTitle = "Portal da Transparência | Prestação de Contas Kenshydokan";
+$pageDescription = "Acompanhe publicamente os demonstrativos operacionais, receitas e despesas do Instituto Kenshydokan, promovendo ética e transparência.";
 include_once __DIR__ . "/menu.php";
 include_once __DIR__ . "/../models/dojoFinanceiroModel.php";
 

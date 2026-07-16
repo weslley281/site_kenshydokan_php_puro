@@ -24,9 +24,80 @@ class Publicacao
 
         $c = new Conexao();
         $this->conexao = $c->conectar();
+
+        // Atualizacao automatica da tabela se necessario
+        if ($this->conexao) {
+            // Verificar e adicionar coluna 'slug' se nao existir
+            $check = $this->conexao->query("SHOW COLUMNS FROM postagens LIKE 'slug'");
+            if ($check && $check->num_rows == 0) {
+                $this->conexao->query("ALTER TABLE postagens ADD COLUMN slug VARCHAR(255) DEFAULT NULL UNIQUE");
+                
+                // Gerar slugs para posts antigos
+                $result = $this->conexao->query("SELECT id_publicacao, titulo FROM postagens");
+                if ($result) {
+                    while ($row = $result->fetch_assoc()) {
+                        $id = $row['id_publicacao'];
+                        $slug = self::gerarSlug($row['titulo']);
+                        
+                        // Garante unicidade adicionando sufixo se necessario
+                        $slug_unico = $slug;
+                        $counter = 1;
+                        while (true) {
+                            $check_slug = $this->conexao->prepare("SELECT id_publicacao FROM postagens WHERE slug = ? AND id_publicacao != ?");
+                            $check_slug->bind_param("si", $slug_unico, $id);
+                            $check_slug->execute();
+                            if ($check_slug->get_result()->num_rows == 0) {
+                                $check_slug->close();
+                                break;
+                            }
+                            $check_slug->close();
+                            $slug_unico = $slug . '-' . $counter;
+                            $counter++;
+                        }
+                        
+                        $upd = $this->conexao->prepare("UPDATE postagens SET slug = ? WHERE id_publicacao = ?");
+                        $upd->bind_param("si", $slug_unico, $id);
+                        $upd->execute();
+                        $upd->close();
+                    }
+                }
+            }
+        }
     }
 
-    // Métodos Getters
+    // Metodo de geracao de slugs para URLs amigaveis (SEO)
+    public static function gerarSlug($titulo)
+    {
+        $slug = mb_strtolower($titulo, 'UTF-8');
+        
+        $utf8 = [
+            '/[áàâãäå]/u' => 'a',
+            '/[éèêë]/u'   => 'e',
+            '/[íìîï]/u'   => 'i',
+            '/[óòôõöø]/u' => 'o',
+            '/[úùûü]/u'   => 'u',
+            '/[ç]/u'      => 'c',
+            '/[ñ]/u'      => 'n',
+            '/[äæ]/u'     => 'ae',
+            '/[ö]/u'      => 'oe',
+            '/[ü]/u'      => 'ue',
+            '/[ß]/u'      => 'ss',
+            '/[^a-z0-9 _-]/s' => '',
+        ];
+        
+        $slug = preg_replace(array_keys($utf8), array_values($utf8), $slug);
+        $slug = preg_replace('/[ _]+/', '-', $slug);
+        $slug = preg_replace('/-+/', '-', $slug);
+        $slug = trim($slug, '-');
+        
+        if (empty($slug)) {
+            $slug = 'artigo-' . rand(100, 999);
+        }
+        
+        return $slug;
+    }
+
+    // Metodos Getters
     public function getIdUsuario()
     {
         return $this->id_usuario;
@@ -67,7 +138,7 @@ class Publicacao
         return $this->dataMudanca;
     }
 
-    // Métodos Setters
+    // Metodos Setters
     public function setIdUsuario($id_usuario)
     {
         $this->id_usuario = $id_usuario;
@@ -98,11 +169,11 @@ class Publicacao
         $this->dataMudanca = $dataMudanca;
     }
 
-    // Métodos vindos do Repositório
+    // Metodos vindos do Repositorio
 
     public function criarPublicacao(Publicacao $publicacao): bool
     {
-        $inserir = $this->conexao->prepare("INSERT INTO postagens (id_usuario, id_imagem, titulo, conteudo, status, dataCriacao, dataMudanca) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $inserir = $this->conexao->prepare("INSERT INTO postagens (id_usuario, id_imagem, titulo, conteudo, status, dataCriacao, dataMudanca, slug) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         $id_u = $publicacao->getIdUsuario();
         $id_img = $publicacao->getIdImagem();
         $tit = $publicacao->getTitulo();
@@ -111,7 +182,24 @@ class Publicacao
         $dc = $publicacao->getDataCriacao();
         $dm = $publicacao->getDataMudanca();
 
-        $inserir->bind_param("iisssss", $id_u, $id_img, $tit, $cont, $st, $dc, $dm);
+        // Gerar slug unico
+        $slug = self::gerarSlug($tit);
+        $slug_unico = $slug;
+        $counter = 1;
+        while (true) {
+            $check_slug = $this->conexao->prepare("SELECT id_publicacao FROM postagens WHERE slug = ?");
+            $check_slug->bind_param("s", $slug_unico);
+            $check_slug->execute();
+            if ($check_slug->get_result()->num_rows == 0) {
+                $check_slug->close();
+                break;
+            }
+            $check_slug->close();
+            $slug_unico = $slug . '-' . $counter;
+            $counter++;
+        }
+
+        $inserir->bind_param("iissssss", $id_u, $id_img, $tit, $cont, $st, $dc, $dm, $slug_unico);
         $resultado = $inserir->execute();
         $inserir->close();
 
@@ -120,14 +208,31 @@ class Publicacao
 
     public function editar_publicacao(int $id_publicacao, Publicacao $publicacao): bool
     {
-        $atualizar = $this->conexao->prepare("UPDATE postagens SET id_imagem = ?, titulo = ?, conteudo = ?, status = ?, dataMudanca = ? WHERE id_publicacao = ?");
+        $atualizar = $this->conexao->prepare("UPDATE postagens SET id_imagem = ?, titulo = ?, conteudo = ?, status = ?, dataMudanca = ?, slug = ? WHERE id_publicacao = ?");
         $id_img = $publicacao->getIdImagem();
         $tit = $publicacao->getTitulo();
         $cont = $publicacao->getConteudo();
         $st = $publicacao->getStatus();
         $dm = $publicacao->getDataMudanca();
 
-        $atualizar->bind_param("issssi", $id_img, $tit, $cont, $st, $dm, $id_publicacao);
+        // Gerar slug unico
+        $slug = self::gerarSlug($tit);
+        $slug_unico = $slug;
+        $counter = 1;
+        while (true) {
+            $check_slug = $this->conexao->prepare("SELECT id_publicacao FROM postagens WHERE slug = ? AND id_publicacao != ?");
+            $check_slug->bind_param("si", $slug_unico, $id_publicacao);
+            $check_slug->execute();
+            if ($check_slug->get_result()->num_rows == 0) {
+                $check_slug->close();
+                break;
+            }
+            $check_slug->close();
+            $slug_unico = $slug . '-' . $counter;
+            $counter++;
+        }
+
+        $atualizar->bind_param("isssssi", $id_img, $tit, $cont, $st, $dm, $slug_unico, $id_publicacao);
         $resultado = $atualizar->execute();
         $atualizar->close();
 
@@ -259,6 +364,26 @@ class Publicacao
 
         $busca = $conexao->prepare("SELECT p.*, i.caminho as caminho_imagem FROM postagens p LEFT JOIN imagens i ON p.id_imagem = i.id_imagem WHERE p.id_publicacao = ?");
         $busca->bind_param("i", $id_publicacao);
+        $busca->execute();
+        $resultado = $busca->get_result();
+
+        if ($resultado->num_rows === 0) {
+            return null;
+        }
+
+        $postagem = $resultado->fetch_assoc();
+        $busca->close();
+
+        return $postagem;
+    }
+
+    public static function buscarPostagemPorSlug(string $slug)
+    {
+        $c = new Conexao();
+        $conexao = $c->conectar();
+
+        $busca = $conexao->prepare("SELECT p.*, i.caminho as caminho_imagem FROM postagens p LEFT JOIN imagens i ON p.id_imagem = i.id_imagem WHERE p.slug = ?");
+        $busca->bind_param("s", $slug);
         $busca->execute();
         $resultado = $busca->get_result();
 

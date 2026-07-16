@@ -1,4 +1,6 @@
-<?php 
+<?php
+$pageTitle = "Filiar-se ao Instituto Kenshydokan | Planos de Filiação";
+$pageDescription = "Seja um membro oficial, registre seu dojô ou associe-se como atleta ou professor de karatê no Instituto Kenshydokan. Confira planos e benefícios.";
 include "menu.php";
 ?>
 

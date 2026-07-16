@@ -1,5 +1,7 @@
-<?php 
-include "menu.php"; 
+<?php
+$pageTitle = "Instituto Kenshydokan | Karatê de Contato e Defesa Pessoal";
+$pageDescription = "Aulas de Karatê de Contato, Defesa Pessoal, Judô e Jiu-Jitsu em Várzea Grande - MT. Venha treinar no Instituto Kenshydokan!";
+include "menu.php";
 include_once "../models/filiadoModel.php";
 ?>
 
@@ -118,6 +120,74 @@ include_once "../models/filiadoModel.php";
         echo '</div>';
       } else {
         echo '<p class="text-center text-muted">Nenhum dojô cadastrado.</p>';
+      }
+      ?>
+    </div>
+  </div>
+
+  <!-- Últimas Postagens do Blog -->
+  <div class="container py-4">
+    <div class="card border-0 shadow bg-white p-4">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+        <h2 class="font-weight-bold mb-3 mb-md-0"><i class="fa-solid fa-newspaper text-danger mr-2"></i>Últimas do Blog</h2>
+        <a href="postagens.php" class="btn btn-sm btn-outline-danger font-weight-bold rounded-pill px-4 shadow-sm">
+          Ver todas as postagens <i class="fa-solid fa-arrow-right ml-1"></i>
+        </a>
+      </div>
+      
+      <?php
+      require_once __DIR__ . '/../models/publicacaoModel.php';
+      $postagens_todas = Publicacao::buscarPostagensAprovadas();
+      $postagens_recentes = array_slice($postagens_todas, 0, 3);
+
+      if (!empty($postagens_recentes)) {
+        echo '<div class="row">';
+        foreach ($postagens_recentes as $post_rec) {
+          $autor_dados = Publicacao::buscar_autor($post_rec["id_usuario"]);
+          $nome_autor = htmlspecialchars($autor_dados["nome"] ?? "Autor Desconhecido");
+          $caminho_foto = $autor_dados["foto"] ?? "";
+          
+          $wordCount = str_word_count(strip_tags($post_rec['conteudo']));
+          $readTime = max(1, ceil($wordCount / 200));
+          $resumo = mb_substr(html_entity_decode(strip_tags($post_rec['conteudo'])), 0, 100, 'UTF-8');
+          $cover_img = $post_rec["caminho_imagem"] ?? "";
+          $link_post = !empty($post_rec['slug']) ? 'postagem.php?slug=' . $post_rec['slug'] : 'postagem.php?id=' . $post_rec['id_publicacao'];
+          ?>
+          <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm overflow-hidden bg-light" style="border-radius: 12px; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+              <!-- Imagem de Capa -->
+              <div style="height: 150px; overflow: hidden; position: relative; background: #eaeaea;">
+                <?php if (!empty($cover_img)): ?>
+                  <img src="<?php echo htmlspecialchars($cover_img); ?>" alt="<?php echo htmlspecialchars($post_rec['titulo']); ?>" style="width: 100%; height: 100%; object-fit: cover;">
+                <?php else: ?>
+                  <div style="width: 100%; height: 100%; background: linear-gradient(45deg, #1f1f1f, #2d2d2d); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.15);">
+                    <i class="fa-solid fa-image" style="font-size: 2.5rem;"></i>
+                  </div>
+                <?php endif; ?>
+              </div>
+              
+              <!-- Corpo do Card -->
+              <div class="card-body d-flex flex-column p-3 text-left">
+                <div class="d-flex align-items-center mb-2">
+                  <span class="text-muted small" style="font-size: 0.75rem;"><i class="fa-regular fa-calendar mr-1"></i> <?php echo date('d/m/Y', strtotime($post_rec['dataCriacao'])); ?></span>
+                  <span class="text-muted small ml-auto" style="font-size: 0.75rem;"><i class="fa-regular fa-clock mr-1"></i> <?php echo $readTime; ?> min</span>
+                </div>
+                
+                <h6 class="font-weight-bold text-dark mb-2 text-truncate" title="<?php echo htmlspecialchars($post_rec['titulo']); ?>"><?php echo htmlspecialchars($post_rec['titulo']); ?></h6>
+                <p class="text-secondary small mb-3" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 38px; line-height: 1.4;"><?php echo htmlspecialchars($resumo); ?>...</p>
+                
+                <div class="mt-auto pt-2 border-top d-flex align-items-center justify-content-between">
+                  <span class="text-muted small text-truncate" style="max-width: 60%; font-size: 0.75rem;">Por: <?php echo $nome_autor; ?></span>
+                  <a href="<?php echo $link_post; ?>" class="btn btn-sm btn-danger font-weight-bold rounded-pill px-3" style="font-size: 0.75rem;">Ler Artigo</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <?php
+        }
+        echo '</div>';
+      } else {
+        echo '<p class="text-center text-muted py-3">Nenhuma postagem publicada recentemente.</p>';
       }
       ?>
     </div>

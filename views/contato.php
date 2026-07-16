@@ -1,4 +1,8 @@
-<?php include "menu.php"; ?>
+<?php
+$pageTitle = "Fale Conosco | Contato do Instituto Kenshydokan";
+$pageDescription = "Entre em contato conosco para tirar dúvidas, propor parcerias ou agendar uma aula experimental de karatê e artes marciais.";
+include "menu.php";
+?>
 
 <div class="container text-center mt-5">
   <form action="../controllers/enviar.php" method="post">
