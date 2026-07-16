@@ -29,8 +29,7 @@ include_once "../models/filiadoModel.php";
         web browser that
         <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
       </p>
-    </video>
-  </div>
+      </div>
   <hr class="my-5 w-75">
 
   <!--Filiações-->
@@ -41,60 +40,37 @@ include_once "../models/filiadoModel.php";
           <h2 class="font-weight-bold">Somos Filiados a</h2>
         </div>
 
-        <!--primeira linha-->
-        <div class="row">
-          <div class="col-lg-3 col-md-6 text-center mb-4">
-            <div class="card h-100 p-4 border-0 shadow-sm align-items-center justify-content-center">
-              <img src="../img/logo_instituto.jpg" class="img-fluid mb-3" style="max-height: 120px;" alt="Logo do Instituto">
-              <h5 class="h6 mb-0 font-weight-bold">Instituto Kenshydokan</h5>
+        <?php
+        require_once __DIR__ . '/../models/filiacaoModel.php';
+        $filiacaoRepo = new Filiacao();
+        $filiacoesAtivas = $filiacaoRepo->listarAtivas();
+
+        if (!empty($filiacoesAtivas)) {
+          echo '<div class="row justify-content-center">';
+          foreach ($filiacoesAtivas as $f_ativa) {
+            $f_nome = htmlspecialchars($f_ativa['nome']);
+            $f_logo = htmlspecialchars($f_ativa['logo']);
+            $f_link = htmlspecialchars($f_ativa['link'] ?? '');
+            ?>
+            <div class="col-lg-3 col-md-6 text-center mb-4">
+              <div class="card h-100 p-4 border-0 shadow-sm align-items-center justify-content-center" style="border-radius: 12px; transition: transform 0.2s ease;">
+                <?php if (!empty($f_link)): ?>
+                  <a href="<?php echo $f_link; ?>" target="_blank" class="d-block text-decoration-none">
+                    <img src="../img/<?php echo $f_logo; ?>" class="img-fluid mb-3" style="max-height: 120px; object-fit: contain;" alt="Logo de <?php echo $f_nome; ?>">
+                  </a>
+                <?php else: ?>
+                  <img src="../img/<?php echo $f_logo; ?>" class="img-fluid mb-3" style="max-height: 120px; object-fit: contain;" alt="Logo de <?php echo $f_nome; ?>">
+                <?php endif; ?>
+                <h5 class="h6 mb-0 font-weight-bold text-dark"><?php echo $f_nome; ?></h5>
+              </div>
             </div>
-          </div>
-          <div class="col-lg-3 col-md-6 text-center mb-4">
-            <div class="card h-100 p-4 border-0 shadow-sm align-items-center justify-content-center">
-              <a href="https://fmjkodokan.com.br/" target="_blank"><img src="../img/image13.png" class="img-fluid mb-3" style="max-height: 120px;" alt="Logo Federação Mineira de Judô Kodokan"></a>
-              <h5 class="h6 mb-0 font-weight-bold">Federação Mineira de Judô Kodokan</h5>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 text-center mb-4">
-            <div class="card h-100 p-4 border-0 shadow-sm align-items-center justify-content-center">
-              <a href="http://seishinkyokushinsko.comunidades.net/representante-seishin-kyokushin-brasil" target="_blank"><img src="../img/image12.png" class="img-fluid mb-3" style="max-height: 120px;" alt="Logo Federação Brasil Karate Full Contact"></a>
-              <h5 class="h6 mb-0 font-weight-bold">Federação Brasil Karate Full Contact</h5>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 text-center mb-4">
-            <div class="card h-100 p-4 border-0 shadow-sm align-items-center justify-content-center">
-              <a href="http://seishinkyokushinsko.comunidades.net/representante-seishin-kyokushin-brasil" target="_blank"><img src="../img/image10.png" class="img-fluid mb-3" style="max-height: 120px;" alt="Logo International Seishin Kyokushin Organization"></a>
-              <h5 class="h6 mb-0 font-weight-bold">International Seishin Kyokushin Organization</h5>
-            </div>
-          </div>
-        </div>
-        <!--segunda linha-->
-        <div class="row">
-          <div class="col-lg-3 col-md-6 text-center mb-4">
-            <div class="card h-100 p-4 border-0 shadow-sm align-items-center justify-content-center">
-              <img src="../img/image14.png" class="img-fluid mb-3" style="max-height: 120px;" alt="Logo World Association of Brasilian Ju Jitsu">
-              <h5 class="h6 mb-0 font-weight-bold">World Association of Brasilian Ju Jitsu</h5>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 text-center mb-4">
-            <div class="card h-100 p-4 border-0 shadow-sm align-items-center justify-content-center">
-              <img src="../img/thaiboxing.jpeg" class="img-fluid mb-3" style="max-height: 120px;" alt="Logo WKA Muay thai e Thaiboxing">
-              <h5 class="h6 mb-0 font-weight-bold">WKA Muay thai e Thaiboxing</h5>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 text-center mb-4">
-            <div class="card h-100 p-4 border-0 shadow-sm align-items-center justify-content-center">
-              <img src="../img/kickboxing.jpeg" class="img-fluid mb-3" style="max-height: 120px;" alt="Logo South American Kickboxing Association">
-              <h5 class="h6 mb-0 font-weight-bold">South American Kickboxing Association</h5>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 text-center mb-4">
-            <div class="card h-100 p-4 border-0 shadow-sm align-items-center justify-content-center">
-              <img src="../img/wka.jpeg" class="img-fluid mb-3" style="max-height: 120px;" alt="World Kyokushinkai Association">
-              <h5 class="h6 mb-0 font-weight-bold">World Kyokushinkai Association</h5>
-            </div>
-          </div>
-        </div>
+            <?php
+          }
+          echo '</div>';
+        } else {
+          echo '<p class="text-center text-muted">Nenhuma filiação cadastrada.</p>';
+        }
+        ?>
       </div>
     </section>
   </div>

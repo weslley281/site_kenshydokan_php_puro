@@ -41,6 +41,11 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link rounded-pill font-weight-bold <?php echo ($pagina == 'filiacoes') ? 'active bg-danger text-white' : 'text-secondary'; ?>" href="index.php?pagina=filiacoes">
+          <i class="fa-solid fa-handshake mr-1"></i> Filiações
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link rounded-pill font-weight-bold <?php echo ($pagina == 'exames') ? 'active bg-danger text-white' : 'text-secondary'; ?>" href="index.php?pagina=exames">
           <i class="fa-solid fa-file-signature mr-1"></i> Exames
         </a>
@@ -108,6 +113,9 @@ if (isset($_SESSION["id_usuario"]) && $_SESSION['nivel'] == "admin") {
       } ?>
       <?php if ($pagina == "filiados") {
         include_once "filiados.php";
+      } ?>
+      <?php if ($pagina == "filiacoes") {
+        include_once "filiacoes.php";
       } ?>
       <?php if ($pagina == "exames") {
         include_once "gerenciar_exames.php";
