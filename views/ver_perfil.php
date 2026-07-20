@@ -1,25 +1,29 @@
 <?php
-include "menu.php";
-include_once "../models/usuarioModel.php";
-include_once "../models/imagemModel.php";
-include_once "../models/filiadoModel.php";
-include_once "../models/graduacaoModel.php";
-
 if (!isset($_GET['id_usuario']) || empty($_GET['id_usuario'])) {
-    echo "<script>window.location.href='inicio.php';</script>";
+    header("Location: inicio.php");
     exit;
 }
 
 $id_usuario = $_GET['id_usuario'];
 
+include_once "../models/usuarioModel.php";
 $usuarioModelRepo = new Usuario();
 $usuario = $usuarioModelRepo->buscarUsuario($id_usuario);
 
 if (!$usuario) {
+    include "menu.php";
     echo "<div class='container mt-5 text-center'><div class='alert alert-danger py-4 shadow-sm border-0'><i class='fa-solid fa-circle-exclamation fa-2x mb-3 text-danger'></i><h4>Usuário não encontrado</h4><p>O perfil selecionado não existe ou foi removido.</p><a href='inicio.php' class='btn btn-danger rounded-pill px-4 mt-2'>Ir para a Página Inicial</a></div></div>";
     include "rodape.php";
     exit;
 }
+
+$pageTitle = "Perfil de " . htmlspecialchars($usuario["nome"]) . " - Instituto Kenshydokan";
+$pageDescription = "Ficha cadastral oficial do filiado " . htmlspecialchars($usuario["nome"]) . " no Instituto Kenshydokan. Veja seu dojô de origem e graduações oficiais registradas.";
+
+include "menu.php";
+include_once "../models/imagemModel.php";
+include_once "../models/filiadoModel.php";
+include_once "../models/graduacaoModel.php";
 
 $imagem = Imagem::procura_imagem($usuario["id_imagem"]);
 $caminho_foto = '../img/sem_foto.png';
@@ -122,7 +126,7 @@ $graduacao = Graduacao::buscarGraduacao($id_graduacao);
                              src="<?php echo htmlspecialchars($caminho_foto); ?>" 
                              alt="Foto de <?php echo htmlspecialchars($usuario["nome"]); ?>" 
                              style="width: 160px; height: 160px; object-fit: cover; border-width: 4px !important;">
-                        <span class="position-absolute shadow-sm" style="bottom: 5px; right: 8px; background-color: <?php echo $confirmacao == 'sim' ? '#28a745' : '#ffc107'; ?>; width: 26px; height: 26px; border-radius: 50%; border: 3px solid #1f1f1f; display: flex; align-items: center; justify-content: center;" title="<?php echo $ativo; ?>">
+                        <span class="position-absolute shadow-sm" style="bottom: 5px; right: 8px; background-color: <?php echo $confirmacao == 'sim' ? '#28a745' : '#ffc107'; ?>; width: 26px; height: 26px; border-radius: 50%; border: 3px solid #1f1f1f; display: flex; align-items: center; justify-content: center;" title="<?php echo $ativo; ?>" role="img" aria-label="Status: <?php echo $ativo; ?>">
                             <i class="fa-solid <?php echo $confirmacao == 'sim' ? 'fa-check text-white' : 'fa-clock text-dark'; ?>" style="font-size: 10px;"></i>
                         </span>
                     </div>

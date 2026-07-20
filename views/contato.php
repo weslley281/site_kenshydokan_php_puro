@@ -11,27 +11,27 @@ include "menu.php";
     </div>
 
     <!-- nome -->
-    <div class="form-group mb-3">
-      <label for="nome">Nome: </label>
-      <input type="text" class="form-control form-control-lg" name="nome" id="nome">
+    <div class="form-group mb-3 text-left">
+      <label for="nome" class="text-secondary small font-weight-bold text-uppercase">Nome <span class="text-danger">*</span></label>
+      <input type="text" class="form-control form-control-lg bg-light border-0 shadow-sm" name="nome" id="nome" required>
     </div>
 
     <!-- email -->
-    <div class="form-group mb-3">
-      <label for="email">Email: </label>
-      <input type="email" class="form-control form-control-lg" name="email" id="email">
+    <div class="form-group mb-3 text-left">
+      <label for="email" class="text-secondary small font-weight-bold text-uppercase">E-mail <span class="text-danger">*</span></label>
+      <input type="email" class="form-control form-control-lg bg-light border-0 shadow-sm" name="email" id="email" required>
     </div>
 
     <!-- Telefone -->
-    <div class="form-group mb-3">
-      <label for="telefone">Numero com DDD: </label>
-      <input type="text" class="form-control form-control-lg" name="telefone" id="telefone">
+    <div class="form-group mb-3 text-left">
+      <label for="telefone" class="text-secondary small font-weight-bold text-uppercase">Telefone com DDD</label>
+      <input type="text" class="form-control form-control-lg bg-light border-0 shadow-sm" name="telefone" id="telefone" placeholder="Ex: (65) 99999-9999">
     </div>
 
     <!-- Mensagem -->
-    <div class="form-group mb-3">
-      <label for="mensagem">Mensagem: </label>
-      <textarea class="form-control form-control-lg" id="mensagem" name="mensagem" placeholder="Por Favor escreva a sua menssagem..." rows="10"></textarea>
+    <div class="form-group mb-3 text-left">
+      <label for="mensagem" class="text-secondary small font-weight-bold text-uppercase">Mensagem <span class="text-danger">*</span></label>
+      <textarea class="form-control form-control-lg bg-light border-0 shadow-sm" id="mensagem" name="mensagem" placeholder="Por favor escreva a sua mensagem..." rows="8" required></textarea>
     </div>
     <div class="form-group mb-3">
       <input class="btn btn-primary btn-lg" type="submit" name="enviar" value="enviar">

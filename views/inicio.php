@@ -22,14 +22,15 @@ include_once "../models/filiadoModel.php";
 <div class="main main-raised">
   <!-- Começo do Carrossel -->
   <div class="container text-center my-5 shadow-sm rounded overflow-hidden p-0 bg-dark">
-    <video id="my-video" class="video-js embed-responsive embed-responsive-16by9" preload="auto" data-setup="{}" controls autoplay="" muted="" loop="">
+    <video id="my-video" class="video-js embed-responsive embed-responsive-16by9" preload="auto" data-setup="{}" controls autoplay="" muted="" loop="" aria-label="Vídeo de apresentação institucional com treinamentos e atividades do Instituto Kenshydokan">
       <source class="embed-responsive-item" src="../videos/slide-kenshydokan.mp4" type="video/mp4">
       <p class="vjs-no-js">
         To view this video please enable JavaScript, and consider upgrading to a
         web browser that
         <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
       </p>
-      </div>
+    </video>
+  </div>
   <hr class="my-5 w-75">
 
   <!--Filiações-->
@@ -154,7 +155,7 @@ include_once "../models/filiadoModel.php";
                 
                 <div class="mt-auto pt-2 border-top d-flex align-items-center justify-content-between">
                   <span class="text-muted small text-truncate" style="max-width: 60%; font-size: 0.75rem;">Por: <?php echo $nome_autor; ?></span>
-                  <a href="<?php echo $link_post; ?>" class="btn btn-sm btn-danger font-weight-bold rounded-pill px-3" style="font-size: 0.75rem;">Ler Artigo</a>
+                  <a href="<?php echo $link_post; ?>" class="btn btn-sm btn-danger font-weight-bold rounded-pill px-3" style="font-size: 0.75rem;" aria-label="Ler artigo: <?php echo htmlspecialchars($post_rec['titulo']); ?>">Ler Artigo</a>
                 </div>
               </div>
             </div>

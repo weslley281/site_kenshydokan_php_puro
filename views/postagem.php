@@ -108,7 +108,7 @@ $todos_comentarios = $comentarioModel->buscarComentariosPorPostagem($postagem['i
             <div>
               <span class="text-uppercase text-muted font-weight-bold tracking-wider" style="font-size: 0.7rem;">Sobre o Autor</span>
               <h5 class="font-weight-bold text-dark mb-2"><?php echo $nome_autor; ?></h5>
-              <p class="text-secondary small mb-0">Instrutor e colaborador do Instituto de Artes Marciais Kenshydokan. Dedicado ao fortalecimento da comunidade e à disseminação do karatê e de seus valores filosóficos.</p>
+              <p class="text-secondary small mb-0"><?php if($postagem["id_usuario"] == 1) { echo "Diretor Técnico e de Ensino do Instituto Kenshydokan."; } else { echo "Instrutor e colaborador do Instituto de Artes Marciais Kenshydokan. Dedicado ao fortalecimento da comunidade e à disseminação do karatê e de seus valores filosóficos."; } ?></p>
             </div>
           </div>
 
@@ -193,7 +193,7 @@ $todos_comentarios = $comentarioModel->buscarComentariosPorPostagem($postagem['i
                                               <span class="text-muted small" style="font-size: 0.75rem;"><?php echo $c_data; ?></span>
                                           </div>
                                           <?php if ($pode_excluir): ?>
-                                              <button type="button" class="btn btn-link text-danger p-0 border-0 btn-excluir-comentario" data-id="<?php echo $id_c; ?>" title="Excluir Comentario">
+                                              <button type="button" class="btn btn-link text-danger p-0 border-0 btn-excluir-comentario" data-id="<?php echo $id_c; ?>" title="Excluir Comentario" aria-label="Excluir comentário">
                                                   <i class="fa-solid fa-trash-can small" style="font-size: 0.8rem;"></i>
                                               </button>
                                           <?php endif; ?>
@@ -202,7 +202,7 @@ $todos_comentarios = $comentarioModel->buscarComentariosPorPostagem($postagem['i
                                       <p class="text-secondary small mb-2" style="line-height: 1.5; font-size: 0.88rem;"><?php echo $c_texto; ?></p>
                                       
                                       <?php if (isset($_SESSION["id_usuario"])): ?>
-                                          <button type="button" class="btn btn-link text-secondary p-0 border-0 btn-trigger-resposta small font-weight-bold" data-id="<?php echo $id_c; ?>" style="font-size: 0.75rem; text-decoration: none;">
+                                          <button type="button" class="btn btn-link text-secondary p-0 border-0 btn-trigger-resposta small font-weight-bold" data-id="<?php echo $id_c; ?>" style="font-size: 0.75rem; text-decoration: none;" aria-label="Responder ao comentário de <?php echo $c_nome; ?>">
                                               <i class="fa-solid fa-reply mr-1"></i>Responder
                                           </button>
                                       <?php endif; ?>
@@ -251,7 +251,7 @@ $todos_comentarios = $comentarioModel->buscarComentariosPorPostagem($postagem['i
                                                                       <span class="text-muted small" style="font-size: 0.7rem;"><?php echo $r_data; ?></span>
                                                                   </div>
                                                                   <?php if ($r_pode_excluir): ?>
-                                                                      <button type="button" class="btn btn-link text-danger p-0 border-0 btn-excluir-comentario" data-id="<?php echo $id_r; ?>" title="Excluir Resposta">
+                                                                      <button type="button" class="btn btn-link text-danger p-0 border-0 btn-excluir-comentario" data-id="<?php echo $id_r; ?>" title="Excluir Resposta" aria-label="Excluir resposta">
                                                                           <i class="fa-solid fa-trash-can small" style="font-size: 0.75rem;"></i>
                                                                       </button>
                                                                   <?php endif; ?>

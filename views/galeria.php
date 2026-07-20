@@ -62,7 +62,7 @@ $galleries_data = $galeriaModel->buscarGaleriasComFotos();
         <div class="row mt-5">
             <div v-for="(photo, photoIndex) in gallery.photos" :key="photo.id_foto" class="col-md-4 mb-3">
                 <!-- Passamos os índices para o método showImage -->
-                <img :src="'../slides/' + photo.foto" class="img-thumbnail gallery-image" :alt="photo.foto" @click="showImage(galleryIndex, photoIndex)">
+                <img :src="'../slides/' + photo.foto" class="img-thumbnail gallery-image" :alt="'Imagem da galeria ' + gallery.nome" @click="showImage(galleryIndex, photoIndex)">
             </div>
         </div>
     </div>
@@ -78,12 +78,12 @@ $galleries_data = $galeriaModel->buscarGaleriasComFotos();
                 </div>
                 <div class="modal-body text-center">
                     <!-- Botão Anterior -->
-                    <button class="modal-nav-btn prev" @click.stop="previousImage">&#10094;</button>
+                    <button class="modal-nav-btn prev" @click.stop="previousImage" aria-label="Imagem anterior">&#10094;</button>
                     
-                    <img class="img-fluid" :src="modalImageUrl" alt="Imagem em destaque">
+                    <img class="img-fluid" :src="modalImageUrl" alt="Imagem em destaque da galeria">
                     
                     <!-- Botão Próximo -->
-                    <button class="modal-nav-btn next" @click.stop="nextImage">&#10095;</button>
+                    <button class="modal-nav-btn next" @click.stop="nextImage" aria-label="Próxima imagem">&#10095;</button>
                 </div>
             </div>
         </div>
