@@ -79,8 +79,8 @@ $paginas = array(
             "@context": "https://schema.org",
             "@type": "SportsOrganization",
             "name": "Instituto de Artes Marciais e Defesa Pessoal Kenshydokan",
-            "alternateName": "Kenshydokan Karate Institute",
-            "url": "https://kenshydokan.com/",
+            "alternateName": ["Kenshidokan", "Kenshydokan Jutsu", "Federação de Karate de Contato do Brasil", "Federação de Karate de Contato do Mato Grosso"],
+            "url": "https://kenshydokan.org.br/",
             "description": "Organização dedicada ao ensino do Karatê Kenshydokan.",
             "founder": {
                 "@type": "Person",
@@ -102,7 +102,12 @@ $paginas = array(
                     "postalCode": "78110-350",
                     "addressCountry": "BR"
                 }
-            }
+            },
+            "knowsAbout": [{
+                "@type": "DefinedTerm",
+                "name": "Kenshydokan",
+                "description": "Tradução oficial: Escola do Praticante Dedicado da Filosofia do Punho. Derivado dos ideogramas Ken (Punho), Shi (Praticante dedicado/Guerreiro), Do (Caminho/Filosofia) e Kan (Escola)."
+            }]
         }
     </script>
 

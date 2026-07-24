@@ -158,6 +158,16 @@ $graduacao = Graduacao::buscarGraduacao($id_graduacao);
                     </span>
                 </div>
 
+                <!-- Nova Seção: Sobre o Atleta -->
+                <div class="mb-4 bg-light p-3 rounded" style="border-left: 4px solid #dc3545; border-radius: 8px !important;">
+                    <h5 class="font-weight-bold text-danger mb-2" style="font-size: 1rem;">
+                        <i class="fa-solid fa-quote-left mr-2"></i>Sobre o Atleta
+                    </h5>
+                    <div class="text-secondary mb-0" style="font-size: 0.9rem; line-height: 1.6; font-style: italic;">
+                        <?php echo !empty($usuario["descricao"]) ? html_entity_decode($usuario["descricao"]) : "Este atleta ainda não cadastrou uma biografia."; ?>
+                    </div>
+                </div>
+
                 <div class="row">
                     <!-- General details -->
                     <div class="col-md-6 pr-md-4 border-right">

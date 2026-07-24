@@ -16,7 +16,11 @@ include_once "../models/filiadoModel.php";
 
     </div>
   </div>
-  <p class="lead font-weight-normal text-center">Unindo a tradição do Karatê de Contato Jutsu ao respeito e a ética com todos.</p>
+  <p class="lead font-weight-normal text-center my-4 py-3" style="background-color: #f8f9fa; border-top: 1px solid #dee2e6; border-bottom: 1px solid #dee2e6; letter-spacing: 0.5px;">
+    Kenshydokan: <span class="text-danger font-weight-bold">"Escola do Praticante Dedicado da Filosofia do Punho"</span>
+    <br>
+    <span class="font-italic">"Unindo a tradição do Karatê de Contato Jutsu ao respeito e a ética com todos."</span> - Princípios do Karatê Kenshydokan
+  </p>
 </div>
 
 <div class="main main-raised">
@@ -52,7 +56,7 @@ include_once "../models/filiadoModel.php";
             $f_nome = htmlspecialchars($f_ativa['nome']);
             $f_logo = htmlspecialchars($f_ativa['logo']);
             $f_link = htmlspecialchars($f_ativa['link'] ?? '');
-            ?>
+        ?>
             <div class="col-lg-3 col-md-6 text-center mb-4">
               <div class="card h-100 p-4 border-0 shadow-sm align-items-center justify-content-center" style="border-radius: 12px; transition: transform 0.2s ease;">
                 <?php if (!empty($f_link)): ?>
@@ -65,7 +69,7 @@ include_once "../models/filiadoModel.php";
                 <h5 class="h6 mb-0 font-weight-bold text-dark"><?php echo $f_nome; ?></h5>
               </div>
             </div>
-            <?php
+        <?php
           }
           echo '</div>';
         } else {
@@ -111,7 +115,7 @@ include_once "../models/filiadoModel.php";
           Ver todas as postagens <i class="fa-solid fa-arrow-right ml-1"></i>
         </a>
       </div>
-      
+
       <?php
       require_once __DIR__ . '/../models/publicacaoModel.php';
       $postagens_todas = Publicacao::buscarPostagensAprovadas();
@@ -123,13 +127,13 @@ include_once "../models/filiadoModel.php";
           $autor_dados = Publicacao::buscar_autor($post_rec["id_usuario"]);
           $nome_autor = htmlspecialchars($autor_dados["nome"] ?? "Autor Desconhecido");
           $caminho_foto = $autor_dados["foto"] ?? "";
-          
+
           $wordCount = str_word_count(strip_tags($post_rec['conteudo']));
           $readTime = max(1, ceil($wordCount / 200));
           $resumo = mb_substr(html_entity_decode(strip_tags($post_rec['conteudo'])), 0, 100, 'UTF-8');
           $cover_img = $post_rec["caminho_imagem"] ?? "";
           $link_post = !empty($post_rec['slug']) ? 'postagem.php?slug=' . $post_rec['slug'] : 'postagem.php?id=' . $post_rec['id_publicacao'];
-          ?>
+      ?>
           <div class="col-md-4 mb-4">
             <div class="card h-100 border-0 shadow-sm overflow-hidden bg-light" style="border-radius: 12px; transition: transform 0.3s ease, box-shadow 0.3s ease;">
               <!-- Imagem de Capa -->
@@ -142,17 +146,17 @@ include_once "../models/filiadoModel.php";
                   </div>
                 <?php endif; ?>
               </div>
-              
+
               <!-- Corpo do Card -->
               <div class="card-body d-flex flex-column p-3 text-left">
                 <div class="d-flex align-items-center mb-2">
                   <span class="text-muted small" style="font-size: 0.75rem;"><i class="fa-regular fa-calendar mr-1"></i> <?php echo date('d/m/Y', strtotime($post_rec['dataCriacao'])); ?></span>
                   <span class="text-muted small ml-auto" style="font-size: 0.75rem;"><i class="fa-regular fa-clock mr-1"></i> <?php echo $readTime; ?> min</span>
                 </div>
-                
+
                 <h6 class="font-weight-bold text-dark mb-2 text-truncate" title="<?php echo htmlspecialchars($post_rec['titulo']); ?>"><?php echo htmlspecialchars($post_rec['titulo']); ?></h6>
                 <p class="text-secondary small mb-3" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 38px; line-height: 1.4;"><?php echo htmlspecialchars($resumo); ?>...</p>
-                
+
                 <div class="mt-auto pt-2 border-top d-flex align-items-center justify-content-between">
                   <span class="text-muted small text-truncate" style="max-width: 60%; font-size: 0.75rem;">Por: <?php echo $nome_autor; ?></span>
                   <a href="<?php echo $link_post; ?>" class="btn btn-sm btn-danger font-weight-bold rounded-pill px-3" style="font-size: 0.75rem;" aria-label="Ler artigo: <?php echo htmlspecialchars($post_rec['titulo']); ?>">Ler Artigo</a>
@@ -160,7 +164,7 @@ include_once "../models/filiadoModel.php";
               </div>
             </div>
           </div>
-          <?php
+      <?php
         }
         echo '</div>';
       } else {
@@ -199,100 +203,100 @@ include_once "../models/filiadoModel.php";
       $conexao = $dbConn->conectar();
 
       $diretores = [
-          [
-              'id_filiado' => 20,
-              'nome' => 'Everson Jones Batista Leite',
-              'cargo' => 'DIRETOR TÉCNICO',
-              'default_img' => '../img/sensei-everson.jpg',
-              'destaque' => false
-          ],
-          [
-              'id_filiado' => 14,
-              'nome' => 'Jonas Teixeira de Andrade',
-              'cargo' => 'PRESIDENTE E FUNDADOR DA KENSHYDOKAN',
-              'default_img' => '../img/Jonas.jpg',
-              'destaque' => true
-          ],
-          [
-              'id_filiado' => 23,
-              'nome' => 'Weslley Henrique Vieira Ferraz',
-              'cargo' => 'DIRETOR TÉCNICO',
-              'default_img' => '../img/sensei_weslley.jpg',
-              'destaque' => false
-          ],
-          [
-              'id_filiado' => 98,
-              'nome' => 'Nilson Egues',
-              'cargo' => 'DIRETOR DE ARBITRAGEM',
-              'default_img' => '../img/sensei_nilson.jpg',
-              'destaque' => false
-          ],
-          [
-              'id_filiado' => 22,
-              'nome' => 'Elyakin Vinicius C de M Metello',
-              'cargo' => 'DIRETOR DE SAÚDE E APOIO MÉDICO',
-              'default_img' => '../img/sensei_elyakin.jpg',
-              'destaque' => false
-          ]
+        [
+          'id_filiado' => 20,
+          'nome' => 'Everson Jones Batista Leite',
+          'cargo' => 'DIRETOR TÉCNICO',
+          'default_img' => '../img/sensei-everson.jpg',
+          'destaque' => false
+        ],
+        [
+          'id_filiado' => 14,
+          'nome' => 'Jonas Teixeira de Andrade',
+          'cargo' => 'PRESIDENTE E FUNDADOR DA KENSHYDOKAN',
+          'default_img' => '../img/Jonas.jpg',
+          'destaque' => true
+        ],
+        [
+          'id_filiado' => 23,
+          'nome' => 'Weslley Henrique Vieira Ferraz',
+          'cargo' => 'DIRETOR TÉCNICO',
+          'default_img' => '../img/sensei_weslley.jpg',
+          'destaque' => false
+        ],
+        [
+          'id_filiado' => 98,
+          'nome' => 'Nilson Egues',
+          'cargo' => 'DIRETOR DE ARBITRAGEM',
+          'default_img' => '../img/sensei_nilson.jpg',
+          'destaque' => false
+        ],
+        [
+          'id_filiado' => 22,
+          'nome' => 'Elyakin Vinicius C de M Metello',
+          'cargo' => 'DIRETOR DE SAÚDE E APOIO MÉDICO',
+          'default_img' => '../img/sensei_elyakin.jpg',
+          'destaque' => false
+        ]
       ];
 
       foreach ($diretores as $d) {
-          $id_filiado = $d['id_filiado'];
-          $nome = $d['nome'];
-          $cargo = $d['cargo'];
-          $default_img = $d['default_img'];
-          $destaque = $d['destaque'];
+        $id_filiado = $d['id_filiado'];
+        $nome = $d['nome'];
+        $cargo = $d['cargo'];
+        $default_img = $d['default_img'];
+        $destaque = $d['destaque'];
 
-          // Busca id_usuario e imagem do usuário vinculado
-          $id_usuario = null;
-          $img_nome_db = null;
-          $stmt = $conexao->prepare("
+        // Busca id_usuario e imagem do usuário vinculado
+        $id_usuario = null;
+        $img_nome_db = null;
+        $stmt = $conexao->prepare("
               SELECT u.id_usuario, img.nome AS imagem_nome
               FROM usuarios u
               LEFT JOIN imagens img ON u.id_imagem = img.id_imagem
               WHERE u.id_fil = ?
               LIMIT 1
           ");
-          $stmt->bind_param("i", $id_filiado);
-          $stmt->execute();
-          $res = $stmt->get_result();
-          if ($res->num_rows > 0) {
-              $row = $res->fetch_assoc();
-              $id_usuario = $row['id_usuario'];
-              $img_nome_db = $row['imagem_nome'];
-          }
-          $stmt->close();
+        $stmt->bind_param("i", $id_filiado);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if ($res->num_rows > 0) {
+          $row = $res->fetch_assoc();
+          $id_usuario = $row['id_usuario'];
+          $img_nome_db = $row['imagem_nome'];
+        }
+        $stmt->close();
 
-          $caminho_foto = $default_img;
-          if (!empty($img_nome_db) && file_exists(__DIR__ . '/../img/' . $img_nome_db)) {
-              $caminho_foto = '../img/' . $img_nome_db;
-          }
+        $caminho_foto = $default_img;
+        if (!empty($img_nome_db) && file_exists(__DIR__ . '/../img/' . $img_nome_db)) {
+          $caminho_foto = '../img/' . $img_nome_db;
+        }
 
-          $graduacoes = $filiadoModel->buscarGraduacoesFiliado($id_filiado);
-          ?>
-          <div class="col-lg-4 col-md-6 mb-5 d-flex justify-content-center">
-            <div class="<?php echo $destaque ? 'card h-100 border-0 shadow pt-4 pb-2 px-3 align-items-center w-100' : 'card h-100 border-0 shadow-sm pt-4 pb-2 px-3 align-items-center w-100'; ?>" <?php echo $destaque ? 'style="transform: scale(1.05); z-index: 1;"' : ''; ?>>
-              <?php if ($id_usuario): ?>
-                <a href="ver_perfil.php?id_usuario=<?php echo $id_usuario; ?>">
-                  <img class="rounded-circle shadow mb-3 border border-danger" src="<?php echo $caminho_foto; ?>" width="<?php echo $destaque ? '180' : '160'; ?>" height="<?php echo $destaque ? '180' : '160'; ?>" alt="<?php echo htmlspecialchars($nome); ?>" style="border-width: 4px !important; object-fit: cover;">
-                </a>
+        $graduacoes = $filiadoModel->buscarGraduacoesFiliado($id_filiado);
+      ?>
+        <div class="col-lg-4 col-md-6 mb-5 d-flex justify-content-center">
+          <div class="<?php echo $destaque ? 'card h-100 border-0 shadow pt-4 pb-2 px-3 align-items-center w-100' : 'card h-100 border-0 shadow-sm pt-4 pb-2 px-3 align-items-center w-100'; ?>" <?php echo $destaque ? 'style="transform: scale(1.05); z-index: 1;"' : ''; ?>>
+            <?php if ($id_usuario): ?>
+              <a href="ver_perfil.php?id_usuario=<?php echo $id_usuario; ?>">
+                <img class="rounded-circle shadow mb-3 border border-danger" src="<?php echo $caminho_foto; ?>" width="<?php echo $destaque ? '180' : '160'; ?>" height="<?php echo $destaque ? '180' : '160'; ?>" alt="<?php echo htmlspecialchars($nome); ?>" style="border-width: 4px !important; object-fit: cover;">
+              </a>
+            <?php else: ?>
+              <img class="rounded-circle shadow mb-3 border border-danger" src="<?php echo $caminho_foto; ?>" width="160" height="160" alt="<?php echo htmlspecialchars($nome); ?>" style="border-width: 4px !important; object-fit: cover;">
+            <?php endif; ?>
+            <h4 class="font-weight-bold mb-1"><?php echo htmlspecialchars($nome); ?></h4>
+            <p class="text-danger font-weight-bold mb-3" style="min-height: 30px;"><small><?php echo htmlspecialchars($cargo); ?></small></p>
+            <ul class="list-unstyled text-muted small text-left ml-4 w-100">
+              <?php if (!empty($graduacoes)): ?>
+                <?php foreach ($graduacoes as $g): ?>
+                  <li><i class="fa-solid fa-check text-danger mr-2"></i> <?php echo htmlspecialchars($g['graduacao_nome']) . ' em ' . htmlspecialchars($g['arte_nome']); ?></li>
+                <?php endforeach; ?>
               <?php else: ?>
-                <img class="rounded-circle shadow mb-3 border border-danger" src="<?php echo $caminho_foto; ?>" width="160" height="160" alt="<?php echo htmlspecialchars($nome); ?>" style="border-width: 4px !important; object-fit: cover;">
+                <li><i class="fa-solid fa-check text-danger mr-2"></i> Sem registro de graduação</li>
               <?php endif; ?>
-              <h4 class="font-weight-bold mb-1"><?php echo htmlspecialchars($nome); ?></h4>
-              <p class="text-danger font-weight-bold mb-3" style="min-height: 30px;"><small><?php echo htmlspecialchars($cargo); ?></small></p>
-              <ul class="list-unstyled text-muted small text-left ml-4 w-100">
-                <?php if (!empty($graduacoes)): ?>
-                  <?php foreach ($graduacoes as $g): ?>
-                    <li><i class="fa-solid fa-check text-danger mr-2"></i> <?php echo htmlspecialchars($g['graduacao_nome']) . ' em ' . htmlspecialchars($g['arte_nome']); ?></li>
-                  <?php endforeach; ?>
-                <?php else: ?>
-                  <li><i class="fa-solid fa-check text-danger mr-2"></i> Sem registro de graduação</li>
-                <?php endif; ?>
-              </ul>
-            </div>
+            </ul>
           </div>
-          <?php
+        </div>
+      <?php
       }
       $conexao->close();
       ?>

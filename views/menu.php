@@ -57,8 +57,8 @@ $paginas = array(
 // --- Lógica para Meta Tags Dinâmicas ---
 $pageTitle = isset($pageTitle) ? $pageTitle : 'Kenshydokan Karatê';
 $pageDescription = isset($pageDescription) ? $pageDescription : 'Somos uma instituição, criada com o intuito de divulgar o karate kenshydokan e outras artes marciais.';
-$ogImage = isset($ogImage) ? $ogImage : 'https://www.kenshydokan.com/img/logo_instituto.jpg'; // Imagem padrão
-$pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
+$ogImage = isset($ogImage) ? $ogImage : 'https://kenshydokan.org.br/img/logo_instituto.jpg'; // Imagem padrão
+$pageUrl = 'https://kenshydokan.org.br' . $_SERVER['REQUEST_URI'];
 // --- Fim da Lógica ---
 
 ?>
@@ -94,8 +94,8 @@ $pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
             "@context": "https://schema.org",
             "@type": "SportsOrganization",
             "name": "Instituto de Artes Marciais e Defesa Pessoal Kenshydokan",
-            "alternateName": "Kenshydokan Karate Institute",
-            "url": "https://kenshydokan.com/",
+            "alternateName": ["Kenshidokan", "Kenshydokan Jutsu", "Federação de Karate de Contato do Brasil", "Federação de Karate de Contato do Mato Grosso"],
+            "url": "https://kenshydokan.org.br/",
             "description": "Organização dedicada ao ensino do Karatê Kenshydokan.",
             "founder": {
                 "@type": "Person",
@@ -117,7 +117,12 @@ $pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
                     "postalCode": "78110-350",
                     "addressCountry": "BR"
                 }
-            }
+            },
+            "knowsAbout": [{
+                "@type": "DefinedTerm",
+                "name": "Kenshydokan",
+                "description": "Tradução oficial: Escola do Praticante Dedicado da Filosofia do Punho. Derivado dos ideogramas Ken (Punho), Shi (Praticante dedicado/Guerreiro), Do (Caminho/Filosofia) e Kan (Escola)."
+            }]
         }
     </script>
 
@@ -130,6 +135,7 @@ $pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     <meta http-equiv="refresh" content="3600">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="canonical" href="<?php echo htmlspecialchars($pageUrl); ?>" />
 
     <!-- Open Graph -->
     <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?>">
@@ -154,7 +160,7 @@ $pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
 
     <link rel="stylesheet" href="../libs/DataTables/datatables.css" />
     <link rel="stylesheet" href="../../libs/DataTables/datatables.css" />
-    
+
     <!-- Custom Modern Theme CSS -->
     <link rel="stylesheet" href="../css/custom.css?v=1.3" />
     <link rel="stylesheet" href="../../css/custom.css?v=1.3" />
@@ -171,28 +177,32 @@ $pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
 
     <script src="../libs/tinymce/tinymce.min.js"></script>
     <script src="../../libs/tinymce/tinymce.min.js"></script>
-    
+
     <style>
         /* Estilização Premium do Google Translate */
         body {
             top: 0px !important;
             position: static !important;
         }
-        .goog-te-banner-frame.skiptranslate, 
+
+        .goog-te-banner-frame.skiptranslate,
         .goog-te-banner-frame,
         #goog-gt-tt,
         .goog-te-balloon-frame {
             display: none !important;
         }
+
         .goog-logo-link {
             display: none !important;
         }
+
         .goog-te-gadget {
             color: transparent !important;
             font-size: 0px !important;
             display: flex !important;
             align-items: center !important;
         }
+
         .goog-te-combo {
             background-color: #2b3035 !important;
             color: #f8f9fa !important;
@@ -205,17 +215,20 @@ $pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
             cursor: pointer !important;
             font-weight: 600 !important;
             transition: all 0.25s ease-in-out !important;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
         }
+
         .goog-te-combo:hover {
             border-color: #dc3545 !important;
             background-color: #343a40 !important;
             box-shadow: 0 2px 8px rgba(220, 53, 69, 0.25) !important;
         }
+
         .goog-te-combo option {
             background-color: #212529 !important;
             color: #fff !important;
         }
+
         /* Oculta barra de ferramentas do Google no topo */
         .skiptranslate {
             margin-top: 0px !important;
@@ -305,13 +318,13 @@ $pageUrl = 'https://www.SEUSITE.com.br' . $_SERVER['REQUEST_URI'];
                     </div>
                 </li>
             </ul>
-            
+
             <!-- Google Translate Element Integrado -->
             <div class="d-flex align-items-center ml-lg-3 my-2 my-lg-0" id="google_translate_container">
                 <i class="fa-solid fa-language text-white mr-2" style="font-size: 1.15rem; opacity: 0.85;"></i>
                 <div id="google_translate_element"></div>
             </div>
-            
+
             <script type="text/javascript">
                 function googleTranslateElementInit() {
                     new google.translate.TranslateElement({

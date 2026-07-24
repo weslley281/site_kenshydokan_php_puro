@@ -11,7 +11,9 @@
 
     </div>
   </div>
-  <p class="lead font-weight-normal text-center">Unindo a tradição do Karatê de Contato Jutsu ao respeito e a ética com todos.</p>
+  <p class="lead font-weight-normal text-center my-4 py-3" style="background-color: #f8f9fa; border-top: 1px solid #dee2e6; border-bottom: 1px solid #dee2e6; letter-spacing: 0.5px;">
+    Kenshydokan: <span class="text-danger font-weight-bold">"Escola do Praticante Dedicado da Filosofia do Punho"</span>
+  </p>
 </div>
 
 <div class="main main-raised">

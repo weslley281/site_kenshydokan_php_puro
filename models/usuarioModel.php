@@ -12,9 +12,10 @@ class Usuario
     private $senha;
     private $dataCriacao;
     private $dataMudanca;
+    private $descricao;
     private $conexao;
 
-    public function __construct($nome = null, $id_fil = null, $id_imagem = null, $email = null, $telefone = null, $dataMudanca = null, $senha = "", $nivel = "aluno")
+    public function __construct($nome = null, $id_fil = null, $id_imagem = null, $email = null, $telefone = null, $dataMudanca = null, $senha = "", $nivel = "aluno", $descricao = null)
     {
         $this->nome = $nome;
         $this->id_fil = $id_fil;
@@ -25,9 +26,18 @@ class Usuario
         $this->senha = $senha;
         $this->dataCriacao = date("Y-m-d");
         $this->dataMudanca = $dataMudanca;
+        $this->descricao = $descricao;
 
         $c = new Conexao();
         $this->conexao = $c->conectar();
+
+        // Migration automatica para adicionar a coluna descricao se nao existir
+        if ($this->conexao) {
+            $check = $this->conexao->query("SHOW COLUMNS FROM usuarios LIKE 'descricao'");
+            if ($check && $check->num_rows == 0) {
+                $this->conexao->query("ALTER TABLE usuarios ADD COLUMN descricao TEXT DEFAULT NULL");
+            }
+        }
     }
 
     // Métodos getters
@@ -122,6 +132,16 @@ class Usuario
         $this->dataMudanca = $dataMudanca;
     }
 
+    public function getDescricao()
+    {
+        return $this->descricao;
+    }
+
+    public function setDescricao($descricao)
+    {
+        $this->descricao = $descricao;
+    }
+
     // Métodos vindos do Repositório
 
     public function criarUsuario(Usuario $usuario): bool
@@ -147,16 +167,17 @@ class Usuario
 
     public function editarUsuario(int $id_usuario, Usuario $usuario): bool
     {
-        $atualizar = $this->conexao->prepare("UPDATE usuarios SET nome = ?, id_fil = ?, id_imagem = ?, email = ?, nivel = ?, telefone = ?, dataMudanca = ? WHERE id_usuario = ?");
+        $atualizar = $this->conexao->prepare("UPDATE usuarios SET nome = ?, id_fil = ?, id_imagem = ?, email = ?, nivel = ?, telefone = ?, descricao = ?, dataMudanca = ? WHERE id_usuario = ?");
         $nome = $usuario->getNome();
         $if = $usuario->getIdFil();
         $ii = $usuario->getIdImagem();
         $em = $usuario->getEmail();
         $ni = $usuario->getNivel();
         $te = $usuario->getTelefone();
+        $desc = $usuario->getDescricao();
         $dm = $usuario->getDataMudanca();
 
-        $atualizar->bind_param("siissssi", $nome, $if, $ii, $em, $ni, $te, $dm, $id_usuario);
+        $atualizar->bind_param("siisssssi", $nome, $if, $ii, $em, $ni, $te, $desc, $dm, $id_usuario);
         $resultado = $atualizar->execute();
         $atualizar->close();
 

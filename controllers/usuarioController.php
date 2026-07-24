@@ -70,8 +70,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $id_imagem = $_POST["id_imagem"];
             $email = $_POST["email"];
             $telefone = $_POST["telefone"];
+            $descricao = $_POST["descricao"] ?? null;
 
-            $usuarioEditado = new Usuario($_POST["nome"], $_POST["id_fil"], $_POST["id_imagem"], $_POST["email"], $_POST["telefone"], $dataMudanca);
+            $usuarioEditado = new Usuario($_POST["nome"], $_POST["id_fil"], $_POST["id_imagem"], $_POST["email"], $_POST["telefone"], $dataMudanca, "", $_POST["nivel"], $descricao);
 
             $usuarioEditado->setNivel($_POST["nivel"]);
 

@@ -190,6 +190,71 @@ $conexao->close();
     </div>
 </div>
 
+<!-- Seção Significado do Nome -->
+<div class="container mb-5">
+    <div class="card border-0 shadow-sm rounded-lg overflow-hidden bg-white">
+        <div class="p-4 p-md-5">
+            <span class="badge badge-danger px-3 py-2 rounded-pill font-weight-bold text-uppercase mb-3" style="font-size: 0.75rem; letter-spacing: 1px;">
+                <i class="fa-solid fa-language mr-1"></i> Tradução Oficial
+            </span>
+            <h3 class="font-weight-bold text-dark mb-4">Significado do Nome Kenshydokan</h3>
+            
+            <p class="history-p">
+                O nome <strong>Kenshydokan</strong> (grafia oficial registrada pelo Instituto, correspondente à romanização marcial de <strong>拳士道館</strong> - <em>Kenshidōkan</em>) traduz-se oficialmente como:
+            </p>
+            
+            <div class="border-left border-danger pl-4 my-4 bg-light py-3 pr-3 rounded-right" style="border-left-width: 4px !important;">
+                <p class="h4 font-weight-bold text-danger mb-0" style="font-style: italic; line-height: 1.5;">
+                    "Escola do Praticante Dedicado da Filosofia do Punho"
+                </p>
+            </div>
+            
+            <h5 class="font-weight-bold text-dark mt-4 mb-3">
+                <i class="fa-solid fa-circle-nodes text-danger mr-2"></i>Decomposição dos Ideogramas (Kanji):
+            </h5>
+            
+            <div class="row mt-4">
+                <div class="col-md-6 mb-4">
+                    <div class="d-flex align-items-start">
+                        <span class="badge badge-danger rounded-circle d-flex align-items-center justify-content-center mr-3" style="width: 36px; height: 36px; font-size: 1.1rem; font-weight: bold; background-color: #d9232d; min-width: 36px;">拳</span>
+                        <div>
+                            <strong class="text-dark">Ken (拳):</strong>
+                            <p class="text-secondary mb-0 small">Punho / Arte do combate.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="d-flex align-items-start">
+                        <span class="badge badge-danger rounded-circle d-flex align-items-center justify-content-center mr-3" style="width: 36px; height: 36px; font-size: 1.1rem; font-weight: bold; background-color: #d9232d; min-width: 36px;">士</span>
+                        <div>
+                            <strong class="text-dark">Shi (士):</strong>
+                            <p class="text-secondary mb-0 small">Praticante dedicado, especialista ou guerreiro qualificado.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="d-flex align-items-start">
+                        <span class="badge badge-danger rounded-circle d-flex align-items-center justify-content-center mr-3" style="width: 36px; height: 36px; font-size: 1.1rem; font-weight: bold; background-color: #d9232d; min-width: 36px;">道</span>
+                        <div>
+                            <strong class="text-dark">Dō (道):</strong>
+                            <p class="text-secondary mb-0 small">Caminho, filosofia, ética e princípios.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="d-flex align-items-start">
+                        <span class="badge badge-danger rounded-circle d-flex align-items-center justify-content-center mr-3" style="width: 36px; height: 36px; font-size: 1.1rem; font-weight: bold; background-color: #d9232d; min-width: 36px;">館</span>
+                        <div>
+                            <strong class="text-dark">Kan (館):</strong>
+                            <p class="text-secondary mb-0 small">Escola, academia ou salão de treino.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Seção Reconhecimento Oficial -->
 <div class="container mb-5">
     <div class="card border-0 shadow-sm rounded-lg overflow-hidden bg-white">

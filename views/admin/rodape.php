@@ -173,7 +173,7 @@ if (isset($_POST['accept_cookie'])) {
     }
 
     // Ouvinte de evento para o campo de entrada de arquivo
-    $('#imagem').change(function() {
+    $('#imagem, #logo, #certificado_imagem').change(function() {
         processAndPreviewImage(this);
     });
 </script>

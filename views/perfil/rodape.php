@@ -81,6 +81,26 @@ if (isset($_POST['accept_cookie'])) {
         plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
         toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
         language: 'pt_BR',
+        setup: function(editor) {
+            editor.on('init', function() {
+                if (editor.id === 'descricao') {
+                    const content = editor.getContent({format: 'text'}).trim();
+                    $('#char-count').text(content.length);
+                }
+            });
+            editor.on('keyup change input', function() {
+                if (editor.id === 'descricao') {
+                    const content = editor.getContent({format: 'text'}).trim();
+                    const charCount = content.length;
+                    $('#char-count').text(charCount);
+                    if (charCount > 600) {
+                        $('#char-count').css('color', '#dc3545').addClass('font-weight-bold');
+                    } else {
+                        $('#char-count').css('color', '#6c757d').removeClass('font-weight-bold');
+                    }
+                }
+            });
+        }
     });
 </script>
 
@@ -195,7 +215,7 @@ if (isset($_POST['accept_cookie'])) {
     }
 
     // Ouvinte de evento para o campo de entrada de arquivo
-    $('#imagem').change(function() {
+    $('#imagem, #logo, #certificado_imagem').change(function() {
         processAndPreviewImage(this);
     });
 </script>
