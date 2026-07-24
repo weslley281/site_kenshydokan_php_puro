@@ -26,14 +26,24 @@ include_once "../models/filiadoModel.php";
 <div class="main main-raised">
   <!-- Começo do Carrossel -->
   <div class="container text-center my-5 shadow-sm rounded overflow-hidden p-0 bg-dark">
-    <video id="my-video" class="video-js embed-responsive embed-responsive-16by9" preload="auto" data-setup="{}" controls autoplay="" muted="" loop="" aria-label="Vídeo de apresentação institucional com treinamentos e atividades do Instituto Kenshydokan">
-      <source class="embed-responsive-item" src="../videos/slide-kenshydokan.mp4" type="video/mp4">
+    <video id="my-video" class="video-js embed-responsive embed-responsive-16by9" preload="none" data-setup="{}" controls autoplay="" muted="" loop="" aria-label="Vídeo de apresentação institucional com treinamentos e atividades do Instituto Kenshydokan">
+      <source id="video-source" class="embed-responsive-item" data-src="../videos/slide-kenshydokan.mp4" type="video/mp4">
       <p class="vjs-no-js">
         To view this video please enable JavaScript, and consider upgrading to a
         web browser that
         <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
       </p>
     </video>
+    <script>
+    window.addEventListener('load', function() {
+        var video = document.getElementById('my-video');
+        var source = document.getElementById('video-source');
+        if (video && source) {
+            source.src = source.getAttribute('data-src');
+            video.load();
+        }
+    });
+    </script>
   </div>
   <hr class="my-5 w-75">
 
