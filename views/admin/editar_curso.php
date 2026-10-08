@@ -156,7 +156,7 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
           <div class="card-body p-4">
             <h5 class="text-danger font-weight-bold mb-4"><i class="fa-solid fa-plus mr-2"></i>Adicionar Nova Aula</h5>
             
-            <form enctype="multipart/form-data" action="../../controllers/AulaController.php" method="post">
+            <form enctype="multipart/form-data" action="../../controllers/aulaController.php" method="post">
               <input type="hidden" name="tipo" value="inserir">
               <input type="hidden" name="id_curso" value="<?php echo $id_curso; ?>">
 
@@ -237,7 +237,7 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
                                 </div>
                                 <div class="modal-footer border-0 bg-light py-3 text-center d-flex justify-content-center">
                                   <button type="button" class="btn btn-secondary px-4 rounded-pill font-weight-bold mr-2" data-dismiss="modal">Cancelar</button>
-                                  <form action="../../controllers/AulaController.php" method="post" class="d-inline">
+                                  <form action="../../controllers/aulaController.php" method="post" class="d-inline">
                                     <input type="hidden" name="tipo" value="excluir">
                                     <input type="hidden" name="id_curso" value="<?php echo $id_curso; ?>">
                                     <input type="hidden" name="id_aula" value="<?php echo $aula["id_aula"]; ?>">

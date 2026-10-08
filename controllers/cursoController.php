@@ -85,6 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $imagemModelManager = new Imagem();
             $cursoModel = new CursoModel();
+            $destino = "../views/admin/editar_curso.php?id=" . $_POST["id_curso"];
 
             $diretorioUpload = "../img/";
             $nomeImagem = uniqid() . $_FILES["imagem"]["name"];
@@ -99,21 +100,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     if ($imagemModelManager->registrar_imagem($imagemModel)) {
                         $id_imagem = Imagem::procura_id_imagem($nomeImagem);
 
-                        $dados_imagem_antiga = Imagem::procura_imagem($_POST["id_imagem"]);
-
-                        $caminho = $dados_imagem_antiga != null ? file_exists($dados_imagem_antiga["caminho"]) : "";
-
-                        if (file_exists($caminho)) {
-                            unlink($caminhoImagemAntiga);
+                        if (!empty($_POST["id_imagem"])) {
+                            $dados_imagem_antiga = Imagem::procura_imagem($_POST["id_imagem"]);
+                            if ($dados_imagem_antiga != null) {
+                                $caminho_antigo = $dados_imagem_antiga["caminho"];
+                                if (!empty($caminho_antigo) && file_exists($caminho_antigo)) {
+                                    unlink($caminho_antigo);
+                                }
+                            }
+                            $imagemModelManager->deleta_imagem($_POST["id_imagem"]);
                         }
-
-                        $imagemModelManager->deleta_imagem($_POST["id_imagem"]);
-                        $destino = "../views/admin/editar_curso.php?id=" . $_POST["id_curso"];
 
                         if ($cursoModel->editarImagemCurso($_POST["id_curso"], $id_imagem, $dataMudanca)) {
                             exibirMensagemEredirecionar(MSG_SUCESSO, $destino);
                         } else {
-                            exibirMensagemEredirecionar("Erro ao editar a imagem do usuário", $destino);
+                            exibirMensagemEredirecionar("Erro ao editar a imagem do curso", $destino);
                         }
                     } else {
                         exibirMensagemEredirecionar("Erro: Imagem não salva, tente novamente", $destino);
