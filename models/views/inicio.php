@@ -19,7 +19,7 @@
 <div class="main main-raised">
   <!-- Começo do Carrossel -->
   <div class="container text-center my-5 shadow-sm rounded overflow-hidden p-0 bg-dark">
-    <video id="my-video" class="video-js embed-responsive embed-responsive-16by9" preload="none" data-setup="{}" controls autoplay="" muted="" loop="">
+    <video id="my-video" class="video-js embed-responsive embed-responsive-16by9" preload="none" controls autoplay="" muted="" loop="">
       <source id="video-source" class="embed-responsive-item" data-src="../videos/slide-kenshydokan.mp4" type="video/mp4">
       <p class="vjs-no-js">
         To view this video please enable JavaScript, and consider upgrading to a
@@ -29,11 +29,14 @@
     </video>
     <script>
     window.addEventListener('load', function() {
-        var video = document.getElementById('my-video');
-        var source = document.getElementById('video-source');
-        if (video && source) {
-            source.src = source.getAttribute('data-src');
-            video.load();
+        var videoElement = document.getElementById('my-video');
+        var sourceElement = document.getElementById('video-source');
+        if (videoElement && sourceElement) {
+            sourceElement.src = sourceElement.getAttribute('data-src');
+            videoElement.load();
+            if (typeof videojs !== 'undefined') {
+                videojs(videoElement);
+            }
         }
     });
     </script>
