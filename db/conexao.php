@@ -1,10 +1,17 @@
 <?php
 
 class Conexao {
+<<<<<<< HEAD
     private $host = 'localhost';
     private $user = 'root';
     private $pass = '';
     private $db   = 'kenshydokan';
+=======
+    private $host = '';
+    private $user = '';
+    private $pass = '';
+    private $db   = '';
+>>>>>>> e4adddcca39c1af8907c74c932273dd34426d427
     private $conn = null;
 
     public function conectar() {
