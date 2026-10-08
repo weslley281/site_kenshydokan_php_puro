@@ -31,15 +31,19 @@ class Campeonato
 
         // Atualizacao automatica da tabela se necessario
         if ($this->conexao) {
-            // Verificar e adicionar coluna 'tipo' se nao existir
-            $check = $this->conexao->query("SHOW COLUMNS FROM campeonatos LIKE 'tipo'");
-            if ($check && $check->num_rows == 0) {
-                $this->conexao->query("ALTER TABLE campeonatos ADD COLUMN tipo VARCHAR(50) NOT NULL DEFAULT 'interno'");
-            }
-            // Verificar e adicionar coluna 'link_externo' se nao existir
-            $check_link = $this->conexao->query("SHOW COLUMNS FROM campeonatos LIKE 'link_externo'");
-            if ($check_link && $check_link->num_rows == 0) {
-                $this->conexao->query("ALTER TABLE campeonatos ADD COLUMN link_externo VARCHAR(500) DEFAULT NULL");
+            try {
+                // Verificar e adicionar coluna 'tipo' se nao existir
+                $check = $this->conexao->query("SHOW COLUMNS FROM campeonatos LIKE 'tipo'");
+                if ($check && $check->num_rows == 0) {
+                    @$this->conexao->query("ALTER TABLE campeonatos ADD COLUMN tipo VARCHAR(50) NOT NULL DEFAULT 'interno'");
+                }
+                // Verificar e adicionar coluna 'link_externo' se nao existir
+                $check_link = $this->conexao->query("SHOW COLUMNS FROM campeonatos LIKE 'link_externo'");
+                if ($check_link && $check_link->num_rows == 0) {
+                    @$this->conexao->query("ALTER TABLE campeonatos ADD COLUMN link_externo VARCHAR(500) DEFAULT NULL");
+                }
+            } catch (Throwable $t) {
+                error_log("Aviso: Falha nas colunas de campeonatos: " . $t->getMessage());
             }
         }
     }

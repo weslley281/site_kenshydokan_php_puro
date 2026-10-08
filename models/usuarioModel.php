@@ -33,9 +33,13 @@ class Usuario
 
         // Migration automatica para adicionar a coluna descricao se nao existir
         if ($this->conexao) {
-            $check = $this->conexao->query("SHOW COLUMNS FROM usuarios LIKE 'descricao'");
-            if ($check && $check->num_rows == 0) {
-                $this->conexao->query("ALTER TABLE usuarios ADD COLUMN descricao TEXT DEFAULT NULL");
+            try {
+                $check = $this->conexao->query("SHOW COLUMNS FROM usuarios LIKE 'descricao'");
+                if ($check && $check->num_rows == 0) {
+                    @$this->conexao->query("ALTER TABLE usuarios ADD COLUMN descricao TEXT DEFAULT NULL");
+                }
+            } catch (Throwable $t) {
+                error_log("Aviso: Falha ao verificar/alterar coluna descricao em usuarios: " . $t->getMessage());
             }
         }
     }

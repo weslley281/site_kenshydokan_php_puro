@@ -295,6 +295,15 @@ class FiliadoModel
     public function excluirFiliado($id_filiado): bool
     {
         try {
+            $this->conexao->begin_transaction();
+
+            // Deleta registros associados de graduacoes
+            $delGrad = $this->conexao->prepare("DELETE FROM filiados_graduacoes WHERE id_filiado = ?");
+            $delGrad->bind_param("i", $id_filiado);
+            $delGrad->execute();
+            $delGrad->close();
+
+            // Deleta o filiado
             $deletar = $this->conexao->prepare("DELETE FROM filiados WHERE id_filiado = ?");
             $deletar->bind_param("i", $id_filiado);
             $resultado = $deletar->execute();
@@ -304,8 +313,10 @@ class FiliadoModel
                 throw new Exception("Erro ao excluir o filiado.");
             }
 
+            $this->conexao->commit();
             return true;
         } catch (Exception $e) {
+            $this->conexao->rollback();
             error_log("Erro ao excluir o filiado: " . $e->getMessage());
             return false;
         }

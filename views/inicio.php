@@ -311,7 +311,6 @@ include_once "../models/filiadoModel.php";
         </div>
       <?php
       }
-      $conexao->close();
       ?>
     </div><!-- /.row -->
   </div>

@@ -68,7 +68,6 @@ if ($id_imagem) {
         $caminho_foto = '../img/' . $imagem['nome'];
     }
 }
-$conexao->close();
 // --- Fim da busca de imagem ---
 
 // --- Início da Geração do PDF ---

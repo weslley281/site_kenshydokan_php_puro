@@ -45,7 +45,6 @@ function contar_pagina($url_atual)
                     $stmt->execute();
                     $stmt->close();
                 }
-                $conexao->close();
             }
         }
     } catch (Throwable $t) {

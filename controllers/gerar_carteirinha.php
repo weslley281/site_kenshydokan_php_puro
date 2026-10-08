@@ -60,7 +60,6 @@ $resultado_usuario = $busca_usuario->get_result();
 $usuario = $resultado_usuario->fetch_assoc();
 
 if (!$usuario || !in_array($usuario['nivel'], ['kohai', 'sensei', 'admin'])) {
-    $conexao->close();
     die("Acesso negado. Apenas kohai, sensei e admin possuem permissão para gerar carteirinha.");
 }
 
@@ -80,7 +79,6 @@ if ($id_imagem) {
         $caminho_foto = '../img/' . $imagem['nome'];
     }
 }
-$conexao->close();
 // --- Fim da busca de imagem ---
 
 // --- Início da Geração do PDF ---

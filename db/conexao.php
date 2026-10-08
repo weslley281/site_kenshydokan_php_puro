@@ -7,51 +7,75 @@ class Conexao {
     private $pass;
     private $db;
 
-    private $conn = null;
+    private static $conn = null;
 
     public function __construct() {
         $this->carregarEnv();
 
-        $envHost = getenv('DB_HOST') ?: '127.0.0.1';
-        // Em hospedagens como Hostinger, 'localhost' pode causar erro de permissao de socket Unix (Operation not permitted).
-        // Se for localhost, altera para 127.0.0.1 para forçar conexao TCP/IP.
-        $this->host = ($envHost === 'localhost') ? '127.0.0.1' : $envHost;
-        $this->user = getenv('DB_USER') !== false ? getenv('DB_USER') : 'root';
-        $this->pass = getenv('DB_PASS') !== false ? getenv('DB_PASS') : '';
-        $this->db   = getenv('DB_NAME') ?: 'kenshydokan';
+        // Se houver .env ou .env.development, usa as variaveis dele.
+        // Se nao houver .env ou nao estiver definido, usa como padrao as credenciais da Hostinger.
+        $this->host = getenv('DB_HOST') ?: '127.0.0.1';
+        $this->user = getenv('DB_USER') ?: 'u515961161_kenshydokan';
+        $this->pass = getenv('DB_PASS') !== false ? getenv('DB_PASS') : 'Wesv@g28';
+        $this->db   = getenv('DB_NAME') ?: 'u515961161_kenshydokan';
     }
 
     private function carregarEnv() {
-        $envPath = __DIR__ . '/../.env';
-        if (file_exists($envPath)) {
-            $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-            foreach ($lines as $line) {
-                $line = trim($line);
-                if (empty($line) || substr($line, 0, 1) === '#') {
-                    continue;
+        $envPaths = [
+            __DIR__ . '/../.env',
+            __DIR__ . '/../.env.development'
+        ];
+
+        foreach ($envPaths as $envPath) {
+            if (file_exists($envPath)) {
+                $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+                foreach ($lines as $line) {
+                    $line = trim($line);
+                    if (empty($line) || substr($line, 0, 1) === '#') {
+                        continue;
+                    }
+                    if (strpos($line, '=') !== false) {
+                        list($key, $value) = explode('=', $line, 2);
+                        $key = trim($key);
+                        $value = trim($value, " \t\n\r\0\x0B\"'");
+                        putenv("$key=$value");
+                        $_ENV[$key] = $value;
+                    }
                 }
-                if (strpos($line, '=') !== false) {
-                    list($key, $value) = explode('=', $line, 2);
-                    $key = trim($key);
-                    $value = trim($value, " \t\n\r\0\x0B\"'");
-                    putenv("$key=$value");
-                    $_ENV[$key] = $value;
-                }
+                break;
             }
         }
     }
 
     public function conectar() {
-        if ($this->conn === null) {
-            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        $connectionValid = false;
+        if (self::$conn !== null) {
             try {
-                $this->conn = new mysqli($this->host, $this->user, $this->pass, $this->db);
-                $this->conn->set_charset('utf8mb4');
-            } catch (Exception $e) {
-                die('Erro na conexao com o banco de dados: ' . $e->getMessage());
+                $connectionValid = @self::$conn->ping();
+            } catch (Throwable $t) {
+                $connectionValid = false;
             }
         }
-        return $this->conn;
+
+        if (self::$conn === null || !$connectionValid) {
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+            // Tenta primeiro com o host principal (ex: 127.0.0.1 ou localhost)
+            try {
+                self::$conn = new mysqli($this->host, $this->user, $this->pass, $this->db);
+                self::$conn->set_charset('utf8mb4');
+            } catch (Exception $e) {
+                // Se falhar no primeiro host, tenta o alternativo (fallback automatico entre 127.0.0.1 e localhost)
+                $altHost = ($this->host === '127.0.0.1') ? 'localhost' : '127.0.0.1';
+                try {
+                    self::$conn = new mysqli($altHost, $this->user, $this->pass, $this->db);
+                    self::$conn->set_charset('utf8mb4');
+                } catch (Exception $e2) {
+                    die('Erro na conexao com o banco de dados: ' . $e2->getMessage());
+                }
+            }
+        }
+        return self::$conn;
     }
 }
 
@@ -61,4 +85,6 @@ class Database extends Conexao {
     }
 }
 ?>
+
+
 

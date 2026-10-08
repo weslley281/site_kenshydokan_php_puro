@@ -84,7 +84,6 @@ if ($conexao) {
             $visualizacoes[] = $row;
         }
     }
-    $conexao->close();
 }
 ?>
 

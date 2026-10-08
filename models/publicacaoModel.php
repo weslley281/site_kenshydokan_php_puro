@@ -27,40 +27,44 @@ class Publicacao
 
         // Atualizacao automatica da tabela se necessario
         if ($this->conexao) {
-            // Verificar e adicionar coluna 'slug' se nao existir
-            $check = $this->conexao->query("SHOW COLUMNS FROM postagens LIKE 'slug'");
-            if ($check && $check->num_rows == 0) {
-                $this->conexao->query("ALTER TABLE postagens ADD COLUMN slug VARCHAR(255) DEFAULT NULL UNIQUE");
-                
-                // Gerar slugs para posts antigos
-                $result = $this->conexao->query("SELECT id_publicacao, titulo FROM postagens");
-                if ($result) {
-                    while ($row = $result->fetch_assoc()) {
-                        $id = $row['id_publicacao'];
-                        $slug = self::gerarSlug($row['titulo']);
-                        
-                        // Garante unicidade adicionando sufixo se necessario
-                        $slug_unico = $slug;
-                        $counter = 1;
-                        while (true) {
-                            $check_slug = $this->conexao->prepare("SELECT id_publicacao FROM postagens WHERE slug = ? AND id_publicacao != ?");
-                            $check_slug->bind_param("si", $slug_unico, $id);
-                            $check_slug->execute();
-                            if ($check_slug->get_result()->num_rows == 0) {
+            try {
+                // Verificar e adicionar coluna 'slug' se nao existir
+                $check = $this->conexao->query("SHOW COLUMNS FROM postagens LIKE 'slug'");
+                if ($check && $check->num_rows == 0) {
+                    @$this->conexao->query("ALTER TABLE postagens ADD COLUMN slug VARCHAR(255) DEFAULT NULL UNIQUE");
+                    
+                    // Gerar slugs para posts antigos
+                    $result = $this->conexao->query("SELECT id_publicacao, titulo FROM postagens");
+                    if ($result) {
+                        while ($row = $result->fetch_assoc()) {
+                            $id = $row['id_publicacao'];
+                            $slug = self::gerarSlug($row['titulo']);
+                            
+                            // Garante unicidade adicionando sufixo se necessario
+                            $slug_unico = $slug;
+                            $counter = 1;
+                            while (true) {
+                                $check_slug = $this->conexao->prepare("SELECT id_publicacao FROM postagens WHERE slug = ? AND id_publicacao != ?");
+                                $check_slug->bind_param("si", $slug_unico, $id);
+                                $check_slug->execute();
+                                if ($check_slug->get_result()->num_rows == 0) {
+                                    $check_slug->close();
+                                    break;
+                                }
                                 $check_slug->close();
-                                break;
+                                $slug_unico = $slug . '-' . $counter;
+                                $counter++;
                             }
-                            $check_slug->close();
-                            $slug_unico = $slug . '-' . $counter;
-                            $counter++;
+                            
+                            $upd = $this->conexao->prepare("UPDATE postagens SET slug = ? WHERE id_publicacao = ?");
+                            $upd->bind_param("si", $slug_unico, $id);
+                            $upd->execute();
+                            $upd->close();
                         }
-                        
-                        $upd = $this->conexao->prepare("UPDATE postagens SET slug = ? WHERE id_publicacao = ?");
-                        $upd->bind_param("si", $slug_unico, $id);
-                        $upd->execute();
-                        $upd->close();
                     }
                 }
+            } catch (Throwable $t) {
+                error_log("Aviso: Falha ao verificar/alterar slug em postagens: " . $t->getMessage());
             }
         }
 

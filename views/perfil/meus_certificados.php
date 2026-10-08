@@ -1,39 +1,36 @@
 <?php
 // views/perfil/meus_certificados.php
-$page_title = "Meus Certificados";
 include __DIR__ . "/_perfil_auth.php";
 
-if ($usuario["nivel"] === "aluno") {
+if (isset($usuario["nivel"]) && $usuario["nivel"] === "aluno") {
     header("Location: perfil.php");
     exit();
 }
 
+$page_title = "Meus Certificados";
+
 include __DIR__ . "/menu.php";
+
 include_once __DIR__ . "/../../models/certificadoModel.php";
 include_once __DIR__ . "/../../models/certificadoManualModel.php";
 include_once __DIR__ . "/../../models/certificadoUploadModel.php";
 include_once __DIR__ . "/../../models/cursoModel.php";
+include_once __DIR__ . "/../../models/aulaModel.php";
 
 $certificados = [];
 if (isset($_SESSION['id_usuario'])) {
-    // Retroactive check: verify and generate certificates for any completed courses
-    try {
-        include_once __DIR__ . "/../../models/aulaModel.php";
-        $aulaModelTmp = new AulaModel();
-        $aulas_assistidas = $aulaModelTmp->getAulasAssistidasPorUsuario($_SESSION['id_usuario']);
-        $cursos_ids = [];
-        foreach ($aulas_assistidas as $aula_id) {
-            $aula_detail = $aulaModelTmp->buscarAula($aula_id);
-            if ($aula_detail && isset($aula_detail['id_curso'])) {
-                $cursos_ids[] = (int)$aula_detail['id_curso'];
-            }
+    $aulaModelTmp = new AulaModel();
+    $aulas_assistidas = $aulaModelTmp->getAulasAssistidasPorUsuario($_SESSION['id_usuario']);
+    $cursos_ids = [];
+    foreach ($aulas_assistidas as $aula_id) {
+        $aula_detail = $aulaModelTmp->buscarAula($aula_id);
+        if ($aula_detail && isset($aula_detail['id_curso'])) {
+            $cursos_ids[] = (int)$aula_detail['id_curso'];
         }
-        $cursos_ids = array_unique($cursos_ids);
-        foreach ($cursos_ids as $id_curso_auto) {
-            CertificadoModel::verificarEGerarCertificadoAuto($_SESSION['id_usuario'], $id_curso_auto);
-        }
-    } catch (Exception $e) {
-        error_log("Erro no check retroativo de certificados: " . $e->getMessage());
+    }
+    $cursos_ids = array_unique($cursos_ids);
+    foreach ($cursos_ids as $id_curso_auto) {
+        CertificadoModel::verificarEGerarCertificadoAuto($_SESSION['id_usuario'], $id_curso_auto);
     }
 
     $certificadoModelRepo = new CertificadoModel();
@@ -190,3 +187,4 @@ $cursoModelRepo = new CursoModel();
 	</div>
 
 <?php include __DIR__ . "/rodape.php"; ?>
+

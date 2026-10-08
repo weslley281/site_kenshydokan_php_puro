@@ -68,8 +68,6 @@ $membros = [
     'roset' => obterDadosMembro($conexao, $filiadoModel, 33, '../img/sensei_rose.jpg'),
     'nilson' => obterDadosMembro($conexao, $filiadoModel, 98, '../img/sensei_nilson.jpg')
 ];
-
-$conexao->close();
 ?>
 
 <!-- Custom Style overrides for premium design -->
