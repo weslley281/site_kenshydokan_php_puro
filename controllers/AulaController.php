@@ -71,6 +71,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $destino = "../views/admin/editar_curso.php?id=$id_curso";
                 exibirMensagemEredirecionar(MSG_ERRO, $destino);
             }
+        } elseif ($_POST["tipo"] == "reordenar") {
+            header('Content-Type: application/json');
+            $aulas_ordem = isset($_POST['aulas']) ? json_decode($_POST['aulas'], true) : [];
+            if (!empty($aulas_ordem) && is_array($aulas_ordem)) {
+                $sucesso = $aulaModel->reordenarAulas($aulas_ordem);
+                echo json_encode(['success' => $sucesso]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Dados de ordenação inválidos']);
+            }
+            exit;
         }
     } else {
         exibirMensagemEredirecionar("Preencha todos os dados", '../views/admin/index.php?pagina=aulas');

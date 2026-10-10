@@ -320,4 +320,25 @@ class AulaModel
             return [];
         }
     }
+
+    public function reordenarAulas(array $ordemAulas): bool
+    {
+        try {
+            $this->conexao->begin_transaction();
+            $stmt = $this->conexao->prepare("UPDATE aulas SET num_ordenacao = ? WHERE id_aula = ?");
+            foreach ($ordemAulas as $item) {
+                $num = (int)$item['num_ordenacao'];
+                $id  = (int)$item['id_aula'];
+                $stmt->bind_param("ii", $num, $id);
+                $stmt->execute();
+            }
+            $stmt->close();
+            $this->conexao->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->conexao->rollback();
+            error_log("Erro ao reordenar aulas: " . $e->getMessage());
+            return false;
+        }
+    }
 }

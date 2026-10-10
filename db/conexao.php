@@ -3,7 +3,7 @@
 class Conexao {
 
     private $host;
-    private $user;
+    private $user; 
     private $pass;
     private $db;
 

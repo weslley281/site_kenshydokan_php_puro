@@ -197,7 +197,7 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
                     <th scope="col" class="text-center" style="width: 100px;">Ações</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="tabelaAulasBody">
                   <?php
                   $aulaModelRepo = new AulaModel();
                   $aulas_curso = $aulaModelRepo->buscarAulasPorCurso($id_curso);
@@ -207,46 +207,19 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
                   } else {
                     foreach ($aulas_curso as $aula) {
                   ?>
-                      <tr>
-                        <td class="align-middle font-weight-bold text-secondary text-center"><?php echo $aula["num_ordenacao"]; ?></td>
+                      <tr class="item-aula" data-id-aula="<?php echo $aula["id_aula"]; ?>">
+                        <td class="align-middle font-weight-bold text-secondary text-center">
+                          <i class="fa-solid fa-grip-vertical text-muted mr-2 handle-drag" style="cursor: grab;" title="Clique e arraste para reordenar"></i>
+                          <span class="col-ordem"><?php echo $aula["num_ordenacao"]; ?></span>
+                        </td>
                         <td class="align-middle font-weight-bold text-dark"><?php echo htmlspecialchars($aula["titulo"]); ?></td>
                         <td class="align-middle text-center">
                           <a class="btn btn-sm btn-outline-primary border-0 rounded-circle mr-1" href="editar_aula.php?id=<?php echo $aula["id_aula"]; ?>&id_curso=<?php echo $id_curso; ?>" title="Editar Aula" style="width: 32px; height: 32px; padding: 5px 0; display: inline-block;">
                             <i class="fa-solid fa-pen-to-square"></i>
                           </a>
-                          <button class="btn btn-sm btn-outline-danger border-0 rounded-circle" data-toggle="modal" data-target="#modalExcluirAula<?php echo $aula["id_aula"]; ?>" title="Excluir Aula" style="width: 32px; height: 32px; padding: 5px 0;">
+                          <button type="button" class="btn btn-sm btn-outline-danger border-0 rounded-circle" data-toggle="modal" data-target="#confirmDeleteAulaModal" data-id="<?php echo $aula["id_aula"]; ?>" data-titulo="<?php echo htmlspecialchars($aula["titulo"]); ?>" title="Excluir Aula" style="width: 32px; height: 32px; padding: 5px 0;">
                             <i class="fa-solid fa-trash"></i>
                           </button>
-
-                          <!-- Modal Excluir Aula -->
-                          <div class="modal fade" id="modalExcluirAula<?php echo $aula["id_aula"]; ?>" tabindex="-1" role="dialog" aria-labelledby="excluirAulaLabel<?php echo $aula["id_aula"]; ?>" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                              <div class="modal-content border-0 shadow-lg">
-                                <div class="modal-header bg-danger text-white border-0 py-3">
-                                  <h5 class="modal-title font-weight-bold" id="excluirAulaLabel<?php echo $aula["id_aula"]; ?>">
-                                    <i class="fa-solid fa-triangle-exclamation mr-2"></i> Confirmar Exclusão
-                                  </h5>
-                                  <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                <div class="modal-body p-4 text-center">
-                                  <p class="lead mb-2">Tem certeza que deseja excluir esta aula?</p>
-                                  <h5 class="font-weight-bold text-danger mb-0"><?php echo htmlspecialchars($aula["titulo"]); ?></h5>
-                                  <p class="text-muted mt-2 small">Esta ação não poderá ser desfeita.</p>
-                                </div>
-                                <div class="modal-footer border-0 bg-light py-3 text-center d-flex justify-content-center">
-                                  <button type="button" class="btn btn-secondary px-4 rounded-pill font-weight-bold mr-2" data-dismiss="modal">Cancelar</button>
-                                  <form action="../../controllers/aulaController.php" method="post" class="d-inline">
-                                    <input type="hidden" name="tipo" value="excluir">
-                                    <input type="hidden" name="id_curso" value="<?php echo $id_curso; ?>">
-                                    <input type="hidden" name="id_aula" value="<?php echo $aula["id_aula"]; ?>">
-                                    <button type="submit" class="btn btn-danger px-4 rounded-pill font-weight-bold shadow-sm">Excluir</button>
-                                  </form>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
                         </td>
                       </tr>
                   <?php }
@@ -261,8 +234,50 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
     </div>
   </div>
 
+  <!-- Modal de Exclusão Único -->
+  <div class="modal fade" id="confirmDeleteAulaModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteAulaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content border-0 shadow-lg text-left">
+        <div class="modal-header bg-danger text-white border-0 py-3">
+          <h5 class="modal-title font-weight-bold" id="confirmDeleteAulaLabel">
+            <i class="fa-solid fa-triangle-exclamation mr-2"></i> Confirmar Exclusão
+          </h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body p-4 text-center">
+          <p class="lead mb-2">Tem certeza que deseja excluir esta aula?</p>
+          <h5 class="font-weight-bold text-danger mb-0" id="deleteAulaTitulo"></h5>
+          <p class="text-muted mt-2 small">Esta ação não poderá ser desfeita.</p>
+        </div>
+        <div class="modal-footer border-0 bg-light py-3 text-center d-flex justify-content-center">
+          <button type="button" class="btn btn-secondary px-4 rounded-pill font-weight-bold mr-2" data-dismiss="modal">Cancelar</button>
+          <form action="../../controllers/aulaController.php" method="post" class="d-inline">
+            <input type="hidden" name="tipo" value="excluir">
+            <input type="hidden" name="id_curso" value="<?php echo $id_curso; ?>">
+            <input type="hidden" name="id_aula" id="deleteAulaId" value="">
+            <button type="submit" class="btn btn-danger px-4 rounded-pill font-weight-bold shadow-sm">Excluir</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../libs/sortable/Sortable.min.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
+      // Configuração dinâmica do modal de exclusão de aula
+      $(document).on('show.bs.modal', '#confirmDeleteAulaModal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var titulo = button.data('titulo');
+
+        var modal = $(this);
+        modal.find('#deleteAulaTitulo').text(titulo);
+        modal.find('#deleteAulaId').val(id);
+      });
+
       // Atualiza o texto do input file ao selecionar um arquivo
       var fileInput = document.getElementById('imagem');
       if (fileInput) {
@@ -271,6 +286,53 @@ if (isset($_SESSION["id_usuario"]) && isset($_GET["id"]) && $_SESSION['nivel'] =
           var nextLabel = e.target.nextElementSibling;
           if (nextLabel) {
             nextLabel.innerHTML = fileName;
+          }
+        });
+      }
+
+      // SortableJS - Arrastar e Soltar Aulas
+      var tabelaBody = document.getElementById('tabelaAulasBody');
+      if (tabelaBody) {
+        Sortable.create(tabelaBody, {
+          handle: '.handle-drag',
+          animation: 150,
+          ghostClass: 'bg-light',
+          onEnd: function() {
+            var rows = tabelaBody.querySelectorAll('tr.item-aula');
+            var novaaulas = [];
+            rows.forEach(function(row, index) {
+              var newOrder = index + 1;
+              var idAula = row.getAttribute('data-id-aula');
+              var badgeOrdem = row.querySelector('.col-ordem');
+              if (badgeOrdem) {
+                badgeOrdem.textContent = newOrder;
+              }
+              novaaulas.push({
+                id_aula: idAula,
+                num_ordenacao: newOrder
+              });
+            });
+
+            var formData = new FormData();
+            formData.append('tipo', 'reordenar');
+            formData.append('id_curso', '<?php echo $id_curso; ?>');
+            formData.append('aulas', JSON.stringify(novaaulas));
+
+            fetch('../../controllers/aulaController.php', {
+              method: 'POST',
+              body: formData
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+              if (data && data.success) {
+                console.log('Ordem das aulas salva no banco!');
+              } else {
+                alert('Erro ao salvar a nova ordem das aulas.');
+              }
+            })
+            .catch(function(err) {
+              console.error('Erro ao salvar ordenação:', err);
+            });
           }
         });
       }
