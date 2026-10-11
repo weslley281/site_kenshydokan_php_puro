@@ -17,7 +17,16 @@ include_once __DIR__ . "/menu.php";
     </div>
 </div>
 
-<div class="card border-0 shadow-sm">
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white py-3 border-bottom d-flex align-items-center gap-2">
+        <span class="p-2 bg-danger bg-opacity-10 text-danger rounded-3">
+            <i class="fas fa-file-alt"></i>
+        </span>
+        <div>
+            <h5 class="card-title mb-0 fs-6 fw-bold text-dark">Formulário de Cadastro do Campeonato</h5>
+            <small class="text-muted">Preencha os dados e datas regulamentares do evento</small>
+        </div>
+    </div>
     <div class="card-body p-4">
         <form method="POST" action="../controllers/campeonatoController.php">
             <input type="hidden" name="tipo" value="criar_campeonato">

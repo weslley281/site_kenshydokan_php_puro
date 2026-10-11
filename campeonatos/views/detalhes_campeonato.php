@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Painel do Campeonato | Kenshydokan';
+$pageTitle = 'Central do Campeonato | Kenshydokan';
 include_once __DIR__ . "/menu.php";
 include_once __DIR__ . "/../models/campeonatoModel.php";
 include_once __DIR__ . "/../models/categoriaModel.php";
@@ -17,86 +17,133 @@ if (!$campeonato) {
 }
 
 $categoriaModel = new Categoria();
-$inscricaoModel = new Inscricao();
-$tatameModel = new Tatame();
+$categorias = $categoriaModel->buscarPorCampeonato($id);
+$totalCategorias = count($categorias);
 
-$totalCategorias = count($categoriaModel->buscarPorCampeonato($id));
+$inscricaoModel = new Inscricao();
 $inscricoes = $inscricaoModel->buscarPorCampeonato($id);
 $totalInscritos = count($inscricoes);
 $totalAprovados = count(array_filter($inscricoes, fn($i) => $i['status_elegibilidade'] === 'aprovada'));
-$totalTatames = count($tatameModel->buscarPorCampeonato($id));
+
+$tatameModel = new Tatame();
+$tatames = $tatameModel->buscarPorCampeonato($id);
+$totalTatames = count($tatames);
 ?>
 
+<!-- Header do Campeonato -->
 <div class="row mb-4 align-items-center">
     <div class="col-md-7">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-1 small">
-                <li class="breadcrumb-item"><a href="campeonatos.php" class="text-decoration-none">Campeonatos</a></li>
+                <li class="breadcrumb-item"><a href="inicio.php">Início</a></li>
+                <li class="breadcrumb-item"><a href="campeonatos.php">Campeonatos</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><?= htmlspecialchars($campeonato['titulo']) ?></li>
             </ol>
         </nav>
-        <h2 class="h3 fw-bold mb-0 text-dark">
+        <h2 class="h3 fw-bold mb-1 text-dark">
             <i class="fas fa-trophy text-danger me-2"></i><?= htmlspecialchars($campeonato['titulo']) ?>
         </h2>
-        <p class="text-muted small mb-0">
-            <?= htmlspecialchars($campeonato['edicao'] ?? '') ?> &bull; 
-            <?= date('d/m/Y', strtotime($campeonato['data_inicio'])) ?> a <?= date('d/m/Y', strtotime($campeonato['data_fim'])) ?> &bull; 
-            <?= htmlspecialchars($campeonato['cidade']) ?>/<?= htmlspecialchars($campeonato['estado']) ?>
-        </p>
+        <div class="d-flex flex-wrap align-items-center gap-2 text-muted small">
+            <span><i class="fas fa-map-marker-alt text-danger me-1"></i><?= htmlspecialchars($campeonato['cidade']) ?>-<?= htmlspecialchars($campeonato['estado']) ?></span>
+            &bull;
+            <span><i class="far fa-calendar-alt text-danger me-1"></i><?= date('d/m/Y', strtotime($campeonato['data_inicio'])) ?></span>
+            &bull;
+            <span class="badge bg-danger text-uppercase"><?= str_replace('_', ' ', $campeonato['status']) ?></span>
+        </div>
     </div>
-    <div class="col-md-5 text-md-end mt-3 mt-md-0 d-flex gap-2 justify-content-md-end">
-        <a href="editar_campeonato.php?id=<?= $id ?>" class="btn btn-outline-secondary">
-            <i class="fas fa-edit me-1"></i> Editar
+    <div class="col-md-5 text-md-end mt-3 mt-md-0 d-flex gap-2 justify-content-md-end flex-wrap">
+        <a href="editar_campeonato.php?id=<?= $id ?>" class="btn btn-secondary">
+            <i class="fas fa-edit me-1"></i> Editar Dados
         </a>
         <a href="../controllers/relatorioController.php?id_campeonato=<?= $id ?>&tipo=inscritos" target="_blank" class="btn btn-outline-danger">
             <i class="fas fa-file-pdf me-1"></i> PDF Inscritos
         </a>
+        <a href="../controllers/relatorioController.php?id_campeonato=<?= $id ?>&tipo=medalhas" target="_blank" class="btn btn-outline-danger">
+            <i class="fas fa-medal me-1"></i> PDF Medalhas
+        </a>
     </div>
 </div>
 
-<!-- Barra de Resumo Rápido -->
+<!-- Barra de Resumo Rápido (KPIs) -->
 <div class="row g-3 mb-4">
     <div class="col-sm-6 col-xl-3">
-        <div class="card border-0 shadow-sm border-start border-primary border-4 p-3">
-            <div class="small text-muted text-uppercase fw-bold">Categorias</div>
-            <div class="fs-4 fw-bold text-dark"><?= $totalCategorias ?> cadastradas</div>
+        <div class="kpi-card kpi-blue">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="kpi-label">Categorias</div>
+                    <div class="kpi-value text-primary"><?= $totalCategorias ?></div>
+                    <div class="small text-muted mt-1">Kumite, Kata e Quebra</div>
+                </div>
+                <div class="kpi-icon-box bg-primary bg-opacity-10 text-primary">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-sm-6 col-xl-3">
-        <div class="card border-0 shadow-sm border-start border-success border-4 p-3">
-            <div class="small text-muted text-uppercase fw-bold">Atletas Inscritos</div>
-            <div class="fs-4 fw-bold text-success"><?= $totalInscritos ?> (<?= $totalAprovados ?> aptos)</div>
+        <div class="kpi-card kpi-green">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="kpi-label">Atletas Inscritos</div>
+                    <div class="kpi-value text-success"><?= $totalInscritos ?></div>
+                    <div class="small text-success fw-bold mt-1"><?= $totalAprovados ?> aptos na pesagem</div>
+                </div>
+                <div class="kpi-icon-box bg-success bg-opacity-10 text-success">
+                    <i class="fas fa-id-card"></i>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-sm-6 col-xl-3">
-        <div class="card border-0 shadow-sm border-start border-warning border-4 p-3">
-            <div class="small text-muted text-uppercase fw-bold">Tatames de Combate</div>
-            <div class="fs-4 fw-bold text-dark"><?= $totalTatames ?> áreas ativas</div>
+        <div class="kpi-card kpi-dark">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="kpi-label">Tatames Ativos</div>
+                    <div class="kpi-value text-dark"><?= $totalTatames ?></div>
+                    <div class="small text-muted mt-1">Áreas com telão e mesa</div>
+                </div>
+                <div class="kpi-icon-box bg-dark bg-opacity-10 text-dark">
+                    <i class="fas fa-desktop"></i>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-sm-6 col-xl-3">
-        <div class="card border-0 shadow-sm border-start border-danger border-4 p-3">
-            <div class="small text-muted text-uppercase fw-bold">Status Atual</div>
-            <div class="fs-6 fw-bold text-danger text-uppercase mt-1"><?= str_replace('_', ' ', $campeonato['status']) ?></div>
+        <div class="kpi-card">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="kpi-label">Status Oficial</div>
+                    <div class="kpi-value text-danger fs-4 text-uppercase"><?= str_replace('_', ' ', $campeonato['status']) ?></div>
+                    <div class="small text-muted mt-1">Edição: <?= htmlspecialchars($campeonato['edicao'] ?? 'Oficial') ?></div>
+                </div>
+                <div class="kpi-icon-box bg-danger bg-opacity-10 text-danger">
+                    <i class="fas fa-flag-checkered"></i>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- Módulos de Operação do Evento -->
-<h5 class="fw-bold text-dark mb-3">
-    <i class="fas fa-th-large text-danger me-2"></i>Módulos de Gestão do Campeonato
-</h5>
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h5 class="fw-bold text-dark mb-0">
+        <i class="fas fa-th-large text-danger me-2"></i>Módulos de Gestão do Campeonato
+    </h5>
+    <span class="badge bg-light text-dark border">8 Módulos Oficiais Integrados</span>
+</div>
 
-<div class="row g-4">
+<div class="row g-4 mb-4">
     <!-- 1. Categorias -->
     <div class="col-md-6 col-xl-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4 text-center">
-                <div class="mb-3 text-primary"><i class="fas fa-layer-group fa-3x"></i></div>
-                <h5 class="fw-bold text-dark">Categorias</h5>
-                <p class="text-muted small">Pesos, idades e modalidades de Kumite, Kata e Tameshiwari.</p>
-                <a href="categorias.php?id=<?= $id ?>" class="btn btn-outline-primary btn-sm w-100 fw-bold">
-                    Gerenciar Categorias
+        <div class="card h-100 border-0 shadow-sm border-top border-4 border-primary">
+            <div class="card-body p-4 text-center d-flex flex-column">
+                <div class="mx-auto mb-3 p-3 rounded-circle bg-primary bg-opacity-10 text-primary" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-layer-group fa-2x"></i>
+                </div>
+                <h5 class="fw-bold text-dark mb-1">Categorias</h5>
+                <p class="text-muted small flex-grow-1">Pesos, idades e modalidades de Kumite, Kata e Tameshiwari.</p>
+                <a href="categorias.php?id=<?= $id ?>" class="btn btn-primary btn-sm w-100 fw-bold mt-2">
+                    <i class="fas fa-cog me-1"></i> Gerenciar Categorias
                 </a>
             </div>
         </div>
@@ -104,13 +151,15 @@ $totalTatames = count($tatameModel->buscarPorCampeonato($id));
 
     <!-- 2. Inscrições -->
     <div class="col-md-6 col-xl-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4 text-center">
-                <div class="mb-3 text-success"><i class="fas fa-id-card fa-3x"></i></div>
-                <h5 class="fw-bold text-dark">Inscrições</h5>
-                <p class="text-muted small">Inscrição de filiados com snapshot imutável e validação.</p>
-                <a href="inscricoes.php?id=<?= $id ?>" class="btn btn-outline-success btn-sm w-100 fw-bold">
-                    Ver Inscrições
+        <div class="card h-100 border-0 shadow-sm border-top border-4 border-success">
+            <div class="card-body p-4 text-center d-flex flex-column">
+                <div class="mx-auto mb-3 p-3 rounded-circle bg-success bg-opacity-10 text-success" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-id-card fa-2x"></i>
+                </div>
+                <h5 class="fw-bold text-dark mb-1">Inscrições</h5>
+                <p class="text-muted small flex-grow-1">Inscrição de filiados com snapshot imutável e validação técnica.</p>
+                <a href="inscricoes.php?id=<?= $id ?>" class="btn btn-success btn-sm w-100 fw-bold mt-2">
+                    <i class="fas fa-users me-1"></i> Ver Inscrições
                 </a>
             </div>
         </div>
@@ -118,13 +167,15 @@ $totalTatames = count($tatameModel->buscarPorCampeonato($id));
 
     <!-- 3. Pesagem -->
     <div class="col-md-6 col-xl-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4 text-center">
-                <div class="mb-3 text-warning"><i class="fas fa-weight fa-3x"></i></div>
-                <h5 class="fw-bold text-dark">Pesagem Oficial</h5>
-                <p class="text-muted small">Controle de balança, aferições e remanejamentos.</p>
-                <a href="pesagem.php?id=<?= $id ?>" class="btn btn-outline-warning text-dark btn-sm w-100 fw-bold">
-                    Abrir Balança
+        <div class="card h-100 border-0 shadow-sm border-top border-4 border-warning">
+            <div class="card-body p-4 text-center d-flex flex-column">
+                <div class="mx-auto mb-3 p-3 rounded-circle bg-warning bg-opacity-10 text-warning" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-weight fa-2x"></i>
+                </div>
+                <h5 class="fw-bold text-dark mb-1">Pesagem Oficial</h5>
+                <p class="text-muted small flex-grow-1">Controle de balança, tolerância de peso e remanejamentos.</p>
+                <a href="pesagem.php?id=<?= $id ?>" class="btn btn-warning text-dark btn-sm w-100 fw-bold mt-2">
+                    <i class="fas fa-balance-scale me-1"></i> Abrir Balança
                 </a>
             </div>
         </div>
@@ -132,13 +183,15 @@ $totalTatames = count($tatameModel->buscarPorCampeonato($id));
 
     <!-- 4. Chaves e Sorteios -->
     <div class="col-md-6 col-xl-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4 text-center">
-                <div class="mb-3 text-danger"><i class="fas fa-sitemap fa-3x"></i></div>
-                <h5 class="fw-bold text-dark">Chaveamento</h5>
-                <p class="text-muted small">Sorteio eliminatório com Byes, potências de 2 e separação de dojo.</p>
-                <a href="chaves.php?id=<?= $id ?>" class="btn btn-outline-danger btn-sm w-100 fw-bold">
-                    Chaves e Sorteios
+        <div class="card h-100 border-0 shadow-sm border-top border-4 border-danger">
+            <div class="card-body p-4 text-center d-flex flex-column">
+                <div class="mx-auto mb-3 p-3 rounded-circle bg-danger bg-opacity-10 text-danger" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-sitemap fa-2x"></i>
+                </div>
+                <h5 class="fw-bold text-dark mb-1">Chaveamento</h5>
+                <p class="text-muted small flex-grow-1">Sorteio eliminatório com potências de 2 e separação de dojo.</p>
+                <a href="chaves.php?id=<?= $id ?>" class="btn btn-danger btn-sm w-100 fw-bold mt-2">
+                    <i class="fas fa-project-diagram me-1"></i> Chaves e Sorteios
                 </a>
             </div>
         </div>
@@ -146,13 +199,15 @@ $totalTatames = count($tatameModel->buscarPorCampeonato($id));
 
     <!-- 5. Tatames -->
     <div class="col-md-6 col-xl-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4 text-center">
-                <div class="mb-3 text-dark"><i class="fas fa-desktop fa-3x"></i></div>
-                <h5 class="fw-bold text-dark">Áreas de Tatame</h5>
-                <p class="text-muted small">Mesas de controle, filas de luta e telões públicos.</p>
-                <a href="tatames.php?id=<?= $id ?>" class="btn btn-outline-dark btn-sm w-100 fw-bold">
-                    Painel de Tatames
+        <div class="card h-100 border-0 shadow-sm border-top border-4 border-dark">
+            <div class="card-body p-4 text-center d-flex flex-column">
+                <div class="mx-auto mb-3 p-3 rounded-circle bg-dark bg-opacity-10 text-dark" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-desktop fa-2x"></i>
+                </div>
+                <h5 class="fw-bold text-dark mb-1">Áreas de Tatame</h5>
+                <p class="text-muted small flex-grow-1">Mesas de controle, filas de luta e telões públicos em Full Screen.</p>
+                <a href="tatames.php?id=<?= $id ?>" class="btn btn-secondary btn-sm w-100 fw-bold mt-2">
+                    <i class="fas fa-tv me-1"></i> Painel de Tatames
                 </a>
             </div>
         </div>
@@ -160,13 +215,15 @@ $totalTatames = count($tatameModel->buscarPorCampeonato($id));
 
     <!-- 6. Resultados -->
     <div class="col-md-6 col-xl-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4 text-center">
-                <div class="mb-3 text-warning"><i class="fas fa-medal fa-3x"></i></div>
-                <h5 class="fw-bold text-dark">Resultados Oficiais</h5>
-                <p class="text-muted small">Quadro geral de medalhas por dojo e homologação de pódios.</p>
-                <a href="resultados.php?id=<?= $id ?>" class="btn btn-outline-warning text-dark btn-sm w-100 fw-bold">
-                    Pódios e Medalhas
+        <div class="card h-100 border-0 shadow-sm border-top border-4 border-warning">
+            <div class="card-body p-4 text-center d-flex flex-column">
+                <div class="mx-auto mb-3 p-3 rounded-circle bg-warning bg-opacity-10 text-warning" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-medal fa-2x"></i>
+                </div>
+                <h5 class="fw-bold text-dark mb-1">Resultados Oficiais</h5>
+                <p class="text-muted small flex-grow-1">Quadro geral de medalhas por dojo e homologação de pódios.</p>
+                <a href="resultados.php?id=<?= $id ?>" class="btn btn-warning text-dark btn-sm w-100 fw-bold mt-2">
+                    <i class="fas fa-trophy me-1"></i> Pódios e Medalhas
                 </a>
             </div>
         </div>
@@ -174,13 +231,15 @@ $totalTatames = count($tatameModel->buscarPorCampeonato($id));
 
     <!-- 7. Certificados -->
     <div class="col-md-6 col-xl-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4 text-center">
-                <div class="mb-3 text-info"><i class="fas fa-certificate fa-3x"></i></div>
-                <h5 class="fw-bold text-dark">Certificados</h5>
-                <p class="text-muted small">Emissão individual e em lote com autenticidade por Hash.</p>
-                <a href="certificados.php?id=<?= $id ?>" class="btn btn-outline-info btn-sm w-100 fw-bold">
-                    Gerar Certificados
+        <div class="card h-100 border-0 shadow-sm border-top border-4 border-success">
+            <div class="card-body p-4 text-center d-flex flex-column">
+                <div class="mx-auto mb-3 p-3 rounded-circle bg-success bg-opacity-10 text-success" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-certificate fa-2x"></i>
+                </div>
+                <h5 class="fw-bold text-dark mb-1">Certificados</h5>
+                <p class="text-muted small flex-grow-1">Emissão individual e em lote com autenticidade por Hash.</p>
+                <a href="certificados.php?id=<?= $id ?>" class="btn btn-success btn-sm w-100 fw-bold mt-2">
+                    <i class="fas fa-print me-1"></i> Gerar Certificados
                 </a>
             </div>
         </div>
@@ -188,13 +247,15 @@ $totalTatames = count($tatameModel->buscarPorCampeonato($id));
 
     <!-- 8. Auditoria -->
     <div class="col-md-6 col-xl-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4 text-center">
-                <div class="mb-3 text-secondary"><i class="fas fa-history fa-3x"></i></div>
-                <h5 class="fw-bold text-dark">Auditoria</h5>
-                <p class="text-muted small">Trilha completa de ações, pesagens, notas e operadores.</p>
-                <a href="auditoria.php?id=<?= $id ?>" class="btn btn-outline-secondary btn-sm w-100 fw-bold">
-                    Trilha de Auditoria
+        <div class="card h-100 border-0 shadow-sm border-top border-4 border-secondary">
+            <div class="card-body p-4 text-center d-flex flex-column">
+                <div class="mx-auto mb-3 p-3 rounded-circle bg-secondary bg-opacity-10 text-secondary" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-history fa-2x"></i>
+                </div>
+                <h5 class="fw-bold text-dark mb-1">Auditoria</h5>
+                <p class="text-muted small flex-grow-1">Trilha completa de ações, pesagens, notas e operadores.</p>
+                <a href="auditoria.php?id=<?= $id ?>" class="btn btn-secondary btn-sm w-100 fw-bold mt-2">
+                    <i class="fas fa-shield-alt me-1"></i> Trilha de Auditoria
                 </a>
             </div>
         </div>

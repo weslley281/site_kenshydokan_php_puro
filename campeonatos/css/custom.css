@@ -1,0 +1,494 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --ks-red: #d9232d;
+    --ks-red-glow: rgba(217, 35, 45, 0.35);
+    --ks-red-hover: #b01c24;
+    --ks-dark: #0f172a;
+    --ks-dark-surface: #1e293b;
+    --ks-dark-border: #334155;
+    --ks-gold: #f59e0b;
+    --ks-gold-glow: rgba(245, 158, 11, 0.3);
+    --ks-bg: #f8fafc;
+    --ks-card-bg: #ffffff;
+    --ks-text-main: #0f172a;
+    --ks-text-muted: #64748b;
+    --ks-border: #e2e8f0;
+    --ks-radius-sm: 8px;
+    --ks-radius-md: 14px;
+    --ks-radius-lg: 20px;
+    --ks-shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+    --ks-shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+    --ks-shadow-lg: 0 20px 35px -10px rgba(15, 23, 42, 0.12), 0 10px 15px -5px rgba(15, 23, 42, 0.06);
+    --ks-shadow-glow: 0 0 25px rgba(217, 35, 45, 0.25);
+}
+
+/* Base & Typography */
+body {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--ks-bg);
+    color: var(--ks-text-main);
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ks-dark);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--ks-red);
+}
+
+/* Premium Navbar */
+.navbar-kenshy {
+    background: rgba(15, 23, 42, 0.96) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 3px solid var(--ks-red) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25) !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.navbar-kenshy .navbar-brand {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: #ffffff !important;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-kenshy .navbar-brand i {
+    filter: drop-shadow(0 0 10px rgba(217, 35, 45, 0.7));
+}
+
+.navbar-kenshy .nav-link {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #cbd5e1 !important;
+    padding: 8px 16px !important;
+    border-radius: 50rem;
+    margin: 0 3px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-kenshy .nav-link:hover {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+.navbar-kenshy .nav-link.active {
+    color: #ffffff !important;
+    background: linear-gradient(135deg, var(--ks-red) 0%, #ef4444 100%) !important;
+    box-shadow: 0 4px 15px rgba(217, 35, 45, 0.4);
+}
+
+/* User pill in navbar */
+.navbar-user-pill {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50rem;
+    padding: 5px 14px;
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Cards & Elevation */
+.card {
+    background: var(--ks-card-bg);
+    border: 1px solid var(--ks-border);
+    border-radius: var(--ks-radius-md);
+    box-shadow: var(--ks-shadow-sm);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    overflow: hidden;
+}
+
+.card:not(.no-hover):hover {
+    box-shadow: var(--ks-shadow-md);
+    border-color: #cbd5e1;
+}
+
+.card-header {
+    background: #ffffff;
+    border-bottom: 1px solid var(--ks-border);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    padding: 16px 20px;
+}
+
+/* Hero Banner Dashboard */
+.hero-kenshy {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    border-radius: var(--ks-radius-lg);
+    color: #ffffff;
+    padding: 35px 40px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(15, 23, 42, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 28px;
+}
+
+.hero-kenshy::after {
+    content: '\f6ac';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 20px;
+    bottom: -30px;
+    font-size: 14rem;
+    color: rgba(217, 35, 45, 0.06);
+    pointer-events: none;
+    line-height: 1;
+}
+
+.hero-kenshy h1, .hero-kenshy h2 {
+    color: #ffffff;
+    font-weight: 800;
+}
+
+/* KPI Stat Cards */
+.kpi-card {
+    background: #ffffff;
+    border: 1px solid var(--ks-border);
+    border-radius: var(--ks-radius-md);
+    padding: 22px;
+    box-shadow: var(--ks-shadow-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--ks-red);
+}
+
+.kpi-card.kpi-gold::before { background: var(--ks-gold); }
+.kpi-card.kpi-green::before { background: #10b981; }
+.kpi-card.kpi-blue::before { background: #3b82f6; }
+.kpi-card.kpi-dark::before { background: var(--ks-dark); }
+
+.kpi-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--ks-shadow-md);
+}
+
+.kpi-icon-box {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.kpi-value {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.1rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--ks-dark);
+}
+
+.kpi-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ks-text-muted);
+}
+
+/* Modern Pill Buttons */
+.btn {
+    border-radius: 50rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    padding: 10px 22px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-sm {
+    padding: 6px 16px;
+    font-size: 0.78rem;
+}
+
+.btn-lg {
+    padding: 14px 32px;
+    font-size: 1rem;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--ks-red) 0%, #ef4444 100%);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(217, 35, 45, 0.35);
+}
+
+.btn-danger:hover, .btn-danger:focus {
+    background: linear-gradient(135deg, #b01c24 0%, #dc2626 100%);
+    box-shadow: 0 6px 20px rgba(217, 35, 45, 0.5);
+    transform: translateY(-2px);
+    color: #ffffff;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+    border: none;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+    transform: translateY(-2px);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    border: none;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #047857 0%, #059669 100%);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+    transform: translateY(-2px);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+    transform: translateY(-2px);
+}
+
+.btn-outline-danger {
+    border: 1.5px solid var(--ks-red);
+    color: var(--ks-red);
+    background: transparent;
+}
+
+.btn-outline-danger:hover {
+    background: var(--ks-red);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(217, 35, 45, 0.35);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+}
+
+.btn-secondary:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+    transform: translateY(-2px);
+}
+
+/* Badges */
+.badge {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 6px 12px;
+    border-radius: 50rem;
+    font-size: 0.72rem;
+}
+
+.badge.bg-danger {
+    background: linear-gradient(135deg, var(--ks-red) 0%, #ef4444 100%) !important;
+}
+
+/* Tables */
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #64748b;
+    background: #f8fafc;
+    border-bottom: 2px solid var(--ks-border);
+    padding: 14px 16px;
+    vertical-align: middle;
+}
+
+.table tbody td {
+    padding: 16px;
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.92rem;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(241, 245, 249, 0.7) !important;
+}
+
+/* Digital Arena Scoreboard (Súmula Kumite) */
+.scoreboard-arena {
+    background: #090d16;
+    border-radius: var(--ks-radius-lg);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+.corner-card-aka {
+    background: linear-gradient(180deg, rgba(220, 38, 38, 0.12) 0%, rgba(15, 23, 42, 0.6) 100%);
+    border: 2px solid #dc2626 !important;
+    box-shadow: 0 0 30px rgba(220, 38, 38, 0.15);
+    border-radius: var(--ks-radius-md);
+}
+
+.corner-card-shiro {
+    background: linear-gradient(180deg, rgba(148, 163, 184, 0.12) 0%, rgba(15, 23, 42, 0.6) 100%);
+    border: 2px solid #cbd5e1 !important;
+    box-shadow: 0 0 30px rgba(203, 213, 225, 0.15);
+    border-radius: var(--ks-radius-md);
+}
+
+.digital-glow-timer {
+    font-family: 'Montserrat', monospace;
+    font-size: 4.5rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: #fbbf24;
+    text-shadow: 0 0 30px rgba(245, 158, 11, 0.6);
+    line-height: 1;
+}
+
+.digital-score-aka {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: #ef4444;
+    text-shadow: 0 0 25px rgba(239, 68, 68, 0.5);
+    line-height: 1;
+}
+
+.digital-score-shiro {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: #f8fafc;
+    text-shadow: 0 0 25px rgba(248, 250, 252, 0.5);
+    line-height: 1;
+}
+
+/* Modals */
+.modal-content {
+    border: none;
+    border-radius: var(--ks-radius-lg);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+}
+
+.modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--ks-border);
+}
+
+.modal-body {
+    padding: 24px;
+}
+
+.modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--ks-border);
+}
+
+/* Breadcrumbs */
+.breadcrumb-item a {
+    color: var(--ks-red);
+    text-decoration: none;
+    font-weight: 600;
+}
+.breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+/* Form Controls */
+.form-control, .form-select {
+    border-radius: 10px;
+    border: 1.5px solid #cbd5e1;
+    padding: 10px 14px;
+    font-size: 0.92rem;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--ks-red);
+    box-shadow: 0 0 0 4px rgba(217, 35, 45, 0.15);
+}
+
+/* Footer */
+footer.bg-dark {
+    background-color: var(--ks-dark) !important;
+    border-top: 3px solid var(--ks-red);
+}
+
+/* Pulse Animation */
+@keyframes pulseGlow {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.85; }
+}
+
+.pulse-glow {
+    animation: pulseGlow 1.8s infinite ease-in-out;
+}

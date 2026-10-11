@@ -79,28 +79,28 @@ $tatame = !empty($luta['id_tatame']) ? $tatameModel->buscarPorId((int)$luta['id_
 <div class="row g-3 mb-4">
     <!-- Cronômetro Geral (3:00 min) -->
     <div class="col-lg-7">
-        <div class="card border-0 shadow-sm bg-dark text-white text-center py-3">
-            <div class="d-flex justify-content-between px-3 align-items-center mb-1">
-                <small class="text-secondary text-uppercase fw-bold tracking-wider">
-                    <i class="fas fa-clock me-1"></i> TEMPO REGULAMENTAR (3 MINUTOS)
-                </small>
-                <span id="badgeFase" class="badge bg-primary">TEMPO NORMAL</span>
+        <div class="card border-0 shadow-lg bg-dark text-white text-center py-4 rounded-4" style="background: radial-gradient(circle at 50% 0%, #1e293b 0%, #090d16 100%) !important; border: 2px solid rgba(255,255,255,0.08) !important;">
+            <div class="d-flex justify-content-between px-4 align-items-center mb-2">
+                <span class="text-white-50 text-uppercase fw-bold" style="font-size: 0.75rem; letter-spacing: 0.1em;">
+                    <i class="fas fa-clock text-warning me-1"></i> TEMPO REGULAMENTAR (3 MINUTOS)
+                </span>
+                <span id="badgeFase" class="badge bg-danger px-3 py-1">TEMPO REGULAMENTAR</span>
             </div>
             
-            <div id="displayTempo" class="display-2 fw-bold font-monospace text-warning py-1" style="letter-spacing: 2px;">
+            <div id="displayTempo" class="digital-glow-timer py-2">
                 03:00
             </div>
 
-            <div class="d-flex justify-content-center gap-2 mt-2">
-                <button type="button" id="btnPlayPause" class="btn btn-success btn-lg px-4 fw-bold">
+            <div class="d-flex justify-content-center gap-2 mt-3 flex-wrap">
+                <button type="button" id="btnPlayPause" class="btn btn-success btn-lg px-4 shadow">
                     <i class="fas fa-play me-1"></i> INICIAR
                 </button>
-                <button type="button" id="btnResetTempo" class="btn btn-outline-secondary btn-lg">
+                <button type="button" id="btnResetTempo" class="btn btn-secondary btn-lg" title="Reiniciar Cronômetro">
                     <i class="fas fa-undo"></i>
                 </button>
-                <button type="button" id="btnMais10s" class="btn btn-outline-secondary btn-sm" title="+10 segundos">+10s</button>
-                <button type="button" id="btnMenos10s" class="btn btn-outline-secondary btn-sm" title="-10 segundos">-10s</button>
-                <button type="button" id="btnGoldenScore" class="btn btn-outline-warning btn-sm fw-bold">
+                <button type="button" id="btnMais10s" class="btn btn-secondary btn-sm" title="+10 segundos">+10s</button>
+                <button type="button" id="btnMenos10s" class="btn btn-secondary btn-sm" title="-10 segundos">-10s</button>
+                <button type="button" id="btnGoldenScore" class="btn btn-warning btn-sm fw-bold">
                     <i class="fas fa-star me-1"></i> Golden Score (1 min)
                 </button>
             </div>
@@ -109,27 +109,27 @@ $tatame = !empty($luta['id_tatame']) ? $tatameModel->buscarPorId((int)$luta['id_
 
     <!-- Cronômetro Ne Waza (Solo - Máx 60s) -->
     <div class="col-lg-5">
-        <div class="card border-0 shadow-sm bg-black text-white text-center py-3 border-start border-4 border-info">
-            <div class="d-flex justify-content-between px-3 align-items-center mb-1">
-                <small class="text-info text-uppercase fw-bold">
+        <div class="card border-0 shadow-lg bg-dark text-white text-center py-4 rounded-4" style="background: radial-gradient(circle at 50% 0%, #162436 0%, #090d16 100%) !important; border: 2px solid rgba(56, 189, 248, 0.3) !important;">
+            <div class="d-flex justify-content-between px-4 align-items-center mb-2">
+                <span class="text-info text-uppercase fw-bold" style="font-size: 0.75rem; letter-spacing: 0.1em;">
                     <i class="fas fa-arrows-alt-v me-1"></i> NE WAZA (SOLO - MÁX 60s)
-                </small>
-                <span id="badgeNeWaza" class="badge bg-secondary">PARADO</span>
+                </span>
+                <span id="badgeNeWaza" class="badge bg-secondary px-3 py-1">PARADO</span>
             </div>
             
-            <div id="displayNeWaza" class="display-3 fw-bold font-monospace text-info py-1">
+            <div id="displayNeWaza" class="display-3 fw-bold font-monospace text-info py-2" style="text-shadow: 0 0 25px rgba(56, 189, 248, 0.6); font-family: 'Montserrat', monospace;">
                 00:00
             </div>
 
-            <div class="d-flex justify-content-center gap-2 mt-2">
-                <button type="button" id="btnNeWazaToggle" class="btn btn-info btn-sm px-3 fw-bold text-dark">
+            <div class="d-flex justify-content-center gap-2 mt-3">
+                <button type="button" id="btnNeWazaToggle" class="btn btn-info btn-sm px-4 fw-bold text-dark shadow">
                     <i class="fas fa-play me-1"></i> Iniciar Solo
                 </button>
-                <button type="button" id="btnNeWazaReset" class="btn btn-outline-secondary btn-sm">
+                <button type="button" id="btnNeWazaReset" class="btn btn-secondary btn-sm">
                     <i class="fas fa-undo"></i> Reset Solo
                 </button>
             </div>
-            <small class="text-muted mt-2 d-block">Ao atingir 60s, a luta deve ser interrompida pelo árbitro central.</small>
+            <small class="text-white-50 mt-2 d-block" style="font-size: 0.75rem;">Ao atingir 60s, a luta deve ser reiniciada em pé pelo árbitro.</small>
         </div>
     </div>
 </div>
@@ -138,22 +138,24 @@ $tatame = !empty($luta['id_tatame']) ? $tatameModel->buscarPorId((int)$luta['id_
 <div class="row g-4 mb-4">
     <!-- CANTO VERMELHO (AKA) -->
     <div class="col-md-6">
-        <div class="card border-0 shadow-sm border-top border-4 border-danger h-100">
-            <div class="card-header bg-danger text-white py-2 d-flex justify-content-between align-items-center">
+        <div class="card border-0 shadow-lg corner-card-aka h-100">
+            <div class="card-header bg-danger text-white py-3 d-flex justify-content-between align-items-center border-0">
                 <span class="fw-bold tracking-wider fs-7 text-uppercase"><i class="fas fa-circle me-1"></i> CANTO VERMELHO (AKA)</span>
-                <span class="badge bg-black bg-opacity-25 fs-7">Atleta 1</span>
+                <span class="badge bg-black bg-opacity-35 px-3 py-1 fs-7">ATLETA 1</span>
             </div>
             <div class="card-body p-4 text-center">
-                <h4 class="fw-bold text-danger mb-0"><?= htmlspecialchars($luta['nome_aka'] ?? 'ATLETA AKA') ?></h4>
-                <p class="text-muted small mb-3"><?= htmlspecialchars($luta['dojo_aka'] ?? 'Dojo') ?></p>
+                <h3 class="fw-bold text-white mb-0"><?= htmlspecialchars($luta['nome_aka'] ?? 'ATLETA AKA') ?></h3>
+                <span class="badge bg-white bg-opacity-10 text-white-50 border border-white border-opacity-10 px-3 py-1 mt-1 mb-3">
+                    <?= htmlspecialchars($luta['dojo_aka'] ?? 'Dojo') ?>
+                </span>
 
                 <!-- PONTUAÇÃO TOTAL AKA -->
-                <div class="p-3 bg-danger bg-opacity-10 rounded border border-danger mb-4">
-                    <div class="small text-danger fw-bold text-uppercase">Pontos Totais</div>
-                    <div id="pontosAka" class="display-2 fw-bold text-danger">
+                <div class="p-3 rounded-4 mb-4" style="background: rgba(220, 38, 38, 0.15); border: 2px solid rgba(220, 38, 38, 0.4);">
+                    <div class="small text-danger fw-bold text-uppercase tracking-wider">Pontuação Total</div>
+                    <div id="pontosAka" class="digital-score-aka py-1">
                         <?= number_format((float)$sumula['pontos_aka'], 1) ?>
                     </div>
-                    <small class="text-muted">6 Waza-ari (3.0 pts) = Vitória por Ippon</small>
+                    <small class="text-white-50">6 Waza-ari (3.0 pts) = Vitória por Ippon</small>
                 </div>
 
                 <!-- BOTÕES DE GOLPES (PONTOS) -->
@@ -209,22 +211,24 @@ $tatame = !empty($luta['id_tatame']) ? $tatameModel->buscarPorId((int)$luta['id_
 
     <!-- CANTO BRANCO (SHIRO) -->
     <div class="col-md-6">
-        <div class="card border-0 shadow-sm border-top border-4 border-secondary h-100">
-            <div class="card-header bg-secondary text-white py-2 d-flex justify-content-between align-items-center">
+        <div class="card border-0 shadow-lg corner-card-shiro h-100">
+            <div class="card-header bg-secondary text-white py-3 d-flex justify-content-between align-items-center border-0" style="background: #334155 !important;">
                 <span class="fw-bold tracking-wider fs-7 text-uppercase"><i class="far fa-circle me-1"></i> CANTO BRANCO (SHIRO)</span>
-                <span class="badge bg-black bg-opacity-25 fs-7">Atleta 2</span>
+                <span class="badge bg-black bg-opacity-35 px-3 py-1 fs-7">ATLETA 2</span>
             </div>
             <div class="card-body p-4 text-center">
-                <h4 class="fw-bold text-dark mb-0"><?= htmlspecialchars($luta['nome_shiro'] ?? 'ATLETA SHIRO') ?></h4>
-                <p class="text-muted small mb-3"><?= htmlspecialchars($luta['dojo_shiro'] ?? 'Dojo') ?></p>
+                <h3 class="fw-bold text-white mb-0"><?= htmlspecialchars($luta['nome_shiro'] ?? 'ATLETA SHIRO') ?></h3>
+                <span class="badge bg-white bg-opacity-10 text-white-50 border border-white border-opacity-10 px-3 py-1 mt-1 mb-3">
+                    <?= htmlspecialchars($luta['dojo_shiro'] ?? 'Dojo') ?>
+                </span>
 
                 <!-- PONTUAÇÃO TOTAL SHIRO -->
-                <div class="p-3 bg-secondary bg-opacity-10 rounded border border-secondary mb-4">
-                    <div class="small text-secondary fw-bold text-uppercase">Pontos Totais</div>
-                    <div id="pontosShiro" class="display-2 fw-bold text-dark">
+                <div class="p-3 rounded-4 mb-4" style="background: rgba(148, 163, 184, 0.15); border: 2px solid rgba(203, 213, 225, 0.4);">
+                    <div class="small text-secondary fw-bold text-uppercase tracking-wider">Pontuação Total</div>
+                    <div id="pontosShiro" class="digital-score-shiro py-1">
                         <?= number_format((float)$sumula['pontos_shiro'], 1) ?>
                     </div>
-                    <small class="text-muted">6 Waza-ari (3.0 pts) = Vitória por Ippon</small>
+                    <small class="text-white-50">6 Waza-ari (3.0 pts) = Vitória por Ippon</small>
                 </div>
 
                 <!-- BOTÕES DE GOLPES (PONTOS) -->

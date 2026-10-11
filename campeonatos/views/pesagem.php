@@ -60,30 +60,62 @@ foreach ($inscricoes as $ins) {
     </div>
 </div>
 
-<!-- Resumo -->
+<!-- Resumo (KPIs) -->
 <div class="row g-3 mb-4">
     <div class="col-sm-6 col-xl-3">
-        <div class="card border-0 shadow-sm border-start border-primary border-4 p-3">
-            <div class="small text-muted text-uppercase fw-bold">Total Atletas</div>
-            <div class="fs-4 fw-bold text-dark"><?= $totalGeral ?></div>
+        <div class="kpi-card kpi-blue">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="kpi-label">Total Atletas</div>
+                    <div class="kpi-value text-primary"><?= $totalGeral ?></div>
+                    <div class="small text-muted mt-1">Inscritos no campeonato</div>
+                </div>
+                <div class="kpi-icon-box bg-primary bg-opacity-10 text-primary">
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-sm-6 col-xl-3">
-        <div class="card border-0 shadow-sm border-start border-success border-4 p-3">
-            <div class="small text-muted text-uppercase fw-bold">Aprovados no Peso</div>
-            <div class="fs-4 fw-bold text-success"><?= $pesadosAprovados ?></div>
+        <div class="kpi-card kpi-green">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="kpi-label">Aprovados no Peso</div>
+                    <div class="kpi-value text-success"><?= $pesadosAprovados ?></div>
+                    <div class="small text-success fw-bold mt-1">Aptos para sorteio</div>
+                </div>
+                <div class="kpi-icon-box bg-success bg-opacity-10 text-success">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-sm-6 col-xl-3">
-        <div class="card border-0 shadow-sm border-start border-warning border-4 p-3">
-            <div class="small text-muted text-uppercase fw-bold">Pendentes de Balança</div>
-            <div class="fs-4 fw-bold text-warning"><?= $pendentesPesagem ?></div>
+        <div class="kpi-card kpi-gold">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="kpi-label">Pendentes de Balança</div>
+                    <div class="kpi-value text-warning"><?= $pendentesPesagem ?></div>
+                    <div class="small text-muted mt-1">Aguardando pesagem</div>
+                </div>
+                <div class="kpi-icon-box bg-warning bg-opacity-10 text-warning">
+                    <i class="fas fa-clock"></i>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-sm-6 col-xl-3">
-        <div class="card border-0 shadow-sm border-start border-danger border-4 p-3">
-            <div class="small text-muted text-uppercase fw-bold">Reprovados / Excedentes</div>
-            <div class="fs-4 fw-bold text-danger"><?= $pesadosReprovados ?></div>
+        <div class="kpi-card">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="kpi-label">Reprovados / Excesso</div>
+                    <div class="kpi-value text-danger"><?= $pesadosReprovados ?></div>
+                    <div class="small text-danger fw-bold mt-1">Acima do peso + tol.</div>
+                </div>
+                <div class="kpi-icon-box bg-danger bg-opacity-10 text-danger">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+            </div>
         </div>
     </div>
 </div>

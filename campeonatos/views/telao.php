@@ -27,6 +27,7 @@ $proximasLutas = $lutaModel->buscarPorTatame($idTatame, 'chamada');
 
     <link rel="stylesheet" href="../libs/fontawesome-free-6.5.2-web/css/all.min.css">
     <link rel="stylesheet" href="../libs/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/custom.css">
 
     <style>
         body {
