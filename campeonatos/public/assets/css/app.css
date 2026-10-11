@@ -1,0 +1,244 @@
+/**
+ * ESTILOS PRINCIPAIS DO SISTEMA DE CAMPEONATOS KENSHYDOKAN JUTSU
+ * Design System Moderno, Alta Performance e Responsividade
+ */
+
+:root {
+    --primary-color: #dc2626;
+    --primary-dark: #991b1b;
+    --primary-light: #ef4444;
+    --accent-gold: #f59e0b;
+    --accent-gold-dark: #d97706;
+    --bg-dark: #0f172a;
+    --bg-surface: #1e293b;
+    --bg-surface-elevated: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --aka-red: #ef4444;
+    --shiro-white: #f8fafc;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --info: #0ea5e9;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* NAVBAR & CABEÇALHO */
+.navbar-kenshy {
+    background-color: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 1.5rem;
+}
+
+.navbar-kenshy .navbar-brand {
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.brand-badge {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: #ffffff;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-link-kenshy {
+    color: var(--text-muted);
+    font-weight: 500;
+    padding: 0.5rem 0.85rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.nav-link-kenshy:hover, .nav-link-kenshy.active {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* CARDS & SUPERFÍCIES */
+.card-kenshy {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-kenshy:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.card-header-kenshy {
+    background-color: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.25rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* BOTÕES PERSONALIZADOS */
+.btn-kenshy {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: #ffffff;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.25rem;
+    transition: all 0.2s ease;
+}
+
+.btn-kenshy:hover {
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
+}
+
+.btn-kenshy-gold {
+    background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
+    color: #0f172a;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.25rem;
+}
+
+.btn-kenshy-gold:hover {
+    color: #0f172a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+}
+
+/* BADGES DE STATUS */
+.badge-status {
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge-status-planejamento { background: rgba(148, 163, 184, 0.15); color: #cbd5e1; }
+.badge-status-inscricoes_abertas { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+.badge-status-conferencia_pesagem { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+.badge-status-chaveamento { background: rgba(14, 165, 233, 0.15); color: #38bdf8; }
+.badge-status-em_andamento { background: rgba(239, 68, 68, 0.2); color: #f87171; animation: pulse 2s infinite; }
+.badge-status-encerrado { background: rgba(148, 163, 184, 0.2); color: #94a3b8; }
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* TABELAS DATATABLES */
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate {
+    color: var(--text-muted) !important;
+    margin: 0.75rem 0;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-color);
+    color: #ffffff;
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+}
+
+table.dataTable {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    width: 100% !important;
+}
+
+table.dataTable thead th {
+    background-color: rgba(255, 255, 255, 0.04);
+    color: var(--text-main);
+    border-bottom: 2px solid var(--border-color) !important;
+    padding: 0.9rem 1rem !important;
+    font-weight: 600;
+}
+
+table.dataTable tbody td {
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color) !important;
+    padding: 0.85rem 1rem !important;
+    vertical-align: middle;
+}
+
+table.dataTable tbody tr:hover td {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* FORMULÁRIOS & SELECT2 */
+.form-control, .form-select {
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 8px;
+    padding: 0.65rem 0.9rem;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--bg-surface-elevated);
+    border-color: var(--primary-light);
+    color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+}
+
+.select2-container--default .select2-selection--single {
+    background-color: var(--bg-surface-elevated) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    height: 44px !important;
+    padding: 0.4rem 0.5rem !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: var(--text-main) !important;
+    line-height: 28px !important;
+}
+
+.select2-dropdown {
+    background-color: var(--bg-surface) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-main) !important;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: var(--primary-color) !important;
+}
+
+/* RODAPÉ */
+footer {
+    margin-top: auto;
+    border-top: 1px solid var(--border-color);
+    padding: 1.5rem 0;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
