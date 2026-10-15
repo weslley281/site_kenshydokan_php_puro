@@ -26,7 +26,7 @@ $proximasLutas = $lutaModel->buscarPorTatame($idTatame, 'chamada');
     <title>Telão <?= htmlspecialchars($tatame['nome']) ?> | Kenshydokan</title>
 
     <link rel="stylesheet" href="../libs/fontawesome-free-6.5.2-web/css/all.min.css">
-    <link rel="stylesheet" href="../libs/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../libs/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="../css/custom.css">
 
     <style>

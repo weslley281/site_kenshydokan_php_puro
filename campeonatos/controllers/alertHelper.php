@@ -15,7 +15,7 @@ if (!function_exists('exibirMensagemEredirecionar')) {
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-    <link rel='stylesheet' href='../libs/bootstrap/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='../libs/bootstrap/bootstrap.css'>
     <link rel='stylesheet' href='../libs/alertifyjs/css/alertify.min.css' />
     <link rel='stylesheet' href='../libs/alertifyjs/css/themes/bootstrap.min.css' />
     <style>
@@ -46,7 +46,7 @@ if (!function_exists('exibirMensagemEredirecionar')) {
     </style>
 </head>
 <body class='bg-light'>
-    <script src='../libs/bootstrap/js/jquery.min.js'></script>
+    <script src='../libs/bootstrap/jquery.js'></script>
     <script src='../libs/alertifyjs/alertify.min.js'></script>
     <script>
         alertify.defaults.transition = 'slide';

@@ -16,7 +16,7 @@ if (isset($_SESSION['id_usuario'])) {
     <title>Acesso Restrito | Campeonatos Kenshydokan</title>
 
     <link rel="stylesheet" href="../libs/fontawesome-free-6.5.2-web/css/all.min.css">
-    <link rel="stylesheet" href="../libs/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../libs/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="../libs/alertifyjs/css/alertify.min.css">
     <link rel="stylesheet" href="../libs/alertifyjs/css/themes/bootstrap.min.css">
     <link rel="stylesheet" href="../css/custom.css">
@@ -96,8 +96,8 @@ if (isset($_SESSION['id_usuario'])) {
     </div>
 </div>
 
-<script src="../libs/bootstrap/js/jquery.min.js"></script>
-<script src="../libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../libs/bootstrap/jquery.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../libs/alertifyjs/alertify.min.js"></script>
 </body>
 </html>
