@@ -23,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $usuario = $usuarioModel->autenticar($email, $senha);
 
     if ($usuario) {
+        session_regenerate_id(true);
         $_SESSION["id_usuario"] = $usuario["id_usuario"];
         $_SESSION["nome"] = $usuario["nome"];
         $_SESSION["email"] = $usuario["email"];

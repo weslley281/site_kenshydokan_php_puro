@@ -40,6 +40,9 @@ $proxima = null;
 foreach ($etapas as $i => $e) {
     if (!$e[2]) { $proxima = $i; break; }
 }
+if ($proxima === null && $etapas) {
+    $proxima = count($etapas) - 1;
+}
 ?>
 
 <div class="page-head">
@@ -48,9 +51,7 @@ foreach ($etapas as $i => $e) {
         <p><i class="far fa-calendar me-1"></i><?= date('d/m/Y', strtotime($campAtual['data_inicio'])) ?>
             &nbsp;&bull;&nbsp; <i class="fas fa-location-dot me-1"></i><?= htmlspecialchars($campAtual['cidade']) ?> - <?= htmlspecialchars($campAtual['estado']) ?></p>
     </div>
-    <?php if ($proxima !== null): ?>
-        <a href="<?= $etapas[$proxima][3] ?>" class="btn btn-danger btn-lg">Continuar: <?= $etapas[$proxima][0] ?> <i class="fas fa-arrow-right"></i></a>
-    <?php endif; ?>
+    <a href="<?= $etapas[$proxima][3] ?>" class="btn btn-danger btn-lg">Continuar <i class="fas fa-arrow-right"></i></a>
 </div>
 
 <div class="help">Siga as etapas na ordem. As etapas com <i class="fas fa-check text-success"></i> já estão prontas.</div>
@@ -60,7 +61,7 @@ foreach ($etapas as $i => $e) {
         $classe = $feito ? 'done' : ($i === $proxima ? 'todo next' : 'todo');
     ?>
         <li class="<?= $classe ?>">
-            <div class="icon"><?= $feito ? '<i class="fas fa-check"></i>' : ($i + 1) ?></div>
+            <div class="icon"><?= $feito ? '<i class="fas fa-check" aria-label="Feito"></i>' : '<i class="far fa-hourglass" aria-label="Falta fazer"></i>' ?></div>
             <div class="txt">
                 <strong><?= $i + 1 ?>. <?= $titulo ?></strong>
                 <span><?= $desc ?></span>

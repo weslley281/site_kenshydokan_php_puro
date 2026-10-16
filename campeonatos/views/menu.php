@@ -1,7 +1,6 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . "/../controllers/authHelper.php";
+exigirLogin('login.php');
 
 include_once __DIR__ . "/../models/campeonatoModel.php";
 
@@ -30,15 +29,16 @@ if (!empty($_SESSION['camp_atual'])) {
     }
 }
 $cid = $campAtual ? (int)$campAtual['id_campeonato'] : 0;
+$campeonatosDisponiveis = (new Campeonato())->buscarTodos();
 
 // Itens do menu na ordem do dia do evento
 $itensMenu = [
-    ['num' => 1, 'icone' => 'fa-trophy',       'texto' => 'Campeonatos',       'link' => 'inicio.php',              'paginas' => ['inicio.php', 'campeonatos.php', 'criar_campeonato.php', 'editar_campeonato.php', 'detalhes_campeonato.php'], 'precisaCamp' => false],
-    ['num' => 2, 'icone' => 'fa-layer-group',  'texto' => 'Categorias',        'link' => "categorias.php?id=$cid",  'paginas' => ['categorias.php'], 'precisaCamp' => true],
-    ['num' => 3, 'icone' => 'fa-user-plus',    'texto' => 'Atletas inscritos', 'link' => "inscricoes.php?id=$cid",  'paginas' => ['inscricoes.php', 'criar_inscricao.php'], 'precisaCamp' => true],
-    ['num' => 4, 'icone' => 'fa-weight-scale', 'texto' => 'Pesagem',           'link' => "pesagem.php?id=$cid",     'paginas' => ['pesagem.php'], 'precisaCamp' => true],
-    ['num' => 5, 'icone' => 'fa-hand-fist',    'texto' => 'Lutas',             'link' => "chaves.php?id=$cid",      'paginas' => ['chaves.php', 'ver_chave.php', 'sumula_kata.php', 'sumula_tameshiwari.php', 'tatames.php', 'painel_tatame.php'], 'precisaCamp' => true],
-    ['num' => 6, 'icone' => 'fa-medal',        'texto' => 'Resultados',        'link' => "resultados.php?id=$cid",  'paginas' => ['resultados.php'], 'precisaCamp' => true],
+    ['num' => 1, 'icone' => 'fa-trophy',       'texto' => 'Campeonatos',       'link' => 'inicio.php',              'etapa' => '', 'paginas' => ['inicio.php', 'campeonatos.php', 'criar_campeonato.php', 'editar_campeonato.php', 'detalhes_campeonato.php'], 'precisaCamp' => false],
+    ['num' => 2, 'icone' => 'fa-layer-group',  'texto' => 'Categorias',        'link' => "categorias.php?id=$cid",  'etapa' => 'categorias', 'paginas' => ['categorias.php'], 'precisaCamp' => true],
+    ['num' => 3, 'icone' => 'fa-user-plus',    'texto' => 'Atletas inscritos', 'link' => "inscricoes.php?id=$cid",  'etapa' => 'inscricoes', 'paginas' => ['inscricoes.php', 'criar_inscricao.php'], 'precisaCamp' => true],
+    ['num' => 4, 'icone' => 'fa-weight-scale', 'texto' => 'Pesagem',           'link' => "pesagem.php?id=$cid",     'etapa' => 'pesagem', 'paginas' => ['pesagem.php'], 'precisaCamp' => true],
+    ['num' => 5, 'icone' => 'fa-hand-fist',    'texto' => 'Lutas',             'link' => "chaves.php?id=$cid",      'etapa' => 'lutas', 'paginas' => ['chaves.php', 'ver_chave.php', 'sumula_kata.php', 'sumula_tameshiwari.php', 'tatames.php', 'painel_tatame.php'], 'precisaCamp' => true],
+    ['num' => 6, 'icone' => 'fa-medal',        'texto' => 'Resultados',        'link' => "resultados.php?id=$cid",  'etapa' => 'resultados', 'paginas' => ['resultados.php'], 'precisaCamp' => true],
 ];
 ?>
 <!DOCTYPE html>
@@ -64,25 +64,26 @@ $itensMenu = [
             <span>Kenshydokan<small>CAMPEONATOS</small></span>
         </a>
 
-        <div class="camp-atual">
-            <div class="label">Campeonato atual</div>
-            <?php if ($campAtual): ?>
-                <a href="detalhes_campeonato.php?id=<?= $cid ?>" title="Ver etapas deste campeonato">
-                    <?= htmlspecialchars($campAtual['titulo']) ?>
-                </a>
-                <a href="inicio.php" class="small fw-normal text-secondary mt-1">Trocar campeonato</a>
-            <?php else: ?>
-                <a href="inicio.php" class="text-warning">Escolha um campeonato</a>
-            <?php endif; ?>
-        </div>
+        <form class="camp-atual" action="detalhes_campeonato.php" method="GET">
+            <label class="label" for="camp-atual-select">Campeonato atual</label>
+            <select class="form-select" id="camp-atual-select" name="id" onchange="this.form.submit()" aria-label="Selecionar campeonato">
+                <option value="" <?= !$campAtual ? 'selected' : '' ?> disabled>Escolha um campeonato</option>
+                <?php foreach ($campeonatosDisponiveis as $campeonato): ?>
+                    <option value="<?= (int)$campeonato['id_campeonato'] ?>" <?= $cid === (int)$campeonato['id_campeonato'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($campeonato['titulo']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </form>
 
         <ul class="side-nav">
             <?php foreach ($itensMenu as $item):
                 $ativo = in_array($paginaAtual, $item['paginas']);
                 $bloqueado = $item['precisaCamp'] && !$campAtual;
+                $link = $bloqueado ? 'inicio.php?etapa=' . urlencode($item['etapa']) : $item['link'];
             ?>
                 <li>
-                    <a href="<?= $item['link'] ?>" class="<?= $ativo ? 'active' : '' ?> <?= $bloqueado ? 'disabled' : '' ?>">
+                    <a href="<?= htmlspecialchars($link, ENT_QUOTES, 'UTF-8') ?>" class="<?= $ativo ? 'active' : '' ?> <?= $bloqueado ? 'needs-camp' : '' ?>" <?= $bloqueado ? 'title="Escolha um campeonato para abrir esta etapa"' : '' ?>>
                         <span class="num"><?= $item['num'] ?></span>
                         <i class="fas <?= $item['icone'] ?>"></i>
                         <?= $item['texto'] ?>
@@ -103,9 +104,11 @@ $itensMenu = [
         </div>
     </aside>
 
+    <button type="button" class="sidebar-backdrop" aria-label="Fechar menu" onclick="fecharMenu()"></button>
+
     <div class="main">
         <div class="topbar-mobile">
-            <button type="button" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Abrir menu">
+            <button type="button" id="btnMenuMobile" aria-controls="sidebar" aria-expanded="false" aria-label="Abrir menu" onclick="alternarMenu()">
                 <i class="fas fa-bars"></i>
             </button>
             <strong>Kenshydokan Campeonatos</strong>

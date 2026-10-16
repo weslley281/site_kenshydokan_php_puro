@@ -2,9 +2,8 @@
 /**
  * Placar da luta (Kumite) - tela cheia, sem menu, feita para o mesário.
  */
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . "/../controllers/authHelper.php";
+exigirLogin('login.php');
 include_once __DIR__ . "/../models/lutaModel.php";
 include_once __DIR__ . "/../models/sumulaKumiteModel.php";
 include_once __DIR__ . "/../models/categoriaModel.php";
@@ -25,6 +24,7 @@ if (!$sumula) {
 }
 $categoria = (new Categoria())->buscarPorId((int)$luta['id_categoria']);
 $duracao = (int)($categoria['duracao_luta_segundos'] ?? 180) ?: 180;
+$avaliacaoAtual = $sumulaModel->avaliarRegrasKumite($sumula);
 $terminada = $luta['status'] === 'concluida';
 $voltar = "ver_chave.php?id=" . (int)$luta['id_categoria'];
 ?>
@@ -63,10 +63,23 @@ $voltar = "ver_chave.php?id=" . (int)$luta['id_categoria'];
         .relogio .btn { min-width: 180px; min-height: 60px; font-size: 1.3rem; font-weight: 800; margin-top: 10px; }
         .relogio .golden { color: #ffcc00; font-weight: 800; display: none; }
         .barra { height: 64px; background: #1b1b1b; color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; gap: 8px; }
-        .barra .btn { min-height: 46px; font-weight: 700; }
+        .barra .btn { min-height: 48px; font-weight: 700; }
         .opcoes-penal .btn { min-height: 64px; font-size: 1.2rem; font-weight: 700; text-align: left; }
         .vencer .btn { min-height: 90px; font-size: 1.5rem; font-weight: 800; }
-        @media (max-width: 768px) { .relogio { top: auto; bottom: 74px; transform: translateX(-50%); } }
+        .newaza { color: #67e8f9; font-size: 1rem; font-weight: 800; letter-spacing: .12em; }
+        @media (max-width: 768px) {
+            body { overflow: auto; }
+            .placar { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; height: calc(100dvh - 64px); min-height: 520px; }
+            .lado { padding: 12px; gap: 6px; }
+            .lado .nome { font-size: clamp(1.2rem, 5vw, 1.8rem); }
+            .lado .pontos { font-size: clamp(4rem, 15vw, 7rem); }
+            .botoes .btn { min-height: 48px; font-size: 1rem; }
+            .relogio { top: 50%; padding: 8px 14px; transform: translate(-50%, -50%); border: 2px solid #fff; }
+            .relogio .tempo { font-size: clamp(2.4rem, 10vw, 3.8rem); }
+            .relogio .btn { min-width: 140px; min-height: 48px; font-size: 1.05rem; }
+            .barra { height: auto; min-height: 64px; flex-wrap: wrap; justify-content: center; padding: 8px; }
+            .barra > .btn, .barra .btn { min-height: 48px; padding: 8px 12px; font-size: .9rem; }
+        }
     </style>
 </head>
 <body>
@@ -75,7 +88,7 @@ $voltar = "ver_chave.php?id=" . (int)$luta['id_categoria'];
     <?php foreach (['aka' => 'VERMELHO', 'shiro' => 'BRANCO'] as $lado => $cor): ?>
     <section class="lado <?= $lado ?>">
         <div>
-            <div class="cor"><?= $cor ?></div>
+            <div class="cor"><?= $lado === 'aka' ? 'AKA · VERMELHO' : 'SHIRO · BRANCO' ?></div>
             <div class="nome"><?= htmlspecialchars($luta["nome_$lado"] ?? '—') ?></div>
             <div class="dojo"><?= htmlspecialchars($luta["dojo_$lado"] ?? '') ?></div>
         </div>
@@ -94,6 +107,7 @@ $voltar = "ver_chave.php?id=" . (int)$luta['id_categoria'];
 
 <div class="relogio">
     <div class="golden" id="golden">PONTO DE OURO</div>
+    <div class="newaza" id="newaza" hidden>NE WAZA · 60 S</div>
     <div class="tempo" id="tempo">0:00</div>
     <button type="button" class="btn btn-success" id="btnRelogio" onclick="alternarRelogio()"><i class="fas fa-play"></i> Iniciar</button>
 </div>
@@ -102,6 +116,7 @@ $voltar = "ver_chave.php?id=" . (int)$luta['id_categoria'];
     <a href="<?= $voltar ?>" class="btn btn-outline-light" id="btnSair"><i class="fas fa-arrow-left"></i> Sair</a>
     <span class="d-none d-md-inline"><?= htmlspecialchars($luta['categoria_nome'] ?? '') ?> · Luta <?= (int)$luta['numero_luta'] ?></span>
     <div class="d-flex gap-2">
+        <button type="button" class="btn btn-outline-info" id="btnNeWaza" onclick="ativarNeWaza()">Ativar Ne Waza (60 s)</button>
         <button type="button" class="btn btn-outline-light" id="btnDesfazer" onclick="desfazer()" disabled><i class="fas fa-rotate-left"></i> Desfazer último</button>
         <button type="button" class="btn btn-warning" id="btnTerminar" onclick="perguntarVencedor()"><i class="fas fa-flag-checkered"></i> Terminar luta</button>
     </div>
@@ -130,17 +145,19 @@ $voltar = "ver_chave.php?id=" . (int)$luta['id_categoria'];
                 <input type="hidden" name="tipo" value="finalizar_luta">
                 <input type="hidden" name="id_luta" value="<?= $idLuta ?>">
                 <input type="hidden" name="forma_vitoria" id="formaVitoria" value="pontos">
+                <input type="hidden" name="motivo" id="motivoVitoria" value="">
                 <div class="modal-header"><h5 class="modal-title fs-3" id="tituloVencedor">Quem venceu?</h5></div>
                 <div class="modal-body">
                     <p class="text-muted" id="textoVencedor">Escolha o vencedor. Se a luta empatou, é a decisão dos árbitros.</p>
                     <div class="row g-3 vencer">
-                        <div class="col-6"><button type="submit" name="vencedor_lado" value="aka" class="btn btn-danger w-100" id="venceAka"><?= htmlspecialchars($luta['nome_aka'] ?? 'Vermelho') ?></button></div>
-                        <div class="col-6"><button type="submit" name="vencedor_lado" value="shiro" class="btn btn-light border border-dark w-100" id="venceShiro"><?= htmlspecialchars($luta['nome_shiro'] ?? 'Branco') ?></button></div>
+                        <div class="col-6"><button type="submit" name="vencedor_lado" value="aka" class="btn btn-danger w-100" id="venceAka" onclick="selecionarVencedor('aka')"><?= htmlspecialchars($luta['nome_aka'] ?? 'Vermelho') ?></button></div>
+                        <div class="col-6"><button type="submit" name="vencedor_lado" value="shiro" class="btn btn-light border border-dark w-100" id="venceShiro" onclick="selecionarVencedor('shiro')"><?= htmlspecialchars($luta['nome_shiro'] ?? 'Branco') ?></button></div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-outline-warning" id="btnGolden" onclick="iniciarGolden()">Empate: Ponto de ouro</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnVoltarPlacar">Voltar ao placar</button>
+                    <button type="button" class="btn btn-outline-danger" id="btnDesfazerModal" onclick="fecharEdesfazer()" disabled><i class="fas fa-rotate-left"></i> Desfazer último</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnVoltarPlacar" onclick="retomarPlacar()">Voltar ao placar</button>
                 </div>
             </form>
         </div>
@@ -167,18 +184,25 @@ var DURACAO = <?= $duracao ?>;
 var NOMES = { aka: <?= json_encode($luta['nome_aka'] ?? 'Vermelho') ?>, shiro: <?= json_encode($luta['nome_shiro'] ?? 'Branco') ?> };
 var sumula = <?= json_encode($sumula) ?>;
 var terminada = <?= $terminada ? 'true' : 'false' ?>;
+var avaliacaoAtual = <?= json_encode($avaliacaoAtual) ?>;
 
 var segundos = parseInt(sumula.tempo_decorrido_segundos || 0, 10);
 var golden = parseInt(sumula.golden_score_ativo || 0, 10) === 1;
 var rodando = false, timer = null;
 var historico = []; // toques que podem ser desfeitos
 var ladoPenal = 'aka';
+var aguardandoVencedor = false, eventoPendente = false;
+var newazaAtivo = false, newazaSegundos = 60;
+var vencedorSugerido = null;
 
 function fmt(s) { s = Math.max(0, s); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
 
 function desenharRelogio() {
     var el = document.getElementById('tempo');
-    if (golden) {
+    if (newazaAtivo) {
+        el.textContent = fmt(newazaSegundos);
+        el.classList.remove('acabou');
+    } else if (golden) {
         el.textContent = fmt(segundos - DURACAO);
         el.classList.remove('acabou');
     } else {
@@ -187,6 +211,7 @@ function desenharRelogio() {
         el.classList.toggle('acabou', resta <= 0);
     }
     document.getElementById('golden').style.display = golden ? 'block' : 'none';
+    document.getElementById('newaza').hidden = !newazaAtivo;
 }
 
 function desenharPlacar() {
@@ -202,21 +227,41 @@ function desenharPlacar() {
         if (+sumula['hansoku_make_' + l]) m.push('DESCLASSIFICADO');
         document.getElementById('marcas-' + l).textContent = m.join(' · ');
     });
-    document.getElementById('btnDesfazer').disabled = historico.length === 0 || terminada;
+    document.getElementById('btnDesfazer').disabled = historico.length === 0 || terminada || eventoPendente;
+    document.getElementById('btnDesfazerModal').disabled = historico.length === 0 || terminada || eventoPendente;
+    document.getElementById('btnNeWaza').disabled = terminada || aguardandoVencedor || newazaAtivo || eventoPendente;
+    document.querySelectorAll('.botoes .btn').forEach(function (b) {
+        b.disabled = terminada || aguardandoVencedor || eventoPendente;
+    });
+    document.getElementById('btnTerminar').disabled = terminada || aguardandoVencedor || eventoPendente;
+    document.getElementById('btnRelogio').disabled = terminada || aguardandoVencedor || eventoPendente;
 }
 
 function alternarRelogio() {
-    if (terminada) return;
+    if (terminada || aguardandoVencedor || eventoPendente) return;
     rodando = !rodando;
     var b = document.getElementById('btnRelogio');
     if (rodando) {
         b.className = 'btn btn-warning';
         b.innerHTML = '<i class="fas fa-pause"></i> Pausar';
         timer = setInterval(function () {
-            segundos++;
+            if (newazaAtivo) {
+                newazaSegundos--;
+                if (newazaSegundos <= 0) {
+                    newazaSegundos = 0;
+                    newazaAtivo = false;
+                    pararRelogio();
+                    alert('Ne Waza encerrado. O cronômetro da luta está pausado.');
+                    desenharRelogio();
+                    desenharPlacar();
+                    return;
+                }
+            } else {
+                segundos++;
+            }
             desenharRelogio();
-            if (segundos % 10 === 0) enviar('tempo', 'geral', true);
-            if (!golden && segundos >= DURACAO) {
+            if (!newazaAtivo && segundos > 0 && segundos % 10 === 0) enviar('tempo', 'geral', true);
+            if (!newazaAtivo && !golden && segundos >= DURACAO) {
                 pararRelogio();
                 perguntarVencedor('Acabou o tempo!');
             }
@@ -236,32 +281,63 @@ function pararRelogio() {
 }
 
 function enviar(tipo, lado, silencioso, extra) {
-    if (terminada) return;
+    if (terminada || eventoPendente) return;
     var dados = { id_luta: ID_LUTA, tipo: tipo, lado: lado, segundo_luta: segundos };
     if (extra) Object.assign(dados, extra);
+    eventoPendente = true;
+    desenharPlacar();
     $.post('../controllers/sumulaKumiteController.php?acao=evento', dados, null, 'json')
         .done(function (r) {
-            if (!r.success) { alert(r.error || 'Não foi possível salvar.'); return; }
+            eventoPendente = false;
+            if (!r.success) { alert(r.error || 'Não foi possível salvar.'); desenharPlacar(); return; }
             sumula = r.sumula;
-            if (['wazaari', 'ippon', 'shido', 'chui', 'saida', 'hansoku_make'].indexOf(tipo) >= 0) {
+            if (tipo === 'desfazer') {
+                historico.pop();
+                aguardandoVencedor = false;
+            } else if (['wazaari', 'ippon', 'shido', 'chui', 'saida', 'hansoku_make'].indexOf(tipo) >= 0) {
                 historico.push({ tipo: tipo, lado: lado });
             }
             desenharPlacar();
             if (r.avaliacao && r.avaliacao.finalizada) {
-                terminada = true;
                 pararRelogio();
-                document.getElementById('fimTitulo').textContent = 'Venceu: ' + NOMES[r.avaliacao.vencedor_lado];
-                document.getElementById('fimMotivo').textContent = r.avaliacao.motivo || '';
-                new bootstrap.Modal(document.getElementById('modalFim')).show();
+                perguntarVencedor('', r.avaliacao.vencedor_lado, r.avaliacao.motivo, r.avaliacao.forma_vitoria);
+            } else if (tipo === 'desfazer' && !golden && segundos >= DURACAO) {
+                perguntarVencedor('Acabou o tempo!');
             }
         })
-        .fail(function () { if (!silencioso) alert('Sem conexão. O toque não foi salvo, tente de novo.'); });
+        .fail(function (xhr) {
+            eventoPendente = false;
+            var erro = xhr.responseJSON && xhr.responseJSON.error;
+            if (!silencioso) alert(erro || 'Sem conexão. O toque não foi salvo, tente de novo.');
+            desenharPlacar();
+        });
 }
 
 function desfazer() {
-    var ultimo = historico.pop();
+    var ultimo = historico[historico.length - 1];
     if (!ultimo) return;
     enviar('desfazer', ultimo.lado, false, { desfazer_tipo: ultimo.tipo });
+}
+
+function fecharEdesfazer() {
+    var modal = bootstrap.Modal.getInstance(document.getElementById('modalVencedor'));
+    if (modal) modal.hide();
+    desfazer();
+}
+
+function retomarPlacar() {
+    aguardandoVencedor = false;
+    desenharPlacar();
+}
+
+function ativarNeWaza() {
+    if (terminada || aguardandoVencedor || eventoPendente || newazaAtivo) return;
+    newazaAtivo = true;
+    newazaSegundos = 60;
+    pararRelogio();
+    enviar('tempo', 'geral', true);
+    desenharRelogio();
+    desenharPlacar();
 }
 
 function abrirPenalidade(lado) {
@@ -275,20 +351,37 @@ function penalidade(tipo) {
     enviar(tipo, ladoPenal);
 }
 
-function perguntarVencedor(titulo) {
+function perguntarVencedor(titulo, vencedorLado, motivo, formaVitoria) {
     pararRelogio();
+    aguardandoVencedor = true;
+    vencedorSugerido = vencedorLado || null;
     document.getElementById('tituloVencedor').textContent = (titulo ? titulo + ' ' : '') + 'Quem venceu?';
     var a = parseFloat(sumula.pontos_aka || 0), s = parseFloat(sumula.pontos_shiro || 0);
-    document.getElementById('formaVitoria').value = (a === s) ? 'hantei' : 'pontos';
-    document.getElementById('textoVencedor').textContent = (a === s)
-        ? 'Empate no placar. Escolha pela decisão dos árbitros ou vá para o ponto de ouro.'
-        : 'Quem tem mais pontos: ' + (a > s ? NOMES.aka : NOMES.shiro) + '.';
+    document.getElementById('formaVitoria').value = formaVitoria || ((a === s) ? 'hantei' : 'pontos');
+    document.getElementById('motivoVitoria').value = motivo || '';
+    document.getElementById('textoVencedor').textContent = motivo
+        ? NOMES[vencedorLado] + ' pontuou. ' + motivo + '. Confirme o resultado ou desfaça o último toque.'
+        : (a === s
+            ? 'Empate no placar. Escolha quem venceu ou inicie o ponto de ouro.'
+            : 'Placar: ' + NOMES.aka + ' ' + a + ' × ' + s + ' ' + NOMES.shiro + '. Confirme quem venceu.');
+    document.getElementById('btnGolden').hidden = !!vencedorLado || a !== s;
+    desenharPlacar();
     new bootstrap.Modal(document.getElementById('modalVencedor')).show();
+}
+
+function selecionarVencedor(lado) {
+    if (vencedorSugerido && lado !== vencedorSugerido) {
+        document.getElementById('formaVitoria').value = 'pontos';
+        document.getElementById('motivoVitoria').value = 'Decisão oficial da arbitragem.';
+    }
 }
 
 function iniciarGolden() {
     bootstrap.Modal.getInstance(document.getElementById('modalVencedor')).hide();
+    aguardandoVencedor = false;
     golden = true;
+    newazaAtivo = false;
+    vencedorSugerido = null;
     if (segundos < DURACAO) segundos = DURACAO;
     enviar('golden_score', 'geral');
     desenharRelogio();
@@ -297,10 +390,12 @@ function iniciarGolden() {
 desenharRelogio();
 desenharPlacar();
 if (terminada) {
-    document.querySelectorAll('.botoes .btn, #btnRelogio, #btnTerminar').forEach(function (b) { b.disabled = true; });
+    document.querySelectorAll('.botoes .btn, #btnRelogio, #btnTerminar, #btnNeWaza, #btnDesfazer, #btnDesfazerModal').forEach(function (b) { b.disabled = true; });
     document.getElementById('fimTitulo').textContent = 'Esta luta já terminou';
     document.getElementById('fimMotivo').textContent = <?= json_encode($luta['nome_vencedor'] ? 'Vencedor: ' . $luta['nome_vencedor'] : '') ?>;
     new bootstrap.Modal(document.getElementById('modalFim')).show();
+} else if (avaliacaoAtual.finalizada) {
+    perguntarVencedor('', avaliacaoAtual.vencedor_lado, avaliacaoAtual.motivo, avaliacaoAtual.forma_vitoria);
 }
 
 // Atalhos de teclado: espaço = iniciar/pausar

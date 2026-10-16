@@ -23,7 +23,7 @@ if (isset($_SESSION['id_usuario'])) {
 
     <style>
         body {
-            background: radial-gradient(circle at 50% 20%, #1e293b 0%, #0f172a 60%, #020617 100%);
+            background: #f4f6f9;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -32,24 +32,22 @@ if (isset($_SESSION['id_usuario'])) {
         }
         .login-card {
             background: #ffffff;
-            border-radius: 24px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45), 0 0 40px rgba(217, 35, 45, 0.15);
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
             overflow: hidden;
             width: 100%;
             max-width: 450px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #dee2e6;
         }
         .login-header {
-            background: #0f172a;
+            background: #1a1a1a;
             border-bottom: 4px solid #d9232d;
-            padding: 35px 25px 28px 25px;
+            padding: 28px 25px 24px;
             text-align: center;
             color: #ffffff;
             position: relative;
         }
-        .login-header i.fa-torii-gate {
-            filter: drop-shadow(0 0 15px rgba(217, 35, 45, 0.8));
-        }
+        .login-header i.fa-torii-gate { color: #d9232d !important; }
     </style>
 </head>
 <body>
@@ -66,9 +64,10 @@ if (isset($_SESSION['id_usuario'])) {
     </div>
 
     <div class="p-4 p-sm-5">
+        <h1 class="h4 mb-4">Entrar no sistema</h1>
         <form method="POST" action="../controllers/autenticar.php">
             <div class="mb-3">
-                <label for="email" class="form-label fw-bold small text-muted text-uppercase" style="font-size: 0.75rem;">E-mail de Acesso:</label>
+                <label for="email" class="form-label fw-bold">E-mail</label>
                 <div class="input-group">
                     <span class="input-group-text bg-light border-end-0 text-muted"><i class="fas fa-envelope"></i></span>
                     <input type="email" class="form-control border-start-0" id="email" name="email" placeholder="admin@kenshydokan.org.br" required autofocus>
@@ -76,15 +75,15 @@ if (isset($_SESSION['id_usuario'])) {
             </div>
 
             <div class="mb-4">
-                <label for="senha" class="form-label fw-bold small text-muted text-uppercase" style="font-size: 0.75rem;">Senha de Segurança:</label>
+                <label for="senha" class="form-label fw-bold">Senha</label>
                 <div class="input-group">
                     <span class="input-group-text bg-light border-end-0 text-muted"><i class="fas fa-lock"></i></span>
                     <input type="password" class="form-control border-start-0" id="senha" name="senha" placeholder="••••••••" required>
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-danger w-100 py-3 fw-bold text-uppercase shadow">
-                <i class="fas fa-sign-in-alt me-2"></i> Entrar na Plataforma
+            <button type="submit" class="btn btn-danger w-100 btn-lg">
+                <i class="fas fa-sign-in-alt me-2"></i> Entrar
             </button>
         </form>
 

@@ -3,6 +3,14 @@ $pageTitle = 'Campeonatos | Kenshydokan';
 include_once __DIR__ . "/menu.php";
 
 $campeonatos = (new Campeonato())->buscarTodos();
+$etapasMenu = [
+    'categorias' => 'Categorias',
+    'inscricoes' => 'Atletas inscritos',
+    'pesagem' => 'Pesagem',
+    'lutas' => 'Lutas',
+    'resultados' => 'Resultados',
+];
+$etapaSolicitada = $etapasMenu[$_GET['etapa'] ?? ''] ?? null;
 
 $nomesStatus = [
     'rascunho' => ['Em preparação', 'secondary'],
@@ -15,6 +23,15 @@ $nomesStatus = [
     'cancelado' => ['Cancelado', 'secondary'],
 ];
 ?>
+
+<?php if ($etapaSolicitada): ?>
+    <div class="alert alert-info" role="status">
+        Para abrir <strong><?= htmlspecialchars($etapaSolicitada) ?></strong>, primeiro escolha um campeonato no seletor do menu.
+        <?php if (empty($campeonatos)): ?>
+            Ainda não há campeonatos cadastrados. <a href="criar_campeonato.php" class="alert-link">Crie um campeonato</a> para começar.
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
 
 <div class="page-head">
     <div>

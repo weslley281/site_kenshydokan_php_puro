@@ -10,6 +10,20 @@
 <script src="../libs/alertifyjs/alertify.min.js"></script>
 <script src="../libs/select2/js/select2.min.js"></script>
 <script>
+function alternarMenu() {
+    var aberto = !document.getElementById('sidebar').classList.contains('open');
+    document.getElementById('sidebar').classList.toggle('open', aberto);
+    document.body.classList.toggle('menu-open', aberto);
+    document.getElementById('btnMenuMobile').setAttribute('aria-expanded', aberto ? 'true' : 'false');
+}
+function fecharMenu() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.body.classList.remove('menu-open');
+    document.getElementById('btnMenuMobile').setAttribute('aria-expanded', 'false');
+}
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') fecharMenu();
+});
 $(function () {
     if ($.fn.select2) {
         $('.select2, .select2-enable').select2({ width: '100%' });

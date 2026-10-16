@@ -1,7 +1,7 @@
 <?php
 /**
  * Ponto de entrada do subdomínio: campeonatos.kenshydokan.org.br
- * Redireciona diretamente para o painel de início das competições
+ * Exige autenticação antes de entrar no sistema de campeonatos
  */
-header("Location: views/inicio.php");
+header("Location: views/login.php");
 exit;

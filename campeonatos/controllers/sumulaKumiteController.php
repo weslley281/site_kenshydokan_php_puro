@@ -8,6 +8,15 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+require_once __DIR__ . "/authHelper.php";
+if (empty($_SESSION['id_usuario']) && isset($_GET['acao']) && $_GET['acao'] === 'evento') {
+    http_response_code(401);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['success' => false, 'error' => 'Entre no sistema para registrar a luta.']);
+    exit;
+}
+exigirLogin();
+
 include_once __DIR__ . "/../models/sumulaKumiteModel.php";
 include_once __DIR__ . "/../models/lutaModel.php";
 include_once __DIR__ . "/../models/tatameModel.php";
@@ -37,6 +46,21 @@ if (isset($_GET['acao']) && $_GET['acao'] === 'evento') {
     $descricao = trim($_POST['descricao'] ?? '');
     $pontosAtribuidos = 0.0;
     $fase = !empty($sumula['golden_score_ativo']) ? 'golden_score' : 'regulamentar';
+
+    $tiposPermitidos = ['wazaari', 'ippon', 'shido', 'chui', 'saida', 'hansoku_make', 'golden_score', 'desfazer', 'tempo'];
+    $ladosPermitidos = ['aka', 'shiro', 'geral'];
+    if (!in_array($tipo, $tiposPermitidos, true) || !in_array($lado, $ladosPermitidos, true)
+        || ($tipo !== 'tempo' && $tipo !== 'golden_score' && $lado === 'geral')
+        || (in_array($tipo, ['tempo', 'golden_score'], true) && $lado !== 'geral')) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'error' => 'Ação ou lado inválido.']);
+        exit;
+    }
+    if ($luta['status'] === 'concluida' && $tipo !== 'tempo') {
+        http_response_code(409);
+        echo json_encode(['success' => false, 'error' => 'Esta luta já terminou.']);
+        exit;
+    }
 
     $sumula['tempo_decorrido_segundos'] = $segundoLuta;
 
@@ -100,23 +124,40 @@ if (isset($_GET['acao']) && $_GET['acao'] === 'evento') {
             break;
 
         case 'desfazer':
-            // Desfaz o último toque do mesário (enviado pela tela: desfazer_tipo + lado)
             $desfazer = $_POST['desfazer_tipo'] ?? '';
+            if (!in_array($desfazer, ['wazaari', 'ippon', 'shido', 'chui', 'saida', 'hansoku_make'], true)
+                || !in_array($lado, ['aka', 'shiro'], true)) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'error' => 'Não foi possível identificar o último toque.']);
+                exit;
+            }
             $oponente = ($lado === 'aka') ? 'shiro' : 'aka';
-            $menos = function (string $campo, $valor) use (&$sumula) {
+            $menos = function (string $campo, float $valor) use (&$sumula) {
                 $sumula[$campo] = max(0, $sumula[$campo] - $valor);
             };
-            if ($desfazer === 'wazaari') { $menos("wazaari_{$lado}", 1); $menos("pontos_{$lado}", 0.5); }
-            if ($desfazer === 'ippon') { $sumula["ippon_{$lado}"] = 0; $menos("pontos_{$lado}", 1.0); }
-            if ($desfazer === 'shido') { $menos("shido_{$lado}", 1); }
+            if ($desfazer === 'wazaari' && (int)$sumula["wazaari_{$lado}"] > 0) {
+                $menos("wazaari_{$lado}", 1);
+                $menos("pontos_{$lado}", 0.5);
+            }
+            if ($desfazer === 'ippon' && !empty($sumula["ippon_{$lado}"])) {
+                $sumula["ippon_{$lado}"] = 0;
+                $menos("pontos_{$lado}", 1.0);
+            }
+            if ($desfazer === 'shido' && (int)$sumula["shido_{$lado}"] > 0) {
+                $menos("shido_{$lado}", 1);
+            }
             if ($desfazer === 'hansoku_make') { $sumula["hansoku_make_{$lado}"] = 0; }
             if ($desfazer === 'chui' || $desfazer === 'saida') {
                 $campo = $desfazer === 'chui' ? "chui_{$lado}" : "saidas_{$lado}";
                 if ((int)$sumula[$campo] > 0 && (int)$sumula[$campo] % 2 === 0) {
-                    $menos("wazaari_{$oponente}", 1);
-                    $menos("pontos_{$oponente}", 0.5);
+                    if ((int)$sumula["wazaari_{$oponente}"] > 0) {
+                        $menos("wazaari_{$oponente}", 1);
+                        $menos("pontos_{$oponente}", 0.5);
+                    }
                 }
-                $menos($campo, 1);
+                if ((int)$sumula[$campo] > 0) {
+                    $menos($campo, 1);
+                }
             }
             $descricao = "Correção: desfeito '{$desfazer}' do lado " . strtoupper($lado);
             break;
@@ -140,20 +181,8 @@ if (isset($_GET['acao']) && $_GET['acao'] === 'evento') {
         ]);
     }
 
-    // Avaliação do motor de regras esportivas da Kenshydokan
+    // A tela confirma o vencedor após o mesário revisar a avaliação automática.
     $avaliacao = $sumulaModel->avaliarRegrasKumite($sumula);
-    if ($avaliacao['finalizada']) {
-        $ladoVenc = $avaliacao['vencedor_lado'];
-        $idVenc = ($ladoVenc === 'aka') ? (int)$luta['id_inscricao_aka'] : (int)$luta['id_inscricao_shiro'];
-        $sumula['vencedor_id'] = $idVenc;
-        $sumula['motivo_encerramento'] = $avaliacao['motivo'];
-
-        $lutaModel->definirVencedor($idLuta, $idVenc, $avaliacao['forma_vitoria']);
-        if (!empty($luta['id_tatame'])) {
-            $tatameModel->atualizarStatus((int)$luta['id_tatame'], 'disponivel', null);
-        }
-    }
-
     $sumulaModel->atualizarPlacar((int)$sumula['id_sumula'], $sumula);
 
     echo json_encode([

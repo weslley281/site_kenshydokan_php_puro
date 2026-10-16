@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Trilha de Auditoria | Kenshydokan';
+$pageTitle = 'Histórico de alterações | Kenshydokan';
 include_once __DIR__ . "/menu.php";
 include_once __DIR__ . "/../models/auditoriaModel.php";
 include_once __DIR__ . "/../models/campeonatoModel.php";
@@ -24,20 +24,20 @@ if ($idCampeonato > 0) {
                 <?php if ($campeonato): ?>
                     <li class="breadcrumb-item"><a href="detalhes_campeonato.php?id=<?= $idCampeonato ?>" class="text-decoration-none"><?= htmlspecialchars($campeonato['titulo']) ?></a></li>
                 <?php endif; ?>
-                <li class="breadcrumb-item active" aria-current="page">Auditoria</li>
+                <li class="breadcrumb-item active" aria-current="page">Histórico de alterações</li>
             </ol>
         </nav>
         <h2 class="h3 fw-bold mb-0 text-dark">
-            <i class="fas fa-history text-danger me-2"></i>Trilha de Auditoria e Governança
+            <i class="fas fa-history text-danger me-2"></i>Histórico de alterações
         </h2>
         <p class="text-muted small mb-0">
-            <?= $campeonato ? htmlspecialchars($campeonato['titulo']) : 'Registro completo de ações no sistema de competições' ?>
+            <?= $campeonato ? htmlspecialchars($campeonato['titulo']) : 'Veja quem fez cada mudança no sistema de campeonatos.' ?>
         </p>
     </div>
     <div class="col-md-5 text-md-end mt-3 mt-md-0">
         <?php if ($campeonato): ?>
             <a href="detalhes_campeonato.php?id=<?= $idCampeonato ?>" class="btn btn-secondary">
-                <i class="fas fa-arrow-left me-1"></i> Voltar ao Evento
+                <i class="fas fa-arrow-left me-1"></i> Voltar às etapas
             </a>
         <?php else: ?>
             <a href="campeonatos.php" class="btn btn-secondary">
@@ -50,9 +50,9 @@ if ($idCampeonato > 0) {
 <div class="card border-0 shadow-sm mb-4">
     <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
         <h5 class="card-title mb-0 fs-6 fw-bold text-dark">
-            <i class="fas fa-list text-primary me-2"></i>Histórico Cronológico de Auditoria (<?= count($logs) ?> registros)
+            <i class="fas fa-list text-primary me-2"></i>Alterações registradas (<?= count($logs) ?>)
         </h5>
-        <span class="badge bg-light text-dark border">Imutável &bull; IP &bull; User-Agent</span>
+        <span class="badge bg-light text-dark border">Registro preservado</span>
     </div>
     <div class="card-body p-0">
         <div class="table-responsive">
@@ -61,18 +61,18 @@ if ($idCampeonato > 0) {
                     <tr>
                         <th class="ps-3" style="width: 140px;">Data / Hora</th>
                         <th>Ação</th>
-                        <th>Usuário</th>
-                        <th>Tabela / Registro</th>
-                        <th>Dados Gravados (JSON)</th>
-                        <th>Justificativa</th>
-                        <th class="pe-3" style="width: 110px;">IP Origem</th>
+                        <th>Quem</th>
+                        <th>Área / item</th>
+                        <th>Detalhes</th>
+                        <th>Motivo</th>
+                        <th class="pe-3" style="width: 110px;">IP</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($logs)): ?>
                         <tr>
                             <td colspan="7" class="text-center py-5 text-muted">
-                                Nenhum log de auditoria encontrado.
+                                Nenhuma alteração registrada ainda.
                             </td>
                         </tr>
                     <?php else: ?>

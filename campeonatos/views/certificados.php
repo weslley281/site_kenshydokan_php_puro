@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Certificados Oficiais | Kenshydokan';
+$pageTitle = 'Certificados | Kenshydokan';
 include_once __DIR__ . "/menu.php";
 include_once __DIR__ . "/../models/campeonatoModel.php";
 include_once __DIR__ . "/../models/inscricaoModel.php";
@@ -32,19 +32,19 @@ $certificados = $certificadoModel->buscarPorCampeonato($idCampeonato);
             </ol>
         </nav>
         <h2 class="h3 fw-bold mb-0 text-dark">
-            <i class="fas fa-award text-success me-2"></i>Certificados Oficiais com Validação Criptográfica
+            <i class="fas fa-award text-success me-2"></i>Certificados
         </h2>
-        <p class="text-muted small mb-0"><?= htmlspecialchars($campeonato['titulo']) ?> &bull; Emissão de Participação e Pódios</p>
+        <p class="text-muted small mb-0"><?= htmlspecialchars($campeonato['titulo']) ?> &bull; Gere ou consulte certificados.</p>
     </div>
     <div class="col-md-5 text-md-end mt-3 mt-md-0 d-flex gap-2 justify-content-md-end">
         <a href="validar_certificado.php" target="_blank" class="btn btn-outline-primary">
-            <i class="fas fa-shield-alt me-1"></i> Validador Público
+            <i class="fas fa-shield-alt me-1"></i> Validar certificado
         </a>
-        <form action="../controllers/certificadoController.php" method="POST" style="display:inline;" onsubmit="return confirm('Deseja gerar os certificados em lote para todos os atletas aprovados no campeonato?');">
+        <form action="../controllers/certificadoController.php" method="POST" style="display:inline;" onsubmit="return confirm('Gerar certificados para todos os atletas aprovados neste campeonato?');">
             <input type="hidden" name="tipo" value="gerar_lote">
             <input type="hidden" name="id_campeonato" value="<?= $idCampeonato ?>">
             <button type="submit" class="btn btn-success">
-                <i class="fas fa-file-invoice me-1"></i> Gerar em Lote
+                <i class="fas fa-file-invoice me-1"></i> Gerar certificados
             </button>
         </form>
         <a href="detalhes_campeonato.php?id=<?= $idCampeonato ?>" class="btn btn-secondary">
@@ -53,14 +53,13 @@ $certificados = $certificadoModel->buscarPorCampeonato($idCampeonato);
     </div>
 </div>
 
-<!-- Card Informativo de Autenticidade -->
 <div class="card border-0 shadow-sm mb-4 border-start border-4 border-success">
     <div class="card-body p-3">
         <div class="row align-items-center">
             <div class="col-md-8">
-                <h6 class="fw-bold mb-1 text-dark"><i class="fas fa-check-shield text-success me-1"></i> Sistema de Autenticação e Rastreabilidade</h6>
+                <h6 class="fw-bold mb-1 text-dark"><i class="fas fa-check-shield text-success me-1"></i> Código de validação</h6>
                 <p class="text-muted small mb-0">
-                    Cada certificado gerado recebe um <strong>código hash único</strong> gravado na base de dados. Qualquer pessoa ou entidade pode verificar a veracidade do documento inserindo o código na página pública de validação.
+                    Cada certificado tem um código único que pode ser usado para confirmar se o documento é válido.
                 </p>
             </div>
             <div class="col-md-4 text-md-end mt-2 mt-md-0">
@@ -71,11 +70,10 @@ $certificados = $certificadoModel->buscarPorCampeonato($idCampeonato);
     </div>
 </div>
 
-<!-- Tabela de Certificados Emitidos -->
 <div class="card border-0 shadow-sm mb-4">
     <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
         <h5 class="card-title mb-0 fs-6 fw-bold text-dark">
-            <i class="fas fa-list-check text-primary me-2"></i>Certificados Gerados (<?= count($certificados) ?>)
+            <i class="fas fa-list-check text-primary me-2"></i>Certificados emitidos (<?= count($certificados) ?>)
         </h5>
     </div>
     <div class="card-body p-0">
@@ -88,7 +86,7 @@ $certificados = $certificadoModel->buscarPorCampeonato($idCampeonato);
                         <th>Dojo</th>
                         <th>Categoria</th>
                         <th>Tipo</th>
-                        <th>Código Hash de Autenticidade</th>
+                        <th>Código de validação</th>
                         <th>Data Emissão</th>
                         <th class="text-end pe-3">Ações</th>
                     </tr>
@@ -97,9 +95,9 @@ $certificados = $certificadoModel->buscarPorCampeonato($idCampeonato);
                     <?php if (empty($certificados)): ?>
                         <tr>
                             <td colspan="8" class="text-center py-5 text-muted">
-                                Nenhum certificado emitido ainda neste campeonato.
+                                Nenhum certificado emitido neste campeonato.
                                 <br>
-                                <span class="small">Clique em <strong>Gerar em Lote</strong> acima para emitir os certificados de todos os inscritos aprovados.</span>
+                                <span class="small">Clique em <strong>Gerar certificados</strong> para emitir os documentos dos atletas aprovados.</span>
                             </td>
                         </tr>
                     <?php else: ?>
@@ -146,7 +144,6 @@ $certificados = $certificadoModel->buscarPorCampeonato($idCampeonato);
     </div>
 </div>
 
-<!-- Emissão Rápida Individual por Atleta -->
 <div class="card border-0 shadow-sm mb-4">
     <div class="card-header bg-white py-3 border-bottom">
         <h5 class="card-title mb-0 fs-6 fw-bold text-dark">

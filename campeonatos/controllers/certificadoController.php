@@ -8,6 +8,9 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+require_once __DIR__ . "/authHelper.php";
+exigirLogin();
+
 include_once __DIR__ . "/../models/certificadoModel.php";
 include_once __DIR__ . "/../models/inscricaoModel.php";
 include_once __DIR__ . "/../models/campeonatoModel.php";

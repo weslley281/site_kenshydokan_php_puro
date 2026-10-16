@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . "/../controllers/authHelper.php";
+exigirLogin('login.php');
+
 include_once __DIR__ . "/../models/tatameModel.php";
 include_once __DIR__ . "/../models/campeonatoModel.php";
 include_once __DIR__ . "/../models/lutaModel.php";

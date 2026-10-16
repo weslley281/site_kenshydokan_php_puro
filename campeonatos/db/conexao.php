@@ -26,7 +26,7 @@ class Conexao {
         $this->db = $_ENV['DB_NAME_CAMPEONATOS'] ?? (getenv('DB_NAME_CAMPEONATOS') ?: 'campeonatos');
 
         // Banco do domínio principal (somente para leitura de filiados)
-        $this->dbPrincipal = $_ENV['DB_NAME'] ?? (getenv('DB_NAME') ?: 'u515961161_kenshydokan');
+        $this->dbPrincipal = $_ENV['MAIN_DB_NAME'] ?? (getenv('MAIN_DB_NAME') ?: ($_ENV['DB_NAME'] ?? (getenv('DB_NAME') ?: 'u515961161_kenshydokan')));
     }
 
     private function carregarEnv() {
