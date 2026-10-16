@@ -15,6 +15,24 @@ class Migration {
         $this->conexao = $db->conectar();
     }
 
+    private function executarTabela(string $tabela, string $sql): void {
+        try {
+            $this->conexao->query($sql);
+            Conexao::adicionarDiagnostico('Tabela processada', [
+                'tabela' => $tabela,
+                'status' => 'sucesso'
+            ]);
+        } catch (mysqli_sql_exception $erro) {
+            Conexao::adicionarDiagnostico('Falha ao processar tabela', [
+                'tabela' => $tabela,
+                'erro' => $erro->getMessage(),
+                'codigo' => $erro->getCode(),
+                'sqlstate' => $erro->getSqlState()
+            ]);
+            throw $erro;
+        }
+    }
+
     public function executarTodas(): void {
         $this->criarTabelaUsuarios();
         $this->criarTabelaCampeonatos();
@@ -43,7 +61,7 @@ class Migration {
             ativo TINYINT(1) NOT NULL DEFAULT 1,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-        $this->conexao->query($sql);
+        $this->executarTabela('campeonato_usuarios', $sql);
     }
 
     public function criarTabelaCampeonatos(): void {
@@ -69,7 +87,7 @@ class Migration {
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-        $this->conexao->query($sql);
+        $this->executarTabela('campeonato_eventos', $sql);
     }
 
     public function criarTabelaCategorias(): void {
@@ -91,7 +109,7 @@ class Migration {
             exige_pesagem TINYINT(1) NOT NULL DEFAULT 1,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-        $this->conexao->query($sql);
+        $this->executarTabela('campeonato_categorias', $sql);
     }
 
     public function criarTabelaInscricoes(): void {
@@ -112,7 +130,7 @@ class Migration {
             motivo_ineligibilidade TEXT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-        $this->conexao->query($sql);
+        $this->executarTabela('campeonato_inscricoes', $sql);
     }
 
     public function criarTabelaPesagens(): void {
@@ -127,7 +145,7 @@ class Migration {
             observacoes TEXT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-        $this->conexao->query($sql);
+        $this->executarTabela('campeonato_pesagens', $sql);
     }
 
     public function criarTabelaChaves(): void {
@@ -141,7 +159,7 @@ class Migration {
             arvore_dados JSON NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-        $this->conexao->query($sql);
+        $this->executarTabela('campeonato_chaves', $sql);
     }
 
     public function criarTabelaTatames(): void {
@@ -155,7 +173,7 @@ class Migration {
             operador_id INT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-        $this->conexao->query($sql);
+        $this->executarTabela('campeonato_tatames', $sql);
     }
 
     public function criarTabelaLutas(): void {
@@ -176,7 +194,7 @@ class Migration {
             proxima_luta_id INT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-        $this->conexao->query($sql);
+        $this->executarTabela('campeonato_lutas', $sql);
     }
 
     public function criarTabelaSumulaKumite(): void {
@@ -204,7 +222,7 @@ class Migration {
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-        $this->conexao->query($sql);
+        $this->executarTabela('campeonato_sumula_kumite', $sql);
     }
 
     public function criarTabelaEventosKumite(): void {
@@ -220,7 +238,7 @@ class Migration {
             id_usuario_operador INT NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-        $this->conexao->query($sql);
+        $this->executarTabela('campeonato_eventos_kumite', $sql);
     }
 
     public function criarTabelaNotasKata(): void {
@@ -238,7 +256,7 @@ class Migration {
             observacao VARCHAR(255) NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-        $this->conexao->query($sql);
+        $this->executarTabela('campeonato_notas_kata', $sql);
     }
 
     public function criarTabelaTameshiwari(): void {
@@ -257,7 +275,7 @@ class Migration {
             observacoes TEXT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-        $this->conexao->query($sql);
+        $this->executarTabela('campeonato_tameshiwari', $sql);
     }
 
     public function criarTabelaClassificacao(): void {
@@ -272,7 +290,7 @@ class Migration {
             homologado_por INT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-        $this->conexao->query($sql);
+        $this->executarTabela('campeonato_classificacao', $sql);
     }
 
     public function criarTabelaCertificados(): void {
@@ -286,7 +304,7 @@ class Migration {
             arquivo_pdf_nome VARCHAR(255) NOT NULL,
             data_emissao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-        $this->conexao->query($sql);
+        $this->executarTabela('campeonato_certificados', $sql);
     }
 
     public function criarTabelaAuditoria(): void {
@@ -304,6 +322,6 @@ class Migration {
             user_agent TEXT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-        $this->conexao->query($sql);
+        $this->executarTabela('campeonato_auditoria', $sql);
     }
 }

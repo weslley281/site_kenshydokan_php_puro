@@ -46,26 +46,21 @@ copy campeonatos\.env.example campeonatos\.env
 Edite o arquivo `campeonatos/.env` com as configurações do seu ambiente:
 
 ```ini
-# Configurações da Aplicação
-APP_NAME="Campeonatos Kenshydokan Jutsu"
-APP_ENV=production
+# Debug deve permanecer desativado em produção.
 APP_DEBUG=false
-APP_URL=https://campeonatos.kenshydokan.org.br
 
-# Banco Operacional Exclusivo (campeonatos)
+# Banco operacional dos campeonatos
 DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_NAME=campeonatos
-DB_USER=u515961161_kenshydokan
-DB_PASS=Wesv@g28
+DB_NAME_CAMPEONATOS=nome_do_banco_campeonatos
+DB_USER=usuario_do_banco
+DB_PASS=senha_do_banco
 
-# Banco Corporativo Raiz (Somente Leitura de Filiados)
-MAIN_DB_HOST=127.0.0.1
-MAIN_DB_PORT=3306
-MAIN_DB_NAME=u515961161_kenshydokan
-MAIN_DB_USER=u515961161_kenshydokan
-MAIN_DB_PASS=Wesv@g28
+# Banco do site principal (consulta de filiados)
+MAIN_DB_NAME=nome_do_banco_principal
+MAIN_DB_USER=usuario_do_banco_principal
 ```
+
+O sistema usa a porta `3306` por padrão e compartilha host e senha entre os dois bancos. Se o provedor usar valores diferentes, adicione somente os ajustes necessários: `DB_PORT`, `MAIN_DB_HOST`, `MAIN_DB_PORT` e/ou `MAIN_DB_PASS`. `APP_NAME`, `APP_ENV` e `APP_URL` também são opcionais; os padrões da aplicação já correspondem ao ambiente de produção.
 
 ---
 
