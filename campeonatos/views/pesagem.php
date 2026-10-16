@@ -1,339 +1,132 @@
 <?php
-$pageTitle = 'Pesagem Oficial | Kenshydokan';
+$pageTitle = 'Pesagem | Kenshydokan';
 include_once __DIR__ . "/menu.php";
-include_once __DIR__ . "/../models/campeonatoModel.php";
 include_once __DIR__ . "/../models/inscricaoModel.php";
-include_once __DIR__ . "/../models/pesagemModel.php";
 include_once __DIR__ . "/../models/categoriaModel.php";
 
-$idCampeonato = (int)($_GET['id'] ?? 0);
-$campeonatoModel = new Campeonato();
-$campeonato = $campeonatoModel->buscarPorId($idCampeonato);
-
-if (!$campeonato) {
-    echo "<div class='alert alert-danger'>Campeonato não encontrado.</div>";
+if (!$campAtual) {
+    echo "<div class='alert alert-warning'>Escolha um campeonato primeiro. <a href='inicio.php'>Ver campeonatos</a></div>";
     include_once __DIR__ . "/rodape.php";
     exit;
 }
+$idCampeonato = $cid;
+$inscricoes = (new Inscricao())->buscarPorCampeonato($idCampeonato);
+$categorias = (new Categoria())->buscarPorCampeonato($idCampeonato);
 
-$inscricaoModel = new Inscricao();
-$pesagemModel = new Pesagem();
-$categoriaModel = new Categoria();
-
-$inscricoes = $inscricaoModel->buscarPorCampeonato($idCampeonato);
-$historicoPesagens = $pesagemModel->buscarPorCampeonato($idCampeonato);
-$categorias = $categoriaModel->buscarPorCampeonato($idCampeonato);
-
-$totalGeral = count($inscricoes);
-$pesadosAprovados = 0;
-$pesadosReprovados = 0;
-$pendentesPesagem = 0;
-
+// Só aparecem aqui os atletas de categorias que exigem pesagem
+$faltam = [];
+$pesados = [];
 foreach ($inscricoes as $ins) {
-    if ($ins['status_elegibilidade'] === 'aprovada') $pesadosAprovados++;
-    elseif ($ins['status_elegibilidade'] === 'reprovada') $pesadosReprovados++;
-    else $pendentesPesagem++;
+    if ((int)$ins['exige_pesagem'] !== 1) continue;
+    if ($ins['status_elegibilidade'] === 'pendente') $faltam[] = $ins;
+    else $pesados[] = $ins;
+}
+
+function textoLimite(array $ins): string {
+    $min = $ins['peso_min'] ? number_format($ins['peso_min'], 1, ',', '') . ' kg' : null;
+    $max = $ins['peso_max'] ? number_format($ins['peso_max'] + $ins['tolerancia_peso_kg'], 1, ',', '') . ' kg' : null;
+    if ($min && $max) return "de $min até $max";
+    if ($max) return "até $max";
+    if ($min) return "a partir de $min";
+    return 'peso livre';
 }
 ?>
 
-<div class="row mb-4 align-items-center">
-    <div class="col-md-7">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-1 small">
-                <li class="breadcrumb-item"><a href="campeonatos.php" class="text-decoration-none">Campeonatos</a></li>
-                <li class="breadcrumb-item"><a href="detalhes_campeonato.php?id=<?= $idCampeonato ?>" class="text-decoration-none"><?= htmlspecialchars($campeonato['titulo']) ?></a></li>
-                <li class="breadcrumb-item active" aria-current="page">Pesagem</li>
-            </ol>
-        </nav>
-        <h2 class="h3 fw-bold mb-0 text-dark">
-            <i class="fas fa-weight text-danger me-2"></i>Controle de Balança Oficial
-        </h2>
-        <p class="text-muted small mb-0"><?= htmlspecialchars($campeonato['titulo']) ?> &bull; Data da Pesagem: <?= date('d/m/Y', strtotime($campeonato['data_pesagem'] ?? $campeonato['data_inicio'])) ?></p>
+<div class="page-head">
+    <div>
+        <h1>4. Pesagem</h1>
+        <p>Digite o peso que apareceu na balança. O sistema diz na hora se o atleta está <strong class="text-success">no peso</strong> ou <strong class="text-danger">fora do peso</strong>.</p>
     </div>
-    <div class="col-md-5 text-md-end mt-3 mt-md-0 d-flex gap-2 justify-content-md-end">
-        <a href="../controllers/relatorioController.php?id_campeonato=<?= $idCampeonato ?>&tipo=pesagem" target="_blank" class="btn btn-outline-secondary">
-            <i class="fas fa-file-pdf me-1 text-danger"></i> PDF Pesagem
-        </a>
-        <a href="chaves.php?id=<?= $idCampeonato ?>" class="btn btn-danger">
-            <i class="fas fa-sitemap me-1"></i> Ir para Chaveamento
-        </a>
-    </div>
+    <a href="chaves.php?id=<?= $idCampeonato ?>" class="btn btn-outline-secondary">Próxima etapa: Lutas <i class="fas fa-arrow-right"></i></a>
 </div>
 
-<!-- Resumo (KPIs) -->
-<div class="row g-3 mb-4">
-    <div class="col-sm-6 col-xl-3">
-        <div class="kpi-card kpi-blue">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="kpi-label">Total Atletas</div>
-                    <div class="kpi-value text-primary"><?= $totalGeral ?></div>
-                    <div class="small text-muted mt-1">Inscritos no campeonato</div>
-                </div>
-                <div class="kpi-icon-box bg-primary bg-opacity-10 text-primary">
-                    <i class="fas fa-users"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-xl-3">
-        <div class="kpi-card kpi-green">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="kpi-label">Aprovados no Peso</div>
-                    <div class="kpi-value text-success"><?= $pesadosAprovados ?></div>
-                    <div class="small text-success fw-bold mt-1">Aptos para sorteio</div>
-                </div>
-                <div class="kpi-icon-box bg-success bg-opacity-10 text-success">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-xl-3">
-        <div class="kpi-card kpi-gold">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="kpi-label">Pendentes de Balança</div>
-                    <div class="kpi-value text-warning"><?= $pendentesPesagem ?></div>
-                    <div class="small text-muted mt-1">Aguardando pesagem</div>
-                </div>
-                <div class="kpi-icon-box bg-warning bg-opacity-10 text-warning">
-                    <i class="fas fa-clock"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-xl-3">
-        <div class="kpi-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="kpi-label">Reprovados / Excesso</div>
-                    <div class="kpi-value text-danger"><?= $pesadosReprovados ?></div>
-                    <div class="small text-danger fw-bold mt-1">Acima do peso + tol.</div>
-                </div>
-                <div class="kpi-icon-box bg-danger bg-opacity-10 text-danger">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Tabs Fila e Histórico -->
-<ul class="nav nav-tabs mb-3" role="tablist">
-    <li class="nav-item">
-        <button class="nav-link active fw-bold" data-bs-toggle="tab" data-bs-target="#tabFila" type="button">
-            <i class="fas fa-list-ol me-1"></i> Fila de Atletas (<?= count($inscricoes) ?>)
-        </button>
-    </li>
-    <li class="nav-item">
-        <button class="nav-link fw-bold" data-bs-toggle="tab" data-bs-target="#tabHist" type="button">
-            <i class="fas fa-history me-1"></i> Histórico de Aferições (<?= count($historicoPesagens) ?>)
-        </button>
-    </li>
-</ul>
-
-<div class="tab-content">
-    <!-- TAB 1: FILA -->
-    <div class="tab-pane fade show active" id="tabFila">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0 datatable-responsive">
-                        <thead class="table-light text-uppercase fs-7 text-secondary">
-                            <tr>
-                                <th class="ps-3">#</th>
-                                <th>Atleta</th>
-                                <th>Dojo</th>
-                                <th>Categoria Atual</th>
-                                <th>Limites de Peso</th>
-                                <th>Peso Decl.</th>
-                                <th>Status Balança</th>
-                                <th class="text-end pe-3">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($inscricoes as $idx => $ins): ?>
-                                <tr>
-                                    <td class="ps-3 fw-bold text-muted"><?= $idx + 1 ?></td>
-                                    <td>
-                                        <strong class="text-dark"><?= htmlspecialchars($ins['nome_atleta_snapshot']) ?></strong>
-                                        <small class="text-muted d-block"><?= htmlspecialchars($ins['graduacao_nome_snapshot']) ?></small>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-light text-dark border"><?= htmlspecialchars($ins['dojo_snapshot']) ?></span>
-                                    </td>
-                                    <td>
-                                        <div class="small fw-semibold"><?= htmlspecialchars($ins['categoria_nome']) ?></div>
-                                    </td>
-                                    <td class="small">
-                                        <?php if ($ins['exige_pesagem'] == 1): ?>
-                                            <?= $ins['peso_min'] ? number_format($ins['peso_min'], 1) . 'kg' : 'Sem mín.' ?> até <strong><?= $ins['peso_max'] ? number_format($ins['peso_max'], 1) . 'kg' : 'Livre' ?></strong>
-                                            <?php if ($ins['tolerancia_peso_kg'] > 0): ?>
-                                                <span class="text-info">(+<?= number_format($ins['tolerancia_peso_kg'], 1) ?>kg tol.)</span>
-                                            <?php endif; ?>
-                                        <?php else: ?>
-                                            <span class="text-muted">Não exige pesagem</span>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td>
-                                        <?= $ins['peso_declarado'] ? number_format($ins['peso_declarado'], 1) . ' kg' : '-' ?>
-                                    </td>
-                                    <td>
-                                        <?php if ($ins['status_elegibilidade'] === 'aprovada'): ?>
-                                            <span class="badge bg-success"><i class="fas fa-check me-1"></i>Aprovado</span>
-                                        <?php elseif ($ins['status_elegibilidade'] === 'pendente'): ?>
-                                            <span class="badge bg-warning text-dark"><i class="fas fa-balance-scale me-1"></i>Pendente</span>
-                                        <?php else: ?>
-                                            <span class="badge bg-danger"><i class="fas fa-times me-1"></i>Reprovado</span>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td class="text-end pe-3">
-                                        <button class="btn btn-sm btn-primary" onclick="abrirModalPesagem(<?= htmlspecialchars(json_encode($ins)) ?>)">
-                                            <i class="fas fa-weight me-1"></i> Pesar
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-warning" title="Remanejar" onclick="abrirModalRemanejar(<?= $ins['id_inscricao'] ?>, '<?= addslashes($ins['nome_atleta_snapshot']) ?>')">
-                                            <i class="fas fa-exchange-alt"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- TAB 2: HISTÓRICO -->
-    <div class="tab-pane fade" id="tabHist">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0 datatable-responsive">
-                        <thead class="table-light text-uppercase fs-7 text-secondary">
-                            <tr>
-                                <th class="ps-3">#</th>
-                                <th>Data / Hora</th>
-                                <th>Atleta</th>
-                                <th>Categoria</th>
-                                <th>Tentativa</th>
-                                <th>Peso Aferido</th>
-                                <th>Resultado</th>
-                                <th>Operador</th>
-                                <th>Observações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($historicoPesagens as $idx => $p): ?>
-                                <tr>
-                                    <td class="ps-3 text-muted"><?= $idx + 1 ?></td>
-                                    <td class="small"><?= date('d/m/Y H:i', strtotime($p['created_at'])) ?></td>
-                                    <td><strong><?= htmlspecialchars($p['nome_atleta']) ?></strong></td>
-                                    <td><?= htmlspecialchars($p['categoria_nome']) ?></td>
-                                    <td><span class="badge bg-secondary"><?= $p['tentativa'] ?>ª</span></td>
-                                    <td class="fw-bold"><?= number_format($p['peso_aferido'], 2, ',', '.') ?> kg</td>
-                                    <td>
-                                        <?php if ($p['resultado'] === 'aprovado'): ?>
-                                            <span class="badge bg-success">Aprovado</span>
-                                        <?php else: ?>
-                                            <span class="badge bg-danger">Reprovado</span>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td><?= htmlspecialchars($p['operador_nome'] ?? 'Operador') ?></td>
-                                    <td class="small text-muted"><?= htmlspecialchars($p['observacoes'] ?? '-') ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Pesar -->
-<div class="modal fade" id="modalPesagem" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content border-0 shadow">
-            <form method="POST" action="../controllers/pesagemController.php">
-                <input type="hidden" name="tipo" value="registrar_pesagem">
-                <input type="hidden" name="id_campeonato" value="<?= $idCampeonato ?>">
-                <input type="hidden" name="id_inscricao" id="pesagemIdInscricao" value="">
-
-                <div class="modal-header bg-dark text-white">
-                    <h5 class="modal-title fs-6 fw-bold">
-                        <i class="fas fa-balance-scale text-danger me-2"></i>Aferição Oficial na Balança
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3 p-3 bg-light rounded border">
-                        <div class="fw-bold fs-5 text-dark" id="pesagemNomeAtleta"></div>
-                        <div class="text-muted small" id="pesagemDojoAtleta"></div>
-                        <div class="mt-2 text-primary fw-semibold" id="pesagemCategoriaNome"></div>
-                        <div class="small text-secondary mt-1" id="pesagemLimitesTexto"></div>
+<div class="card mb-4">
+    <div class="card-header py-3"><i class="fas fa-scale-balanced text-danger me-2"></i>Faltam pesar (<?= count($faltam) ?>)</div>
+    <?php if (empty($faltam)): ?>
+        <div class="empty"><i class="fas fa-circle-check text-success"></i>Todos os atletas já foram pesados.</div>
+    <?php else: ?>
+        <ul class="list-group list-group-flush">
+        <?php foreach ($faltam as $ins): ?>
+            <li class="list-group-item py-3">
+                <form method="POST" action="../controllers/pesagemController.php" class="row g-3 align-items-center form-pesagem"
+                      data-min="<?= (float)$ins['peso_min'] ?>" data-max="<?= $ins['peso_max'] ? (float)$ins['peso_max'] + (float)$ins['tolerancia_peso_kg'] : 0 ?>">
+                    <input type="hidden" name="tipo" value="registrar_pesagem">
+                    <input type="hidden" name="id_campeonato" value="<?= $idCampeonato ?>">
+                    <input type="hidden" name="id_inscricao" value="<?= $ins['id_inscricao'] ?>">
+                    <div class="col-md-5">
+                        <strong class="fs-5"><?= htmlspecialchars($ins['nome_atleta_snapshot']) ?></strong><br>
+                        <span class="text-muted"><?= htmlspecialchars($ins['categoria_nome']) ?> · <?= textoLimite($ins) ?></span>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="peso_aferido" class="form-label fw-bold">Peso Aferido na Balança (kg): <span class="text-danger">*</span></label>
+                    <div class="col-6 col-md-3">
                         <div class="input-group input-group-lg">
-                            <input type="number" step="0.05" min="15" max="250" class="form-control text-center fw-bold fs-3" id="peso_aferido" name="peso_aferido" required placeholder="0.00" autofocus>
-                            <span class="input-group-text fw-bold">KG</span>
+                            <input type="number" step="0.05" min="10" max="250" name="peso_aferido" class="form-control text-center fw-bold campo-peso" placeholder="0,0" required aria-label="Peso em kg">
+                            <span class="input-group-text">kg</span>
                         </div>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="obs" class="form-label small fw-bold">Observações da Balança:</label>
-                        <input type="text" class="form-control" id="obs" name="observacoes" placeholder="Ex: Pesado de calça de quimono...">
+                    <div class="col-6 col-md-2 text-center">
+                        <span class="resultado-peso fw-bold fs-5 text-muted">—</span>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success fw-bold px-4">Salvar Aferição</button>
-                </div>
-            </form>
-        </div>
-    </div>
+                    <div class="col-md-2 text-end">
+                        <button type="submit" class="btn btn-danger btn-lg w-100">Salvar</button>
+                    </div>
+                </form>
+            </li>
+        <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
 </div>
 
-<!-- Modal Remanejar Categoria -->
-<div class="modal fade" id="modalRemanejar" tabindex="-1" aria-hidden="true">
+<?php if (!empty($pesados)): ?>
+<div class="card">
+    <div class="card-header py-3">Já pesados (<?= count($pesados) ?>)</div>
+    <div class="table-responsive">
+        <table class="table align-middle mb-0">
+            <thead><tr><th>Atleta</th><th>Categoria</th><th>Resultado</th><th class="text-end"></th></tr></thead>
+            <tbody>
+            <?php foreach ($pesados as $ins): $ok = $ins['status_elegibilidade'] === 'aprovada'; ?>
+                <tr>
+                    <td><strong><?= htmlspecialchars($ins['nome_atleta_snapshot']) ?></strong></td>
+                    <td><?= htmlspecialchars($ins['categoria_nome']) ?></td>
+                    <td><span class="badge fs-6 <?= $ok ? 'bg-success' : 'bg-danger' ?>"><?= $ok ? 'NO PESO' : 'FORA DO PESO' ?></span></td>
+                    <td class="text-end">
+                        <?php if (!$ok): ?>
+                            <button type="button" class="btn btn-sm btn-outline-warning" onclick="trocarCategoria(<?= $ins['id_inscricao'] ?>, '<?= htmlspecialchars(addslashes($ins['nome_atleta_snapshot']), ENT_QUOTES) ?>')">
+                                <i class="fas fa-right-left"></i> Trocar de categoria
+                            </button>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<?php endif; ?>
+
+<!-- Trocar de categoria (atleta fora do peso) -->
+<div class="modal fade" id="modalTrocar" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content border-0 shadow">
+        <div class="modal-content">
             <form method="POST" action="../controllers/pesagemController.php">
                 <input type="hidden" name="tipo" value="remanejar_categoria">
                 <input type="hidden" name="id_campeonato" value="<?= $idCampeonato ?>">
-                <input type="hidden" name="id_inscricao" id="remanejarIdInscricao" value="">
-
-                <div class="modal-header bg-warning text-dark">
-                    <h5 class="modal-title fs-6 fw-bold">
-                        <i class="fas fa-exchange-alt me-2"></i>Remanejar Categoria por Incompatibilidade de Peso
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+                <input type="hidden" name="id_inscricao" id="trocarId">
+                <div class="modal-header"><h5 class="modal-title">Trocar de categoria</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
                 <div class="modal-body">
-                    <p class="mb-3">Atleta: <strong id="remanejarNomeAtleta" class="text-dark"></strong></p>
-                    <div class="mb-3">
-                        <label for="nova_cat" class="form-label fw-bold">Nova Categoria de Destino: <span class="text-danger">*</span></label>
-                        <select class="form-select" id="nova_cat" name="nova_categoria_id" required>
-                            <option value="">-- Selecione a Categoria --</option>
-                            <?php foreach ($categorias as $cat): ?>
-                                <option value="<?= $cat['id_categoria'] ?>">
-                                    [<?= strtoupper($cat['modalidade']) ?>] <?= htmlspecialchars($cat['nome']) ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="just" class="form-label fw-bold">Justificativa Oficial: <span class="text-danger">*</span></label>
-                        <textarea class="form-control" id="just" name="justificativa" rows="3" required placeholder="Motivo do remanejamento..."></textarea>
-                    </div>
+                    <p>Atleta: <strong id="trocarNome"></strong></p>
+                    <label class="form-label" for="trocarCat">Nova categoria</label>
+                    <select class="form-select mb-3" id="trocarCat" name="nova_categoria_id" required>
+                        <option value="">Escolha...</option>
+                        <?php foreach ($categorias as $cat): ?>
+                            <option value="<?= $cat['id_categoria'] ?>"><?= htmlspecialchars($cat['nome']) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <label class="form-label" for="trocarMotivo">Motivo</label>
+                    <input type="text" class="form-control" id="trocarMotivo" name="justificativa" value="Fora do peso na pesagem" required>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-warning fw-bold">Confirmar Remanejamento</button>
+                    <button type="submit" class="btn btn-danger">Trocar</button>
                 </div>
             </form>
         </div>
@@ -341,30 +134,24 @@ foreach ($inscricoes as $ins) {
 </div>
 
 <script>
-function abrirModalPesagem(ins) {
-    document.getElementById('pesagemIdInscricao').value = ins.id_inscricao;
-    document.getElementById('pesagemNomeAtleta').textContent = ins.nome_atleta_snapshot;
-    document.getElementById('pesagemDojoAtleta').textContent = ins.dojo_snapshot + ' (' + ins.graduacao_nome_snapshot + ')';
-    document.getElementById('pesagemCategoriaNome').textContent = 'Categoria: ' + ins.categoria_nome;
+document.querySelectorAll('.form-pesagem').forEach(function (form) {
+    var campo = form.querySelector('.campo-peso');
+    var saida = form.querySelector('.resultado-peso');
+    var min = parseFloat(form.dataset.min) || 0;
+    var max = parseFloat(form.dataset.max) || 0;
+    campo.addEventListener('input', function () {
+        var p = parseFloat(campo.value);
+        if (isNaN(p)) { saida.textContent = '—'; saida.className = 'resultado-peso fw-bold fs-5 text-muted'; return; }
+        var ok = p >= min && (max === 0 || p <= max);
+        saida.textContent = ok ? 'NO PESO' : 'FORA DO PESO';
+        saida.className = 'resultado-peso fw-bold fs-5 ' + (ok ? 'text-success' : 'text-danger');
+    });
+});
 
-    var limites = 'Limite: ';
-    if (ins.peso_min) limites += parseFloat(ins.peso_min).toFixed(1) + 'kg ';
-    if (ins.peso_max) limites += 'até ' + parseFloat(ins.peso_max).toFixed(1) + 'kg';
-    else limites += 'Livre';
-    if (ins.tolerancia_peso_kg > 0) limites += ' (Tolerância: +' + parseFloat(ins.tolerancia_peso_kg).toFixed(1) + 'kg)';
-
-    document.getElementById('pesagemLimitesTexto').textContent = limites;
-    document.getElementById('peso_aferido').value = ins.peso_declarado ? parseFloat(ins.peso_declarado).toFixed(2) : '';
-
-    var modal = new bootstrap.Modal(document.getElementById('modalPesagem'));
-    modal.show();
-}
-
-function abrirModalRemanejar(id, nome) {
-    document.getElementById('remanejarIdInscricao').value = id;
-    document.getElementById('remanejarNomeAtleta').textContent = nome;
-    var modal = new bootstrap.Modal(document.getElementById('modalRemanejar'));
-    modal.show();
+function trocarCategoria(id, nome) {
+    document.getElementById('trocarId').value = id;
+    document.getElementById('trocarNome').textContent = nome;
+    new bootstrap.Modal(document.getElementById('modalTrocar')).show();
 }
 </script>
 

@@ -1,657 +1,312 @@
 <?php
-$pageTitle = 'Súmula Digital de Kumite | Kenshydokan';
-include_once __DIR__ . "/menu.php";
+/**
+ * Placar da luta (Kumite) - tela cheia, sem menu, feita para o mesário.
+ */
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include_once __DIR__ . "/../models/lutaModel.php";
 include_once __DIR__ . "/../models/sumulaKumiteModel.php";
-include_once __DIR__ . "/../models/tatameModel.php";
-include_once __DIR__ . "/../models/campeonatoModel.php";
+include_once __DIR__ . "/../models/categoriaModel.php";
 
 $idLuta = (int)($_GET['id'] ?? 0);
-$lutaModel = new Luta();
-$sumulaModel = new SumulaKumite();
-$tatameModel = new Tatame();
-$campeonatoModel = new Campeonato();
-
-$luta = $lutaModel->buscarPorId($idLuta);
-
+$luta = (new Luta())->buscarPorId($idLuta);
 if (!$luta) {
-    echo "<div class='alert alert-danger'>Combate #{$idLuta} não encontrado.</div>";
-    include_once __DIR__ . "/rodape.php";
+    echo "Luta não encontrada. <a href='inicio.php'>Voltar</a>";
     exit;
 }
+$_SESSION['camp_atual'] = (int)$luta['id_campeonato'];
 
-$campeonato = $campeonatoModel->buscarPorId((int)$luta['id_campeonato']);
+$sumulaModel = new SumulaKumite();
 $sumula = $sumulaModel->buscarPorLuta($idLuta);
-
 if (!$sumula) {
     $idSumula = $sumulaModel->criarSumula($idLuta, (int)$luta['id_campeonato']);
     $sumula = $sumulaModel->buscarPorId($idSumula);
 }
-
-$eventos = $sumulaModel->buscarEventos($idLuta);
-$tatame = !empty($luta['id_tatame']) ? $tatameModel->buscarPorId((int)$luta['id_tatame']) : null;
+$categoria = (new Categoria())->buscarPorId((int)$luta['id_categoria']);
+$duracao = (int)($categoria['duracao_luta_segundos'] ?? 180) ?: 180;
+$terminada = $luta['status'] === 'concluida';
+$voltar = "ver_chave.php?id=" . (int)$luta['id_categoria'];
 ?>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Placar - Luta <?= (int)$luta['numero_luta'] ?> | Kenshydokan</title>
+    <link rel="icon" href="../img/wkka.jpg" type="image/jpg">
+    <link rel="stylesheet" href="../libs/fontawesome-free-6.5.2-web/css/all.min.css">
+    <link rel="stylesheet" href="../libs/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="../css/custom.css?v=3">
+    <style>
+        body { margin: 0; background: #111; font-family: 'Montserrat', 'Roboto', sans-serif; overflow: hidden; }
+        .placar { display: grid; grid-template-columns: 1fr 1fr; height: calc(100vh - 64px); }
+        .lado { display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 24px 16px; text-align: center; }
+        .lado.aka { background: #c81e28; color: #fff; }
+        .lado.shiro { background: #f4f4f4; color: #111; }
+        .lado .cor { font-size: 1.1rem; font-weight: 700; letter-spacing: .15em; opacity: .85; }
+        .lado .nome { font-size: clamp(1.4rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.1; }
+        .lado .dojo { opacity: .8; }
+        .lado .pontos { font-size: clamp(6rem, 18vw, 14rem); font-weight: 900; line-height: 1; }
+        .lado .marcas { font-size: 1.05rem; min-height: 1.6em; }
+        .botoes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 520px; }
+        .botoes .btn { min-height: 72px; font-size: 1.35rem; font-weight: 800; border-radius: 14px; }
+        .aka .btn-ponto { background: #fff; color: #c81e28; border: 0; }
+        .shiro .btn-ponto { background: #111; color: #fff; border: 0; }
+        .btn-penal { grid-column: span 2; min-height: 56px !important; font-size: 1.1rem !important; }
+        .aka .btn-penal { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.7); }
+        .shiro .btn-penal { background: transparent; color: #111; border: 2px solid #111; }
+        .relogio { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -60%); background: #111; color: #fff;
+                   border-radius: 24px; padding: 16px 28px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,.5); z-index: 5; }
+        .relogio .tempo { font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; font-variant-numeric: tabular-nums; line-height: 1; }
+        .relogio .tempo.acabou { color: #ffcc00; }
+        .relogio .btn { min-width: 180px; min-height: 60px; font-size: 1.3rem; font-weight: 800; margin-top: 10px; }
+        .relogio .golden { color: #ffcc00; font-weight: 800; display: none; }
+        .barra { height: 64px; background: #1b1b1b; color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; gap: 8px; }
+        .barra .btn { min-height: 46px; font-weight: 700; }
+        .opcoes-penal .btn { min-height: 64px; font-size: 1.2rem; font-weight: 700; text-align: left; }
+        .vencer .btn { min-height: 90px; font-size: 1.5rem; font-weight: 800; }
+        @media (max-width: 768px) { .relogio { top: auto; bottom: 74px; transform: translateX(-50%); } }
+    </style>
+</head>
+<body>
 
-<div class="row mb-3 align-items-center">
-    <div class="col-md-7">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-1 small">
-                <li class="breadcrumb-item"><a href="campeonatos.php" class="text-decoration-none">Campeonatos</a></li>
-                <li class="breadcrumb-item"><a href="detalhes_campeonato.php?id=<?= $luta['id_campeonato'] ?>" class="text-decoration-none"><?= htmlspecialchars($campeonato['titulo'] ?? '') ?></a></li>
-                <?php if ($tatame): ?>
-                    <li class="breadcrumb-item"><a href="painel_tatame.php?id=<?= $tatame['id_tatame'] ?>" class="text-decoration-none"><?= htmlspecialchars($tatame['nome']) ?></a></li>
-                <?php endif; ?>
-                <li class="breadcrumb-item active" aria-current="page">Súmula #<?= $luta['numero_luta'] ?></li>
-            </ol>
-        </nav>
-        <h2 class="h4 fw-bold mb-0 text-dark">
-            <i class="fas fa-stopwatch text-danger me-2"></i>Súmula Digital Oficial: Combate #<?= $luta['numero_luta'] ?>
-        </h2>
-        <span class="badge bg-dark mt-1"><?= htmlspecialchars($luta['categoria_nome'] ?? 'Categoria') ?></span>
-        <span class="badge bg-secondary mt-1">Rodada <?= $luta['rodada'] ?></span>
-        <?php if ($luta['status'] === 'concluida'): ?>
-            <span class="badge bg-success mt-1">CONCLUÍDA</span>
-        <?php else: ?>
-            <span class="badge bg-danger mt-1">AO VIVO</span>
-        <?php endif; ?>
-    </div>
-    <div class="col-md-5 text-md-end mt-3 mt-md-0 d-flex gap-2 justify-content-md-end">
-        <?php if ($tatame): ?>
-            <a href="telao.php?id=<?= $tatame['id_tatame'] ?>" target="_blank" class="btn btn-outline-danger btn-sm">
-                <i class="fas fa-tv me-1"></i> Abrir Telão
-            </a>
-            <a href="painel_tatame.php?id=<?= $tatame['id_tatame'] ?>" class="btn btn-outline-secondary btn-sm">
-                <i class="fas fa-arrow-left me-1"></i> Mesa Tatame
-            </a>
-        <?php endif; ?>
-        <button type="button" class="btn btn-danger btn-sm fw-bold" data-bs-toggle="modal" data-bs-target="#modalFinalizar">
-            <i class="fas fa-flag-checkered me-1"></i> Encerrar Combate
-        </button>
+<div class="placar">
+    <?php foreach (['aka' => 'VERMELHO', 'shiro' => 'BRANCO'] as $lado => $cor): ?>
+    <section class="lado <?= $lado ?>">
+        <div>
+            <div class="cor"><?= $cor ?></div>
+            <div class="nome"><?= htmlspecialchars($luta["nome_$lado"] ?? '—') ?></div>
+            <div class="dojo"><?= htmlspecialchars($luta["dojo_$lado"] ?? '') ?></div>
+        </div>
+        <div>
+            <div class="pontos" id="pontos-<?= $lado ?>">0</div>
+            <div class="marcas" id="marcas-<?= $lado ?>"></div>
+        </div>
+        <div class="botoes">
+            <button type="button" class="btn btn-ponto" onclick="enviar('wazaari','<?= $lado ?>')" id="btn-wazaari-<?= $lado ?>">+ Waza-ari</button>
+            <button type="button" class="btn btn-ponto" onclick="enviar('ippon','<?= $lado ?>')" id="btn-ippon-<?= $lado ?>">+ Ippon</button>
+            <button type="button" class="btn btn-penal" onclick="abrirPenalidade('<?= $lado ?>')" id="btn-penal-<?= $lado ?>"><i class="fas fa-triangle-exclamation"></i> Penalidade</button>
+        </div>
+    </section>
+    <?php endforeach; ?>
+</div>
+
+<div class="relogio">
+    <div class="golden" id="golden">PONTO DE OURO</div>
+    <div class="tempo" id="tempo">0:00</div>
+    <button type="button" class="btn btn-success" id="btnRelogio" onclick="alternarRelogio()"><i class="fas fa-play"></i> Iniciar</button>
+</div>
+
+<div class="barra">
+    <a href="<?= $voltar ?>" class="btn btn-outline-light" id="btnSair"><i class="fas fa-arrow-left"></i> Sair</a>
+    <span class="d-none d-md-inline"><?= htmlspecialchars($luta['categoria_nome'] ?? '') ?> · Luta <?= (int)$luta['numero_luta'] ?></span>
+    <div class="d-flex gap-2">
+        <button type="button" class="btn btn-outline-light" id="btnDesfazer" onclick="desfazer()" disabled><i class="fas fa-rotate-left"></i> Desfazer último</button>
+        <button type="button" class="btn btn-warning" id="btnTerminar" onclick="perguntarVencedor()"><i class="fas fa-flag-checkered"></i> Terminar luta</button>
     </div>
 </div>
 
-<!-- Alerta de Vitória Imediata (Waza-ari Awasete Ippon ou Golden Score) -->
-<div id="alertaVitoria" class="alert alert-success d-none shadow-sm border-2 fw-bold text-center fs-5 mb-3">
-    <i class="fas fa-trophy text-warning me-2"></i> <span id="textoVitoria"></span>
-</div>
-
-<!-- CRONÔMETROS (Combate Regulamentar e Ne Waza) -->
-<div class="row g-3 mb-4">
-    <!-- Cronômetro Geral (3:00 min) -->
-    <div class="col-lg-7">
-        <div class="card border-0 shadow-lg bg-dark text-white text-center py-4 rounded-4" style="background: radial-gradient(circle at 50% 0%, #1e293b 0%, #090d16 100%) !important; border: 2px solid rgba(255,255,255,0.08) !important;">
-            <div class="d-flex justify-content-between px-4 align-items-center mb-2">
-                <span class="text-white-50 text-uppercase fw-bold" style="font-size: 0.75rem; letter-spacing: 0.1em;">
-                    <i class="fas fa-clock text-warning me-1"></i> TEMPO REGULAMENTAR (3 MINUTOS)
-                </span>
-                <span id="badgeFase" class="badge bg-danger px-3 py-1">TEMPO REGULAMENTAR</span>
-            </div>
-            
-            <div id="displayTempo" class="digital-glow-timer py-2">
-                03:00
-            </div>
-
-            <div class="d-flex justify-content-center gap-2 mt-3 flex-wrap">
-                <button type="button" id="btnPlayPause" class="btn btn-success btn-lg px-4 shadow">
-                    <i class="fas fa-play me-1"></i> INICIAR
-                </button>
-                <button type="button" id="btnResetTempo" class="btn btn-secondary btn-lg" title="Reiniciar Cronômetro">
-                    <i class="fas fa-undo"></i>
-                </button>
-                <button type="button" id="btnMais10s" class="btn btn-secondary btn-sm" title="+10 segundos">+10s</button>
-                <button type="button" id="btnMenos10s" class="btn btn-secondary btn-sm" title="-10 segundos">-10s</button>
-                <button type="button" id="btnGoldenScore" class="btn btn-warning btn-sm fw-bold">
-                    <i class="fas fa-star me-1"></i> Golden Score (1 min)
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cronômetro Ne Waza (Solo - Máx 60s) -->
-    <div class="col-lg-5">
-        <div class="card border-0 shadow-lg bg-dark text-white text-center py-4 rounded-4" style="background: radial-gradient(circle at 50% 0%, #162436 0%, #090d16 100%) !important; border: 2px solid rgba(56, 189, 248, 0.3) !important;">
-            <div class="d-flex justify-content-between px-4 align-items-center mb-2">
-                <span class="text-info text-uppercase fw-bold" style="font-size: 0.75rem; letter-spacing: 0.1em;">
-                    <i class="fas fa-arrows-alt-v me-1"></i> NE WAZA (SOLO - MÁX 60s)
-                </span>
-                <span id="badgeNeWaza" class="badge bg-secondary px-3 py-1">PARADO</span>
-            </div>
-            
-            <div id="displayNeWaza" class="display-3 fw-bold font-monospace text-info py-2" style="text-shadow: 0 0 25px rgba(56, 189, 248, 0.6); font-family: 'Montserrat', monospace;">
-                00:00
-            </div>
-
-            <div class="d-flex justify-content-center gap-2 mt-3">
-                <button type="button" id="btnNeWazaToggle" class="btn btn-info btn-sm px-4 fw-bold text-dark shadow">
-                    <i class="fas fa-play me-1"></i> Iniciar Solo
-                </button>
-                <button type="button" id="btnNeWazaReset" class="btn btn-secondary btn-sm">
-                    <i class="fas fa-undo"></i> Reset Solo
-                </button>
-            </div>
-            <small class="text-white-50 mt-2 d-block" style="font-size: 0.75rem;">Ao atingir 60s, a luta deve ser reiniciada em pé pelo árbitro.</small>
-        </div>
-    </div>
-</div>
-
-<!-- PLACAR OFICIAL (AKA x SHIRO) -->
-<div class="row g-4 mb-4">
-    <!-- CANTO VERMELHO (AKA) -->
-    <div class="col-md-6">
-        <div class="card border-0 shadow-lg corner-card-aka h-100">
-            <div class="card-header bg-danger text-white py-3 d-flex justify-content-between align-items-center border-0">
-                <span class="fw-bold tracking-wider fs-7 text-uppercase"><i class="fas fa-circle me-1"></i> CANTO VERMELHO (AKA)</span>
-                <span class="badge bg-black bg-opacity-35 px-3 py-1 fs-7">ATLETA 1</span>
-            </div>
-            <div class="card-body p-4 text-center">
-                <h3 class="fw-bold text-white mb-0"><?= htmlspecialchars($luta['nome_aka'] ?? 'ATLETA AKA') ?></h3>
-                <span class="badge bg-white bg-opacity-10 text-white-50 border border-white border-opacity-10 px-3 py-1 mt-1 mb-3">
-                    <?= htmlspecialchars($luta['dojo_aka'] ?? 'Dojo') ?>
-                </span>
-
-                <!-- PONTUAÇÃO TOTAL AKA -->
-                <div class="p-3 rounded-4 mb-4" style="background: rgba(220, 38, 38, 0.15); border: 2px solid rgba(220, 38, 38, 0.4);">
-                    <div class="small text-danger fw-bold text-uppercase tracking-wider">Pontuação Total</div>
-                    <div id="pontosAka" class="digital-score-aka py-1">
-                        <?= number_format((float)$sumula['pontos_aka'], 1) ?>
-                    </div>
-                    <small class="text-white-50">6 Waza-ari (3.0 pts) = Vitória por Ippon</small>
-                </div>
-
-                <!-- BOTÕES DE GOLPES (PONTOS) -->
-                <div class="row g-2 mb-3">
-                    <div class="col-6">
-                        <button type="button" class="btn btn-danger w-100 py-3 fw-bold btn-acao" data-tipo="wazaari" data-lado="aka">
-                            <i class="fas fa-plus-circle me-1"></i> WAZA-ARI (+0.5)
-                        </button>
-                        <div class="small text-muted mt-1">Total: <strong id="qtdWazaariAka"><?= $sumula['wazaari_aka'] ?></strong></div>
-                    </div>
-                    <div class="col-6">
-                        <button type="button" class="btn btn-dark w-100 py-3 fw-bold btn-acao" data-tipo="ippon" data-lado="aka">
-                            <i class="fas fa-star me-1"></i> IPPON (+1.0)
-                        </button>
-                        <div class="small text-muted mt-1">Total: <strong id="qtdIpponAka"><?= $sumula['ippon_aka'] ?></strong></div>
-                    </div>
-                </div>
-
-                <hr class="my-3">
-
-                <!-- PENALIDADES AKA -->
-                <h6 class="text-muted fw-bold small text-uppercase mb-3 text-start">
-                    <i class="fas fa-exclamation-triangle text-warning me-1"></i> Penalidades Oficiais
-                </h6>
-                <div class="row g-2">
-                    <div class="col-4">
-                        <button type="button" class="btn btn-outline-warning w-100 btn-sm fw-bold btn-acao" data-tipo="shido" data-lado="aka">
-                            + SHIDO
-                        </button>
-                        <small class="d-block text-muted mt-1">Shido: <strong id="qtdShidoAka"><?= $sumula['shido_aka'] ?></strong></small>
-                    </div>
-                    <div class="col-4">
-                        <button type="button" class="btn btn-outline-warning w-100 btn-sm fw-bold btn-acao" data-tipo="chui" data-lado="aka" title="2º Chui dá 0.5 pt ao adversário">
-                            + CHUI
-                        </button>
-                        <small class="d-block text-muted mt-1">Chui: <strong id="qtdChuiAka"><?= $sumula['chui_aka'] ?></strong></small>
-                    </div>
-                    <div class="col-4">
-                        <button type="button" class="btn btn-outline-secondary w-100 btn-sm fw-bold btn-acao" data-tipo="saida" data-lado="aka" title="2ª saída dá 0.5 pt ao adversário">
-                            + JOGAI
-                        </button>
-                        <small class="d-block text-muted mt-1">Saídas: <strong id="qtdSaidasAka"><?= $sumula['saidas_aka'] ?></strong></small>
-                    </div>
-                    <div class="col-12 mt-2">
-                        <button type="button" class="btn btn-outline-danger btn-sm w-100 fw-bold btn-acao" data-tipo="hansoku_make" data-lado="aka" onclick="return confirm('Confirma HANSOKU-MAKE (desclassificação direta) para AKA?');">
-                            <i class="fas fa-ban me-1"></i> HANSOKU-MAKE (DESCLASSIFICAÇÃO)
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CANTO BRANCO (SHIRO) -->
-    <div class="col-md-6">
-        <div class="card border-0 shadow-lg corner-card-shiro h-100">
-            <div class="card-header bg-secondary text-white py-3 d-flex justify-content-between align-items-center border-0" style="background: #334155 !important;">
-                <span class="fw-bold tracking-wider fs-7 text-uppercase"><i class="far fa-circle me-1"></i> CANTO BRANCO (SHIRO)</span>
-                <span class="badge bg-black bg-opacity-35 px-3 py-1 fs-7">ATLETA 2</span>
-            </div>
-            <div class="card-body p-4 text-center">
-                <h3 class="fw-bold text-white mb-0"><?= htmlspecialchars($luta['nome_shiro'] ?? 'ATLETA SHIRO') ?></h3>
-                <span class="badge bg-white bg-opacity-10 text-white-50 border border-white border-opacity-10 px-3 py-1 mt-1 mb-3">
-                    <?= htmlspecialchars($luta['dojo_shiro'] ?? 'Dojo') ?>
-                </span>
-
-                <!-- PONTUAÇÃO TOTAL SHIRO -->
-                <div class="p-3 rounded-4 mb-4" style="background: rgba(148, 163, 184, 0.15); border: 2px solid rgba(203, 213, 225, 0.4);">
-                    <div class="small text-secondary fw-bold text-uppercase tracking-wider">Pontuação Total</div>
-                    <div id="pontosShiro" class="digital-score-shiro py-1">
-                        <?= number_format((float)$sumula['pontos_shiro'], 1) ?>
-                    </div>
-                    <small class="text-white-50">6 Waza-ari (3.0 pts) = Vitória por Ippon</small>
-                </div>
-
-                <!-- BOTÕES DE GOLPES (PONTOS) -->
-                <div class="row g-2 mb-3">
-                    <div class="col-6">
-                        <button type="button" class="btn btn-secondary w-100 py-3 fw-bold btn-acao" data-tipo="wazaari" data-lado="shiro">
-                            <i class="fas fa-plus-circle me-1"></i> WAZA-ARI (+0.5)
-                        </button>
-                        <div class="small text-muted mt-1">Total: <strong id="qtdWazaariShiro"><?= $sumula['wazaari_shiro'] ?></strong></div>
-                    </div>
-                    <div class="col-6">
-                        <button type="button" class="btn btn-dark w-100 py-3 fw-bold btn-acao" data-tipo="ippon" data-lado="shiro">
-                            <i class="fas fa-star me-1"></i> IPPON (+1.0)
-                        </button>
-                        <div class="small text-muted mt-1">Total: <strong id="qtdIpponShiro"><?= $sumula['ippon_shiro'] ?></strong></div>
-                    </div>
-                </div>
-
-                <hr class="my-3">
-
-                <!-- PENALIDADES SHIRO -->
-                <h6 class="text-muted fw-bold small text-uppercase mb-3 text-start">
-                    <i class="fas fa-exclamation-triangle text-warning me-1"></i> Penalidades Oficiais
-                </h6>
-                <div class="row g-2">
-                    <div class="col-4">
-                        <button type="button" class="btn btn-outline-warning w-100 btn-sm fw-bold btn-acao" data-tipo="shido" data-lado="shiro">
-                            + SHIDO
-                        </button>
-                        <small class="d-block text-muted mt-1">Shido: <strong id="qtdShidoShiro"><?= $sumula['shido_shiro'] ?></strong></small>
-                    </div>
-                    <div class="col-4">
-                        <button type="button" class="btn btn-outline-warning w-100 btn-sm fw-bold btn-acao" data-tipo="chui" data-lado="shiro" title="2º Chui dá 0.5 pt ao adversário">
-                            + CHUI
-                        </button>
-                        <small class="d-block text-muted mt-1">Chui: <strong id="qtdChuiShiro"><?= $sumula['chui_shiro'] ?></strong></small>
-                    </div>
-                    <div class="col-4">
-                        <button type="button" class="btn btn-outline-secondary w-100 btn-sm fw-bold btn-acao" data-tipo="saida" data-lado="shiro" title="2ª saída dá 0.5 pt ao adversário">
-                            + JOGAI
-                        </button>
-                        <small class="d-block text-muted mt-1">Saídas: <strong id="qtdSaidasShiro"><?= $sumula['saidas_shiro'] ?></strong></small>
-                    </div>
-                    <div class="col-12 mt-2">
-                        <button type="button" class="btn btn-outline-danger btn-sm w-100 fw-bold btn-acao" data-tipo="hansoku_make" data-lado="shiro" onclick="return confirm('Confirma HANSOKU-MAKE (desclassificação direta) para SHIRO?');">
-                            <i class="fas fa-ban me-1"></i> HANSOKU-MAKE (DESCLASSIFICAÇÃO)
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- HISTÓRICO DE EVENTOS EM TEMPO REAL -->
-<div class="card border-0 shadow-sm mb-4">
-    <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
-        <h5 class="card-title mb-0 fs-6 fw-bold text-dark">
-            <i class="fas fa-list-alt text-primary me-2"></i>Histórico Oficial do Combate (Súmula de Mesa)
-        </h5>
-        <span class="badge bg-light text-dark border">
-            Atalhos: [Espaço] Cronômetro | [N] Ne Waza | [A] +Waza-ari Aka | [S] +Waza-ari Shiro
-        </span>
-    </div>
-    <div class="card-body p-0">
-        <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
-            <table class="table table-hover align-middle mb-0 font-monospace small">
-                <thead class="table-light">
-                    <tr>
-                        <th style="width: 90px;">Tempo</th>
-                        <th style="width: 100px;">Lado</th>
-                        <th style="width: 120px;">Tipo</th>
-                        <th>Descrição do Lance</th>
-                        <th style="width: 80px;" class="text-end">Pts</th>
-                    </tr>
-                </thead>
-                <tbody id="listaEventos">
-                    <?php if (empty($eventos)): ?>
-                        <tr id="linhaVazia"><td colspan="5" class="text-center py-3 text-muted font-sans-serif">Nenhum evento registrado ainda. Inicie o combate.</td></tr>
-                    <?php else: ?>
-                        <?php foreach (array_reverse($eventos) as $ev): ?>
-                            <tr>
-                                <td><?= sprintf('%02d:%02d', floor($ev['segundo_luta'] / 60), $ev['segundo_luta'] % 60) ?></td>
-                                <td>
-                                    <?php if ($ev['lado'] === 'aka'): ?>
-                                        <span class="badge bg-danger">AKA</span>
-                                    <?php elseif ($ev['lado'] === 'shiro'): ?>
-                                        <span class="badge bg-secondary">SHIRO</span>
-                                    <?php else: ?>
-                                        <span class="badge bg-dark">MESA</span>
-                                    <?php endif; ?>
-                                </td>
-                                <td><span class="text-uppercase"><?= htmlspecialchars($ev['tipo_evento']) ?></span></td>
-                                <td class="font-sans-serif"><?= htmlspecialchars($ev['descricao']) ?></td>
-                                <td class="text-end fw-bold"><?= $ev['pontos_atribuidos'] > 0 ? '+' . number_format($ev['pontos_atribuidos'], 1) : '-' ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<!-- MODAL PARA ENCERRAMENTO OFICIAL / DECISÃO DE ÁRBITROS (HANTEI) -->
-<div class="modal fade" id="modalFinalizar" tabindex="-1" aria-labelledby="modalFinalizarLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<!-- Penalidades -->
+<div class="modal fade" id="modalPenal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="../controllers/sumulaKumiteController.php" method="POST">
+            <div class="modal-header"><h5 class="modal-title">Penalidade para <span id="penalLado"></span></h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+            <div class="modal-body d-grid gap-2 opcoes-penal">
+                <button type="button" class="btn btn-outline-dark" onclick="penalidade('shido')"><strong>Shido</strong> — aviso leve</button>
+                <button type="button" class="btn btn-outline-warning text-dark" onclick="penalidade('chui')"><strong>Chui</strong> — aviso (2 avisos = ponto para o outro)</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="penalidade('saida')"><strong>Saiu da área</strong> (2 saídas = ponto para o outro)</button>
+                <button type="button" class="btn btn-outline-danger" onclick="if(confirm('Desclassificar este atleta?')) penalidade('hansoku_make')"><strong>Desclassificar</strong></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quem venceu? -->
+<div class="modal fade" id="modalVencedor" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <form method="POST" action="../controllers/sumulaKumiteController.php">
                 <input type="hidden" name="tipo" value="finalizar_luta">
                 <input type="hidden" name="id_luta" value="<?= $idLuta ?>">
-
-                <div class="modal-header bg-dark text-white">
-                    <h5 class="modal-title fs-6 fw-bold" id="modalFinalizarLabel">
-                        <i class="fas fa-gavel text-warning me-2"></i>Decisão Final e Encerramento de Combate
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div class="mb-3">
-                        <label class="form-label fw-bold small text-muted">Vencedor Oficial</label>
-                        <select name="vencedor_lado" class="form-select form-select-lg fw-bold" required>
-                            <option value="aka" class="text-danger">CANTO VERMELHO (AKA) - <?= htmlspecialchars($luta['nome_aka'] ?? 'AKA') ?></option>
-                            <option value="shiro" class="text-secondary">CANTO BRANCO (SHIRO) - <?= htmlspecialchars($luta['nome_shiro'] ?? 'SHIRO') ?></option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-bold small text-muted">Forma da Vitória</label>
-                        <select name="forma_vitoria" class="form-select" required>
-                            <option value="pontos">Vitória por Pontos (Decisão Regulamentar)</option>
-                            <option value="ippon">Ippon Direto</option>
-                            <option value="wazaari_awasete_ippon">Waza-ari Awasete Ippon (Acúmulo de Waza-ari)</option>
-                            <option value="golden_score">Golden Score (Ponto de Ouro na Prorrogação)</option>
-                            <option value="hantei">Hantei (Decisão dos Árbitros - Empate Técnico)</option>
-                            <option value="desclassificacao">Hansoku-make (Desclassificação do Oponente)</option>
-                            <option value="desistencia">Kiken-gachi (Desistência/Abandono)</option>
-                        </select>
-                    </div>
-
-                    <div class="p-3 bg-light rounded border mb-3 small">
-                        <strong>Critérios Oficiais Kenshydokan para Hantei:</strong>
-                        <ol class="mb-0 ps-3 mt-1 text-muted">
-                            <li>Iniciativa de ataque e combatividade</li>
-                            <li>Eficácia dos golpes e controle técnico</li>
-                            <li>Defesa e postura marcial</li>
-                            <li>Tameshiwari (se houver empate absoluto comprovado)</li>
-                        </ol>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-bold small text-muted">Observações da Mesa Arbitral</label>
-                        <textarea name="motivo" class="form-control" rows="2" placeholder="Decisão unânime dos árbitros centrais e laterais..."></textarea>
+                <input type="hidden" name="forma_vitoria" id="formaVitoria" value="pontos">
+                <div class="modal-header"><h5 class="modal-title fs-3" id="tituloVencedor">Quem venceu?</h5></div>
+                <div class="modal-body">
+                    <p class="text-muted" id="textoVencedor">Escolha o vencedor. Se a luta empatou, é a decisão dos árbitros.</p>
+                    <div class="row g-3 vencer">
+                        <div class="col-6"><button type="submit" name="vencedor_lado" value="aka" class="btn btn-danger w-100" id="venceAka"><?= htmlspecialchars($luta['nome_aka'] ?? 'Vermelho') ?></button></div>
+                        <div class="col-6"><button type="submit" name="vencedor_lado" value="shiro" class="btn btn-light border border-dark w-100" id="venceShiro"><?= htmlspecialchars($luta['nome_shiro'] ?? 'Branco') ?></button></div>
                     </div>
                 </div>
-                <div class="modal-footer bg-light">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger fw-bold">Confirmar e Gravar Resultado</button>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-warning" id="btnGolden" onclick="iniciarGolden()">Empate: Ponto de ouro</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnVoltarPlacar">Voltar ao placar</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
+<!-- Luta terminada automaticamente -->
+<div class="modal fade" id="modalFim" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center p-4">
+            <div class="fs-1">🏆</div>
+            <h2 class="h3" id="fimTitulo">Luta terminada</h2>
+            <p class="text-muted" id="fimMotivo"></p>
+            <a href="<?= $voltar ?>" class="btn btn-danger btn-lg">Ver próximas lutas</a>
+        </div>
+    </div>
+</div>
+
+<script src="../libs/bootstrap/jquery.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// Motor de Cronômetro e AJAX da Súmula Kenshydokan
-const idLuta = <?= $idLuta ?>;
-let tempoTotalSegundos = 180; // 3 minutos
-let tempoDecorrido = <?= (int)$sumula['tempo_decorrido_segundos'] ?>;
-let cronometroAtivo = false;
-let intervaloCronometro = null;
+var ID_LUTA = <?= $idLuta ?>;
+var DURACAO = <?= $duracao ?>;
+var NOMES = { aka: <?= json_encode($luta['nome_aka'] ?? 'Vermelho') ?>, shiro: <?= json_encode($luta['nome_shiro'] ?? 'Branco') ?> };
+var sumula = <?= json_encode($sumula) ?>;
+var terminada = <?= $terminada ? 'true' : 'false' ?>;
 
-// Cronômetro Ne Waza (Solo)
-let neWazaSegundos = 0;
-let neWazaAtivo = false;
-let intervaloNeWaza = null;
+var segundos = parseInt(sumula.tempo_decorrido_segundos || 0, 10);
+var golden = parseInt(sumula.golden_score_ativo || 0, 10) === 1;
+var rodando = false, timer = null;
+var historico = []; // toques que podem ser desfeitos
+var ladoPenal = 'aka';
 
-// Sintetizador de Áudio (Buzzer de Mesa)
-function tocarBuzzer(duracaoMs = 800, freq = 440) {
-    try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        setTimeout(() => {
-            osc.stop();
-            audioCtx.close();
-        }, duracaoMs);
-    } catch(e) {}
-}
+function fmt(s) { s = Math.max(0, s); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
 
-function formatarTempo(segundos) {
-    const min = Math.floor(segundos / 60);
-    const seg = segundos % 60;
-    return (min < 10 ? '0' : '') + min + ':' + (seg < 10 ? '0' : '') + seg;
-}
-
-function atualizarDisplayTempo() {
-    let restante = Math.max(0, tempoTotalSegundos - tempoDecorrido);
-    document.getElementById('displayTempo').innerText = formatarTempo(restante);
-    if (restante <= 10 && restante > 0) {
-        document.getElementById('displayTempo').classList.remove('text-warning');
-        document.getElementById('displayTempo').classList.add('text-danger');
-    }
-}
-
-// Iniciar / Pausar Cronômetro Geral
-document.getElementById('btnPlayPause').addEventListener('click', function() {
-    if (cronometroAtivo) {
-        clearInterval(intervaloCronometro);
-        cronometroAtivo = false;
-        this.innerHTML = '<i class="fas fa-play me-1"></i> CONTINUAR';
-        this.classList.remove('btn-warning');
-        this.classList.add('btn-success');
+function desenharRelogio() {
+    var el = document.getElementById('tempo');
+    if (golden) {
+        el.textContent = fmt(segundos - DURACAO);
+        el.classList.remove('acabou');
     } else {
-        cronometroAtivo = true;
-        this.innerHTML = '<i class="fas fa-pause me-1"></i> PAUSAR';
-        this.classList.remove('btn-success');
-        this.classList.add('btn-warning');
+        var resta = DURACAO - segundos;
+        el.textContent = fmt(resta);
+        el.classList.toggle('acabou', resta <= 0);
+    }
+    document.getElementById('golden').style.display = golden ? 'block' : 'none';
+}
 
-        intervaloCronometro = setInterval(function() {
-            tempoDecorrido++;
-            atualizarDisplayTempo();
+function desenharPlacar() {
+    ['aka', 'shiro'].forEach(function (l) {
+        var p = parseFloat(sumula['pontos_' + l] || 0);
+        document.getElementById('pontos-' + l).textContent = (p % 1 === 0) ? p.toFixed(0) : p.toFixed(1).replace('.', ',');
+        var m = [];
+        if (+sumula['wazaari_' + l]) m.push(sumula['wazaari_' + l] + ' waza-ari');
+        if (+sumula['ippon_' + l]) m.push('IPPON');
+        if (+sumula['shido_' + l]) m.push(sumula['shido_' + l] + ' shido');
+        if (+sumula['chui_' + l]) m.push(sumula['chui_' + l] + ' chui');
+        if (+sumula['saidas_' + l]) m.push(sumula['saidas_' + l] + ' saída(s)');
+        if (+sumula['hansoku_make_' + l]) m.push('DESCLASSIFICADO');
+        document.getElementById('marcas-' + l).textContent = m.join(' · ');
+    });
+    document.getElementById('btnDesfazer').disabled = historico.length === 0 || terminada;
+}
 
-            if (tempoDecorrido >= tempoTotalSegundos) {
-                clearInterval(intervaloCronometro);
-                cronometroAtivo = false;
-                document.getElementById('btnPlayPause').innerHTML = '<i class="fas fa-check me-1"></i> TEMPO ESGOTADO';
-                tocarBuzzer(1500, 300); // Apito longo de término
-                alertify.warning('TEMPO REGULAMENTAR ESGOTADO!');
+function alternarRelogio() {
+    if (terminada) return;
+    rodando = !rodando;
+    var b = document.getElementById('btnRelogio');
+    if (rodando) {
+        b.className = 'btn btn-warning';
+        b.innerHTML = '<i class="fas fa-pause"></i> Pausar';
+        timer = setInterval(function () {
+            segundos++;
+            desenharRelogio();
+            if (segundos % 10 === 0) enviar('tempo', 'geral', true);
+            if (!golden && segundos >= DURACAO) {
+                pararRelogio();
+                perguntarVencedor('Acabou o tempo!');
             }
         }, 1000);
-    }
-});
-
-// Reset Cronômetro Geral
-document.getElementById('btnResetTempo').addEventListener('click', function() {
-    clearInterval(intervaloCronometro);
-    cronometroAtivo = false;
-    tempoDecorrido = 0;
-    document.getElementById('btnPlayPause').innerHTML = '<i class="fas fa-play me-1"></i> INICIAR';
-    document.getElementById('btnPlayPause').classList.remove('btn-warning');
-    document.getElementById('btnPlayPause').classList.add('btn-success');
-    document.getElementById('displayTempo').classList.remove('text-danger');
-    document.getElementById('displayTempo').classList.add('text-warning');
-    atualizarDisplayTempo();
-});
-
-// Ajustes Finos de Tempo (+10s / -10s)
-document.getElementById('btnMais10s').addEventListener('click', function() {
-    tempoDecorrido = Math.max(0, tempoDecorrido - 10);
-    atualizarDisplayTempo();
-});
-document.getElementById('btnMenos10s').addEventListener('click', function() {
-    tempoDecorrido += 10;
-    atualizarDisplayTempo();
-});
-
-// Golden Score (Prorrogação de 1 minuto)
-document.getElementById('btnGoldenScore').addEventListener('click', function() {
-    tempoTotalSegundos = 60;
-    tempoDecorrido = 0;
-    document.getElementById('badgeFase').innerText = 'GOLDEN SCORE (1 MIN)';
-    document.getElementById('badgeFase').className = 'badge bg-warning text-dark';
-    atualizarDisplayTempo();
-    enviarEvento('golden_score', 'geral', 'Início da Prorrogação de Ponto de Ouro');
-});
-
-// Cronômetro de Ne Waza (Solo - Máx 60s)
-document.getElementById('btnNeWazaToggle').addEventListener('click', function() {
-    const badge = document.getElementById('badgeNeWaza');
-    if (neWazaAtivo) {
-        clearInterval(intervaloNeWaza);
-        neWazaAtivo = false;
-        this.innerHTML = '<i class="fas fa-play me-1"></i> Iniciar Solo';
-        badge.innerText = 'PARADO';
-        badge.className = 'badge bg-secondary';
     } else {
-        neWazaAtivo = true;
-        this.innerHTML = '<i class="fas fa-pause me-1"></i> Pausar Solo';
-        badge.innerText = 'SOLO ATIVO';
-        badge.className = 'badge bg-info text-dark';
+        pararRelogio();
+        enviar('tempo', 'geral', true);
+    }
+}
 
-        intervaloNeWaza = setInterval(function() {
-            neWazaSegundos++;
-            document.getElementById('displayNeWaza').innerText = formatarTempo(neWazaSegundos);
+function pararRelogio() {
+    rodando = false;
+    clearInterval(timer);
+    var b = document.getElementById('btnRelogio');
+    b.className = 'btn btn-success';
+    b.innerHTML = '<i class="fas fa-play"></i> Iniciar';
+}
 
-            if (neWazaSegundos >= 60) {
-                clearInterval(intervaloNeWaza);
-                neWazaAtivo = false;
-                document.getElementById('btnNeWazaToggle').innerHTML = '<i class="fas fa-stop me-1"></i> LIMITE 60s!';
-                tocarBuzzer(1000, 600); // Alerta agudo de 60s
-                alertify.error('LIMITE DE 60 SEGUNDOS DE NE WAZA ATINGIDO! Luta deve reiniciar em pé.');
+function enviar(tipo, lado, silencioso, extra) {
+    if (terminada) return;
+    var dados = { id_luta: ID_LUTA, tipo: tipo, lado: lado, segundo_luta: segundos };
+    if (extra) Object.assign(dados, extra);
+    $.post('../controllers/sumulaKumiteController.php?acao=evento', dados, null, 'json')
+        .done(function (r) {
+            if (!r.success) { alert(r.error || 'Não foi possível salvar.'); return; }
+            sumula = r.sumula;
+            if (['wazaari', 'ippon', 'shido', 'chui', 'saida', 'hansoku_make'].indexOf(tipo) >= 0) {
+                historico.push({ tipo: tipo, lado: lado });
             }
-        }, 1000);
-    }
-});
-
-document.getElementById('btnNeWazaReset').addEventListener('click', function() {
-    clearInterval(intervaloNeWaza);
-    neWazaAtivo = false;
-    neWazaSegundos = 0;
-    document.getElementById('displayNeWaza').innerText = '00:00';
-    document.getElementById('btnNeWazaToggle').innerHTML = '<i class="fas fa-play me-1"></i> Iniciar Solo';
-    document.getElementById('badgeNeWaza').innerText = 'PARADO';
-    document.getElementById('badgeNeWaza').className = 'badge bg-secondary';
-});
-
-// Envio de Eventos AJAX para o Servidor
-function enviarEvento(tipo, lado, descricao = '') {
-    const formData = new FormData();
-    formData.append('id_luta', idLuta);
-    formData.append('tipo', tipo);
-    formData.append('lado', lado);
-    formData.append('segundo_luta', tempoDecorrido);
-    formData.append('descricao', descricao);
-
-    fetch('../controllers/sumulaKumiteController.php?acao=evento', {
-        method: 'POST',
-        body: formData
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (!data.success) {
-            alertify.error(data.error || 'Erro ao processar pontuação.');
-            return;
-        }
-
-        tocarBuzzer(250, tipo === 'ippon' ? 880 : 520);
-
-        // Atualiza Placar na Tela
-        const s = data.sumula;
-        document.getElementById('pontosAka').innerText = parseFloat(s.pontos_aka).toFixed(1);
-        document.getElementById('qtdWazaariAka').innerText = s.wazaari_aka;
-        document.getElementById('qtdIpponAka').innerText = s.ippon_aka;
-        document.getElementById('qtdShidoAka').innerText = s.shido_aka;
-        document.getElementById('qtdChuiAka').innerText = s.chui_aka;
-        document.getElementById('qtdSaidasAka').innerText = s.saidas_aka;
-
-        document.getElementById('pontosShiro').innerText = parseFloat(s.pontos_shiro).toFixed(1);
-        document.getElementById('qtdWazaariShiro').innerText = s.wazaari_shiro;
-        document.getElementById('qtdIpponShiro').innerText = s.ippon_shiro;
-        document.getElementById('qtdShidoShiro').innerText = s.shido_shiro;
-        document.getElementById('qtdChuiShiro').innerText = s.chui_shiro;
-        document.getElementById('qtdSaidasShiro').innerText = s.saidas_shiro;
-
-        // Se o motor indicou vitória imediata
-        if (data.avaliacao && data.avaliacao.finalizada) {
-            clearInterval(intervaloCronometro);
-            tocarBuzzer(1500, 440);
-            const boxVitoria = document.getElementById('alertaVitoria');
-            document.getElementById('textoVitoria').innerText = data.avaliacao.motivo;
-            boxVitoria.classList.remove('d-none');
-            alertify.success('COMBATE FINALIZADO: ' + data.avaliacao.motivo);
-        }
-
-        // Atualiza Lista de Eventos
-        if (data.eventos && data.eventos.length > 0) {
-            renderizarEventos(data.eventos);
-        }
-    })
-    .catch(err => {
-        alertify.error('Erro de conexão ao enviar evento.');
-    });
+            desenharPlacar();
+            if (r.avaliacao && r.avaliacao.finalizada) {
+                terminada = true;
+                pararRelogio();
+                document.getElementById('fimTitulo').textContent = 'Venceu: ' + NOMES[r.avaliacao.vencedor_lado];
+                document.getElementById('fimMotivo').textContent = r.avaliacao.motivo || '';
+                new bootstrap.Modal(document.getElementById('modalFim')).show();
+            }
+        })
+        .fail(function () { if (!silencioso) alert('Sem conexão. O toque não foi salvo, tente de novo.'); });
 }
 
-function renderizarEventos(eventos) {
-    const tbody = document.getElementById('listaEventos');
-    const reversos = [...eventos].reverse();
-    let html = '';
-
-    reversos.forEach(ev => {
-        const min = Math.floor(ev.segundo_luta / 60);
-        const seg = ev.segundo_luta % 60;
-        const tempo = (min < 10 ? '0' : '') + min + ':' + (seg < 10 ? '0' : '') + seg;
-        const badgeLado = ev.lado === 'aka' ? '<span class="badge bg-danger">AKA</span>' : (ev.lado === 'shiro' ? '<span class="badge bg-secondary">SHIRO</span>' : '<span class="badge bg-dark">MESA</span>');
-        const pts = parseFloat(ev.pontos_atribuidos) > 0 ? '+' + parseFloat(ev.pontos_atribuidos).toFixed(1) : '-';
-
-        html += `<tr>
-            <td>${tempo}</td>
-            <td>${badgeLado}</td>
-            <td><span class="text-uppercase">${ev.tipo_evento}</span></td>
-            <td class="font-sans-serif">${ev.descricao}</td>
-            <td class="text-end fw-bold">${pts}</td>
-        </tr>`;
-    });
-
-    tbody.innerHTML = html;
+function desfazer() {
+    var ultimo = historico.pop();
+    if (!ultimo) return;
+    enviar('desfazer', ultimo.lado, false, { desfazer_tipo: ultimo.tipo });
 }
 
-// Vincula cliques aos botões de ação
-document.querySelectorAll('.btn-acao').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const tipo = this.getAttribute('data-tipo');
-        const lado = this.getAttribute('data-lado');
-        enviarEvento(tipo, lado);
-    });
+function abrirPenalidade(lado) {
+    ladoPenal = lado;
+    document.getElementById('penalLado').textContent = NOMES[lado];
+    new bootstrap.Modal(document.getElementById('modalPenal')).show();
+}
+
+function penalidade(tipo) {
+    bootstrap.Modal.getInstance(document.getElementById('modalPenal')).hide();
+    enviar(tipo, ladoPenal);
+}
+
+function perguntarVencedor(titulo) {
+    pararRelogio();
+    document.getElementById('tituloVencedor').textContent = (titulo ? titulo + ' ' : '') + 'Quem venceu?';
+    var a = parseFloat(sumula.pontos_aka || 0), s = parseFloat(sumula.pontos_shiro || 0);
+    document.getElementById('formaVitoria').value = (a === s) ? 'hantei' : 'pontos';
+    document.getElementById('textoVencedor').textContent = (a === s)
+        ? 'Empate no placar. Escolha pela decisão dos árbitros ou vá para o ponto de ouro.'
+        : 'Quem tem mais pontos: ' + (a > s ? NOMES.aka : NOMES.shiro) + '.';
+    new bootstrap.Modal(document.getElementById('modalVencedor')).show();
+}
+
+function iniciarGolden() {
+    bootstrap.Modal.getInstance(document.getElementById('modalVencedor')).hide();
+    golden = true;
+    if (segundos < DURACAO) segundos = DURACAO;
+    enviar('golden_score', 'geral');
+    desenharRelogio();
+}
+
+desenharRelogio();
+desenharPlacar();
+if (terminada) {
+    document.querySelectorAll('.botoes .btn, #btnRelogio, #btnTerminar').forEach(function (b) { b.disabled = true; });
+    document.getElementById('fimTitulo').textContent = 'Esta luta já terminou';
+    document.getElementById('fimMotivo').textContent = <?= json_encode($luta['nome_vencedor'] ? 'Vencedor: ' . $luta['nome_vencedor'] : '') ?>;
+    new bootstrap.Modal(document.getElementById('modalFim')).show();
+}
+
+// Atalhos de teclado: espaço = iniciar/pausar
+document.addEventListener('keydown', function (e) {
+    if (e.code === 'Space' && !document.querySelector('.modal.show')) { e.preventDefault(); alternarRelogio(); }
 });
-
-// Atalhos de Teclado
-window.addEventListener('keydown', function(e) {
-    if (['input', 'textarea', 'select'].includes(document.activeElement.tagName.toLowerCase())) {
-        return;
-    }
-
-    if (e.code === 'Space') {
-        e.preventDefault();
-        document.getElementById('btnPlayPause').click();
-    } else if (e.key === 'n' || e.key === 'N') {
-        document.getElementById('btnNeWazaToggle').click();
-    } else if (e.key === 'a' || e.key === 'A') {
-        enviarEvento('wazaari', 'aka');
-    } else if (e.key === 's' || e.key === 'S') {
-        enviarEvento('wazaari', 'shiro');
-    }
-});
-
-atualizarDisplayTempo();
 </script>
-
-<?php include_once __DIR__ . "/rodape.php"; ?>
+</body>
+</html>

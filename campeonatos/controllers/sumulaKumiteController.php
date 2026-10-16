@@ -99,6 +99,28 @@ if (isset($_GET['acao']) && $_GET['acao'] === 'evento') {
             $descricao = "Início da prorrogação em Golden Score (Ponto de Ouro).";
             break;
 
+        case 'desfazer':
+            // Desfaz o último toque do mesário (enviado pela tela: desfazer_tipo + lado)
+            $desfazer = $_POST['desfazer_tipo'] ?? '';
+            $oponente = ($lado === 'aka') ? 'shiro' : 'aka';
+            $menos = function (string $campo, $valor) use (&$sumula) {
+                $sumula[$campo] = max(0, $sumula[$campo] - $valor);
+            };
+            if ($desfazer === 'wazaari') { $menos("wazaari_{$lado}", 1); $menos("pontos_{$lado}", 0.5); }
+            if ($desfazer === 'ippon') { $sumula["ippon_{$lado}"] = 0; $menos("pontos_{$lado}", 1.0); }
+            if ($desfazer === 'shido') { $menos("shido_{$lado}", 1); }
+            if ($desfazer === 'hansoku_make') { $sumula["hansoku_make_{$lado}"] = 0; }
+            if ($desfazer === 'chui' || $desfazer === 'saida') {
+                $campo = $desfazer === 'chui' ? "chui_{$lado}" : "saidas_{$lado}";
+                if ((int)$sumula[$campo] > 0 && (int)$sumula[$campo] % 2 === 0) {
+                    $menos("wazaari_{$oponente}", 1);
+                    $menos("pontos_{$oponente}", 0.5);
+                }
+                $menos($campo, 1);
+            }
+            $descricao = "Correção: desfeito '{$desfazer}' do lado " . strtoupper($lado);
+            break;
+
         case 'tempo':
             // Sincronização periódica do cronômetro
             break;
@@ -178,6 +200,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             'motivo' => $motivo
         ], null, (int)$luta['id_campeonato']);
 
-        exibirMensagemEredirecionar("Combate #{$luta['numero_luta']} finalizado com sucesso!", "../views/painel_tatame.php?id=" . ($luta['id_tatame'] ?? 1));
+        exibirMensagemEredirecionar("Luta {$luta['numero_luta']} terminada!", "../views/ver_chave.php?id=" . (int)$luta['id_categoria']);
     }
 }
