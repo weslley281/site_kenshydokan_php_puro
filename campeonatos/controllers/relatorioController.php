@@ -31,7 +31,9 @@ class KenshyPDF extends FPDF {
     }
 
     public function conv($str) {
-        return utf8_decode($str ?? '');
+        $texto = (string)($str ?? '');
+        $convertido = iconv('UTF-8', 'windows-1252//TRANSLIT', $texto);
+        return $convertido !== false ? $convertido : $texto;
     }
 
     function Header() {

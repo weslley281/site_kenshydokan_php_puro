@@ -7,6 +7,25 @@ if (isset($_SESSION['id_usuario'])) {
     header("Location: inicio.php");
     exit;
 }
+
+$erroInicializacao = false;
+$detalheInicializacao = null;
+require_once __DIR__ . '/../db/conexao.php';
+try {
+    (new Conexao())->conectar();
+} catch (Throwable $erro) {
+    $erroInicializacao = true;
+    $debug = $_ENV['APP_DEBUG'] ?? getenv('APP_DEBUG');
+    if ($debug === 'true' || $debug === '1') {
+        $detalheInicializacao = $erro->getMessage();
+        foreach (['DB_USER', 'DB_PASS', 'ADMIN_EMAIL', 'ADMIN_PASSWORD'] as $chave) {
+            $segredo = $_ENV[$chave] ?? getenv($chave);
+            if (is_string($segredo) && $segredo !== '') {
+                $detalheInicializacao = str_replace($segredo, '[redigido]', $detalheInicializacao);
+            }
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -65,6 +84,15 @@ if (isset($_SESSION['id_usuario'])) {
 
     <div class="p-4 p-sm-5">
         <h1 class="h4 mb-4">Entrar no sistema</h1>
+        <?php if ($erroInicializacao): ?>
+            <div class="alert alert-danger" role="alert">
+                A configuração inicial do sistema não foi concluída. Verifique no arquivo <code>.env</code> as credenciais dos bancos e, se ainda não houver administrador, defina <code>ADMIN_EMAIL</code> e <code>ADMIN_PASSWORD</code> (mínimo de 12 caracteres).
+                <?php if ($detalheInicializacao !== null): ?>
+                    <hr>
+                    <strong>Detalhe:</strong> <?= htmlspecialchars($detalheInicializacao, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
         <form method="POST" action="../controllers/autenticar.php">
             <div class="mb-3">
                 <label for="email" class="form-label fw-bold">E-mail</label>

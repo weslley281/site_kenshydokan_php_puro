@@ -25,8 +25,7 @@ class Filiado {
                     f.dataNascimento,
                     f.dojo,
                     f.codigo,
-                    f.foto,
-                    COALESCE(g.nome, 'Sem Graduação') AS graduacao_nome,
+                    COALESCE(g.graduacao, 'Sem Graduação') AS graduacao_nome,
                     COALESCE(fg.id_graduacao, 0) AS id_graduacao
                 FROM filiados f
                 LEFT JOIN filiados_graduacoes fg ON f.id_filiado = fg.id_filiado AND fg.id_arte = 1
@@ -49,7 +48,7 @@ class Filiado {
                     f.dataNascimento,
                     f.dojo,
                     f.codigo,
-                    COALESCE(g.nome, 'Iniciante / Branca') AS graduacao_nome,
+                    COALESCE(g.graduacao, 'Iniciante / Branca') AS graduacao_nome,
                     COALESCE(fg.id_graduacao, 1) AS id_graduacao
                 FROM filiados f
                 LEFT JOIN filiados_graduacoes fg ON f.id_filiado = fg.id_filiado AND fg.id_arte = 1
@@ -68,5 +67,47 @@ class Filiado {
         }
         $stmt->close();
         return $lista;
+    }
+
+    public function diagnosticarConexao(): array {
+        $resultadoBanco = $this->conexao->query('SELECT DATABASE()');
+        $bancoSelecionado = $resultadoBanco->fetch_row()[0] ?? null;
+        $resultadoBanco->free();
+        $diagnostico = [
+            'banco_selecionado' => $bancoSelecionado,
+            'host_info' => $this->conexao->host_info,
+            'servidor_mysql' => $this->conexao->server_info,
+            'tabelas' => []
+        ];
+
+        $colunasEsperadas = [
+            'filiados' => ['id_filiado', 'nome', 'dojo', 'codigo', 'dataNascimento'],
+            'filiados_graduacoes' => ['id_filiado', 'id_arte', 'id_graduacao'],
+            'graduacoes' => ['id_graduacao', 'graduacao']
+        ];
+
+        foreach ($colunasEsperadas as $tabela => $esperadas) {
+            try {
+                $resultado = $this->conexao->query("SHOW COLUMNS FROM `{$tabela}`");
+                $colunas = [];
+                while ($coluna = $resultado->fetch_assoc()) {
+                    $colunas[] = $coluna['Field'];
+                }
+                $resultado->free();
+                $diagnostico['tabelas'][$tabela] = [
+                    'existe' => true,
+                    'colunas' => $colunas,
+                    'colunas_esperadas_ausentes' => array_values(array_diff($esperadas, $colunas))
+                ];
+            } catch (mysqli_sql_exception $erro) {
+                $diagnostico['tabelas'][$tabela] = [
+                    'existe' => false,
+                    'codigo_erro' => $erro->getCode(),
+                    'sqlstate' => $erro->getSqlState()
+                ];
+            }
+        }
+
+        return $diagnostico;
     }
 }

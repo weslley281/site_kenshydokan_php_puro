@@ -55,4 +55,48 @@ class Usuario {
         $stmt->close();
         return $id;
     }
+
+    public function criarAdminInicialSeNecessario(?string $email, ?string $senha): bool {
+        if ($this->temAdministrador()) {
+            return false;
+        }
+
+        $resultadoLock = $this->conexao->query("SELECT GET_LOCK('kenshydokan_campeonatos_admin_init', 10)");
+        $lockObtido = $resultadoLock->fetch_row()[0] ?? null;
+        $resultadoLock->free();
+
+        if ((int) $lockObtido !== 1) {
+            throw new RuntimeException('Não foi possível obter o bloqueio para inicializar o administrador.');
+        }
+
+        try {
+            if ($this->temAdministrador()) {
+                return false;
+            }
+
+            if ($email === null || filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+                throw new RuntimeException('Configure um ADMIN_EMAIL válido no arquivo .env para criar o primeiro administrador.');
+            }
+            if ($senha === null || strlen($senha) < 12) {
+                throw new RuntimeException('Configure ADMIN_PASSWORD com pelo menos 12 caracteres no arquivo .env para criar o primeiro administrador.');
+            }
+
+            if ($this->buscarPorEmail($email) !== null) {
+                throw new RuntimeException('ADMIN_EMAIL já está associado a uma conta que não é administradora.');
+            }
+
+            $this->criarUsuario('Administrador Geral', $email, $senha, 'admin');
+            return true;
+        } finally {
+            $resultadoRelease = $this->conexao->query("SELECT RELEASE_LOCK('kenshydokan_campeonatos_admin_init')");
+            $resultadoRelease->free();
+        }
+    }
+
+    private function temAdministrador(): bool {
+        $resultado = $this->conexao->query("SELECT id_usuario FROM campeonato_usuarios WHERE nivel = 'admin' LIMIT 1");
+        $existe = $resultado->num_rows > 0;
+        $resultado->free();
+        return $existe;
+    }
 }

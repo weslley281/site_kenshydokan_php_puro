@@ -45,7 +45,7 @@ class Conexao {
         echo '</pre>';
     }
 
-    private static function debugAtivo(): bool {
+    public static function debugAtivo(): bool {
         $debug = $_ENV['APP_DEBUG'] ?? getenv('APP_DEBUG');
         return $debug === 'true' || $debug === '1';
     }
@@ -237,6 +237,14 @@ class Conexao {
                 'porta' => $this->port,
                 'banco' => $this->db
             ]);
+
+            require_once __DIR__ . '/../models/usuarioModel.php';
+            $usuario = new Usuario();
+            $emailAdmin = $_ENV['ADMIN_EMAIL'] ?? (getenv('ADMIN_EMAIL') !== false ? getenv('ADMIN_EMAIL') : null);
+            $senhaAdmin = $_ENV['ADMIN_PASSWORD'] ?? (getenv('ADMIN_PASSWORD') !== false ? getenv('ADMIN_PASSWORD') : null);
+            $adminCriado = $usuario->criarAdminInicialSeNecessario($emailAdmin, $senhaAdmin);
+            self::adicionarDiagnostico($adminCriado ? 'Administrador inicial criado' : 'Administrador já configurado');
+
             if (self::debugAtivo() && ($_GET['db_debug'] ?? '') === '1') {
                 $tabelas = self::$conn->query('SHOW TABLES');
                 $nomesTabelas = [];

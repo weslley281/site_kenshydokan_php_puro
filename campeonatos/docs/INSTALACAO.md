@@ -58,6 +58,10 @@ DB_PASS=senha_do_banco
 # Banco do site principal (consulta de filiados)
 MAIN_DB_NAME=nome_do_banco_principal
 MAIN_DB_USER=usuario_do_banco_principal
+
+# Conta criada no primeiro acesso, somente se ainda não houver admin
+ADMIN_EMAIL=admin@seu-dominio.com
+ADMIN_PASSWORD=defina-uma-senha-forte-com-12-caracteres
 ```
 
 O sistema usa a porta `3306` por padrão e compartilha host e senha entre os dois bancos. Se o provedor usar valores diferentes, adicione somente os ajustes necessários: `DB_PORT`, `MAIN_DB_HOST`, `MAIN_DB_PORT` e/ou `MAIN_DB_PASS`. `APP_NAME`, `APP_ENV` e `APP_URL` também são opcionais; os padrões da aplicação já correspondem ao ambiente de produção.
@@ -110,7 +114,4 @@ Certifique-se de que o servidor web possui permissão de leitura e escrita nas s
 
 ## 6. Primeiro Acesso Administrativo
 
-Após a execução das migrações, o sistema contará com um usuário administrador padrão para o primeiro acesso:
-- **E-mail**: `admin@kenshydokan.org.br`
-- **Senha Inicial**: `Admin@Kenshy2026`
-- **Ação Imediata**: Realizar login e alterar a senha de acesso no primeiro login por medidas de segurança.
+No primeiro acesso, depois de criar as tabelas, o sistema cria um usuário administrador se ainda não existir nenhum. Configure `ADMIN_EMAIL` e `ADMIN_PASSWORD` no `.env` antes de abrir o sistema. A senha deve ter pelo menos 12 caracteres; escolha uma senha forte e não a reutilize em outros serviços. Se já houver um administrador, o sistema não altera nem redefine a conta.

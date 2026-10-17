@@ -35,6 +35,12 @@ $categorias = (new Categoria())->buscarPorCampeonato($idCampeonato);
                 <select id="selectFiliado" name="id_filiado" class="form-select" required>
                     <option value="">Digite pelo menos 2 letras...</option>
                 </select>
+                <div id="erroBuscaFiliado" class="alert alert-danger mt-2 mb-0" role="alert" style="display:none"></div>
+                <div id="statusBuscaFiliado" class="small text-muted mt-2" role="status" aria-live="polite" style="display:none"></div>
+                <details id="diagnosticoBuscaFiliado" class="mt-2" style="display:none">
+                    <summary>Detalhes técnicos da busca</summary>
+                    <pre class="small bg-light border rounded p-2 mt-2 mb-0" style="white-space:pre-wrap"></pre>
+                </details>
                 <div id="previewFiliado" class="mt-2 p-3 bg-light rounded" style="display:none">
                     <strong id="previewNome"></strong><br>
                     <span class="text-muted"><span id="previewDojo"></span> · <span id="previewGraduacao"></span> · <span id="previewIdade"></span></span>
@@ -85,13 +91,144 @@ window.addEventListener('load', function () {
         width: '100%',
         placeholder: 'Digite pelo menos 2 letras...',
         minimumInputLength: 2,
-        language: { inputTooShort: function () { return 'Digite pelo menos 2 letras'; }, noResults: function () { return 'Nenhum atleta encontrado'; }, searching: function () { return 'Procurando...'; } },
+        language: {
+            inputTooShort: function () { return 'Digite pelo menos 2 letras'; },
+            noResults: function () { return 'Nenhum atleta encontrado'; },
+            searching: function () { return 'Procurando...'; },
+            errorLoading: function () { return 'Falha ao consultar filiados. Confira o banco principal e tente novamente.'; }
+        },
         ajax: {
             url: '../controllers/inscricaoController.php?acao=buscar_filiados',
             dataType: 'json',
             delay: 300,
+            timeout: 12000,
             data: function (p) { return { q: p.term }; },
-            processResults: function (d) { return { results: d.results }; }
+            processResults: function (d) {
+                if (!d || !Array.isArray(d.results)) {
+                    console.error('[Busca de filiados] Resposta inesperada do servidor.', {
+                        resposta: d,
+                        tipoResposta: typeof d
+                    });
+                    mostrarDiagnosticoBusca(null, 'O servidor retornou uma resposta inesperada.');
+                    return { results: [] };
+                }
+                mostrarDiagnosticoBusca(d.debug, d.error);
+                return { results: d.results || [] };
+            },
+            transport: function (params, success, failure) {
+                var status = document.getElementById('statusBuscaFiliado');
+                status.textContent = 'Consultando o banco principal...';
+                status.style.display = 'block';
+                var request = new XMLHttpRequest();
+                var url = params.url;
+                var dados = params.data || {};
+                var query = Object.keys(dados).map(function (key) {
+                    return encodeURIComponent(key) + '=' + encodeURIComponent(dados[key]);
+                }).join('&');
+                if (query) url += (url.indexOf('?') === -1 ? '?' : '&') + query;
+
+                var urlLog = url.replace(/([?&])q=[^&]*/i, '$1q=[termo oculto]');
+                request.timeout = params.timeout || 12000;
+                request.onreadystatechange = function () {
+                    if (request.readyState !== XMLHttpRequest.DONE) return;
+                    status.style.display = 'none';
+
+                    if (request.status >= 200 && request.status < 300) {
+                        var respostaValida;
+                        try {
+                            respostaValida = JSON.parse(request.responseText);
+                        } catch (erroJson) {
+                            console.error('[Busca de filiados] Falha ao interpretar JSON.', {
+                                erro: erroJson,
+                                status: request.status,
+                                url: urlLog,
+                                resposta: request.responseText.substring(0, 4000)
+                            });
+                            var erroResposta = {
+                                status: request.status,
+                                statusText: 'Resposta JSON inválida',
+                                responseJSON: null
+                            };
+                            mostrarDiagnosticoBusca(null, 'O servidor respondeu em formato inválido.', request.responseText.substring(0, 2000));
+                            failure(erroResposta);
+                            return;
+                        }
+                        console.info('[Busca de filiados] Resposta recebida.', {
+                            status: request.status,
+                            quantidade: respostaValida && Array.isArray(respostaValida.results) ? respostaValida.results.length : 'formato inesperado'
+                        });
+                        success(respostaValida);
+                        return;
+                    }
+
+                    var resposta = null;
+                    try { resposta = JSON.parse(request.responseText); } catch (erroJson) {}
+                    var erroHttp = {
+                        status: request.status,
+                        statusText: request.statusText || 'Erro HTTP',
+                        responseJSON: resposta
+                    };
+                    console.error('[Busca de filiados] Requisição HTTP falhou.', {
+                        status: request.status,
+                        statusText: request.statusText,
+                        url: urlLog,
+                        resposta: resposta || request.responseText.substring(0, 4000)
+                    });
+                    var detalheTransporte = request.status
+                        ? 'HTTP ' + request.status + (request.statusText ? ' (' + request.statusText + ')' : '')
+                        : 'Sem resposta HTTP (' + (request.statusText || 'erro de rede') + ')';
+                    mostrarDiagnosticoBusca(
+                        resposta && resposta.debug,
+                        resposta && resposta.error ? resposta.error : 'Não foi possível concluir a busca. ' + detalheTransporte,
+                        resposta && resposta.debug ? resposta.debug.var_dump : detalheTransporte
+                    );
+                    failure(erroHttp);
+                };
+                request.ontimeout = function () {
+                    status.style.display = 'none';
+                    var erroTimeout = {
+                        status: 0,
+                        statusText: 'timeout',
+                        responseJSON: null
+                    };
+                    var detalhe = 'O servidor não respondeu em até ' + Math.round(request.timeout / 1000) + ' segundos.';
+                    console.error('[Busca de filiados] Tempo limite excedido.', {
+                        timeoutMs: request.timeout,
+                        url: urlLog,
+                        readyState: request.readyState
+                    });
+                    mostrarDiagnosticoBusca(null, 'A busca excedeu o tempo limite.', detalhe);
+                    failure(erroTimeout);
+                };
+                request.onerror = function () {
+                    status.style.display = 'none';
+                    var erroRede = { status: 0, statusText: 'Erro de rede', responseJSON: null };
+                    console.error('[Busca de filiados] Erro de rede.', {
+                        url: urlLog,
+                        status: request.status,
+                        statusText: request.statusText,
+                        readyState: request.readyState
+                    });
+                    mostrarDiagnosticoBusca(null, 'Falha de comunicação com o servidor.', 'Confira a conexão de rede e o console/aba Network do navegador.');
+                    failure(erroRede);
+                };
+                request.onabort = function () {
+                    status.style.display = 'none';
+                };
+                try {
+                    request.open(params.type || 'GET', url, true);
+                    request.send();
+                } catch (erroEnvio) {
+                    status.style.display = 'none';
+                    console.error('[Busca de filiados] Exceção ao iniciar a requisição.', {
+                        erro: erroEnvio,
+                        url: urlLog
+                    });
+                    mostrarDiagnosticoBusca(null, 'Não foi possível iniciar a busca.', erroEnvio.name + ': ' + erroEnvio.message);
+                    failure({ status: 0, statusText: erroEnvio.message, responseJSON: null });
+                }
+                return { abort: function () { request.abort(); } };
+            }
         }
     }).on('select2:select', function (e) {
         var d = e.params.data;
@@ -112,6 +249,16 @@ window.addEventListener('load', function () {
         validarCompatibilidade();
     });
 });
+
+function mostrarDiagnosticoBusca(diagnostico, mensagem, detalheExtra) {
+    var erro = document.getElementById('erroBuscaFiliado');
+    var detalhes = document.getElementById('diagnosticoBuscaFiliado');
+    var pre = detalhes.querySelector('pre');
+    erro.textContent = mensagem || '';
+    erro.style.display = mensagem ? 'block' : 'none';
+    pre.textContent = detalheExtra || (diagnostico && diagnostico.var_dump ? diagnostico.var_dump : '');
+    detalhes.style.display = pre.textContent ? 'block' : 'none';
+}
 
 function validarCompatibilidade() {
     var sel = document.getElementById('id_categoria');

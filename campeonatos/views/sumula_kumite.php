@@ -17,11 +17,7 @@ if (!$luta) {
 $_SESSION['camp_atual'] = (int)$luta['id_campeonato'];
 
 $sumulaModel = new SumulaKumite();
-$sumula = $sumulaModel->buscarPorLuta($idLuta);
-if (!$sumula) {
-    $idSumula = $sumulaModel->criarSumula($idLuta, (int)$luta['id_campeonato']);
-    $sumula = $sumulaModel->buscarPorId($idSumula);
-}
+$sumula = $sumulaModel->buscarOuCriarInicial($idLuta);
 $categoria = (new Categoria())->buscarPorId((int)$luta['id_categoria']);
 $duracao = (int)($categoria['duracao_luta_segundos'] ?? 180) ?: 180;
 $avaliacaoAtual = $sumulaModel->avaliarRegrasKumite($sumula);
@@ -286,11 +282,73 @@ function enviar(tipo, lado, silencioso, extra) {
     if (extra) Object.assign(dados, extra);
     eventoPendente = true;
     desenharPlacar();
-    $.post('../controllers/sumulaKumiteController.php?acao=evento', dados, null, 'json')
-        .done(function (r) {
-            eventoPendente = false;
-            if (!r.success) { alert(r.error || 'Não foi possível salvar.'); desenharPlacar(); return; }
-            sumula = r.sumula;
+    var request = new XMLHttpRequest();
+    var url = '../controllers/sumulaKumiteController.php?acao=evento';
+    var corpo = Object.keys(dados).map(function (chave) {
+        return encodeURIComponent(chave) + '=' + encodeURIComponent(dados[chave]);
+    }).join('&');
+    var finalizado = false;
+
+    function liberarBotoes() {
+        if (finalizado) return false;
+        finalizado = true;
+        eventoPendente = false;
+        desenharPlacar();
+        return true;
+    }
+
+    function falha(mensagem, detalhe, resposta) {
+        if (!liberarBotoes()) return;
+        console.error('[Súmula Kumite] Falha ao registrar evento.', {
+            evento: tipo,
+            lado: lado,
+            status: request.status,
+            statusText: request.statusText,
+            url: url,
+            erro: mensagem,
+            detalhe: detalhe,
+            resposta: resposta
+        });
+        if (!silencioso) {
+            alert(mensagem || 'Não foi possível salvar o toque. Confira o console para ver o erro.');
+        }
+    }
+
+    try {
+        request.open('POST', url, true);
+        request.timeout = 15000;
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        request.onreadystatechange = function () {
+            if (request.readyState !== XMLHttpRequest.DONE || finalizado) return;
+
+            var resposta;
+            try {
+                resposta = JSON.parse(request.responseText);
+            } catch (erroJson) {
+                falha(
+                    'O servidor retornou uma resposta inválida. O toque pode não ter sido salvo.',
+                    erroJson.name + ': ' + erroJson.message,
+                    request.responseText.substring(0, 4000)
+                );
+                return;
+            }
+
+            if (request.status < 200 || request.status >= 300) {
+                falha(
+                    resposta.error || 'Erro HTTP ' + request.status + '. O toque não foi confirmado.',
+                    'HTTP ' + request.status + ' ' + request.statusText,
+                    resposta
+                );
+                return;
+            }
+
+            if (!resposta.success) {
+                falha(resposta.error || 'Não foi possível salvar o toque.', 'A aplicação recusou o evento.', resposta);
+                return;
+            }
+
+            if (!liberarBotoes()) return;
+            sumula = resposta.sumula;
             if (tipo === 'desfazer') {
                 historico.pop();
                 aguardandoVencedor = false;
@@ -298,19 +356,30 @@ function enviar(tipo, lado, silencioso, extra) {
                 historico.push({ tipo: tipo, lado: lado });
             }
             desenharPlacar();
-            if (r.avaliacao && r.avaliacao.finalizada) {
+            if (resposta.avaliacao && resposta.avaliacao.finalizada) {
                 pararRelogio();
-                perguntarVencedor('', r.avaliacao.vencedor_lado, r.avaliacao.motivo, r.avaliacao.forma_vitoria);
+                perguntarVencedor('', resposta.avaliacao.vencedor_lado, resposta.avaliacao.motivo, resposta.avaliacao.forma_vitoria);
             } else if (tipo === 'desfazer' && !golden && segundos >= DURACAO) {
                 perguntarVencedor('Acabou o tempo!');
             }
-        })
-        .fail(function (xhr) {
-            eventoPendente = false;
-            var erro = xhr.responseJSON && xhr.responseJSON.error;
-            if (!silencioso) alert(erro || 'Sem conexão. O toque não foi salvo, tente de novo.');
-            desenharPlacar();
-        });
+        };
+        request.onerror = function () {
+            falha('Falha de rede ao salvar o toque.', 'XMLHttpRequest encontrou um erro de rede.', request.responseText);
+        };
+        request.ontimeout = function () {
+            falha('O servidor demorou para responder. Verifique a luta antes de tentar novamente.', 'Tempo limite de 15 segundos excedido.', request.responseText);
+        };
+        request.onabort = function () {
+            falha('O envio do toque foi interrompido.', 'A requisição foi cancelada.', request.responseText);
+        };
+        request.send(corpo);
+    } catch (erroEnvio) {
+        falha(
+            'Não foi possível enviar o toque ao servidor.',
+            erroEnvio.name + ': ' + erroEnvio.message,
+            null
+        );
+    }
 }
 
 function desfazer() {
