@@ -106,7 +106,26 @@ class TestRunner
         $this->assert($resGS['vencedor_lado'] === 'aka', 'AKA venceu por ponto de ouro');
         $this->assert($resGS['forma_vitoria'] === 'golden_score', 'Forma de vitória é golden_score');
 
-        // Teste 1.4: Hansoku-make desclassifica e dá vitória imediata ao oponente
+        // Teste 1.4: Um Ippon isolado não encerra antes dos 3 pontos.
+        $sumulaIppon = [
+            'pontos_aka' => 1.0,
+            'pontos_shiro' => 0.0,
+            'ippon_aka' => 1,
+            'ippon_shiro' => 0,
+            'golden_score_ativo' => 0
+        ];
+        $resIppon = $sumulaModel->avaliarRegrasKumite($sumulaIppon);
+        $this->assert($resIppon['finalizada'] === false, 'Ippon isolado não encerra luta antes dos 3 pontos');
+
+        $sumulaAbaixoLimite = [
+            'pontos_aka' => 2.5,
+            'pontos_shiro' => 0.0,
+            'golden_score_ativo' => 0
+        ];
+        $resAbaixoLimite = $sumulaModel->avaliarRegrasKumite($sumulaAbaixoLimite);
+        $this->assert($resAbaixoLimite['finalizada'] === false, '2.5 pontos não encerram luta antes do tempo');
+
+        // Teste 1.6: Hansoku-make não encerra a luta antes do tempo nem dos 3 pontos.
         $sumulaHM = [
             'wazaari_aka' => 4,
             'pontos_aka' => 2.0,
@@ -119,9 +138,7 @@ class TestRunner
             'tempo_decorrido_segundos' => 80
         ];
         $resHM = $sumulaModel->avaliarRegrasKumite($sumulaHM);
-        $this->assert($resHM['finalizada'] === true, 'Hansoku-make encerra o combate de imediato');
-        $this->assert($resHM['vencedor_lado'] === 'shiro', 'SHIRO vence por desclassificação de AKA');
-        $this->assert($resHM['forma_vitoria'] === 'desclassificacao', 'Forma de vitória é desclassificacao');
+        $this->assert($resHM['finalizada'] === false, 'Hansoku-make não encerra antes dos 3 pontos');
     }
 
     private function testKataRules(): void

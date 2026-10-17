@@ -114,7 +114,7 @@ $voltar = "ver_chave.php?id=" . (int)$luta['id_categoria'];
     <div class="d-flex gap-2">
         <button type="button" class="btn btn-outline-info" id="btnNeWaza" onclick="ativarNeWaza()">Ativar Ne Waza (60 s)</button>
         <button type="button" class="btn btn-outline-light" id="btnDesfazer" onclick="desfazer()" disabled><i class="fas fa-rotate-left"></i> Desfazer último</button>
-        <button type="button" class="btn btn-warning" id="btnTerminar" onclick="perguntarVencedor()"><i class="fas fa-flag-checkered"></i> Terminar luta</button>
+        <button type="button" class="btn btn-warning" id="btnTerminar" onclick="perguntarVencedor('Confirme o resultado.')"><i class="fas fa-flag-checkered"></i> Confirmar resultado</button>
     </div>
 </div>
 
@@ -140,6 +140,7 @@ $voltar = "ver_chave.php?id=" . (int)$luta['id_categoria'];
             <form method="POST" action="../controllers/sumulaKumiteController.php">
                 <input type="hidden" name="tipo" value="finalizar_luta">
                 <input type="hidden" name="id_luta" value="<?= $idLuta ?>">
+                <input type="hidden" name="tempo_decorrido_segundos" id="tempoFinalLuta" value="<?= (int)$sumula['tempo_decorrido_segundos'] ?>">
                 <input type="hidden" name="forma_vitoria" id="formaVitoria" value="pontos">
                 <input type="hidden" name="motivo" id="motivoVitoria" value="">
                 <div class="modal-header"><h5 class="modal-title fs-3" id="tituloVencedor">Quem venceu?</h5></div>
@@ -229,7 +230,12 @@ function desenharPlacar() {
     document.querySelectorAll('.botoes .btn').forEach(function (b) {
         b.disabled = terminada || aguardandoVencedor || eventoPendente;
     });
-    document.getElementById('btnTerminar').disabled = terminada || aguardandoVencedor || eventoPendente;
+    var pontosAka = parseFloat(sumula.pontos_aka || 0);
+    var pontosShiro = parseFloat(sumula.pontos_shiro || 0);
+    var pontosDecisivos = pontosAka >= 3 || pontosShiro >= 3;
+    var pontoDeOuro = golden && pontosAka !== pontosShiro;
+    var podeConfirmar = pontosDecisivos || (golden ? pontoDeOuro : segundos >= DURACAO);
+    document.getElementById('btnTerminar').disabled = terminada || aguardandoVencedor || eventoPendente || !podeConfirmar;
     document.getElementById('btnRelogio').disabled = terminada || aguardandoVencedor || eventoPendente;
 }
 
@@ -259,6 +265,7 @@ function alternarRelogio() {
             if (!newazaAtivo && segundos > 0 && segundos % 10 === 0) enviar('tempo', 'geral', true);
             if (!newazaAtivo && !golden && segundos >= DURACAO) {
                 pararRelogio();
+                enviar('tempo', 'geral', true);
                 perguntarVencedor('Acabou o tempo!');
             }
         }, 1000);
@@ -421,9 +428,18 @@ function penalidade(tipo) {
 }
 
 function perguntarVencedor(titulo, vencedorLado, motivo, formaVitoria) {
+    var pontosAka = parseFloat(sumula.pontos_aka || 0);
+    var pontosShiro = parseFloat(sumula.pontos_shiro || 0);
+    var atingiuLimite = pontosAka >= 3 || pontosShiro >= 3;
+    var podeConfirmar = atingiuLimite || (golden
+        ? pontosAka !== pontosShiro
+        : segundos >= DURACAO);
+    if (!podeConfirmar) return;
+
     pararRelogio();
     aguardandoVencedor = true;
     vencedorSugerido = vencedorLado || null;
+    document.getElementById('tempoFinalLuta').value = segundos;
     document.getElementById('tituloVencedor').textContent = (titulo ? titulo + ' ' : '') + 'Quem venceu?';
     var a = parseFloat(sumula.pontos_aka || 0), s = parseFloat(sumula.pontos_shiro || 0);
     document.getElementById('formaVitoria').value = formaVitoria || ((a === s) ? 'hantei' : 'pontos');
@@ -465,6 +481,8 @@ if (terminada) {
     new bootstrap.Modal(document.getElementById('modalFim')).show();
 } else if (avaliacaoAtual.finalizada) {
     perguntarVencedor('', avaliacaoAtual.vencedor_lado, avaliacaoAtual.motivo, avaliacaoAtual.forma_vitoria);
+} else if (segundos >= DURACAO && !golden) {
+    perguntarVencedor('Acabou o tempo!');
 }
 
 // Atalhos de teclado: espaço = iniciar/pausar

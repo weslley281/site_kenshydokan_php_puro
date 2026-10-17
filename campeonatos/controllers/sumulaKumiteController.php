@@ -19,12 +19,14 @@ exigirLogin();
 
 include_once __DIR__ . "/../models/sumulaKumiteModel.php";
 include_once __DIR__ . "/../models/lutaModel.php";
+include_once __DIR__ . "/../models/categoriaModel.php";
 include_once __DIR__ . "/../models/tatameModel.php";
 include_once __DIR__ . "/../models/auditoriaModel.php";
 include_once __DIR__ . "/alertHelper.php";
 
 $sumulaModel = new SumulaKumite();
 $lutaModel = new Luta();
+$categoriaModel = new Categoria();
 $tatameModel = new Tatame();
 
 // Endpoint AJAX: Eventos em tempo real da súmula
@@ -207,6 +209,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exibirMensagemEredirecionar("Luta não encontrada.", "../views/campeonatos.php");
         }
 
+        $categoria = $categoriaModel->buscarPorId((int)$luta['id_categoria']);
+        $duracao = (int)($categoria['duracao_luta_segundos'] ?? 180);
+        $tempoEnviado = max(0, (int)($_POST['tempo_decorrido_segundos'] ?? 0));
+        $pontosAka = (float)$sumula['pontos_aka'];
+        $pontosShiro = (float)$sumula['pontos_shiro'];
+        $atingiuLimite = $pontosAka >= 3.0 || $pontosShiro >= 3.0;
+        $tempoRegulamentarEncerrado = max((int)$sumula['tempo_decorrido_segundos'], $tempoEnviado) >= $duracao;
+        $pontoDeOuro = !empty($sumula['golden_score_ativo']) && $pontosAka !== $pontosShiro;
+        $podeFinalizar = $atingiuLimite || (!empty($sumula['golden_score_ativo'])
+            ? $pontoDeOuro
+            : $tempoRegulamentarEncerrado);
+        if (!$podeFinalizar) {
+            http_response_code(409);
+            exibirMensagemEredirecionar("A luta só pode ser encerrada ao atingir 3 pontos ou após o tempo regulamentar.", "../views/sumula_kumite.php?id=" . $idLuta);
+        }
+
+        $sumula['tempo_decorrido_segundos'] = max((int)$sumula['tempo_decorrido_segundos'], $tempoEnviado);
         $vencedorLado = $_POST['vencedor_lado'] ?? 'aka';
         $formaVitoria = $_POST['forma_vitoria'] ?? 'pontos';
         $motivo = trim($_POST['motivo'] ?? "Decisão oficial da arbitragem ({$formaVitoria})");

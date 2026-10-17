@@ -17,6 +17,7 @@ include_once __DIR__ . "/../models/pesagemModel.php";
 include_once __DIR__ . "/../models/categoriaModel.php";
 include_once __DIR__ . "/../models/chaveModel.php";
 include_once __DIR__ . "/../models/lutaModel.php";
+include_once __DIR__ . "/../models/sumulaKumiteModel.php";
 include_once __DIR__ . "/alertHelper.php";
 
 require_once __DIR__ . "/../libs/fpdf/fpdf.php";
@@ -34,6 +35,74 @@ class KenshyPDF extends FPDF {
         $texto = (string)($str ?? '');
         $convertido = iconv('UTF-8', 'windows-1252//TRANSLIT', $texto);
         return $convertido !== false ? $convertido : $texto;
+    }
+
+    public function resumoPenalidades(array $sumula, string $lado): string {
+        $penalidades = [];
+        foreach ([
+            'shido' => 'Shido',
+            'chui' => 'Chui',
+            'saidas' => 'Saídas'
+        ] as $campo => $rotulo) {
+            $quantidade = (int)($sumula[$campo . '_' . $lado] ?? 0);
+            if ($quantidade > 0) {
+                $penalidades[] = $rotulo . ': ' . $quantidade;
+            }
+        }
+
+        if (!empty($sumula['hansoku_make_' . $lado])) {
+            $penalidades[] = 'Desclassificado';
+        }
+
+        return $penalidades ? implode(' | ', $penalidades) : 'Nenhuma';
+    }
+
+    public function resumoTemporal(array $eventos, string $lado): string {
+        $pontos = [];
+        $penalidades = [];
+
+        foreach ($eventos as $evento) {
+            $segundo = max(0, (int)($evento['segundo_luta'] ?? 0));
+            $tempo = sprintf('%02d:%02d', intdiv($segundo, 60), $segundo % 60);
+            $descricao = (string)($evento['descricao'] ?? '');
+            $tipo = $evento['tipo_evento'] ?? '';
+
+            if ($tipo === 'ponto' && ($evento['lado'] ?? '') === $lado) {
+                if (stripos($descricao, 'waza-ari') !== false) {
+                    $pontos[] = $tempo . ' Waza-ari (+0,5)';
+                } elseif (stripos($descricao, 'ippon') !== false) {
+                    $pontos[] = $tempo . ' Ippon (+1,0)';
+                } else {
+                    $pontos[] = $tempo . ' ' . $descricao;
+                }
+            } elseif ($tipo === 'penalidade') {
+                if (($evento['lado'] ?? '') === $lado) {
+                    if (stripos($descricao, 'shido') !== false) {
+                        $penalidades[] = $tempo . ' Shido';
+                    } elseif (stripos($descricao, 'chui') !== false) {
+                        $penalidades[] = $tempo . ' Chui';
+                    } elseif (stripos($descricao, 'saída') !== false) {
+                        $penalidades[] = $tempo . ' Saída';
+                    } elseif (stripos($descricao, 'desclassificação') !== false) {
+                        $penalidades[] = $tempo . ' Desclassificação';
+                    } else {
+                        $penalidades[] = $tempo . ' ' . $descricao;
+                    }
+                }
+
+                $ladoPenalizado = $evento['lado'] ?? '';
+                $ladoBeneficiado = $ladoPenalizado === 'aka' ? 'shiro' : 'aka';
+                if ((float)($evento['pontos_atribuidos'] ?? 0) > 0 && $ladoBeneficiado === $lado) {
+                    $oponente = stripos($descricao, 'chui') !== false
+                        ? 'Ponto por Chui (+0,5)'
+                        : 'Ponto por saída (+0,5)';
+                    $pontos[] = $tempo . ' ' . $oponente;
+                }
+            }
+        }
+
+        return 'Pontos: ' . ($pontos ? implode('; ', $pontos) : 'nenhum')
+            . ' | Penalidades: ' . ($penalidades ? implode('; ', $penalidades) : 'nenhuma');
     }
 
     function Header() {
@@ -144,28 +213,56 @@ if ($tipo === 'inscritos') {
     }
 
     $lutas = $lutaModel->buscarPorChave((int)$chave['id_chave']);
+    $sumulaModel = new SumulaKumite();
 
     $pdf = new KenshyPDF('L', 'mm', 'A4');
     $pdf->AliasNbPages();
     $pdf->setEventInfo($campeonato['titulo'], 'CHAVE ELIMINATÓRIA: ' . strtoupper($categoria['nome']));
     $pdf->AddPage();
 
-    $pdf->SetFillColor(241, 245, 249);
-    $pdf->SetFont('Arial', 'B', 10);
-    $pdf->SetTextColor(17, 24, 39);
-    $pdf->Cell(25, 8, 'Luta #', 1, 0, 'C', true);
-    $pdf->Cell(30, 8, 'Rodada', 1, 0, 'C', true);
-    $pdf->Cell(85, 8, 'Canto Vermelho (AKA)', 1, 0, 'L', true);
-    $pdf->Cell(85, 8, 'Canto Branco (SHIRO)', 1, 0, 'L', true);
-    $pdf->Cell(52, 8, 'Vencedor', 1, 1, 'L', true);
+    $desenharCabecalhoLutas = static function () use ($pdf): void {
+        $pdf->SetFillColor(241, 245, 249);
+        $pdf->SetFont('Arial', 'B', 10);
+        $pdf->SetTextColor(17, 24, 39);
+        $pdf->Cell(19, 8, 'Luta #', 1, 0, 'C', true);
+        $pdf->Cell(23, 8, 'Rodada', 1, 0, 'C', true);
+        $pdf->Cell(105, 8, $pdf->conv('Atleta'), 1, 0, 'L', true);
+        $pdf->Cell(20, 8, 'Pontos', 1, 0, 'C', true);
+        $pdf->Cell(70, 8, $pdf->conv('Penalidades'), 1, 0, 'L', true);
+        $pdf->Cell(40, 8, 'Resultado', 1, 1, 'C', true);
+        $pdf->SetFont('Arial', '', 8);
+    };
+    $desenharCabecalhoLutas();
 
-    $pdf->SetFont('Arial', '', 9);
     foreach ($lutas as $l) {
-        $pdf->Cell(25, 7, '#' . $l['numero_luta'], 1, 0, 'C');
-        $pdf->Cell(30, 7, $l['rodada'] . 'a Rodada', 1, 0, 'C');
-        $pdf->Cell(85, 7, $pdf->conv(substr($l['nome_aka'] ?? 'Aguardando', 0, 38)), 1, 0, 'L');
-        $pdf->Cell(85, 7, $pdf->conv(substr($l['nome_shiro'] ?? 'Aguardando', 0, 38)), 1, 0, 'L');
-        $pdf->Cell(52, 7, $pdf->conv(substr($l['nome_vencedor'] ?? '-', 0, 24)), 1, 1, 'L');
+        $sumula = $sumulaModel->buscarPorLuta((int)$l['id_luta']) ?? [];
+        $eventos = $sumula ? $sumulaModel->buscarEventos((int)$l['id_luta']) : [];
+        $lados = [
+            'aka' => ['rotulo' => 'AKA', 'nome' => $l['nome_aka'] ?? 'Aguardando'],
+            'shiro' => ['rotulo' => 'SHIRO', 'nome' => $l['nome_shiro'] ?? 'Aguardando']
+        ];
+
+        foreach ($lados as $lado => $atleta) {
+            $linhaTemporal = $pdf->conv($pdf->resumoTemporal($eventos, $lado));
+            $alturaTemporal = max(6, (int)ceil($pdf->GetStringWidth($linhaTemporal) / 270) * 6);
+            if ($pdf->GetY() + 7 + $alturaTemporal > 185) {
+                $pdf->AddPage();
+                $desenharCabecalhoLutas();
+            }
+
+            $idInscricao = $lado === 'aka' ? ($l['id_inscricao_aka'] ?? 0) : ($l['id_inscricao_shiro'] ?? 0);
+            $vencedor = !empty($l['id_vencedor']) && (int)$l['id_vencedor'] === (int)$idInscricao;
+            $pdf->Cell(19, 7, $lado === 'aka' ? '#' . $l['numero_luta'] : '', 1, 0, 'C');
+            $pdf->Cell(23, 7, $lado === 'aka' ? $l['rodada'] . 'a' : '', 1, 0, 'C');
+            $pdf->Cell(105, 7, $pdf->conv($atleta['rotulo'] . ' - ' . substr($atleta['nome'], 0, 38)), 1, 0, 'L');
+            $pdf->Cell(20, 7, number_format((float)($sumula['pontos_' . $lado] ?? 0), 1, ',', '.'), 1, 0, 'C');
+            $pdf->Cell(70, 7, $pdf->conv($pdf->resumoPenalidades($sumula, $lado)), 1, 0, 'L');
+            $pdf->Cell(38, 7, $pdf->conv($vencedor ? 'Vencedor' : '-'), 1, 1, 'C');
+
+            $pdf->SetFont('Arial', 'I', 7.5);
+            $pdf->MultiCell(277, 6, $linhaTemporal, 1, 'L');
+            $pdf->SetFont('Arial', '', 8);
+        }
     }
 
     $pdf->Output('I', 'chave_' . $idCategoria . '.pdf');

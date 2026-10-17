@@ -114,26 +114,8 @@ class SumulaKumite {
      * Motor de Regras Oficiais de Kumite Kenshydokan
      */
     public function avaliarRegrasKumite(array $sumula): array {
-        // 1. Desclassificação por Hansoku-make
-        if (!empty($sumula['hansoku_make_aka'])) {
-            return [
-                'finalizada' => true,
-                'vencedor_lado' => 'shiro',
-                'forma_vitoria' => 'desclassificacao',
-                'motivo' => 'Hansoku-make (Desclassificação de AKA)'
-            ];
-        }
-        if (!empty($sumula['hansoku_make_shiro'])) {
-            return [
-                'finalizada' => true,
-                'vencedor_lado' => 'aka',
-                'forma_vitoria' => 'desclassificacao',
-                'motivo' => 'Hansoku-make (Desclassificação de SHIRO)'
-            ];
-        }
-
-        // 2. Acúmulo de 6 Waza-ari (3.0 pontos totais) = Ippon imediato
-        if ((int)$sumula['wazaari_aka'] >= 6 || (float)$sumula['pontos_aka'] >= 3.0) {
+        // A luta só termina antecipadamente quando um atleta soma 3 pontos.
+        if ((float)$sumula['pontos_aka'] >= 3.0) {
             return [
                 'finalizada' => true,
                 'vencedor_lado' => 'aka',
@@ -141,7 +123,7 @@ class SumulaKumite {
                 'motivo' => 'Waza-ari Awasete Ippon (Acúmulo de 6 Waza-ari / 3.0 pts)'
             ];
         }
-        if ((int)$sumula['wazaari_shiro'] >= 6 || (float)$sumula['pontos_shiro'] >= 3.0) {
+        if ((float)$sumula['pontos_shiro'] >= 3.0) {
             return [
                 'finalizada' => true,
                 'vencedor_lado' => 'shiro',
@@ -150,27 +132,9 @@ class SumulaKumite {
             ];
         }
 
-        // 3. Ippon direto (1.0 pt)
-        if (!empty($sumula['ippon_aka'])) {
-            return [
-                'finalizada' => true,
-                'vencedor_lado' => 'aka',
-                'forma_vitoria' => 'ippon',
-                'motivo' => 'Ippon Direto (Golpe perfeito e decisivo)'
-            ];
-        }
-        if (!empty($sumula['ippon_shiro'])) {
-            return [
-                'finalizada' => true,
-                'vencedor_lado' => 'shiro',
-                'forma_vitoria' => 'ippon',
-                'motivo' => 'Ippon Direto (Golpe perfeito e decisivo)'
-            ];
-        }
-
-        // 4. Golden Score (Ponto de Ouro: primeiro que pontuar vence imediatamente)
+        // Golden Score só pode começar depois do tempo regulamentar.
         if (!empty($sumula['golden_score_ativo'])) {
-            if ((float)$sumula['pontos_aka'] > 0.0) {
+            if ((float)$sumula['pontos_aka'] > (float)$sumula['pontos_shiro']) {
                 return [
                     'finalizada' => true,
                     'vencedor_lado' => 'aka',
@@ -178,7 +142,7 @@ class SumulaKumite {
                     'motivo' => 'Golden Score (Ponto de Ouro marcado)'
                 ];
             }
-            if ((float)$sumula['pontos_shiro'] > 0.0) {
+            if ((float)$sumula['pontos_shiro'] > (float)$sumula['pontos_aka']) {
                 return [
                     'finalizada' => true,
                     'vencedor_lado' => 'shiro',
