@@ -270,6 +270,7 @@ CREATE TABLE IF NOT EXISTS `campeonato_certificados` (
   `tipo_certificado` ENUM('campeao', 'vice_campeao', 'terceiro_lugar', 'participacao', 'arbitro', 'organizador') NOT NULL,
   `codigo_autenticidade` VARCHAR(64) NOT NULL UNIQUE,
   `arquivo_pdf_nome` VARCHAR(255) NOT NULL,
+  `resultados_snapshot` JSON DEFAULT NULL,
   `data_emissao` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_certificado`),
   INDEX `idx_cert_hash` (`codigo_autenticidade`),

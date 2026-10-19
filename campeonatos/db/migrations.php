@@ -33,6 +33,25 @@ class Migration {
         }
     }
 
+    private function adicionarColunaSeAusente(string $tabela, string $coluna, string $definicao): void {
+        $stmt = $this->conexao->prepare(
+            "SELECT COUNT(*) AS total
+             FROM information_schema.COLUMNS
+             WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ? AND COLUMN_NAME = ?"
+        );
+        $stmt->bind_param("ss", $tabela, $coluna);
+        $stmt->execute();
+        $existe = (int)$stmt->get_result()->fetch_assoc()['total'] > 0;
+        $stmt->close();
+
+        if (!$existe) {
+            $this->executarTabela(
+                $tabela,
+                "ALTER TABLE `{$tabela}` ADD COLUMN `{$coluna}` {$definicao}"
+            );
+        }
+    }
+
     public function executarTodas(): void {
         $this->criarTabelaUsuarios();
         $this->criarTabelaCampeonatos();
@@ -305,6 +324,11 @@ class Migration {
             data_emissao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
         $this->executarTabela('campeonato_certificados', $sql);
+        $this->adicionarColunaSeAusente(
+            'campeonato_certificados',
+            'resultados_snapshot',
+            'JSON NULL AFTER arquivo_pdf_nome'
+        );
     }
 
     public function criarTabelaAuditoria(): void {

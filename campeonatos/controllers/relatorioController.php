@@ -18,6 +18,7 @@ include_once __DIR__ . "/../models/categoriaModel.php";
 include_once __DIR__ . "/../models/chaveModel.php";
 include_once __DIR__ . "/../models/lutaModel.php";
 include_once __DIR__ . "/../models/sumulaKumiteModel.php";
+include_once __DIR__ . "/../models/classificacaoModel.php";
 include_once __DIR__ . "/alertHelper.php";
 
 require_once __DIR__ . "/../libs/fpdf/fpdf.php";
@@ -199,6 +200,51 @@ if ($tipo === 'inscritos') {
     $pdf->Output('I', 'pesagem_' . $idCampeonato . '.pdf');
     exit;
 
+} elseif ($tipo === 'medalhas') {
+    $classificacaoModel = new Classificacao();
+    $quadroMedalhas = $classificacaoModel->obterQuadroMedalhas($idCampeonato);
+
+    $pdf->setEventInfo($campeonato['titulo'], 'QUADRO GERAL DE MEDALHAS POR DOJO');
+    $pdf->AddPage();
+
+    $pdf->SetFillColor(241, 245, 249);
+    $pdf->SetFont('Arial', 'B', 10);
+    $pdf->SetTextColor(17, 24, 39);
+    $pdf->Cell(90, 8, $pdf->conv('Dojo / Academia'), 1, 0, 'L', true);
+    $pdf->Cell(22, 8, $pdf->conv('Ouro'), 1, 0, 'C', true);
+    $pdf->Cell(22, 8, $pdf->conv('Prata'), 1, 0, 'C', true);
+    $pdf->Cell(22, 8, $pdf->conv('Bronze'), 1, 0, 'C', true);
+    $pdf->Cell(24, 8, $pdf->conv('Total'), 1, 1, 'C', true);
+
+    $pdf->SetFont('Arial', '', 9);
+    if (!$quadroMedalhas) {
+        $pdf->Cell(180, 10, $pdf->conv('Ainda não há medalhas confirmadas neste campeonato.'), 1, 1, 'C');
+    } else {
+        foreach ($quadroMedalhas as $dojo) {
+            if ($pdf->GetY() > 180) {
+                $pdf->AddPage();
+                $pdf->SetFillColor(241, 245, 249);
+                $pdf->SetFont('Arial', 'B', 10);
+                $pdf->SetTextColor(17, 24, 39);
+                $pdf->Cell(90, 8, $pdf->conv('Dojo / Academia'), 1, 0, 'L', true);
+                $pdf->Cell(22, 8, $pdf->conv('Ouro'), 1, 0, 'C', true);
+                $pdf->Cell(22, 8, $pdf->conv('Prata'), 1, 0, 'C', true);
+                $pdf->Cell(22, 8, $pdf->conv('Bronze'), 1, 0, 'C', true);
+                $pdf->Cell(24, 8, $pdf->conv('Total'), 1, 1, 'C', true);
+                $pdf->SetFont('Arial', '', 9);
+            }
+
+            $pdf->Cell(90, 7, $pdf->conv($dojo['dojo'] ?? ''), 1, 0, 'L');
+            $pdf->Cell(22, 7, (int)$dojo['ouro'], 1, 0, 'C');
+            $pdf->Cell(22, 7, (int)$dojo['prata'], 1, 0, 'C');
+            $pdf->Cell(22, 7, (int)$dojo['bronze'], 1, 0, 'C');
+            $pdf->Cell(24, 7, (int)$dojo['total_medalhas'], 1, 1, 'C');
+        }
+    }
+
+    $pdf->Output('I', 'medalhas_' . $idCampeonato . '.pdf');
+    exit;
+
 } elseif ($tipo === 'chave') {
     $idCategoria = (int)($_GET['id_categoria'] ?? 0);
     $categoriaModel = new Categoria();
@@ -267,4 +313,7 @@ if ($tipo === 'inscritos') {
 
     $pdf->Output('I', 'chave_' . $idCategoria . '.pdf');
     exit;
+} else {
+    http_response_code(400);
+    die('Tipo de relatório inválido.');
 }

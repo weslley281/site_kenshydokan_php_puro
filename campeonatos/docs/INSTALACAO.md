@@ -66,6 +66,12 @@ ADMIN_PASSWORD=defina-uma-senha-forte-com-12-caracteres
 
 O sistema usa a porta `3306` por padrão e compartilha host e senha entre os dois bancos. Se o provedor usar valores diferentes, adicione somente os ajustes necessários: `DB_PORT`, `MAIN_DB_HOST`, `MAIN_DB_PORT` e/ou `MAIN_DB_PASS`. `APP_NAME`, `APP_ENV` e `APP_URL` também são opcionais; os padrões da aplicação já correspondem ao ambiente de produção.
 
+### Certificados no perfil do site principal
+
+Depois de finalizar o campeonato, use **Emitir todos** na tela **Certificados** do sistema de campeonatos. Os atletas poderão consultar e baixar seus certificados em `views/perfil/meus_certificados.php`. O certificado reúne todas as classificações homologadas do atleta naquele campeonato.
+
+O site principal consulta o banco de campeonatos em modo de leitura e usa por padrão as configurações `DB_HOST`, `DB_PORT`, `DB_NAME_CAMPEONATOS`, `DB_USER` e `DB_PASS` do arquivo `campeonatos/.env`. Se precisar usar uma conta de leitura separada, configure no ambiente do site principal `CHAMPIONSHIP_DB_HOST`, `CHAMPIONSHIP_DB_PORT`, `CHAMPIONSHIP_DB_NAME`, `CHAMPIONSHIP_DB_USER` e `CHAMPIONSHIP_DB_PASS`; ela precisa de permissão `SELECT` nas tabelas `campeonato_certificados`, `campeonato_inscricoes`, `campeonato_eventos`, `campeonato_classificacao` e `campeonato_categorias`. Mantenha essas credenciais somente nas variáveis de ambiente ou no arquivo `.env` protegido, nunca em arquivos públicos.
+
 ---
 
 ## 4. Configuração do Apache e Subdomínio

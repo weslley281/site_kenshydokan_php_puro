@@ -2,11 +2,6 @@
 // views/perfil/meus_certificados.php
 include __DIR__ . "/_perfil_auth.php";
 
-if (isset($usuario["nivel"]) && $usuario["nivel"] === "aluno") {
-    header("Location: perfil.php");
-    exit();
-}
-
 $page_title = "Meus Certificados";
 
 include __DIR__ . "/menu.php";
@@ -14,6 +9,7 @@ include __DIR__ . "/menu.php";
 include_once __DIR__ . "/../../models/certificadoModel.php";
 include_once __DIR__ . "/../../models/certificadoManualModel.php";
 include_once __DIR__ . "/../../models/certificadoUploadModel.php";
+include_once __DIR__ . "/../../models/campeonatoCertificadoModel.php";
 include_once __DIR__ . "/../../models/cursoModel.php";
 include_once __DIR__ . "/../../models/aulaModel.php";
 
@@ -49,6 +45,24 @@ if (!empty($filiado['id_filiado'])) {
     $certificados_upload = $uploadModel->listarPorFiliado($filiado['id_filiado']);
 }
 
+$certificados_campeonato = [];
+$erro_certificados_campeonato = null;
+if (!empty($filiado['id_filiado'])) {
+    try {
+        $campeonatoCertificadoModel = new CampeonatoCertificadoModel();
+        $certificados_campeonato = $campeonatoCertificadoModel->buscarPorFiliado((int)$filiado['id_filiado']);
+    } catch (RuntimeException | mysqli_sql_exception $erro) {
+        error_log(
+            'Falha ao carregar certificados de campeonatos no perfil. '
+            . 'Código ' . $erro->getCode()
+            . ', mensagem: ' . $erro->getMessage()
+        );
+        $erro_certificados_campeonato = $erro instanceof RuntimeException
+            ? $erro->getMessage()
+            : 'Não foi possível consultar o banco de campeonatos. Verifique as permissões de leitura da conexão.';
+    }
+}
+
 $cursoModelRepo = new CursoModel();
 ?>
 
@@ -60,13 +74,19 @@ $cursoModelRepo = new CursoModel();
 				<?php include __DIR__ . "/_perfil_info_card.php"; ?>
 
 				<hr>
+				<?php if ($erro_certificados_campeonato !== null): ?>
+					<div class="alert alert-warning" role="alert">
+						<strong>Certificados de campeonatos indisponíveis.</strong>
+						<?php echo htmlspecialchars($erro_certificados_campeonato, ENT_QUOTES, 'UTF-8'); ?>
+					</div>
+				<?php endif; ?>
 				<div class="text-center">
 					<h1 class="my-4"><strong>Meus Certificados</strong></h1>
 				</div>
 				<hr>
 
 				<div class="row">
-					<?php if (empty($certificados) && empty($certificados_manuais) && empty($certificados_upload)) : ?>
+					<?php if (empty($certificados) && empty($certificados_manuais) && empty($certificados_upload) && empty($certificados_campeonato)) : ?>
 						<div class="col-12 text-center py-4">
 							<div class="alert alert-light border shadow-sm p-4 rounded-lg">
 								<h5 class="text-secondary mb-0"><i class="fa-solid fa-folder-open mr-2"></i>Você ainda não possui certificados emitidos.</h5>
@@ -99,6 +119,42 @@ $cursoModelRepo = new CursoModel();
 													<td class="align-middle">
 														<a href="<?php echo htmlspecialchars("../" . $certificado['caminho_arquivo']); ?>" class="btn btn-sm btn-outline-success font-weight-bold px-3 rounded-pill" download>Baixar</a>
 														<a href="../../controllers/verificar_certificado.php?codigo=<?php echo htmlspecialchars($certificado['codigo_verificacao']); ?>" class="btn btn-sm btn-outline-info font-weight-bold px-3 rounded-pill" target="_blank">Verificar</a>
+													</td>
+												</tr>
+											<?php endforeach; ?>
+										</tbody>
+									</table>
+								</div>
+							<?php endif; ?>
+						</div>
+
+						<div class="col-12 mb-5">
+							<h5 class="font-weight-bold text-danger mb-3 border-bottom pb-2">
+								<i class="fa-solid fa-trophy mr-2"></i>Certificados de Campeonatos
+							</h5>
+							<?php if (empty($certificados_campeonato)): ?>
+								<p class="text-muted small pl-1">Nenhum certificado de campeonato finalizado foi emitido para este perfil.</p>
+							<?php else: ?>
+								<div class="table-responsive">
+									<table class="table table-hover bg-white border rounded shadow-sm">
+										<thead>
+											<tr class="bg-light text-secondary small font-weight-bold">
+												<th>Campeonato</th>
+												<th>Data</th>
+												<th>Resultados</th>
+												<th style="width: 200px;">Ações</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php foreach ($certificados_campeonato as $certificadoCampeonato): ?>
+												<tr>
+													<td class="align-middle font-weight-bold text-dark"><?php echo htmlspecialchars($certificadoCampeonato['campeonato_titulo']); ?></td>
+													<td class="align-middle text-secondary small"><?php echo date('d/m/Y', strtotime($certificadoCampeonato['campeonato_data_inicio'])); ?></td>
+													<td class="align-middle"><?php echo (int)$certificadoCampeonato['total_resultados']; ?></td>
+													<td class="align-middle">
+														<a href="../../controllers/gerar_certificado_campeonato.php?id=<?php echo (int)$certificadoCampeonato['id_certificado']; ?>" class="btn btn-sm btn-danger font-weight-bold px-3 rounded-pill shadow-sm" target="_blank">
+															<i class="fa-solid fa-file-pdf mr-1"></i>Visualizar / Baixar
+														</a>
 													</td>
 												</tr>
 											<?php endforeach; ?>
@@ -187,4 +243,3 @@ $cursoModelRepo = new CursoModel();
 	</div>
 
 <?php include __DIR__ . "/rodape.php"; ?>
-

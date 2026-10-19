@@ -16,95 +16,82 @@ include_once __DIR__ . "/../models/inscricaoModel.php";
 include_once __DIR__ . "/../models/campeonatoModel.php";
 include_once __DIR__ . "/../models/auditoriaModel.php";
 include_once __DIR__ . "/alertHelper.php";
+require_once __DIR__ . "/../libs/CertificadoCampeonatoPdf.php";
 
 $certificadoModel = new Certificado();
 $inscricaoModel = new Inscricao();
 $campeonatoModel = new Campeonato();
 
-// Emissão individual de certificado em PDF
+// Emite ou reabre o certificado único do atleta neste campeonato.
 if (isset($_GET['acao']) && $_GET['acao'] === 'gerar_pdf') {
-    $idInscricao = (int)($_GET['id_inscricao'] ?? 0);
-    $tipo = $_GET['tipo'] ?? 'participacao';
-
-    $inscricao = $inscricaoModel->buscarPorId($idInscricao);
-    if (!$inscricao) {
-        exibirMensagemEredirecionar("Inscrição não encontrada.", "../views/campeonatos.php");
+    $idCertificado = (int)($_GET['id_certificado'] ?? 0);
+    $certificado = $idCertificado > 0 ? $certificadoModel->buscarPorId($idCertificado) : null;
+    if ($idCertificado > 0 && !$certificado) {
+        exibirMensagemEredirecionar("Certificado não encontrado.", "../views/campeonatos.php");
     }
 
-    $campeonato = $campeonatoModel->buscarPorId((int)$inscricao['id_campeonato']);
+    if (!$certificado) {
+        $idInscricao = (int)($_GET['id_inscricao'] ?? 0);
+        $inscricao = $inscricaoModel->buscarPorId($idInscricao);
+        if (!$inscricao || $inscricao['status_elegibilidade'] !== 'aprovada') {
+            exibirMensagemEredirecionar("Inscrição aprovada não encontrada.", "../views/certificados.php");
+        }
 
-    // Gera hash criptográfico
-    $codigoHash = strtoupper(bin2hex(random_bytes(6))) . '-' . date('Y');
-    $pdfNome = "cert_{$idInscricao}_" . time() . ".pdf";
+        $campeonato = $campeonatoModel->buscarPorId((int)$inscricao['id_campeonato']);
+        if (!$campeonato || $campeonato['status'] !== 'finalizado') {
+            exibirMensagemEredirecionar("Os certificados ficam disponíveis após finalizar o campeonato.", "../views/certificados.php?id=" . (int)$inscricao['id_campeonato']);
+        }
 
-    $certificadoModel->criarCertificado([
-        'id_campeonato' => (int)$campeonato['id_campeonato'],
-        'id_inscricao' => $idInscricao,
-        'nome_titular' => $inscricao['nome_atleta_snapshot'],
-        'tipo_certificado' => $tipo,
-        'codigo_autenticidade' => $codigoHash,
-        'arquivo_pdf_nome' => $pdfNome
-    ]);
+        $certificado = $certificadoModel->buscarPorAtleta(
+            (int)$inscricao['id_campeonato'],
+            (int)$inscricao['id_filiado']
+        );
+        if (!$certificado) {
+            $codigoHash = strtoupper(bin2hex(random_bytes(12)));
+            $resultados = $certificadoModel->buscarResultadosAtleta(
+                (int)$inscricao['id_campeonato'],
+                (int)$inscricao['id_filiado']
+            );
+            $certificadoModel->criarCertificado([
+                'id_campeonato' => (int)$inscricao['id_campeonato'],
+                'id_inscricao' => (int)$inscricao['id_inscricao'],
+                'nome_titular' => $inscricao['nome_atleta_snapshot'],
+                'tipo_certificado' => 'participacao',
+                'codigo_autenticidade' => $codigoHash,
+                'arquivo_pdf_nome' => 'cert_campeonato_' . (int)$inscricao['id_campeonato'] . '_' . (int)$inscricao['id_filiado'] . '.pdf',
+                'resultados_snapshot' => $resultados
+            ]);
+            $certificado = $certificadoModel->buscarPorAtleta(
+                (int)$inscricao['id_campeonato'],
+                (int)$inscricao['id_filiado']
+            );
+            Auditoria::log("EMITIR_CERTIFICADO_CAMPEONATO", "campeonato_certificados", (int)$inscricao['id_inscricao'], null, [
+                'atleta' => $inscricao['nome_atleta_snapshot'],
+                'codigo' => $codigoHash
+            ], null, (int)$inscricao['id_campeonato']);
+        }
 
-    Auditoria::log("EMITIR_CERTIFICADO", "campeonato_certificados", $idInscricao, null, [
-        'atleta' => $inscricao['nome_atleta_snapshot'],
-        'hash' => $codigoHash
-    ], null, (int)$campeonato['id_campeonato']);
+        if (!$certificado) {
+            throw new RuntimeException('O certificado foi salvo, mas não foi possível recuperá-lo.');
+        }
+        $certificado = $certificadoModel->buscarPorId((int)$certificado['id_certificado']);
+    }
 
-    // Renderiza PDF com FPDF nativo
-    require_once __DIR__ . "/../libs/fpdf/fpdf.php";
+    if (!$certificado || $certificado['campeonato_status'] !== 'finalizado') {
+        http_response_code(403);
+        exit('Este certificado só pode ser consultado após o campeonato ser finalizado.');
+    }
 
-    $pdf = new FPDF('L', 'mm', 'A4');
-    $pdf->AddPage();
-    $pdf->SetAutoPageBreak(false);
-
-    // Borda dupla elegante
-    $pdf->SetDrawColor(220, 38, 38);
-    $pdf->SetLineWidth(1.5);
-    $pdf->Rect(10, 10, 277, 190);
-    $pdf->SetDrawColor(17, 24, 39);
-    $pdf->SetLineWidth(0.5);
-    $pdf->Rect(13, 13, 271, 184);
-
-    // Cabeçalho
-    $pdf->SetFont('Arial', 'B', 24);
-    $pdf->SetTextColor(17, 24, 39);
-    $pdf->Cell(0, 30, utf8_decode('FEDERAÇÃO KENSHYDOKAN JUTSU'), 0, 1, 'C');
-
-    $pdf->SetFont('Arial', 'B', 16);
-    $pdf->SetTextColor(220, 38, 38);
-    $pdf->Cell(0, 10, utf8_decode('CERTIFICADO OFICIAL'), 0, 1, 'C');
-
-    // Corpo
-    $pdf->Ln(15);
-    $pdf->SetFont('Arial', '', 14);
-    $pdf->SetTextColor(55, 65, 81);
-
-    $texto = "Certificamos que o(a) atleta " . strtoupper($inscricao['nome_atleta_snapshot']) . ", representando o dojo " . strtoupper($inscricao['dojo_snapshot']) . ", participou oficialmente do campeonato " . strtoupper($campeonato['titulo']) . ", realizado em " . date('d/m/Y', strtotime($campeonato['data_inicio'])) . " na cidade de " . $campeonato['cidade'] . "-" . $campeonato['estado'] . ".";
-
-    $pdf->SetX(25);
-    $pdf->MultiCell(247, 10, utf8_decode($texto), 0, 'C');
-
-    // Assinaturas
-    $pdf->Ln(25);
-    $y = $pdf->GetY();
-    $pdf->Line(40, $y + 15, 110, $y + 15);
-    $pdf->Line(187, $y + 15, 257, $y + 15);
-
-    $pdf->SetY($y + 18);
-    $pdf->SetFont('Arial', 'B', 10);
-    $pdf->SetX(40);
-    $pdf->Cell(70, 5, utf8_decode('Diretoria Técnica'), 0, 0, 'C');
-    $pdf->SetX(187);
-    $pdf->Cell(70, 5, utf8_decode('Presidente da Federação'), 0, 1, 'C');
-
-    // Hash de autenticidade
-    $pdf->SetY(185);
-    $pdf->SetFont('Arial', '', 8);
-    $pdf->SetTextColor(156, 163, 175);
-    $pdf->Cell(0, 5, utf8_decode('Autenticidade verificável em kenshydokan.org.br | Código Hash: ' . $codigoHash), 0, 1, 'C');
-
-    $pdf->Output('I', $pdfNome);
+    $resultados = !empty($certificado['resultados_snapshot'])
+        ? json_decode($certificado['resultados_snapshot'], true, 512, JSON_THROW_ON_ERROR)
+        : $certificadoModel->buscarResultadosAtleta(
+            (int)$certificado['id_campeonato'],
+            (int)$certificado['id_filiado']
+        );
+    if (!is_array($resultados)) {
+        throw new UnexpectedValueException('O retrato dos resultados do certificado é inválido.');
+    }
+    CertificadoCampeonatoPdf::emitir($certificado, $resultados);
     exit;
 }
 
@@ -114,27 +101,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $idCampeonato = (int)($_POST["id_campeonato"] ?? 0);
 
     if ($tipo === "gerar_lote") {
-        $inscricoes = $inscricaoModel->buscarPorCampeonato($idCampeonato);
+        $campeonato = $campeonatoModel->buscarPorId($idCampeonato);
+        if (!$campeonato || $campeonato['status'] !== 'finalizado') {
+            exibirMensagemEredirecionar("Finalize o campeonato antes de emitir os certificados.", "../views/certificados.php?id=" . $idCampeonato);
+        }
+
+        $atletas = $certificadoModel->buscarAtletasPorCampeonato($idCampeonato);
         $emitidos = 0;
 
-        foreach ($inscricoes as $ins) {
-            if ($ins['status_elegibilidade'] === 'aprovada') {
-                $codigoHash = strtoupper(bin2hex(random_bytes(6))) . '-' . date('Y');
-                $pdfNome = "cert_{$ins['id_inscricao']}_" . time() . ".pdf";
-
+        foreach ($atletas as $atleta) {
+            if (empty($atleta['id_certificado'])) {
+                $codigoHash = strtoupper(bin2hex(random_bytes(12)));
+                $resultados = $certificadoModel->buscarResultadosAtleta(
+                    $idCampeonato,
+                    (int)$atleta['id_filiado']
+                );
                 $certificadoModel->criarCertificado([
                     'id_campeonato' => $idCampeonato,
-                    'id_inscricao' => (int)$ins['id_inscricao'],
-                    'nome_titular' => $ins['nome_atleta_snapshot'],
+                    'id_inscricao' => (int)$atleta['id_inscricao'],
+                    'nome_titular' => $atleta['nome_titular'],
                     'tipo_certificado' => 'participacao',
                     'codigo_autenticidade' => $codigoHash,
-                    'arquivo_pdf_nome' => $pdfNome
+                    'arquivo_pdf_nome' => 'cert_campeonato_' . $idCampeonato . '_' . (int)$atleta['id_filiado'] . '.pdf',
+                    'resultados_snapshot' => $resultados
                 ]);
                 $emitidos++;
             }
         }
 
         Auditoria::log("EMITIR_LOTE_CERTIFICADOS", "campeonato_certificados", null, null, ['total' => $emitidos], null, $idCampeonato);
-        exibirMensagemEredirecionar("Lote de {$emitidos} certificados gerado com sucesso!", "../views/certificados.php?id=" . $idCampeonato);
+        exibirMensagemEredirecionar("Certificados prontos: {$emitidos} novos emitidos para " . count($atletas) . " atletas.", "../views/certificados.php?id=" . $idCampeonato);
     }
 }

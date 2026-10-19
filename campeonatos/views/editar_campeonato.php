@@ -21,7 +21,18 @@ if (!$campeonato) {
         </h2>
         <p class="text-muted small mb-0"><?= htmlspecialchars($campeonato['titulo']) ?></p>
     </div>
-    <div class="col-md-5 text-md-end mt-3 mt-md-0">
+    <div class="col-md-5 text-md-end mt-3 mt-md-0 d-flex gap-2 justify-content-md-end">
+        <?php if ($campeonato['status'] === 'finalizado'): ?>
+            <span class="btn btn-success disabled" aria-disabled="true"><i class="fas fa-check me-1"></i> Encerrado</span>
+        <?php elseif ($campeonato['status'] !== 'cancelado'): ?>
+            <form method="POST" action="../controllers/campeonatoController.php" onsubmit="return confirm('Encerrar este campeonato? Depois disso, os certificados dos atletas ficarão disponíveis no site principal. Confirme que os resultados das categorias já foram homologados.');">
+                <input type="hidden" name="tipo" value="encerrar_campeonato">
+                <input type="hidden" name="id_campeonato" value="<?= $id ?>">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-flag-checkered me-1"></i> Encerrar campeonato
+                </button>
+            </form>
+        <?php endif; ?>
         <a href="detalhes_campeonato.php?id=<?= $id ?>" class="btn btn-outline-secondary">
             <i class="fas fa-arrow-left me-1"></i> Voltar
         </a>

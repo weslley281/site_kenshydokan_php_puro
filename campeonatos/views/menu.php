@@ -39,6 +39,7 @@ $itensMenu = [
     ['num' => 4, 'icone' => 'fa-weight-scale', 'texto' => 'Pesagem',           'link' => "pesagem.php?id=$cid",     'etapa' => 'pesagem', 'paginas' => ['pesagem.php'], 'precisaCamp' => true],
     ['num' => 5, 'icone' => 'fa-hand-fist',    'texto' => 'Lutas',             'link' => "chaves.php?id=$cid",      'etapa' => 'lutas', 'paginas' => ['chaves.php', 'ver_chave.php', 'sumula_kata.php', 'sumula_tameshiwari.php', 'tatames.php', 'painel_tatame.php'], 'precisaCamp' => true],
     ['num' => 6, 'icone' => 'fa-medal',        'texto' => 'Resultados',        'link' => "resultados.php?id=$cid",  'etapa' => 'resultados', 'paginas' => ['resultados.php'], 'precisaCamp' => true],
+    ['num' => 7, 'icone' => 'fa-certificate',  'texto' => 'Certificados',      'link' => "certificados.php?id=$cid", 'etapa' => 'certificados', 'paginas' => ['certificados.php'], 'precisaCamp' => true],
 ];
 ?>
 <!DOCTYPE html>

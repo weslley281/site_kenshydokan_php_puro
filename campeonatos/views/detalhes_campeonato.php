@@ -49,9 +49,23 @@ if ($proxima === null && $etapas) {
     <div>
         <h1><?= htmlspecialchars($campAtual['titulo']) ?></h1>
         <p><i class="far fa-calendar me-1"></i><?= date('d/m/Y', strtotime($campAtual['data_inicio'])) ?>
-            &nbsp;&bull;&nbsp; <i class="fas fa-location-dot me-1"></i><?= htmlspecialchars($campAtual['cidade']) ?> - <?= htmlspecialchars($campAtual['estado']) ?></p>
+            &nbsp;&bull;&nbsp; <i class="fas fa-location-dot me-1"></i><?= htmlspecialchars($campAtual['cidade']) ?> - <?= htmlspecialchars($campAtual['estado']) ?>
+            &nbsp;&bull;&nbsp; Status: <strong><?= htmlspecialchars(str_replace('_', ' ', ucfirst($campAtual['status']))) ?></strong></p>
     </div>
-    <a href="<?= $etapas[$proxima][3] ?>" class="btn btn-danger btn-lg">Continuar <i class="fas fa-arrow-right"></i></a>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="<?= $etapas[$proxima][3] ?>" class="btn btn-danger btn-lg">Continuar <i class="fas fa-arrow-right"></i></a>
+        <?php if ($campAtual['status'] === 'finalizado'): ?>
+            <span class="btn btn-success btn-lg disabled" aria-disabled="true"><i class="fas fa-check me-1"></i> Campeonato encerrado</span>
+        <?php elseif ($campAtual['status'] !== 'cancelado'): ?>
+            <form method="POST" action="../controllers/campeonatoController.php" onsubmit="return confirm('Encerrar este campeonato? Depois disso, os certificados dos atletas ficarão disponíveis no site principal. Confirme que os resultados das categorias já foram homologados.');">
+                <input type="hidden" name="tipo" value="encerrar_campeonato">
+                <input type="hidden" name="id_campeonato" value="<?= $id ?>">
+                <button type="submit" class="btn btn-outline-success btn-lg">
+                    <i class="fas fa-flag-checkered me-1"></i> Encerrar campeonato
+                </button>
+            </form>
+        <?php endif; ?>
+    </div>
 </div>
 
 <div class="help">Siga as etapas na ordem. As etapas com <i class="fas fa-check text-success"></i> já estão prontas.</div>

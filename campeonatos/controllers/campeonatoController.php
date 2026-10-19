@@ -87,6 +87,37 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exibirMensagemEredirecionar("Erro ao excluir campeonato.", "../views/detalhes_campeonato.php?id=" . $id);
         }
 
+    } elseif ($tipo === "encerrar_campeonato") {
+        $id = (int)($_POST['id_campeonato'] ?? 0);
+        $campeonato = $campeonatoModel->buscarPorId($id);
+        if (!$campeonato) {
+            exibirMensagemEredirecionar("Campeonato não encontrado.", "../views/inicio.php");
+        }
+        if ($campeonato['status'] === 'cancelado') {
+            exibirMensagemEredirecionar("Um campeonato cancelado não pode ser encerrado.", "../views/detalhes_campeonato.php?id=" . $id);
+        }
+        if ($campeonato['status'] === 'finalizado') {
+            exibirMensagemEredirecionar("Este campeonato já está encerrado.", "../views/detalhes_campeonato.php?id=" . $id);
+        }
+
+        if ($campeonatoModel->atualizarStatus($id, 'finalizado')) {
+            Auditoria::log(
+                "ENCERRAR_CAMPEONATO",
+                "campeonato_eventos",
+                $id,
+                ['status' => $campeonato['status']],
+                ['status' => 'finalizado'],
+                null,
+                $id
+            );
+            exibirMensagemEredirecionar(
+                "Campeonato encerrado. Os certificados já podem ser emitidos e consultados no perfil dos atletas.",
+                "../views/detalhes_campeonato.php?id=" . $id
+            );
+        } else {
+            exibirMensagemEredirecionar("Não foi possível encerrar o campeonato.", "../views/detalhes_campeonato.php?id=" . $id);
+        }
+
     } elseif ($tipo === "mudar_status") {
         $id = (int)($_POST['id_campeonato'] ?? 0);
         $novoStatus = $_POST['status'] ?? 'rascunho';
