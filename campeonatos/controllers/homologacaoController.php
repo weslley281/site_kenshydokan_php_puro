@@ -21,7 +21,10 @@ if (!isset($_SESSION["id_usuario"])) {
     exibirMensagemEredirecionar("Acesso restrito.", "../views/login.php");
 }
 
+include_once __DIR__ . "/csrfHelper.php";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    csrfExigir('../views/inicio.php');
+    exigirPerfil([]);
     $classificacaoModel = new Classificacao();
     $categoriaModel = new Categoria();
 

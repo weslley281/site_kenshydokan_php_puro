@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . "/../controllers/authHelper.php";
+exigirPerfil([], 'inicio.php'); // somente administrador
 $pageTitle = 'Editar Campeonato | Kenshydokan';
 include_once __DIR__ . "/menu.php";
 include_once __DIR__ . "/../models/campeonatoModel.php";
@@ -25,7 +27,7 @@ if (!$campeonato) {
         <?php if ($campeonato['status'] === 'finalizado'): ?>
             <span class="btn btn-success disabled" aria-disabled="true"><i class="fas fa-check me-1"></i> Encerrado</span>
         <?php elseif ($campeonato['status'] !== 'cancelado'): ?>
-            <form method="POST" action="../controllers/campeonatoController.php" onsubmit="return confirm('Encerrar este campeonato? Depois disso, os certificados dos atletas ficarão disponíveis no site principal. Confirme que os resultados das categorias já foram homologados.');">
+            <form method="POST" action="../controllers/campeonatoController.php" onsubmit="return confirm('Encerrar este campeonato? Depois disso, os certificados dos atletas ficarão disponíveis no site principal. Confirme que os resultados das categorias já foram homologados.');"><?= csrfCampo() ?>
                 <input type="hidden" name="tipo" value="encerrar_campeonato">
                 <input type="hidden" name="id_campeonato" value="<?= $id ?>">
                 <button type="submit" class="btn btn-success">
@@ -41,7 +43,7 @@ if (!$campeonato) {
 
 <div class="card border-0 shadow-sm">
     <div class="card-body p-4">
-        <form method="POST" action="../controllers/campeonatoController.php">
+        <form method="POST" action="../controllers/campeonatoController.php"><?= csrfCampo() ?>
             <input type="hidden" name="tipo" value="editar_campeonato">
             <input type="hidden" name="id_campeonato" value="<?= $id ?>">
 

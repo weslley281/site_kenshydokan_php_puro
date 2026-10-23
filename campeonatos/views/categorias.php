@@ -29,7 +29,7 @@ $nomeSexo = ['M' => 'Masculino', 'F' => 'Feminino', 'misto' => 'Misto'];
         <div class="card">
             <div class="card-header py-3"><i class="fas fa-plus text-danger me-2"></i>Nova categoria</div>
             <div class="card-body">
-                <form method="POST" action="../controllers/categoriaController.php">
+                <form method="POST" action="../controllers/categoriaController.php"><?= csrfCampo() ?>
                     <input type="hidden" name="tipo" value="criar_categoria">
                     <input type="hidden" name="id_campeonato" value="<?= $idCampeonato ?>">
 
@@ -138,7 +138,7 @@ $nomeSexo = ['M' => 'Masculino', 'F' => 'Feminino', 'misto' => 'Misto'];
                                     <?php endif; ?>
                                 </td>
                                 <td class="text-end">
-                                    <form method="POST" action="../controllers/categoriaController.php" onsubmit="return confirm('Apagar esta categoria?');">
+                                    <form method="POST" action="../controllers/categoriaController.php" onsubmit="return confirm('Apagar esta categoria?');"><?= csrfCampo() ?>
                                         <input type="hidden" name="tipo" value="excluir_categoria">
                                         <input type="hidden" name="id_campeonato" value="<?= $idCampeonato ?>">
                                         <input type="hidden" name="id_categoria" value="<?= $cat['id_categoria'] ?>">

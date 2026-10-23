@@ -86,7 +86,7 @@ class Luta {
                 LEFT JOIN campeonato_inscricoes shiro ON l.id_inscricao_shiro = shiro.id_inscricao
                 LEFT JOIN campeonato_inscricoes venc ON l.id_vencedor = venc.id_inscricao
                 LEFT JOIN campeonato_categorias cat ON l.id_categoria = cat.id_categoria
-                WHERE (l.id_tatame = ? OR l.id_tatame IS NULL)";
+                WHERE l.id_tatame = ?";
 
         if ($status !== null) {
             $sql .= " AND l.status = ?";
@@ -180,5 +180,67 @@ class Luta {
         $ok = $stmt->execute();
         $stmt->close();
         return $ok;
+    }
+
+    /**
+     * RF07.2: envia todas as lutas ainda não terminadas de uma categoria para um tatame.
+     * $idTatame = null tira a categoria do tatame. Lutas já concluídas não mudam.
+     */
+    public function alocarCategoriaAoTatame(int $idCategoria, ?int $idTatame): int {
+        $stmt = $this->conexao->prepare(
+            "UPDATE campeonato_lutas SET id_tatame = ? WHERE id_categoria = ? AND status <> 'concluida'"
+        );
+        $stmt->bind_param("ii", $idTatame, $idCategoria);
+        $stmt->execute();
+        $afetadas = $stmt->affected_rows;
+        $stmt->close();
+        return $afetadas;
+    }
+
+    /**
+     * Resumo por categoria: quantas lutas faltam e em qual tatame estão.
+     * Retorna [id_categoria => ['pendentes' => n, 'id_tatame' => id|null]].
+     */
+    public function resumoTatamesPorCategoria(int $idCampeonato): array {
+        $sql = "SELECT id_categoria,
+                       SUM(status <> 'concluida') AS pendentes,
+                       MAX(CASE WHEN status <> 'concluida' THEN id_tatame END) AS id_tatame
+                FROM campeonato_lutas
+                WHERE id_campeonato = ?
+                GROUP BY id_categoria";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param("i", $idCampeonato);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $resumo = [];
+        while ($row = $res->fetch_assoc()) {
+            $resumo[(int)$row['id_categoria']] = [
+                'pendentes' => (int)$row['pendentes'],
+                'id_tatame' => $row['id_tatame'] !== null ? (int)$row['id_tatame'] : null,
+            ];
+        }
+        $stmt->close();
+        return $resumo;
+    }
+
+    /**
+     * RF06.5: encerra a luta sem combate (W.O., desistência ou desclassificação).
+     * O vencedor avança automaticamente na chave (via definirVencedor).
+     * Retorna o id do vencedor, ou 0 se a luta não puder receber esse resultado.
+     */
+    public function registrarResultadoSemLuta(int $idLuta, string $ladoVencedor, string $forma): int {
+        if (!in_array($forma, ['wo', 'desistencia', 'desclassificacao'], true)
+            || !in_array($ladoVencedor, ['aka', 'shiro'], true)) {
+            return 0;
+        }
+
+        $luta = $this->buscarPorId($idLuta);
+        if (!$luta || $luta['status'] === 'concluida'
+            || empty($luta['id_inscricao_aka']) || empty($luta['id_inscricao_shiro'])) {
+            return 0;
+        }
+
+        $idVencedor = $ladoVencedor === 'aka' ? (int)$luta['id_inscricao_aka'] : (int)$luta['id_inscricao_shiro'];
+        return $this->definirVencedor($idLuta, $idVencedor, $forma) ? $idVencedor : 0;
     }
 }

@@ -16,7 +16,10 @@ if (!isset($_SESSION["id_usuario"])) {
     exibirMensagemEredirecionar("Acesso restrito.", "../views/login.php");
 }
 
+include_once __DIR__ . "/csrfHelper.php";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    csrfExigir('../views/inicio.php');
+    exigirPerfil(['mesario']);
     $kataModel = new SumulaKata();
     $tipo = $_POST["tipo"] ?? "";
     $idCampeonato = (int)($_POST["id_campeonato"] ?? 0);

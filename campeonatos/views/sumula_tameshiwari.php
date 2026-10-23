@@ -46,7 +46,7 @@ $tecnicas = ['seiken' => 'Seiken (soco)', 'shuto' => 'Shuto (mão em faca)', 'hi
                 <?php if (empty($inscricoes)): ?>
                     <p class="text-muted mb-0">Nenhum atleta liberado nesta categoria.</p>
                 <?php else: ?>
-                <form action="../controllers/sumulaTameshiwariController.php" method="POST" id="formTam">
+                <form action="../controllers/sumulaTameshiwariController.php" method="POST" id="formTam"><?= csrfCampo() ?>
                     <input type="hidden" name="tipo" value="registrar_tameshiwari">
                     <input type="hidden" name="id_campeonato" value="<?= $idCampeonato ?>">
                     <input type="hidden" name="id_categoria" value="<?= $idCategoria ?>">

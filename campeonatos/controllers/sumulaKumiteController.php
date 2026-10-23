@@ -31,6 +31,8 @@ $tatameModel = new Tatame();
 
 // Endpoint AJAX: Eventos em tempo real da súmula
 if (isset($_GET['acao']) && $_GET['acao'] === 'evento') {
+    csrfExigir('', true);
+    exigirPerfil(['mesario'], '', true);
     header('Content-Type: application/json; charset=utf-8');
 
     $idLuta = (int)($_POST['id_luta'] ?? 0);
@@ -197,7 +199,10 @@ if (isset($_GET['acao']) && $_GET['acao'] === 'evento') {
 }
 
 // Finalização manual ou decisão oficial dos árbitros (Hantei / Pontos)
+include_once __DIR__ . "/csrfHelper.php";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    csrfExigir('../views/inicio.php');
+    exigirPerfil(['mesario']);
     $tipo = $_POST["tipo"] ?? "";
     $idLuta = (int)($_POST["id_luta"] ?? 0);
 

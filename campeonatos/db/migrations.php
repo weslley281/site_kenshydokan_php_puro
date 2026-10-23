@@ -68,6 +68,7 @@ class Migration {
         $this->criarTabelaClassificacao();
         $this->criarTabelaCertificados();
         $this->criarTabelaAuditoria();
+        $this->criarTabelaLoginTentativas();
     }
 
     public function criarTabelaUsuarios(): void {
@@ -81,6 +82,22 @@ class Migration {
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
         $this->executarTabela('campeonato_usuarios', $sql);
+    }
+
+    /**
+     * Registro de tentativas de login (RF01.3: bloqueio temporário após 5 falhas seguidas).
+     * Tabela própria para não alterar campeonato_usuarios.
+     */
+    public function criarTabelaLoginTentativas(): void {
+        $sql = "CREATE TABLE IF NOT EXISTS campeonato_login_tentativas (
+            id_tentativa INT AUTO_INCREMENT PRIMARY KEY,
+            email VARCHAR(150) NOT NULL,
+            ip_address VARCHAR(45) NOT NULL,
+            sucesso TINYINT(1) NOT NULL DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            INDEX idx_login_email_data (email, created_at)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+        $this->executarTabela('campeonato_login_tentativas', $sql);
     }
 
     public function criarTabelaCampeonatos(): void {

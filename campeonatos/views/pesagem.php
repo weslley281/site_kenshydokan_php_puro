@@ -49,7 +49,7 @@ function textoLimite(array $ins): string {
         <?php foreach ($faltam as $ins): ?>
             <li class="list-group-item py-3">
                 <form method="POST" action="../controllers/pesagemController.php" class="row g-3 align-items-center form-pesagem"
-                      data-min="<?= (float)$ins['peso_min'] ?>" data-max="<?= $ins['peso_max'] ? (float)$ins['peso_max'] + (float)$ins['tolerancia_peso_kg'] : 0 ?>">
+                      data-min="<?= (float)$ins['peso_min'] ?><?= csrfCampo() ?>" data-max="<?= $ins['peso_max'] ? (float)$ins['peso_max'] + (float)$ins['tolerancia_peso_kg'] : 0 ?>">
                     <input type="hidden" name="tipo" value="registrar_pesagem">
                     <input type="hidden" name="id_campeonato" value="<?= $idCampeonato ?>">
                     <input type="hidden" name="id_inscricao" value="<?= $ins['id_inscricao'] ?>">
@@ -107,7 +107,7 @@ function textoLimite(array $ins): string {
 <div class="modal fade" id="modalTrocar" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST" action="../controllers/pesagemController.php">
+            <form method="POST" action="../controllers/pesagemController.php"><?= csrfCampo() ?>
                 <input type="hidden" name="tipo" value="remanejar_categoria">
                 <input type="hidden" name="id_campeonato" value="<?= $idCampeonato ?>">
                 <input type="hidden" name="id_inscricao" id="trocarId">

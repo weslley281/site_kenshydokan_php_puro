@@ -60,7 +60,7 @@ $medalha = [
                 <?php endif; ?>
             </div>
             <div class="card-footer bg-white text-end">
-                <form action="../controllers/homologacaoController.php" method="POST" onsubmit="return confirm('Confirmar o resultado desta categoria?');">
+                <form action="../controllers/homologacaoController.php" method="POST" onsubmit="return confirm('Confirmar o resultado desta categoria?');"><?= csrfCampo() ?>
                     <input type="hidden" name="tipo" value="homologar_categoria">
                     <input type="hidden" name="id_campeonato" value="<?= $idCampeonato ?>">
                     <input type="hidden" name="id_categoria" value="<?= $cat['id_categoria'] ?>">

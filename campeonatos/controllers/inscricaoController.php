@@ -180,7 +180,10 @@ if (isset($_GET['acao']) && $_GET['acao'] === 'buscar_filiados') {
     exit;
 }
 
+include_once __DIR__ . "/csrfHelper.php";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    csrfExigir('../views/inicio.php');
+    exigirPerfil(['mesario']);
     $inscricaoModel = new Inscricao();
     $categoriaModel = new Categoria();
     $campeonatoModel = new Campeonato();
@@ -256,6 +259,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
     } elseif ($tipo === "atualizar_status") {
+        exigirPerfil([]); // somente administrador
         $idInscricao = (int)($_POST["id_inscricao"] ?? 0);
         $novoStatus = $_POST["status"] ?? "aprovada";
         $motivo = trim($_POST["motivo"] ?? "");

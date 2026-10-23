@@ -49,7 +49,7 @@ function nomeRodada(int $r, int $total): string {
 <?php if (!$chave): ?>
     <div class="card"><div class="empty">
         <i class="fas fa-shuffle"></i>As lutas desta categoria ainda não foram sorteadas.
-        <form method="POST" action="../controllers/chaveamentoController.php" class="mt-3">
+        <form method="POST" action="../controllers/chaveamentoController.php" class="mt-3"><?= csrfCampo() ?>
             <input type="hidden" name="tipo" value="gerar_chave">
             <input type="hidden" name="id_categoria" value="<?= $idCategoria ?>">
             <button type="submit" class="btn btn-danger btn-lg"><i class="fas fa-shuffle"></i> Sortear lutas</button>
@@ -84,6 +84,16 @@ function nomeRodada(int $r, int $total): string {
                             <a href="sumula_kumite.php?id=<?= $luta['id_luta'] ?>" class="btn btn-danger btn-lg">
                                 <i class="fas fa-play"></i> <?= $luta['status'] === 'em_andamento' ? 'Continuar luta' : 'Começar luta' ?>
                             </a>
+                            <?php if (usuarioTemPerfil(['mesario'])): ?>
+                                <button type="button" class="btn btn-outline-secondary btn-lg btn-sem-luta"
+                                        data-id="<?= (int)$luta['id_luta'] ?>"
+                                        data-num="<?= (int)$luta['numero_luta'] ?>"
+                                        data-aka="<?= htmlspecialchars($luta['nome_aka'] ?? 'AKA', ENT_QUOTES, 'UTF-8') ?>"
+                                        data-shiro="<?= htmlspecialchars($luta['nome_shiro'] ?? 'SHIRO', ENT_QUOTES, 'UTF-8') ?>"
+                                        data-bs-toggle="modal" data-bs-target="#modalSemLuta">
+                                    <i class="fas fa-user-xmark"></i> Não houve luta
+                                </button>
+                            <?php endif; ?>
                         <?php else: ?>
                             <span class="text-muted">Aguardando lutas anteriores</span>
                         <?php endif; ?>
@@ -94,5 +104,65 @@ function nomeRodada(int $r, int $total): string {
         </div>
     <?php endforeach; ?>
 <?php endif; ?>
+
+<!-- Modal: luta encerrada sem combate (W.O., desistência, desclassificação) -->
+<div class="modal fade" id="modalSemLuta" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border-0 shadow">
+            <form method="POST" action="../controllers/lutaController.php" onsubmit="return confirm('Confirmar? O vencedor passa direto para a próxima fase.');"><?= csrfCampo() ?>
+                <input type="hidden" name="tipo" value="resultado_sem_luta">
+                <input type="hidden" name="id_luta" id="semLutaId">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title fs-6 fw-bold"><i class="fas fa-user-xmark text-danger me-2"></i>Luta <span id="semLutaNum"></span>: não houve luta</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="fw-bold mb-2">O que aconteceu?</p>
+                    <div class="d-grid gap-2 mb-3">
+                        <input type="radio" class="btn-check" name="forma_vitoria" id="formaWo" value="wo" required checked>
+                        <label class="btn btn-outline-dark btn-lg text-start" for="formaWo"><strong>W.O.</strong> - um atleta não apareceu</label>
+                        <input type="radio" class="btn-check" name="forma_vitoria" id="formaDesist" value="desistencia">
+                        <label class="btn btn-outline-dark btn-lg text-start" for="formaDesist"><strong>Desistência</strong> - um atleta desistiu</label>
+                        <input type="radio" class="btn-check" name="forma_vitoria" id="formaDesc" value="desclassificacao">
+                        <label class="btn btn-outline-dark btn-lg text-start" for="formaDesc"><strong>Desclassificação</strong> - um atleta foi desclassificado</label>
+                    </div>
+
+                    <p class="fw-bold mb-2">Quem passa para a próxima fase?</p>
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <input type="radio" class="btn-check" name="vencedor_lado" id="vencAka" value="aka" required>
+                            <label class="btn btn-outline-danger btn-lg w-100" for="vencAka"><small class="d-block">Vermelho</small><span id="semLutaAka"></span></label>
+                        </div>
+                        <div class="col-6">
+                            <input type="radio" class="btn-check" name="vencedor_lado" id="vencShiro" value="shiro">
+                            <label class="btn btn-outline-dark btn-lg w-100" for="vencShiro"><small class="d-block">Branco</small><span id="semLutaShiro"></span></label>
+                        </div>
+                    </div>
+
+                    <label for="semLutaMotivo" class="form-label fw-bold">Motivo</label>
+                    <input type="text" class="form-control form-control-lg" id="semLutaMotivo" name="motivo" required maxlength="255" placeholder="Ex.: não compareceu após 3 chamadas">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger fw-bold">Confirmar resultado</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.querySelectorAll('.btn-sem-luta').forEach(function (botao) {
+    botao.addEventListener('click', function () {
+        document.getElementById('semLutaId').value = botao.dataset.id;
+        document.getElementById('semLutaNum').textContent = botao.dataset.num;
+        document.getElementById('semLutaAka').textContent = botao.dataset.aka;
+        document.getElementById('semLutaShiro').textContent = botao.dataset.shiro;
+        document.getElementById('vencAka').checked = false;
+        document.getElementById('vencShiro').checked = false;
+        document.getElementById('semLutaMotivo').value = '';
+    });
+});
+</script>
 
 <?php include_once __DIR__ . "/rodape.php"; ?>

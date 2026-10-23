@@ -57,7 +57,7 @@ if ($proxima === null && $etapas) {
         <?php if ($campAtual['status'] === 'finalizado'): ?>
             <span class="btn btn-success btn-lg disabled" aria-disabled="true"><i class="fas fa-check me-1"></i> Campeonato encerrado</span>
         <?php elseif ($campAtual['status'] !== 'cancelado'): ?>
-            <form method="POST" action="../controllers/campeonatoController.php" onsubmit="return confirm('Encerrar este campeonato? Depois disso, os certificados dos atletas ficarão disponíveis no site principal. Confirme que os resultados das categorias já foram homologados.');">
+            <form method="POST" action="../controllers/campeonatoController.php" onsubmit="return confirm('Encerrar este campeonato? Depois disso, os certificados dos atletas ficarão disponíveis no site principal. Confirme que os resultados das categorias já foram homologados.');"><?= csrfCampo() ?>
                 <input type="hidden" name="tipo" value="encerrar_campeonato">
                 <input type="hidden" name="id_campeonato" value="<?= $id ?>">
                 <button type="submit" class="btn btn-outline-success btn-lg">

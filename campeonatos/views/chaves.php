@@ -43,7 +43,7 @@ $chaveModel = new Chave();
             <?php if ($cat['modalidade'] === 'kumite'): ?>
                 <?php if ($chave): ?>
                     <a href="ver_chave.php?id=<?= $cat['id_categoria'] ?>" class="btn btn-danger btn-lg"><i class="fas fa-hand-fist"></i> Ver lutas</a>
-                    <form method="POST" action="../controllers/chaveamentoController.php" onsubmit="return confirm('Sortear de novo? As lutas atuais desta categoria serão apagadas.');">
+                    <form method="POST" action="../controllers/chaveamentoController.php" onsubmit="return confirm('Sortear de novo? As lutas atuais desta categoria serão apagadas.');"><?= csrfCampo() ?>
                         <input type="hidden" name="tipo" value="gerar_chave">
                         <input type="hidden" name="id_categoria" value="<?= $cat['id_categoria'] ?>">
                         <button type="submit" class="btn btn-outline-secondary btn-lg" title="Sortear de novo"><i class="fas fa-rotate"></i></button>
@@ -51,7 +51,7 @@ $chaveModel = new Chave();
                 <?php elseif ($liberados < 2): ?>
                     <span class="text-muted align-self-center">Precisa de pelo menos 2 atletas liberados</span>
                 <?php else: ?>
-                    <form method="POST" action="../controllers/chaveamentoController.php" onsubmit="return confirm('Sortear as lutas desta categoria agora?');">
+                    <form method="POST" action="../controllers/chaveamentoController.php" onsubmit="return confirm('Sortear as lutas desta categoria agora?');"><?= csrfCampo() ?>
                         <input type="hidden" name="tipo" value="gerar_chave">
                         <input type="hidden" name="id_categoria" value="<?= $cat['id_categoria'] ?>">
                         <button type="submit" class="btn btn-danger btn-lg"><i class="fas fa-shuffle"></i> Sortear lutas</button>

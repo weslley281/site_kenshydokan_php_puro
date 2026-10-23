@@ -40,7 +40,7 @@ $certificadosEmitidos = count(array_filter($atletas, static function (array $atl
         <a href="validar_certificado.php" target="_blank" class="btn btn-outline-primary">
             <i class="fas fa-shield-alt me-1"></i> Validar certificado
         </a>
-        <form action="../controllers/certificadoController.php" method="POST" style="display:inline;" onsubmit="return confirm('Gerar certificados para todos os atletas aprovados neste campeonato?');">
+        <form action="../controllers/certificadoController.php" method="POST" style="display:inline;" onsubmit="return confirm('Gerar certificados para todos os atletas aprovados neste campeonato?');"><?= csrfCampo() ?>
             <input type="hidden" name="tipo" value="gerar_lote">
             <input type="hidden" name="id_campeonato" value="<?= $idCampeonato ?>">
             <button type="submit" class="btn btn-success" <?= !$encerrado ? 'disabled title="Disponível após finalizar o campeonato"' : '' ?>>

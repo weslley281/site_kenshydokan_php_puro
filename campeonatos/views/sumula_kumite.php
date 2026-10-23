@@ -137,7 +137,7 @@ $voltar = "ver_chave.php?id=" . (int)$luta['id_categoria'];
 <div class="modal fade" id="modalVencedor" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            <form method="POST" action="../controllers/sumulaKumiteController.php">
+            <form method="POST" action="../controllers/sumulaKumiteController.php"><?= csrfCampo() ?>
                 <input type="hidden" name="tipo" value="finalizar_luta">
                 <input type="hidden" name="id_luta" value="<?= $idLuta ?>">
                 <input type="hidden" name="tempo_decorrido_segundos" id="tempoFinalLuta" value="<?= (int)$sumula['tempo_decorrido_segundos'] ?>">
@@ -325,6 +325,7 @@ function enviar(tipo, lado, silencioso, extra) {
         request.open('POST', url, true);
         request.timeout = 15000;
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        request.setRequestHeader('X-CSRF-Token', '<?= csrfToken() ?>');
         request.onreadystatechange = function () {
             if (request.readyState !== XMLHttpRequest.DONE || finalizado) return;
 

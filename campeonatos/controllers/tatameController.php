@@ -16,12 +16,16 @@ if (!isset($_SESSION["id_usuario"])) {
     exibirMensagemEredirecionar("Acesso restrito.", "../views/login.php");
 }
 
+include_once __DIR__ . "/csrfHelper.php";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    csrfExigir('../views/inicio.php');
+    exigirPerfil(['mesario']);
     $tatameModel = new Tatame();
     $tipo = $_POST["tipo"] ?? "";
     $idCampeonato = (int)($_POST["id_campeonato"] ?? 0);
 
     if ($tipo === "criar_tatame") {
+        exigirPerfil([]); // somente administrador
         $numero = (int)($_POST["numero"] ?? 1);
         $nome = trim($_POST["nome"] ?? "Tatame " . $numero);
 

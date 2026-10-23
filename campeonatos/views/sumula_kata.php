@@ -53,7 +53,7 @@ function campoNotas(): void {
                 <?php if (empty($inscricoes)): ?>
                     <p class="text-muted mb-0">Nenhum atleta liberado nesta categoria.</p>
                 <?php else: ?>
-                <form action="../controllers/sumulaKataController.php" method="POST" class="form-notas">
+                <form action="../controllers/sumulaKataController.php" method="POST" class="form-notas"><?= csrfCampo() ?>
                     <input type="hidden" name="tipo" value="lancar_notas">
                     <input type="hidden" name="id_campeonato" value="<?= $idCampeonato ?>">
                     <input type="hidden" name="id_categoria" value="<?= $idCategoria ?>">
@@ -119,7 +119,7 @@ function campoNotas(): void {
             <summary class="card-header py-3">Deu empate? Lançar desempate</summary>
             <div class="card-body">
                 <p class="text-muted">No desempate o atleta apresenta um <strong>kata diferente</strong>.</p>
-                <form action="../controllers/sumulaKataController.php" method="POST" class="form-notas">
+                <form action="../controllers/sumulaKataController.php" method="POST" class="form-notas"><?= csrfCampo() ?>
                     <input type="hidden" name="tipo" value="desempate">
                     <input type="hidden" name="id_campeonato" value="<?= $idCampeonato ?>">
                     <input type="hidden" name="id_categoria" value="<?= $idCategoria ?>">

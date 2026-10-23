@@ -18,7 +18,10 @@ if (!isset($_SESSION["id_usuario"])) {
     exibirMensagemEredirecionar("Acesso restrito.", "../views/login.php");
 }
 
+include_once __DIR__ . "/csrfHelper.php";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    csrfExigir('../views/inicio.php');
+    exigirPerfil(['mesario']);
     $pesagemModel = new Pesagem();
     $inscricaoModel = new Inscricao();
     $categoriaModel = new Categoria();
@@ -73,6 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
     } elseif ($tipo === "remanejar_categoria") {
+        exigirPerfil([]); // somente administrador
         $idInscricao = (int)($_POST["id_inscricao"] ?? 0);
         $novaCategoriaId = (int)($_POST["nova_categoria_id"] ?? 0);
         $justificativa = trim($_POST["justificativa"] ?? "");

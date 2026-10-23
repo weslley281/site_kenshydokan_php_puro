@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . "/../controllers/authHelper.php";
+exigirPerfil([], 'inicio.php'); // somente administrador
 $pageTitle = 'Novo Campeonato | Kenshydokan';
 include_once __DIR__ . "/menu.php";
 ?>
@@ -28,7 +30,7 @@ include_once __DIR__ . "/menu.php";
         </div>
     </div>
     <div class="card-body p-4">
-        <form method="POST" action="../controllers/campeonatoController.php">
+        <form method="POST" action="../controllers/campeonatoController.php"><?= csrfCampo() ?>
             <input type="hidden" name="tipo" value="criar_campeonato">
 
             <div class="row g-3">

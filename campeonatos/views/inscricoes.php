@@ -62,7 +62,7 @@ $situacao = [
                         <td><?= htmlspecialchars($ins['categoria_nome']) ?></td>
                         <td><span class="badge <?= $s[1] ?> fs-6"><?= $s[0] ?></span></td>
                         <td class="text-end">
-                            <form method="POST" action="../controllers/inscricaoController.php" class="d-inline-flex gap-1">
+                            <form method="POST" action="../controllers/inscricaoController.php" class="d-inline-flex gap-1"><?= csrfCampo() ?>
                                 <input type="hidden" name="tipo" value="atualizar_status">
                                 <input type="hidden" name="id_campeonato" value="<?= $idCampeonato ?>">
                                 <input type="hidden" name="id_inscricao" value="<?= $ins['id_inscricao'] ?>">

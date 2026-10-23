@@ -25,7 +25,7 @@ $categorias = (new Categoria())->buscarPorCampeonato($idCampeonato);
 <?php else: ?>
 <div class="card" style="max-width:720px">
     <div class="card-body p-4">
-        <form method="POST" action="../controllers/inscricaoController.php" id="formInscricao">
+        <form method="POST" action="../controllers/inscricaoController.php" id="formInscricao"><?= csrfCampo() ?>
             <input type="hidden" name="tipo" value="criar_inscricao">
             <input type="hidden" name="id_campeonato" value="<?= $idCampeonato ?>">
             <input type="hidden" id="data_ref_campeonato" value="<?= htmlspecialchars($campAtual['data_referencia_idade']) ?>">

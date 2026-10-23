@@ -93,7 +93,7 @@ try {
                 <?php endif; ?>
             </div>
         <?php endif; ?>
-        <form method="POST" action="../controllers/autenticar.php">
+        <?php require_once __DIR__ . '/../controllers/csrfHelper.php'; ?><form method="POST" action="../controllers/autenticar.php"><?= csrfCampo() ?>
             <div class="mb-3">
                 <label for="email" class="form-label fw-bold">E-mail</label>
                 <div class="input-group">

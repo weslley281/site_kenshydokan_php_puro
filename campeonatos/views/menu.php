@@ -97,6 +97,9 @@ $itensMenu = [
             <?php if ($campAtual): ?>
                 <a href="mais_opcoes.php?id=<?= $cid ?>"><i class="fas fa-ellipsis me-2"></i>Mais opções</a>
             <?php endif; ?>
+            <?php if (nivelAtual() === 'admin'): ?>
+                <a href="usuarios.php" class="<?= $paginaAtual === 'usuarios.php' ? 'active' : '' ?>"><i class="fas fa-users-gear me-2"></i>Usuários</a>
+            <?php endif; ?>
             <?php if (isset($_SESSION['id_usuario'])): ?>
                 <a href="../controllers/sair.php"><i class="fas fa-right-from-bracket me-2"></i>Sair (<?= htmlspecialchars($nomeUsuario) ?>)</a>
             <?php else: ?>

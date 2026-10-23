@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . "/../controllers/authHelper.php";
+exigirPerfil([], 'inicio.php'); // somente administrador
 $pageTitle = 'Histórico de alterações | Kenshydokan';
 include_once __DIR__ . "/menu.php";
 include_once __DIR__ . "/../models/auditoriaModel.php";

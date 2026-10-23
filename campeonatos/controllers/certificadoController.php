@@ -96,7 +96,10 @@ if (isset($_GET['acao']) && $_GET['acao'] === 'gerar_pdf') {
 }
 
 // Emissão em lote via POST
+include_once __DIR__ . "/csrfHelper.php";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    csrfExigir('../views/inicio.php');
+    exigirPerfil([]);
     $tipo = $_POST["tipo"] ?? "";
     $idCampeonato = (int)($_POST["id_campeonato"] ?? 0);
 

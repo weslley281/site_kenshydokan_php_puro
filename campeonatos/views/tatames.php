@@ -16,6 +16,15 @@ if (!$campeonato) {
 
 $tatameModel = new Tatame();
 $tatames = $tatameModel->buscarPorCampeonato($idCampeonato);
+
+include_once __DIR__ . "/../models/categoriaModel.php";
+include_once __DIR__ . "/../models/lutaModel.php";
+$categoriasCamp = (new Categoria())->buscarPorCampeonato($idCampeonato);
+$resumoLutas = (new Luta())->resumoTatamesPorCategoria($idCampeonato);
+$nomesTatames = [];
+foreach ($tatames as $tt) {
+    $nomesTatames[(int)$tt['id_tatame']] = $tt['nome'];
+}
 ?>
 
 <div class="row mb-4 align-items-center">
@@ -98,11 +107,57 @@ $tatames = $tatameModel->buscarPorCampeonato($idCampeonato);
     <?php endif; ?>
 </div>
 
+<?php if (nivelAtual() === 'admin' && !empty($tatames)): ?>
+<div class="card border-0 shadow-sm mt-4">
+    <div class="card-body">
+        <h2 class="h5 fw-bold mb-1"><i class="fas fa-arrows-split-up-and-left text-danger me-2"></i>Qual tatame faz cada categoria</h2>
+        <p class="text-muted mb-3">Escolha o tatame de cada categoria. As lutas que ainda faltam aparecem na mesa desse tatame.</p>
+
+        <?php
+        $temLinha = false;
+        foreach ($categoriasCamp as $cat):
+            $idCat = (int)$cat['id_categoria'];
+            if (!isset($resumoLutas[$idCat])) continue; // ainda sem lutas sorteadas
+            $temLinha = true;
+            $info = $resumoLutas[$idCat];
+        ?>
+            <form method="POST" action="../controllers/lutaController.php" class="d-flex flex-wrap align-items-center gap-3 py-2 border-bottom"><?= csrfCampo() ?>
+                <input type="hidden" name="tipo" value="alocar_categoria">
+                <input type="hidden" name="id_campeonato" value="<?= $idCampeonato ?>">
+                <input type="hidden" name="id_categoria" value="<?= $idCat ?>">
+                <div class="flex-grow-1">
+                    <strong><?= htmlspecialchars($cat['nome']) ?></strong>
+                    <span class="text-muted small d-block">
+                        <?= $info['pendentes'] > 0 ? $info['pendentes'] . ' luta(s) faltando' : 'Todas as lutas terminaram' ?>
+                    </span>
+                </div>
+                <?php if ($info['pendentes'] > 0): ?>
+                    <label class="visually-hidden" for="tatameCat<?= $idCat ?>">Tatame de <?= htmlspecialchars($cat['nome']) ?></label>
+                    <select class="form-select form-select-lg" style="max-width:240px" id="tatameCat<?= $idCat ?>" name="id_tatame" onchange="this.form.submit()">
+                        <option value="" <?= $info['id_tatame'] === null ? 'selected' : '' ?>>Sem tatame</option>
+                        <?php foreach ($nomesTatames as $idT => $nomeT): ?>
+                            <option value="<?= $idT ?>" <?= $info['id_tatame'] === $idT ? 'selected' : '' ?>><?= htmlspecialchars($nomeT) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <noscript><button type="submit" class="btn btn-danger">Salvar</button></noscript>
+                <?php else: ?>
+                    <span class="badge bg-success">Concluída</span>
+                <?php endif; ?>
+            </form>
+        <?php endforeach; ?>
+
+        <?php if (!$temLinha): ?>
+            <p class="text-muted mb-0">Nenhuma categoria com lutas sorteadas ainda. Sorteie as lutas em <a href="chaves.php?id=<?= $idCampeonato ?>">Lutas</a>.</p>
+        <?php endif; ?>
+    </div>
+</div>
+<?php endif; ?>
+
 <!-- Modal Novo Tatame -->
 <div class="modal fade" id="modalNovoTatame" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content border-0 shadow">
-            <form method="POST" action="../controllers/tatameController.php">
+            <form method="POST" action="../controllers/tatameController.php"><?= csrfCampo() ?>
                 <input type="hidden" name="tipo" value="criar_tatame">
                 <input type="hidden" name="id_campeonato" value="<?= $idCampeonato ?>">
 
